@@ -80,6 +80,7 @@ namespace hpx { namespace util { namespace detail
         >
     {};
 
+#if 0
     template <typename ...Ts>
     static std::false_type _all_of(...);
 
@@ -91,6 +92,25 @@ namespace hpx { namespace util { namespace detail
     struct all_of
       : decltype(detail::_all_of<Ts...>(0))
     {};
+#else
+    template <typename T0>
+    struct all_of<T0>
+      : std::conditional<
+            (bool)T0::value,
+            std::true_type,
+            std::false_type
+        >::type
+    {};
+    
+    template <typename T0, typename ...Ts>
+    struct all_of<T0, Ts...>
+      : std::conditional<
+            (bool)T0::value,
+            all_of<Ts...>,
+            std::false_type
+        >::type
+    {};
+#endif
 
     template <>
     struct all_of<> // <fake-type>
@@ -110,6 +130,7 @@ namespace hpx { namespace util { namespace detail
         >
     {};
 
+#if 0
     template <typename ...Ts>
     static std::true_type _any_of(...);
 
@@ -121,6 +142,25 @@ namespace hpx { namespace util { namespace detail
     struct any_of
       : decltype(detail::_any_of<Ts...>(0))
     {};
+#else
+    template <typename T0>
+    struct any_of<T0>
+      : std::conditional<
+            (bool)T0::value,
+            std::true_type,
+            std::false_type
+        >::type
+    {};
+    
+    template <typename T0, typename ...Ts>
+    struct any_of<T0, Ts...>
+      : std::conditional<
+            (bool)T0::value,
+            std::true_type,
+            any_of<Ts...>
+        >::type
+    {};
+#endif
 
     template <>
     struct any_of<> // <fake-type>
@@ -138,6 +178,7 @@ namespace hpx { namespace util { namespace detail
         >
     {};
 
+#if 0
     template <typename ...Ts>
     static std::false_type _none_of(...);
 
@@ -149,6 +190,25 @@ namespace hpx { namespace util { namespace detail
     struct none_of
       : decltype(detail::_none_of<Ts...>(0))
     {};
+#else
+    template <typename T0>
+    struct none_of<T0>
+      : std::conditional<
+            (bool)T0::value,
+            std::false_type,
+            std::true_type
+        >::type
+    {};
+    
+    template <typename T0, typename ...Ts>
+    struct none_of<T0, Ts...>
+      : std::conditional<
+            (bool)T0::value,
+            std::false_type,
+            none_of<Ts...>
+        >::type
+    {};
+#endif
 
     template <>
     struct none_of<> // <fake-type>
