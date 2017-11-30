@@ -284,7 +284,7 @@ namespace hpx { namespace threads { namespace policies
                 hpx::util::unlock_guard<Lock> ull(lk);
 
                 // Allocate a new thread object.
-                thrd = threads::thread_data::create(data, memory_pool_, state);
+                thrd = threads::thread_data::create(data, memory_pool_, this, state);
             }
         }
 
@@ -891,18 +891,17 @@ namespace hpx { namespace threads { namespace policies
         /// Destroy the passed thread as it has been terminated
         bool destroy_thread(threads::thread_data* thrd, std::int64_t& busy_count)
         {
-            if (thrd->get_pool() == &memory_pool_)
-            {
-                terminated_items_.push(thrd);
+            HPX_ASSERT(thrd->get_pool() == &memory_pool_);
 
-                std::int64_t count = ++terminated_items_count_;
-                if (count > max_terminated_threads)
-                {
-                    cleanup_terminated(true);   // clean up all terminated threads
-                }
-                return true;
+            terminated_items_.push(thrd);
+
+            std::int64_t count = ++terminated_items_count_;
+            if (count > max_terminated_threads)
+            {
+                cleanup_terminated(true);   // clean up all terminated threads
             }
-            return false;
+
+            return true;
         }
 
         ///////////////////////////////////////////////////////////////////////

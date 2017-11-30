@@ -472,16 +472,10 @@ namespace hpx { namespace threads { namespace policies
         /// Destroy the passed thread as it has been terminated
         bool destroy_thread(threads::thread_data* thrd, std::int64_t& busy_count)
         {
-            for (std::size_t i = 0; i != queues_.size(); ++i)
-            {
-                if (queues_[i]->destroy_thread(thrd, busy_count))
-                    return true;
-            }
+            auto queue = static_cast<thread_queue_type *>(thrd->get_queue());
+            queue->destroy_thread(thrd, busy_count);
 
-            // the thread has to belong to one of the queues, always
-            HPX_ASSERT(false);
-
-            return false;
+            return true;
         }
 
         ///////////////////////////////////////////////////////////////////////

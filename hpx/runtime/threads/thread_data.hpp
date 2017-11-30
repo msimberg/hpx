@@ -98,6 +98,7 @@ namespace hpx { namespace threads
 
         static boost::intrusive_ptr<thread_data> create(
             thread_init_data& init_data, pool_type& pool,
+            void *queue,
             thread_state_enum newstate)
         {
             thread_data* ret = pool.allocate();
@@ -111,7 +112,7 @@ namespace hpx { namespace threads
             using namespace std;    // some systems have memset in namespace std
             memset (ret, initial_value, sizeof(thread_data));
 #endif
-            return new (ret) thread_data(init_data, &pool, newstate);
+            return new (ret) thread_data(init_data, &pool, queue, newstate);
         }
 
         ~thread_data()
@@ -508,6 +509,11 @@ namespace hpx { namespace threads
             return pool_;
         }
 
+        void* get_queue()
+        {
+            return queue_;
+        }
+
         /// \brief Execute the thread function
         ///
         /// \returns        This function returns the thread state the thread
@@ -577,7 +583,7 @@ namespace hpx { namespace threads
 
         /// Construct a new \a thread
         thread_data(thread_init_data& init_data,
-            pool_type* pool, thread_state_enum newstate)
+            pool_type* pool, void* queue, thread_state_enum newstate)
           : current_state_(thread_state(newstate, wait_signaled)),
 #ifdef HPX_HAVE_THREAD_TARGET_ADDRESS
             component_id_(init_data.lva),
@@ -606,7 +612,8 @@ namespace hpx { namespace threads
             stacksize_(init_data.stacksize),
             coroutine_(std::move(init_data.func),
                 this_(), init_data.stacksize),
-            pool_(pool)
+            pool_(pool),
+            queue_(queue)
         {
             LTM_(debug) << "thread::thread(" << this << "), description("
                         << get_description() << ")";
@@ -734,6 +741,7 @@ namespace hpx { namespace threads
 
         coroutine_type coroutine_;
         pool_type* pool_;
+        void* queue_;
     };
 
     typedef thread_data::pool_type thread_pool;
