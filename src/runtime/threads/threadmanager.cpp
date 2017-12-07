@@ -26,6 +26,7 @@
 #include <hpx/runtime/threads/thread_init_data.hpp>
 #include <hpx/runtime/threads/threadmanager.hpp>
 #include <hpx/runtime/threads/topology.hpp>
+#include <hpx/util/detail/yield_k.hpp>
 #include <hpx/util/assert.hpp>
 #include <hpx/util/bind_back.hpp>
 #include <hpx/util/bind_front.hpp>
@@ -1929,7 +1930,47 @@ namespace hpx { namespace threads
     {
         for (auto& pool_iter : pools_)
         {
-            pool_iter->resume();
+            bool resumed = false;
+            pool_iter->resume_cb([&resumed]()
+                {
+                    // std::cout << "in resume_cb callback\n";
+                    resumed = true;
+                });
+
+            for (std::size_t k = 0; !resumed; ++k)
+            {
+                // std::cout << "waiting for resume_cb callback\n";
+                util::detail::yield_k(k, "threadmanager::resume");
+            }
+        }
+    }
+
+    void threadmanager::suspend(bool blocking)
+    {
+        // TODO
+        blocking = true;
+        if (blocking)
+        {
+            for (auto& pool_iter : pools_)
+            {
+                bool suspended = false;
+                pool_iter->suspend_cb([&suspended]()
+                    {
+                        suspended = true;
+                    });
+
+                for (std::size_t k = 0; !suspended; ++k)
+                {
+                    util::detail::yield_k(k, "threadmanager::suspend");
+                }
+            }
+        }
+        else
+        {
+            for (auto& pool_iter : pools_)
+            {
+                pool_iter->suspend_cb([](){});
+            }
         }
     }
 

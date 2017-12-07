@@ -66,6 +66,9 @@ namespace hpx { namespace threads { namespace detail
         ///////////////////////////////////////////////////////////////////////
         void stop (std::unique_lock<compat::mutex>& l, bool blocking = true);
 
+        void resume(error_code& ec = throws);
+        void suspend(error_code& ec = throws);
+
         ///////////////////////////////////////////////////////////////////////
         hpx::future<void> resume();
         void resume_cb(std::function<void(void)> callback,

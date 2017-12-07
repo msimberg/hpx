@@ -234,6 +234,10 @@ namespace hpx { namespace util
         }
     }
 
+    void io_service_pool::resume() {}
+
+    void io_service_pool::suspend() {}
+
     void io_service_pool::clear()
     {
         std::lock_guard<compat::mutex> l(mtx_);

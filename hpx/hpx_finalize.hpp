@@ -10,6 +10,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/exception_fwd.hpp>
+#include <hpx/runtime/runtime_mode.hpp>
 
 /// \namespace hpx
 namespace hpx
@@ -203,7 +204,9 @@ namespace hpx
     /// called on every locality. This function should be used only if the
     /// runtime system was started using `hpx::start`.
     ///
-    HPX_EXPORT int stop(error_code& ec = throws);
+    HPX_EXPORT int stop(
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown,
+        error_code& ec = throws);
 }
 
 #endif /*HPX_HPX_FINALIZE_HPP*/

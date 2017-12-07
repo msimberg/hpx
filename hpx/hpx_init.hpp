@@ -116,7 +116,8 @@ namespace hpx
         int argc, char** argv, std::vector<std::string> const& cfg,
         startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -170,7 +171,8 @@ namespace hpx
         int argc, char** argv,
         startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -223,7 +225,8 @@ namespace hpx
         int argc, char** argv,
         startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -282,7 +285,8 @@ namespace hpx
         int argc, char** argv, std::vector<std::string> const& cfg,
         startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -323,7 +327,8 @@ namespace hpx
     ///                     command line arguments passed in `argc`/`argv`.
     inline int
     init(int argc, char** argv, std::vector<std::string> const& cfg,
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -366,7 +371,8 @@ namespace hpx
     ///                     parameter\p mode.
     inline int
     init(boost::program_options::options_description const& desc_cmdline,
-        int argc, char** argv, hpx::runtime_mode mode);
+        int argc, char** argv, hpx::runtime_mode mode,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -416,7 +422,8 @@ namespace hpx
     inline int
     init(boost::program_options::options_description const& desc_cmdline,
         int argc, char** argv, std::vector<std::string> const& cfg,
-        hpx::runtime_mode mode);
+        hpx::runtime_mode mode,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -490,7 +497,8 @@ namespace hpx
     inline
 #endif
     int init(int argc = 0, char** argv = nullptr,
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -528,7 +536,8 @@ namespace hpx
     ///                     command line options as described in the section
     ///                     'HPX Command Line Options'.
     inline int init(std::vector<std::string> const& cfg,
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -563,7 +572,8 @@ namespace hpx
     ///                     command line arguments passed in `argc`/`argv`.
     inline int init(int (*f)(boost::program_options::variables_map& vm),
         std::string const& app_name, int argc, char** argv,
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -596,7 +606,8 @@ namespace hpx
     ///                     executed in console or worker mode depending on the
     ///                     command line arguments passed in `argc`/`argv`.
     inline int init(int (*f)(boost::program_options::variables_map& vm),
-        int argc, char** argv, hpx::runtime_mode mode = hpx::runtime_mode_default);
+        int argc, char** argv, hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -631,7 +642,8 @@ namespace hpx
     ///                     command line arguments passed in `argc`/`argv`.
     inline int init(util::function_nonser<int(int, char**)> const& f,
         std::string const& app_name, int argc, char** argv,
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -664,7 +676,8 @@ namespace hpx
     ///                     executed in console or worker mode depending on the
     ///                     command line arguments passed in `argc`/`argv`.
     inline int init(util::function_nonser<int(int, char**)> const& f,
-        int argc, char** argv, hpx::runtime_mode mode = hpx::runtime_mode_default);
+        int argc, char** argv, hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
     /// \brief Main entry point for launching the HPX runtime system.
     ///
@@ -704,7 +717,13 @@ namespace hpx
     ///                     command line arguments passed in `argc`/`argv`.
     inline int init(util::function_nonser<int(int, char**)> const& f,
         int argc, char** argv, std::vector<std::string> const& cfg,
-        hpx::runtime_mode mode = hpx::runtime_mode_default);
+        hpx::runtime_mode mode = hpx::runtime_mode_default,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
+
+    // This version always resumes. TODO: Make it like any other init (i.e.
+    // start runtime if needed, otherwise resume).
+    inline int init(util::function_nonser<int(void)> const& f,
+        hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 }
 
 #ifndef DOXYGEN

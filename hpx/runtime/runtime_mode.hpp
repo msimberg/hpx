@@ -29,6 +29,16 @@ namespace hpx
         runtime_mode_last
     };
 
+    /// The HPX runtime can be fully shut down when done or suspended for
+    /// resuming quickly later.
+    enum runtime_exit_mode
+    {
+        runtime_exit_mode_invalid = -1,
+        runtime_exit_mode_shutdown = 0, ///< The runtime is shut down on exit
+        runtime_exit_mode_suspend = 1,  ///< The runtime is suspended on exit
+        runtime_exit_mode_last
+    };
+
     /// Get the readable string representing the name of the given runtime_mode
     /// constant.
     HPX_API_EXPORT char const* get_runtime_mode_name(runtime_mode state);
@@ -36,6 +46,8 @@ namespace hpx
     /// Get the internal representation (runtime_mode constant) from the
     /// readable string representing the name.
     HPX_API_EXPORT runtime_mode get_runtime_mode_from_name(std::string const& mode);
+
+    // TODO: runtime_exit_mode functions
 }
 
 #endif /*HPX_RUNTIME_RUNTIME_MODE_HPP*/

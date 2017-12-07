@@ -173,20 +173,35 @@ namespace hpx
         void register_counter_types();
 
         ///////////////////////////////////////////////////////////////////////
-        virtual int run(util::function_nonser<hpx_main_function_type> const& func) = 0;
+        virtual int run(
+            util::function_nonser<hpx_main_function_type> const& func,
+            hpx::runtime_exit_mode exit_mode) = 0;
 
-        virtual int run() = 0;
+        virtual int run(hpx::runtime_exit_mode exit_mode) = 0;
 
         virtual void rethrow_exception() = 0;
 
-        virtual int start(util::function_nonser<hpx_main_function_type> const& func,
-            bool blocking = false) = 0;
+        virtual int start(
+            util::function_nonser<hpx_main_function_type> const& func) = 0;
 
-        virtual int start(bool blocking = false) = 0;
+        virtual int start() = 0;
 
         virtual int wait() = 0;
 
         virtual void stop(bool blocking = true) = 0;
+        virtual void suspend(bool blocking = true) = 0;
+
+        virtual int resume(
+            util::function_nonser<hpx_main_function_type> const& func) = 0;
+        virtual int resume() = 0;
+
+        virtual int resume_blocking(
+            util::function_nonser<hpx_main_function_type> const& func,
+            hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown)
+            = 0;
+        virtual int resume_blocking(
+            hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown)
+            = 0;
 
         virtual parcelset::parcelhandler& get_parcel_handler() = 0;
         virtual parcelset::parcelhandler const& get_parcel_handler() const = 0;

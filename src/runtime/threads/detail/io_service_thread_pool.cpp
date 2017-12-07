@@ -144,7 +144,6 @@ namespace hpx { namespace threads { namespace detail
             "Suspending threads on io_service_thread_pool is not supported");
     }
 
-
     hpx::compat::thread& io_service_thread_pool::get_os_thread_handle(
         std::size_t global_thread_num)
     {

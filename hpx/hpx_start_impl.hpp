@@ -40,7 +40,12 @@ namespace hpx
             boost::program_options::options_description const& desc_cmdline,
             int argc, char** argv, std::vector<std::string>&& ini_config,
             startup_function_type startup, shutdown_function_type shutdown,
-            hpx::runtime_mode mode, bool blocking);
+            hpx::runtime_mode mode, hpx::runtime_exit_mode exit_mode,
+            bool blocking);
+
+        HPX_EXPORT int run_or_start_resume(
+            util::function_nonser<int(void)> const& f,
+            hpx::runtime_exit_mode exit_mode, bool blocking);
 
 #if defined(HPX_WINDOWS)
         void init_winsocket();
@@ -74,7 +79,8 @@ namespace hpx
 #endif
         return 0 == detail::run_or_start(f, desc_cmdline, argc, argv,
             hpx_startup::user_main_config(cfg),
-            std::move(startup), std::move(shutdown), mode, false);
+            std::move(startup), std::move(shutdown), mode,
+            hpx::runtime_exit_mode_shutdown, false);
     }
 
     /// \brief Main non-blocking entry point for launching the HPX runtime system.
@@ -318,6 +324,12 @@ namespace hpx
 
         return start(main_f, desc_commandline, argc, argv, cfg,
             startup_function_type(), shutdown_function_type(), mode);
+    }
+
+    inline bool start(util::function_nonser<int(void)> const& f)
+    {
+        return 0 == detail::run_or_start_resume(f,
+            hpx::runtime_exit_mode_shutdown, false);
     }
 }
 

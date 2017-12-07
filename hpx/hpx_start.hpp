@@ -728,6 +728,10 @@ namespace hpx
     inline bool start(util::function_nonser<int(int, char**)> const& f,
         int argc, char** argv, std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode_default);
+
+    // This version always resumes. TODO: Make it like any other start (i.e.
+    // start runtime if needed, otherwise resume).
+    inline bool start(util::function_nonser<int(void)> const&f);
 }
 
 #ifndef DOXYGEN

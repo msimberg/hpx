@@ -88,8 +88,7 @@ namespace hpx
         ///                   return the value as returned as the result of the
         ///                   invocation of the function object given by the
         ///                   parameter \p func. Otherwise it will return zero.
-        int start(util::function_nonser<hpx_main_function_type> const& func,
-                bool blocking = false);
+        int start(util::function_nonser<hpx_main_function_type> const& func);
 
         /// \brief Start the runtime system
         ///
@@ -103,7 +102,7 @@ namespace hpx
         ///                   return the value as returned as the result of the
         ///                   invocation of the function object given by the
         ///                   parameter \p func. Otherwise it will return zero.
-        int start(bool blocking = false);
+        int start();
 
         /// \brief Wait for the shutdown action to be executed
         ///
@@ -122,6 +121,20 @@ namespace hpx
         ///                   with this parameter set to \a true to wait for
         ///                   all internal work to be completed.
         void stop(bool blocking = true);
+        void suspend(bool blocking = true);
+
+        threads::thread_result_type resume_helper(
+            util::function_nonser<runtime::hpx_main_function_type> func,
+            int& result);
+
+        int resume(util::function_nonser<hpx_main_function_type> const& func);
+        int resume();
+
+        int resume_blocking(
+            util::function_nonser<hpx_main_function_type> const& func,
+            hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
+        int resume_blocking(
+            hpx::runtime_exit_mode exit_mode = hpx::runtime_exit_mode_shutdown);
 
         /// \brief Stop the runtime system, wait for termination
         ///
@@ -133,6 +146,9 @@ namespace hpx
         ///                   with this parameter set to \a true to wait for
         ///                   all internal work to be completed.
         void stopped(bool blocking, compat::condition_variable& cond,
+            compat::mutex& mtx);
+
+        void suspended(bool blocking, compat::condition_variable& cond,
             compat::mutex& mtx);
 
         /// \brief Report a non-recoverable error to the runtime system
@@ -168,6 +184,11 @@ namespace hpx
         ///                   function, in which case all threads have to be
         ///                   scheduled explicitly.
         ///
+        /// \param exit_mode  [in] This tells HPX whether it should completely
+        ///                   shut down after hpx::finalize has been called, or
+        ///                   if it should only suspend the runtime so that it
+        ///                   can be resumed quickly later.
+        ///
         /// \note             The parameter \a func is optional. If no function
         ///                   is supplied, the runtime system will simply wait
         ///                   for the shutdown action without explicitly
@@ -176,14 +197,20 @@ namespace hpx
         /// \returns          This function will return the value as returned
         ///                   as the result of the invocation of the function
         ///                   object given by the parameter \p func.
-        int run(util::function_nonser<hpx_main_function_type> const& func);
+        int run(util::function_nonser<hpx_main_function_type> const& func,
+            hpx::runtime_exit_mode exit_mode);
 
         /// \brief Run the HPX runtime system, initially use the given number
         ///        of (OS) threads in the thread-manager and block waiting for
         ///        all threads to finish.
         ///
+        /// \param exit_mode  [in] This tells HPX whether it should completely
+        ///                   shut down after hpx::finalize has been called, or
+        ///                   if it should only suspend the runtime so that it
+        ///                   can be resumed quickly later.
+        ///
         /// \returns          This function will always return 0 (zero).
-        int run();
+        int run(hpx::runtime_exit_mode exit_mode);
 
         /// Rethrow any stored exception (to be called after stop())
         void rethrow_exception();

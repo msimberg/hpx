@@ -500,7 +500,8 @@ namespace hpx
             util::function_nonser<int(boost::program_options::variables_map& vm)>
                 const& f,
             boost::program_options::variables_map& vm, runtime_mode mode,
-            startup_function_type startup, shutdown_function_type shutdown)
+            startup_function_type startup, shutdown_function_type shutdown,
+            hpx::runtime_exit_mode exit_mode)
         {
             LPROGRESS_;
 
@@ -509,10 +510,10 @@ namespace hpx
 
             // Run this runtime instance using the given function f.
             if (!f.empty())
-                return rt.run(util::bind(f, vm));
+                return rt.run(util::bind(f, vm), exit_mode);
 
             // Run this runtime instance without an hpx_main
-            return rt.run();
+            return rt.run(exit_mode);
         }
 
         int start(hpx::runtime& rt,
@@ -537,14 +538,32 @@ namespace hpx
 
         int run_or_start(bool blocking, std::unique_ptr<hpx::runtime> rt,
             util::command_line_handling& cfg,
-            startup_function_type startup, shutdown_function_type shutdown)
+            startup_function_type startup, shutdown_function_type shutdown,
+            hpx::runtime_exit_mode exit_mode)
         {
+            // TODO: Is the rt unique_ptr handled correctly when suspeding?
+
+            if (cfg.rtcfg_.mode_ != hpx::runtime_mode_console &&
+                exit_mode != hpx::runtime_exit_mode_shutdown)
+            {
+                // TODO
+                HPX_THROW_EXCEPTION(bad_parameter, "hpx::start/run",
+                    "Can only suspend HPX with one locality");
+            }
+
             if (blocking) {
                 return run(*rt, cfg.hpx_main_f_, cfg.vm_, cfg.rtcfg_.mode_,
-                    std::move(startup), std::move(shutdown));
+                    std::move(startup), std::move(shutdown), exit_mode);
             }
 
             // non-blocking version
+            if (exit_mode == hpx::runtime_exit_mode_suspend)
+            {
+                HPX_THROW_EXCEPTION(bad_parameter, "hpx::start",
+                    "Cannot suspend runtime after hpx::start. Pass"
+                    " hpx::runtime_exit_mode_suspend to hpx::stop instead.");
+            }
+
             start(*rt, cfg.hpx_main_f_, cfg.vm_, cfg.rtcfg_.mode_, std::move(startup),
                 std::move(shutdown));
 
@@ -560,7 +579,8 @@ namespace hpx
             boost::program_options::options_description const& desc_cmdline,
             int argc, char** argv, std::vector<std::string> && ini_config,
             startup_function_type startup, shutdown_function_type shutdown,
-            hpx::runtime_mode mode, bool blocking)
+            hpx::runtime_mode mode, hpx::runtime_exit_mode exit_mode,
+            bool blocking)
         {
 #if !defined(HPX_HAVE_DISABLED_SIGNAL_EXCEPTION_HANDLERS)
             set_error_handlers();
@@ -585,12 +605,29 @@ namespace hpx
 
             int result = 0;
             try {
-                // make sure the runtime system is not active yet
+                // Resume runtime if it's already initialized
                 if (get_runtime_ptr() != nullptr)
                 {
-                    std::cerr << "hpx::init: can't initialize runtime system "
-                        "more than once! Exiting...\n";
-                    return -1;
+                    // TODO: Allow resuming runtime with init/start?
+                    auto& rp = hpx::resource::get_partitioner();
+                    util::command_line_handling& cms = rp.get_command_line_switches();
+
+                    hpx::runtime* rt = get_runtime_ptr();
+
+                    if (blocking)
+                    {
+                        if (!f.empty())
+                            return rt->resume_blocking(util::bind(f, cms.vm_), exit_mode);
+
+                        return rt->resume_blocking(exit_mode);
+                    }
+                    else
+                    {
+                        if (!f.empty())
+                            return rt->resume(util::bind(f, cms.vm_));
+
+                        return rt->resume();
+                    }
                 }
 
                 // Construct resource partitioner if this has not been done yet
@@ -630,7 +667,7 @@ namespace hpx
                 }
 
                 result = run_or_start(blocking, std::move(rt),
-                    cms, std::move(startup), std::move(shutdown));
+                    cms, std::move(startup), std::move(shutdown), exit_mode);
             }
             catch (detail::command_line_error const& e) {
                 std::cerr << "{env}: " << hpx::detail::get_execution_environment();
@@ -638,6 +675,38 @@ namespace hpx
                 return -1;
             }
             return result;
+        }
+
+        ///////////////////////////////////////////////////////////////////////
+        HPX_EXPORT int run_or_start_resume(
+            util::function_nonser<int(void)> const& f,
+            hpx::runtime_exit_mode exit_mode,
+            bool blocking)
+        {
+            // TODO: Is rt handled correctly when shutting down? Should it be
+            // released?
+            hpx::runtime* rt = get_runtime_ptr();
+
+            if (rt == nullptr)
+            {
+                HPX_THROW_EXCEPTION(invalid_status, "hpx::run_or_start_resume",
+                    "The runtime system must already be initialized to call"
+                    "this version of hpx::init or hpx::start. Did you already"
+                    "pass argc and argv to hpx::init or hpx::start?");
+            }
+
+            if (blocking)
+            {
+                if (!f.empty())
+                    return rt->resume_blocking(f, exit_mode);
+
+                return rt->resume_blocking(exit_mode);
+            }
+
+            if (!f.empty())
+                return rt->resume(f);
+
+            return rt->resume();
         }
 
         template <typename T>
@@ -776,7 +845,7 @@ namespace hpx
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    int stop(error_code& ec)
+    int stop(hpx::runtime_exit_mode exit_mode, error_code& ec)
     {
         if (threads::get_self_ptr()) {
             HPX_THROWS_IF(ec, invalid_status, "hpx::stop",
@@ -784,22 +853,54 @@ namespace hpx
             return -1;
         }
 
-        std::unique_ptr<runtime> rt(get_runtime_ptr());    // take ownership!
-        if (nullptr == rt.get()) {
-            HPX_THROWS_IF(ec, invalid_status, "hpx::stop",
-                "the runtime system is not active (did you already "
-                "call hpx::stop?)");
-            return -1;
+        int result;
+
+        switch (exit_mode)
+        {
+        case hpx::runtime_exit_mode_shutdown:
+        {
+            // Take ownership
+            std::unique_ptr<runtime> rt(get_runtime_ptr());
+            if (nullptr == rt.get()) {
+                HPX_THROWS_IF(ec, invalid_status, "hpx::stop",
+                    "the runtime system is not active (did you already "
+                    "call hpx::stop?)");
+                return -1;
+            }
+
+            result = rt->wait();
+            rt->stop();
+
+            break;
         }
 
-        int result = rt->wait();
+        case hpx::runtime_exit_mode_suspend:
+        {
+            // Don't take ownership
+            runtime* rt = get_runtime_ptr();
+            if (nullptr == rt) {
+                HPX_THROWS_IF(ec, invalid_status, "hpx::stop",
+                    "the runtime system is not active (did you already "
+                    "call hpx::stop?)");
+                return -1;
+            }
 
-        rt->stop();
-        rt->rethrow_exception();
+            result = rt->wait();
+            rt->suspend();
+
+            break;
+        }
+
+        default:
+            HPX_THROWS_IF(ec, bad_parameter, "hpx::stop",
+                "Invalid runtime_exit_mode");
+            return -1;
+        }
 
         return result;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
     namespace detail
     {
         HPX_EXPORT int init_helper(

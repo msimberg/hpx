@@ -24,6 +24,7 @@
 #include <hpx/runtime/threads/threadmanager.hpp>
 #include <hpx/runtime_impl.hpp>
 #include <hpx/state.hpp>
+#include <hpx/util/detail/yield_k.hpp>
 #include <hpx/util/apex.hpp>
 #include <hpx/util/assert.hpp>
 #include <hpx/util/bind.hpp>
@@ -306,7 +307,7 @@ namespace hpx {
     }
 
     int runtime_impl::start(
-        util::function_nonser<hpx_main_function_type> const& func, bool blocking)
+        util::function_nonser<hpx_main_function_type> const& func)
     {
 #if defined(_WIN64) && defined(_DEBUG) && !defined(HPX_HAVE_FIBER_BASED_COROUTINES)
         // needs to be called to avoid problems at system startup
@@ -357,10 +358,6 @@ namespace hpx {
         this->runtime::starting();
         // }}}
 
-        // block if required
-        if (blocking)
-            return wait();     // wait for the shutdown_action to be executed
-
         // Register this thread with the runtime system to allow calling certain
         // HPX functionality from the main thread.
         init_tss("main-thread", 0, "", false);
@@ -368,10 +365,133 @@ namespace hpx {
         return 0;   // return zero as we don't know the outcome of hpx_main yet
     }
 
-    int runtime_impl::start(bool blocking)
+    int runtime_impl::start()
     {
         util::function_nonser<hpx_main_function_type> empty_main;
-        return start(empty_main, blocking);
+        return start(empty_main);
+    }
+
+    threads::thread_result_type
+    runtime_impl::resume_helper(
+        util::function_nonser<runtime::hpx_main_function_type> func, int& result)
+    {
+        // Resuming runtime
+        set_state(state_running);
+
+        // Now, execute the user supplied thread function (hpx_main)
+        if (!!func)
+        {
+            lbt_ << "runtime_impl::resume_helper: about to "
+                 "invoke hpx_main";
+
+            // Change our thread description, as we're about to call hpx_main
+            threads::set_thread_description(threads::get_self_id(), "hpx_main");
+
+            // Call hpx_main
+            result = func();
+        }
+
+        return threads::thread_result_type(threads::terminated, nullptr);
+    }
+
+    int runtime_impl::resume(
+        util::function_nonser<hpx_main_function_type> const& func)
+    {
+        // start runtime_support services
+
+        // TODO: This causes second shutdown_all to fail, because it tries to
+        // shut down agas etc. twice. However, we don't know in shutdown_all if
+        // the runtime should be shut down or only suspended. So can't really
+        // make a decision there.
+        //
+        // Can AGAS be disabled?
+        //
+        // TODO: Allow suspension only with HPX_HAVE_NETWORKING=OFF, and disable
+        // parts of shutdown_all when HPX_HAVE_NETWORKING=OFF?
+        // runtime_support_->run();
+
+#ifdef HPX_HAVE_IO_POOL
+        // resume the io pool
+        io_pool_.run(false);
+        lbt_ << "runtime_impl::resume: resumed the application "
+             "I/O service pool";
+#endif
+        // resume the thread manager
+        thread_manager_->resume();
+        lbt_ << "runtime_impl::resume: resumed threadmanager";
+
+        threads::thread_init_data data(
+            util::bind(&runtime_impl::resume_helper, this, func,
+                std::ref(result_)),
+            "resume_helper", 0, threads::thread_priority_normal, std::size_t(-1),
+            threads::get_stack_size(threads::thread_stacksize_large));
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        thread_manager_->register_thread(data, id);
+
+        return 0;   // return zero as we don't know the outcome of hpx_main yet
+    }
+
+    int runtime_impl::resume()
+    {
+        util::function_nonser<hpx_main_function_type> empty_main;
+        return resume(empty_main);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    int runtime_impl::resume_blocking(
+        util::function_nonser<hpx_main_function_type> const& func,
+        hpx::runtime_exit_mode exit_mode)
+    {
+        // resume the main thread function
+        resume(func);
+
+        // now wait for everything to finish
+        wait();
+
+        switch (exit_mode)
+        {
+        case hpx::runtime_exit_mode_shutdown:
+            stop();
+            parcel_handler_.stop();      // stops parcelport for sure
+            break;
+        case hpx::runtime_exit_mode_suspend:
+            suspend();
+            break;
+        default:
+            HPX_THROW_EXCEPTION(bad_parameter, "runtime_impl::run",
+                "Invalid runtime_exit_mode");
+        }
+
+        rethrow_exception();
+        return result_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    int runtime_impl::resume_blocking(hpx::runtime_exit_mode exit_mode)
+    {
+        // resume the main thread function
+        resume();
+
+        // now wait for everything to finish
+        int result = wait();
+
+        switch (exit_mode)
+        {
+        case hpx::runtime_exit_mode_shutdown:
+            stop();
+            parcel_handler_.stop();      // stops parcelport for sure
+            break;
+        case hpx::runtime_exit_mode_suspend:
+            suspend();
+            break;
+        default:
+            HPX_THROW_EXCEPTION(bad_parameter, "runtime_impl::run",
+                "Invalid runtime_exit_mode");
+        }
+
+        rethrow_exception();
+        return result;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -447,7 +567,8 @@ namespace hpx {
         }
 
         // use main thread to drive main thread pool
-        main_pool_.thread_run(0);
+        // TODO: What does this do? It resets the TSS for the main thread when done.
+        // main_pool_.thread_run(0);
 
         // block main thread
         t.join();
@@ -507,6 +628,48 @@ namespace hpx {
         deinit_tss();
     }
 
+    void runtime_impl::suspend(bool blocking)
+    {
+        LRT_(warning) << "runtime_impl: about to suspend services";
+
+        // NOTE: Assume single locality, i.e. no parcels.
+        //parcel_handler_.do_background_work(true);
+
+        // NOTE: Execute on_exit functions only when shutting down runtime.
+        // this->runtime::stopping();
+
+        // NOTE: This hangs suspension.
+        // thread_manager_->suspend(false);    // just initiate suspension
+
+        if (threads::get_self_ptr())
+        {
+            // schedule task on separate thread to execute suspended() below
+            // this is necessary as this function (suspend()) might have been called
+            // from a HPX thread, so it would deadlock by waiting for the thread
+            // manager
+            compat::mutex mtx;
+            compat::condition_variable cond;
+            std::unique_lock<compat::mutex> l(mtx);
+
+            compat::thread t(util::bind(&runtime_impl::suspended, this, blocking,
+                std::ref(cond), std::ref(mtx)));
+            cond.wait(l);
+
+            t.join();
+        }
+        else
+        {
+            runtime_support_->stopped();         // re-activate shutdown HPX-thread
+            thread_manager_->suspend(blocking);  // wait for thread manager
+
+            LRT_(info) << "runtime_impl: suspended all services";
+        }
+
+#ifdef HPX_HAVE_IO_POOL
+        io_pool_.suspend();                    // stops io_pool_ as well
+#endif
+    }
+
     // Second step in termination: shut down all services.
     // This gets executed as a task in the timer_pool io_service and not as
     // a HPX thread!
@@ -521,6 +684,19 @@ namespace hpx {
         deinit_tss();
 
         LRT_(info) << "runtime_impl: stopped all services";
+
+        std::lock_guard<compat::mutex> l(mtx);
+        cond.notify_all();                  // we're done now
+    }
+
+    void runtime_impl::suspended(
+        bool blocking, compat::condition_variable& cond, compat::mutex& mtx)
+    {
+        // wait for thread manager to exit
+        runtime_support_->stopped();         // re-activate shutdown HPX-thread
+        thread_manager_->suspend(blocking);  // wait for thread manager
+
+        LRT_(info) << "runtime_impl: suspended all services";
 
         std::lock_guard<compat::mutex> l(mtx);
         cond.notify_all();                  // we're done now
@@ -593,34 +769,59 @@ namespace hpx {
 
     ///////////////////////////////////////////////////////////////////////////
     int runtime_impl::run(
-        util::function_nonser<hpx_main_function_type> const& func)
+        util::function_nonser<hpx_main_function_type> const& func,
+        hpx::runtime_exit_mode exit_mode)
     {
         // start the main thread function
         start(func);
 
         // now wait for everything to finish
         wait();
-        stop();
 
-        parcel_handler_.stop();      // stops parcelport for sure
+        switch (exit_mode)
+        {
+        case hpx::runtime_exit_mode_shutdown:
+            stop();
+            parcel_handler_.stop();      // stops parcelport for sure
+            break;
+        case hpx::runtime_exit_mode_suspend:
+            suspend();
+            break;
+        default:
+            HPX_THROW_EXCEPTION(bad_parameter, "runtime_impl::run",
+                "Invalid runtime_exit_mode");
+        }
 
         rethrow_exception();
         return result_;
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    int runtime_impl::run()
+    int runtime_impl::run(hpx::runtime_exit_mode exit_mode)
     {
         // start the main thread function
         start();
 
         // now wait for everything to finish
         int result = wait();
-        stop();
 
-        parcel_handler_.stop();      // stops parcelport for sure
+        switch (exit_mode)
+        {
+        case hpx::runtime_exit_mode_shutdown:
+            stop();
+            parcel_handler_.stop();      // stops parcelport for sure
+            break;
+        case hpx::runtime_exit_mode_suspend:
+            suspend();
+            break;
+        default:
+            HPX_THROW_EXCEPTION(bad_parameter, "runtime_impl::run",
+                "Invalid runtime_exit_mode");
+        }
 
+        // TODO: Where should this one be?
         rethrow_exception();
+
         return result;
     }
 

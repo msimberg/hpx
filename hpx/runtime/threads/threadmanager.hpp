@@ -156,10 +156,13 @@ namespace hpx { namespace threads
         ///
         /// \param blocking
         ///
-        void stop (bool blocking = true);
+        void stop(bool blocking = true);
 
-        // \brief Resume all suspended threads.
+        // \brief Resume all suspended OS threads.
         void resume();
+
+        // \brief Suspend all OS threads.
+        void suspend(bool blocking = true);
 
         /// \brief Return whether the thread manager is still running
         //! This returns the "minimal state", i.e. the state of the

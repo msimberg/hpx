@@ -680,6 +680,12 @@ namespace hpx { namespace threads { namespace detail
                         if (can_exit)
                         {
                             scheduler.SchedulingPolicy::suspend(num_thread);
+
+                            // TODO
+                            // Reset counts and look for new work immediately
+                            busy_loop_count = 0;
+                            idle_loop_count = 0;
+                            continue;
                         }
                     }
                     else
@@ -691,7 +697,7 @@ namespace hpx { namespace threads { namespace detail
 
                         if (can_exit)
                         {
-                            if (!(scheduler.get_scheduler_mode() & policies::delay_exit))
+                            if (true) // Temporarily disable delayed exits: !(scheduler.get_scheduler_mode() & policies::delay_exit))
                             {
                                 // If this is an inner scheduler, try to exit immediately
                                 if (background_thread.get() != nullptr)

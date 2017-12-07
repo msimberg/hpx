@@ -7,9 +7,10 @@ set(tests
     named_pool_executor
     resource_partitioner
     shutdown_suspended_pus
+    suspend_disabled
     suspend_pool
     suspend_pool_external
-    suspend_disabled
+    suspend_runtime
     throttle
     throttle_timed
     used_pus

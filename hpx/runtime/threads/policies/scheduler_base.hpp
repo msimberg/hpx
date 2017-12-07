@@ -28,6 +28,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <exception>
+#include <cmath>
 #include <memory>
 #include <mutex>
 #include <set>
@@ -121,7 +122,11 @@ namespace hpx { namespace threads { namespace policies
 #if defined(HPX_HAVE_THREAD_MANAGER_IDLE_BACKOFF)
             // Put this thread to sleep for some time, additionally it gets
             // woken up on new work.
-            std::chrono::milliseconds period(++wait_count_);
+            std::chrono::milliseconds
+                period(
+                    std::min(
+                        1000l,
+                        std::lround(std::pow(2.0, ++wait_count_))));
 
             std::unique_lock<compat::mutex> l(mtx_);
             cond_.wait_for(l, period);

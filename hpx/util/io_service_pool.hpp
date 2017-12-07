@@ -78,6 +78,9 @@ namespace hpx { namespace util
         /// \brief Stop all io_service objects in the pool.
         void stop();
 
+        void resume();
+        void suspend();
+
         /// \brief Join all io_service threads in the pool.
         void join();
 
