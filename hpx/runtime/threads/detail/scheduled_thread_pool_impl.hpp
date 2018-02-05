@@ -30,8 +30,8 @@
 #include <hpx/state.hpp>
 #include <hpx/throw_exception.hpp>
 #include <hpx/util/assert.hpp>
-#include <hpx/util/detail/yield_k.hpp>
 #include <hpx/util/unlock_guard.hpp>
+#include <hpx/util/yield_while.hpp>
 
 #include <boost/system/system_error.hpp>
 
@@ -397,7 +397,7 @@ namespace hpx { namespace threads { namespace detail
     template <typename Scheduler>
     void scheduled_thread_pool<Scheduler>::suspend_internal(error_code& ec)
     {
-        util::detail::yield_while([this]()
+        util::yield_while([this]()
             {
                 return this->sched_->Scheduler::get_thread_count() >
                     this->get_background_thread_count();
@@ -1624,7 +1624,7 @@ namespace hpx { namespace threads { namespace detail
         {
             std::size_t thread_num = thread_offset_ + virt_core;
 
-            util::detail::yield_while([thread_num]()
+            util::yield_while([thread_num]()
                 {
                     return thread_num == hpx::get_worker_thread_num();
                 }, "scheduled_thread_pool::remove_processing_unit_internal",
@@ -1642,7 +1642,7 @@ namespace hpx { namespace threads { namespace detail
         // deadlocks when multiple HPX threads try to resume or suspend pus.
         std::unique_lock<compat::mutex>
             l(sched_->Scheduler::get_pu_mutex(virt_core), std::try_to_lock);
-        util::detail::yield_while([&l]()
+        util::yield_while([&l]()
             {
                 if (l.owns_lock())
                 {
@@ -1682,7 +1682,7 @@ namespace hpx { namespace threads { namespace detail
 
         HPX_ASSERT(expected == state_running || expected == state_pre_sleep);
 
-        util::detail::yield_while([&state]()
+        util::yield_while([&state]()
             {
                 return state.load() == state_pre_sleep;
             }, "scheduled_thread_pool::suspend_processing_unit_internal",
@@ -1753,7 +1753,7 @@ namespace hpx { namespace threads { namespace detail
         // deadlocks when multiple HPX threads try to resume or suspend pus.
         std::unique_lock<compat::mutex>
             l(sched_->Scheduler::get_pu_mutex(virt_core), std::try_to_lock);
-        util::detail::yield_while([&l]()
+        util::yield_while([&l]()
             {
                 if (l.owns_lock())
                 {
@@ -1780,7 +1780,7 @@ namespace hpx { namespace threads { namespace detail
         std::atomic<hpx::state>& state =
             sched_->Scheduler::get_state(virt_core);
 
-        util::detail::yield_while([this, &state, virt_core]()
+        util::yield_while([this, &state, virt_core]()
             {
                 this->sched_->Scheduler::resume(virt_core);
                 return state.load() == state_sleeping;
