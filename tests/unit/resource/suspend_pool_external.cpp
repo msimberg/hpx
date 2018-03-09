@@ -33,8 +33,8 @@ int main(int argc, char* argv[])
     std::vector<std::string> scheduler_strings =
         {
             "local",
-            "local-priority-lifo",
-            "local-priority-fifo",
+            "abp-priority-lifo",
+            "abp-priority-fifo",
             "static",
             "static-priority"
         };

@@ -25,6 +25,8 @@ int main(int argc, char* argv[])
         "local",
         "local-priority-lifo",
         "local-priority-fifo",
+        "abp-priority-lifo",
+        "abp-priority-fifo",
         "static",
         "static-priority"
     };
