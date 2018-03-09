@@ -10,6 +10,7 @@
 #include <hpx/runtime/resource/partitioner.hpp>
 #include <hpx/runtime/thread_pool_helpers.hpp>
 #include <hpx/runtime/threads/cpu_mask.hpp>
+#include <hpx/util/optional.hpp>
 
 #include <boost/program_options.hpp>
 
@@ -242,9 +243,10 @@ namespace hpx { namespace resource
 
     ///////////////////////////////////////////////////////////////////////////
     void partitioner::create_thread_pool(std::string const& name,
-        scheduling_policy sched /*= scheduling_policy::unspecified*/)
+        scheduling_policy sched /*= scheduling_policy::unspecified*/,
+        hpx::util::optional<hpx::threads::policies::scheduler_mode> mode)
     {
-        partitioner_.create_thread_pool(name, sched);
+        partitioner_.create_thread_pool(name, sched, mode);
     }
 
     void partitioner::create_thread_pool(
