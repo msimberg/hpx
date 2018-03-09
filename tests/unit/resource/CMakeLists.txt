@@ -12,6 +12,7 @@ set(tests
     suspend_pool_external
     suspend_runtime
     throttle
+    throttle_external
     throttle_timed
     used_pus
 )
@@ -24,6 +25,7 @@ set(suspend_pool_PARAMETERS THREADS_PER_LOCALITY 4)
 set(suspend_pool_external_PARAMETERS THREADS_PER_LOCALITY 4)
 set(suspend_runtime_PARAMETERS THREADS_PER_LOCALITY 4)
 set(throttle_PARAMETERS THREADS_PER_LOCALITY 4)
+set(throttle_external_PARAMETERS THREADS_PER_LOCALITY 4)
 set(throttle_timed_PARAMETERS THREADS_PER_LOCALITY 4)
 set(used_pus_PARAMETERS THREADS_PER_LOCALITY 4)
 
