@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
 
         hpx::util::high_resolution_timer t;
 
-        while (t.elapsed() < 5)
+        while (t.elapsed() < 2)
         {
             for (std::size_t i = 0;
                  i < default_pool_threads * 10000; ++i)
