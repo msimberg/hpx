@@ -32,6 +32,9 @@
 
 #include <hpx/config.hpp>
 #include <hpx/util/assert.hpp>
+#include <hpx/util/thread_specific_ptr.hpp>
+
+#include <unordered_map>
 
 // include unist.d conditionally to check for POSIX version. Not all OSs have the
 // unistd header...
@@ -77,11 +80,29 @@ namespace posix
 {
     HPX_EXPORT extern bool use_guard_pages;
 
+    struct stack_heap_tag {};
+    static util::thread_specific_ptr<
+        std::unordered_multimap<std::size_t, void*>,
+        stack_heap_tag>
+        stack_heap;
+
 #if defined(HPX_HAVE_THREAD_STACK_MMAP) && defined(_POSIX_MAPPED_FILES) \
  && _POSIX_MAPPED_FILES > 0
 
     inline void* alloc_stack(std::size_t size)
     {
+        if (HPX_UNLIKELY(nullptr == stack_heap.get()))
+        {
+            stack_heap.reset(new std::unordered_multimap<std::size_t, void*>{});
+        }
+
+        auto potential_stack = stack_heap->find(size);
+        if (HPX_LIKELY(potential_stack != stack_heap->end()))
+        {
+            stack_heap->erase(potential_stack);
+            return potential_stack->second;
+        }
+
         void* real_stack = ::mmap(nullptr,
             size + EXEC_PAGESIZE,
             PROT_EXEC | PROT_READ | PROT_WRITE,
@@ -117,10 +138,8 @@ namespace posix
                 / sizeof(void*));
             return static_cast<void*>(stack);
         }
-        return real_stack;
-#else
-        return real_stack;
 #endif
+        return real_stack;
     }
 
     inline void watermark_stack(void* stack, std::size_t size)
@@ -153,17 +172,24 @@ namespace posix
 
     inline void free_stack(void* stack, std::size_t size)
     {
-#if defined(HPX_HAVE_THREAD_GUARD_PAGE)
-        if (use_guard_pages) {
-            void** real_stack =
-                static_cast<void**>(stack) - (EXEC_PAGESIZE / sizeof(void*));
-            ::munmap(static_cast<void*>(real_stack), size + EXEC_PAGESIZE);
-        } else {
-            ::munmap(stack, size);
-        }
-#else
-        ::munmap(stack, size);
-#endif
+        // TODO: Check where stack was created. Only keep if created on same
+        // thread/NUMA domain.
+
+        // TODO: Only keep a maximum number of stacks.
+
+        // TODO: Have to eventually munmap resources.
+        stack_heap->emplace(size, stack);
+// #if defined(HPX_HAVE_THREAD_GUARD_PAGE)
+//         if (use_guard_pages) {
+//             void** real_stack =
+//                 static_cast<void**>(stack) - (EXEC_PAGESIZE / sizeof(void*));
+//             ::munmap(static_cast<void*>(real_stack), size + EXEC_PAGESIZE);
+//         } else {
+//             ::munmap(stack, size);
+//         }
+// #else
+//         ::munmap(stack, size);
+// #endif
     }
 
 #else  // non-mmap()
