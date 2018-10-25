@@ -69,7 +69,8 @@ jobs:
                 -DCMAKE_CXX_FLAGS="-fcolor-diagnostics" \
                 -DHPX_WITH_TESTS_HEADERS=On \
                 -DHPX_WITH_DEPRECATION_WARNINGS=Off \
-                -DCMAKE_EXPORT_COMPILE_COMMANDS=On
+                -DCMAKE_EXPORT_COMPILE_COMMANDS=On  \
+                -DHPX_WITH_RPM=ON
       - persist_to_workspace:
           root: /hpx/build
           paths:
