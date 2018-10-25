@@ -1,0 +1,2 @@
+* Wed Oct 24 2018 STE||AR Group <contact@stellar-group.org> 1.2.0-1
+- HPX Release 1.2
