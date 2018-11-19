@@ -376,6 +376,8 @@ hpx_option(HPX_WITH_HCC BOOL
   "Enable hcc support (default: OFF)" OFF ADVANCED)
 hpx_option(HPX_WITH_SYCL BOOL
   "Enable sycl support (default: OFF)" OFF ADVANCED)
+hpx_option(HPX_WITH_KOKKOS BOOL
+  "Enable Kokkos support (default: OFF)" OFF ADVANCED)
 
 ################################################################################
 # HPX datapar configuration
@@ -1704,6 +1706,43 @@ if(HPX_WITH_HPXMP)
 
   # make sure thread-local storage is supported
   hpx_add_config_define(HPX_HAVE_THREAD_LOCAL_STORAGE)
+endif()
+
+if(HPX_WITH_KOKKOS)
+  set(_hpx_kokkos_no_update)
+  if(HPX_WITH_KOKKOS_NO_UPDATE)
+    set(_hpx_kokkos_no_update NO_UPDATE)
+  endif()
+  set(_hpx_kokkos_tag "hpx-backend")
+  if(HPX_WITH_KOKKOS_TAG)
+    message("Overriding KOKKOS git tag ${_hpx_kokkos_tag} with ${HPX_WITH_KOKKOS_TAG}")
+    set(_hpx_kokkos_tag ${HPX_WITH_KOKKOS_TAG})
+  endif()
+
+  # handle KOKKOS library
+  include(GitExternal)
+  git_external(kokkos
+    https://github.com/msimberg/kokkos.git
+    ${_hpx_kokkos_tag}
+    ${_hpx_kokkos_no_update}
+    VERBOSE)
+
+  set(KOKKOS_ENABLE_DEPRECATED_CODE OFF)
+
+  if(NOT DEFINED KOKKOS_ENABLE_HPX)
+    set(KOKKOS_ENABLE_HPX ON)
+  endif()
+
+  if(HPX_WITH_CUDA AND (NOT DEFINED KOKKOS_ENABLE_CUDA))
+    set(KOKKOS_ENABLE_CUDA ON)
+  endif()
+
+  LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/apex/cmake/Modules")
+  add_subdirectory(kokkos ${HPX_BINARY_DIR}/kokkos)
+  include_directories(${Kokkos_INCLUDE_DIRS_RET})
+  set(HPX_ADDITIONAL_PRIVATE_RUNTIME_DEPENDENCIES
+      ${HPX_ADDITIONAL_PRIVATE_RUNTIME_DEPENDENCIES} kokkos)
+  hpx_add_config_define(HPX_HAVE_KOKKOS)
 endif()
 
 if(HPX_WITH_GOOGLE_PERFTOOLS)
