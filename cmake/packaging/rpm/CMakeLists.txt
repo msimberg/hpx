@@ -27,3 +27,4 @@ set(CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION
   )
 set(CPACK_RPM_CHANGELOG_FILE "${CMAKE_HOME_DIRECTORY}/cmake/packaging/rpm/Changelog.txt")
 include(CPack)
+
