@@ -46,7 +46,7 @@ endif()
 project(HPX CXX C)
 
 set(HPX_MAJOR_VERSION 1)
-set(HPX_MINOR_VERSION 2)
+set(HPX_MINOR_VERSION 3)
 set(HPX_PATCH_LEVEL   0)
 set(HPX_VERSION "${HPX_MAJOR_VERSION}.${HPX_MINOR_VERSION}.${HPX_PATCH_LEVEL}")
 set(HPX_LIBRARY_VERSION "${HPX_VERSION}")
@@ -94,8 +94,8 @@ if(NOT HPX_CMAKE_LOGLEVEL)
 endif()
 
 # print initial diagnostics
-hpx_info("CMake version: " ${CMAKE_VERSION})
-hpx_info("HPX version: " ${HPX_VERSION})
+hpx_info("CMake version: ${CMAKE_VERSION}")
+hpx_info("HPX version: ${HPX_VERSION}")
 
 ################################################################################
 # Fortran compiler detection
@@ -642,11 +642,12 @@ hpx_option(HPX_WITH_ITTNOTIFY BOOL
 hpx_option(HPX_WITH_HPXMP BOOL
   "Enable hpxMP OpenMP emulation." OFF CATEGORY "OpenMP")
 if(HPX_WITH_HPXMP)
-  if(NOT MSVC AND ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"))
+  if(NOT MSVC AND (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")))
     hpx_option(HPX_WITH_HPXMP_NO_UPDATE BOOL
       "Do not update code from remote hpxMP repository." OFF CATEGORY "OpenMP")
   else()
-    hpx_warn("hpxMP can be used only when compiling with clang")
+    hpx_warn("hpxMP can be used only when compiling with clang or gcc")
     set(HPX_WITH_HPXMP OFF)
   endif()
 endif()
@@ -1269,6 +1270,10 @@ if(WIN32)
       # qualification conformance
       hpx_add_target_compile_option(-Zc:rvalueCast PUBLIC)
       hpx_add_target_compile_option(-Zc:strictStrings PUBLIC)
+
+      # Update 8 requires to set _ENABLE_EXTENDED_ALIGNED_STORAGE for it to
+      # compile atomics
+      hpx_add_config_cond_define(_ENABLE_EXTENDED_ALIGNED_STORAGE)
     endif()
 
     # Runtime type information
@@ -1540,7 +1545,7 @@ if(HPX_WITH_APEX)
   if(HPX_WITH_APEX_NO_UPDATE)
     set(_hpx_apex_no_update NO_UPDATE)
   endif()
-  set(_hpx_apex_tag "v2.0.1")
+  set(_hpx_apex_tag "v2.1.0")
   if(HPX_WITH_APEX_TAG)
     message("Overriding APEX git tag ${_hpx_apex_tag} with ${HPX_WITH_APEX_TAG}")
     set(_hpx_apex_tag ${HPX_WITH_APEX_TAG})
@@ -1604,12 +1609,17 @@ if(HPX_WITH_HPXMP)
   if(HPX_WITH_HPXMP_NO_UPDATE)
     set(_hpxmp_no_update NO_UPDATE)
   endif()
+  set(_hpx_hpxmp_tag "v0.1.0")
+  if(HPX_WITH_HPXMP_TAG)
+    message("Overriding hpxMP git tag ${_hpx_hpxmp_tag} with ${HPX_WITH_HPXMP_TAG}")
+    set(_hpx_hpxmp_tag ${HPX_WITH_HPXMP_TAG})
+  endif()
 
   # handle hpxMP library
   include(GitExternal)
   git_external(hpxmp
     https://github.com/STEllAR-GROUP/hpxMP.git
-    master
+    ${_hpx_hpxmp_tag}
     ${_hpxmp_no_update}
     VERBOSE)
 
@@ -1713,14 +1723,14 @@ hpx_include(SetOutputPaths)
 ################################################################################
 # Provide a macro for generating config headers
 ################################################################################
-macro(generate_config_defines_header TARGET_DIRECTORY)
+function(generate_config_defines_header TARGET_DIRECTORY)
   # Generate a defines.hpp to be used in the build directory ...
   set(HPX_DEFINES_PREFIX ${HPX_BUILD_PREFIX})
   write_config_defines_file(
     TEMPLATE "${PROJECT_SOURCE_DIR}/cmake/templates/config_defines.hpp.in"
     NAMESPACE default
     FILENAME "${TARGET_DIRECTORY}/hpx/config/defines.hpp")
-endmacro()
+endfunction()
 
 ################################################################################
 # Set basic search paths for the generated HPX headers
@@ -1807,12 +1817,6 @@ endif()
 add_plugin_modules()
 
 ################################################################################
-# Prepare the Build Directory
-################################################################################
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/share)
-
-
-################################################################################
 # Configure the header to include all compile definitions
 ################################################################################
 generate_config_defines_header(${CMAKE_BINARY_DIR})
@@ -1856,39 +1860,6 @@ install(
   DESTINATION include/hpx
   COMPONENT core
   FILES_MATCHING PATTERN "*.hpp"
-  PATTERN ".git" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE
-  PATTERN "CTestFiles" EXCLUDE)
-
-install( # install all hpx header files
-  DIRECTORY hpx
-  DESTINATION share/hpx-${HPX_VERSION}/docs/html/code
-  COMPONENT core
-  FILES_MATCHING PATTERN "*.hpp"
-  PATTERN ".git" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE
-  PATTERN "CTestFiles" EXCLUDE)
-
-install( # install all hpx source files
-  DIRECTORY src
-  DESTINATION share/hpx-${HPX_VERSION}/docs/html/code
-  COMPONENT core
-  PATTERN ".git" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE
-  PATTERN "CTestFiles" EXCLUDE)
-
-install( # install all hpx examples source files
-  DIRECTORY examples
-  DESTINATION share/hpx-${HPX_VERSION}/docs/html/code
-  COMPONENT core
-  PATTERN ".git" EXCLUDE
-  PATTERN "CMakeFiles" EXCLUDE
-  PATTERN "CTestFiles" EXCLUDE)
-
-install( # install all hpx tests source files
-  DIRECTORY tests
-  DESTINATION share/hpx-${HPX_VERSION}/docs/html/code
-  COMPONENT core
   PATTERN ".git" EXCLUDE
   PATTERN "CMakeFiles" EXCLUDE
   PATTERN "CTestFiles" EXCLUDE)
@@ -1958,19 +1929,19 @@ endif()
 
 install(
   FILES "${PROJECT_SOURCE_DIR}/LICENSE_1_0.txt"
-  DESTINATION share/hpx-${HPX_VERSION}
+  DESTINATION share/hpx
   COMPONENT license)
 
 if(HPX_WITH_DOCUMENTATION)
   # Install HPX documentation files
   install(
     FILES "${PROJECT_SOURCE_DIR}/docs/index.html"
-    DESTINATION share/hpx-${HPX_VERSION}/
+    DESTINATION share/hpx/
     COMPONENT docs)
 
   install(
-    DIRECTORY "${CMAKE_BINARY_DIR}/share/hpx-${HPX_VERSION}/docs"
-    DESTINATION share/hpx-${HPX_VERSION}/docs
+    DIRECTORY "${CMAKE_BINARY_DIR}/share/hpx/docs/html/"
+    DESTINATION share/hpx/docs/html
     COMPONENT docs
     PATTERN ".git" EXCLUDE)
 endif()
@@ -2004,10 +1975,6 @@ include(HPX_PrintSummary)
 ################################################################################
 
 include(HPX_GeneratePackage)
-
-# Create a symlink in share pointing to the latest HPX installation
-create_symbolic_link("${CMAKE_BINARY_DIR}/share/hpx-${HPX_VERSION}"
-                     "${CMAKE_BINARY_DIR}/share/hpx")
 
 message("")
 message("HPX will be installed to ${CMAKE_INSTALL_PREFIX}")

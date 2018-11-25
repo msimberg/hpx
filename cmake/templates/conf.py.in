@@ -70,15 +70,19 @@ rst_prolog += '''
 .. |stellar| replace:: STE||AR
 .. _stellar: https://stellar-group.org
 .. |stellar_list| replace:: hpx-users@stellar.cct.lsu.edu
-.. _stellar_list: email:hpx-users@stellar.cct.lsu.edu
+.. _stellar_list: mailto:hpx-users@stellar.cct.lsu.edu
 .. |stellar_irc| replace:: #ste||ar at Freenode
 .. _stellar_irc: irc://irc.freenode.net:6667/#ste||ar
+.. |cpplang_slack| replace:: Cpplang Slack
+.. _cpplang_slack: https://cpplang.slack.com
 .. |stellar_hpx_download| replace:: |hpx| Downloads
 .. _stellar_hpx_download: https://stellar-group.org/downloads/
 .. |hpx_github| replace:: Github
 .. _hpx_github: https://github.com/STEllAR-GROUP/hpx/
 .. |hpx_github_issues| replace:: |hpx| Issues
 .. _hpx_github_issues: https://github.com/STEllAR-GROUP/hpx/issues
+.. |hpx_stackoverflow| replace:: StackOverflow |hpx| questions
+.. _hpx_stackoverflow: https://stackoverflow.com/questions/tagged/hpx>
 .. |hpx_buildbot| replace:: |hpx| Buildbot Website
 .. _hpx_buildbot: https://rostam.cct.lsu.edu/
 .. |pycicle| replace:: pycicle
@@ -178,6 +182,12 @@ rst_prolog += '''
 .. |macports| replace:: MacPorts
 .. _macports: https://www.macports.org/
 
+.. |apex| replace:: APEX
+.. _apex: https://khuck.github.io/xpress-apex/
+.. |apex_hpx_doc| replace:: APEX |hpx| documentation
+.. _apex_hpx_doc: https://khuck.github.io/xpress-apex/usage/#hpx-louisiana-state-university
+.. |tau| replace:: TAU
+.. _tau: https://www.cs.uoregon.edu/research/tau/home.php
 .. |cmake| replace:: CMake
 .. _cmake: https://www.cmake.org
 .. |ctest| replace:: CTest
