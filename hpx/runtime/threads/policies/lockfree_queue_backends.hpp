@@ -31,10 +31,7 @@ struct lockfree_fifo_backend
     typedef T const& const_reference;
     typedef std::uint64_t size_type;
 
-    lockfree_fifo_backend(
-        size_type initial_size = 0
-      , size_type num_thread = size_type(-1)
-        )
+    lockfree_fifo_backend(size_type initial_size = 0)
       : queue_(std::size_t(initial_size))
     {}
 
@@ -76,10 +73,7 @@ struct lockfree_lifo_backend
     typedef T const& const_reference;
     typedef std::uint64_t size_type;
 
-    lockfree_lifo_backend(
-        size_type initial_size = 0
-      , size_type num_thread = size_type(-1)
-        )
+    lockfree_lifo_backend(size_type initial_size = 0)
       : queue_(std::size_t(initial_size))
     {}
 
@@ -115,7 +109,6 @@ struct lockfree_lifo
 
 ///////////////////////////////////////////////////////////////////////////////
 // FIFO + stealing at opposite end.
-#if defined(HPX_HAVE_ABP_SCHEDULER)
 struct lockfree_abp_fifo;
 struct lockfree_abp_lifo;
 
@@ -128,10 +121,7 @@ struct lockfree_abp_fifo_backend
     typedef T const& const_reference;
     typedef std::uint64_t size_type;
 
-    lockfree_abp_fifo_backend(
-        size_type initial_size = 0
-      , size_type num_thread = size_type(-1)
-        )
+    lockfree_abp_fifo_backend(size_type initial_size = 0)
       : queue_(std::size_t(initial_size))
     {}
 
@@ -178,10 +168,7 @@ struct lockfree_abp_lifo_backend
     typedef T const& const_reference;
     typedef std::uint64_t size_type;
 
-    lockfree_abp_lifo_backend(
-        size_type initial_size = 0
-      , size_type num_thread = size_type(-1)
-        )
+    lockfree_abp_lifo_backend(size_type initial_size = 0)
       : queue_(std::size_t(initial_size))
     {}
 
@@ -216,8 +203,6 @@ struct lockfree_abp_lifo
         typedef lockfree_abp_lifo_backend<T> type;
     };
 };
-
-#endif // HPX_HAVE_ABP_SCHEDULER
 
 }}}
 

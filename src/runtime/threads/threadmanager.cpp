@@ -327,7 +327,6 @@ namespace hpx { namespace threads
             }
             case resource::local:
             {
-#if defined(HPX_HAVE_LOCAL_SCHEDULER)
                 // set parameters for scheduler and pool instantiation and
                 // perform compatibility checks
                 hpx::detail::ensure_high_priority_compatibility(cfg_.vm_);
@@ -336,10 +335,11 @@ namespace hpx { namespace threads
                     hpx::detail::get_affinity_description(cfg_, affinity_desc);
 
                 // instantiate the scheduler
-                typedef hpx::threads::policies::local_queue_scheduler<>
+                typedef hpx::threads::policies::local_priority_queue_scheduler<>
                     local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
-                    1000, numa_sensitive, "core-local_queue_scheduler");
+                    0, 1000, false, numa_sensitive, true, true,
+                    "core-local_queue_scheduler");
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
 
@@ -351,13 +351,6 @@ namespace hpx { namespace threads
                         notifier_, i, name.c_str(), scheduler_mode,
                         thread_offset));
                 pools_.push_back(std::move(pool));
-
-#else
-                throw hpx::detail::command_line_error(
-                    "Command line option --hpx:queuing=local "
-                    "is not configured in this build. Please rebuild with "
-                    "'cmake -DHPX_WITH_THREAD_SCHEDULERS=local'.");
-#endif
                 break;
             }
 
@@ -374,11 +367,12 @@ namespace hpx { namespace threads
 
                 // instantiate the scheduler
                 typedef hpx::threads::policies::local_priority_queue_scheduler<
-                    compat::mutex, hpx::threads::policies::lockfree_fifo>
+                    compat::mutex, hpx::threads::policies::lockfree_fifo,
+                    hpx::threads::policies::lockfree_fifo>
                     local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
-                    num_high_priority_queues, 1000, numa_sensitive,
-                    "core-local_priority_queue_scheduler");
+                    num_high_priority_queues, 1000, true, numa_sensitive, true,
+                    true, "core-local_priority_queue_scheduler");
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
 
@@ -407,11 +401,12 @@ namespace hpx { namespace threads
 
                 // instantiate the scheduler
                 typedef hpx::threads::policies::local_priority_queue_scheduler<
-                    compat::mutex, hpx::threads::policies::lockfree_lifo>
+                    compat::mutex, hpx::threads::policies::lockfree_fifo,
+                    hpx::threads::policies::lockfree_lifo>
                     local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
-                    num_high_priority_queues, 1000, numa_sensitive,
-                    "core-local_priority_queue_scheduler");
+                    num_high_priority_queues, 1000, true, numa_sensitive, true,
+                    true, "core-local_priority_queue_scheduler");
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
 
@@ -429,21 +424,19 @@ namespace hpx { namespace threads
 
             case resource::static_:
             {
-#if defined(HPX_HAVE_STATIC_SCHEDULER)
                 // set parameters for scheduler and pool instantiation and
                 // perform compatibility checks
                 hpx::detail::ensure_high_priority_compatibility(cfg_.vm_);
                 std::string affinity_domain =
                     hpx::detail::get_affinity_domain(cfg_);
                 std::string affinity_desc;
-                std::size_t numa_sensitive =
-                    hpx::detail::get_affinity_description(cfg_, affinity_desc);
 
                 // instantiate the scheduler
-                typedef hpx::threads::policies::static_queue_scheduler<>
+                typedef hpx::threads::policies::local_priority_queue_scheduler<>
                     local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
-                    1000, numa_sensitive, "core-static_queue_scheduler");
+                    0, 1000, false, false, false, false,
+                    "core-static_queue_scheduler");
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
 
@@ -455,19 +448,11 @@ namespace hpx { namespace threads
                         notifier_, i, name.c_str(), scheduler_mode,
                         thread_offset));
                 pools_.push_back(std::move(pool));
-
-#else
-                throw hpx::detail::command_line_error(
-                    "Command line option --hpx:queuing=static "
-                    "is not configured in this build. Please rebuild with "
-                    "'cmake -DHPX_WITH_THREAD_SCHEDULERS=static'.");
-#endif
                 break;
             }
 
             case resource::static_priority:
             {
-#if defined(HPX_HAVE_STATIC_PRIORITY_SCHEDULER)
                 // set parameters for scheduler and pool instantiation and
                 // perform compatibility checks
                 std::size_t num_high_priority_queues =
@@ -476,15 +461,12 @@ namespace hpx { namespace threads
                 std::string affinity_domain =
                     hpx::detail::get_affinity_domain(cfg_);
                 std::string affinity_desc;
-                std::size_t numa_sensitive =
-                    hpx::detail::get_affinity_description(cfg_, affinity_desc);
 
                 // instantiate the scheduler
-                typedef hpx::threads::policies::
-                    static_priority_queue_scheduler<>
-                        local_sched_type;
+                typedef hpx::threads::policies::local_priority_queue_scheduler<>
+                    local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
-                    num_high_priority_queues, 1000, numa_sensitive,
+                    num_high_priority_queues, 1000, true, false, false, false,
                     "core-static_priority_queue_scheduler");
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
@@ -497,19 +479,11 @@ namespace hpx { namespace threads
                         notifier_, i, name.c_str(), scheduler_mode,
                         thread_offset));
                 pools_.push_back(std::move(pool));
-
-#else
-                throw hpx::detail::command_line_error(
-                    "Command line option --hpx:queuing=static-priority "
-                    "is not configured in this build. Please rebuild with "
-                    "'cmake -DHPX_WITH_THREAD_SCHEDULERS=static-priority'.");
-#endif
                 break;
             }
 
             case resource::abp_priority_fifo:
             {
-#if defined(HPX_HAVE_ABP_SCHEDULER)
                 // set parameters for scheduler and pool instantiation and
                 // perform compatibility checks
                 std::size_t num_high_priority_queues =
@@ -518,11 +492,11 @@ namespace hpx { namespace threads
 
                 // instantiate the scheduler
                 typedef hpx::threads::policies::local_priority_queue_scheduler<
-                    compat::mutex, hpx::threads::policies::lockfree_fifo>
+                    compat::mutex, hpx::threads::policies::lockfree_abp_fifo>
                     local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
-                    num_high_priority_queues, 1000, cfg_.numa_sensitive_,
-                    "core-abp_fifo_priority_queue_scheduler");
+                    num_high_priority_queues, 1000, true, cfg_.numa_sensitive_,
+                    true, true, "core-abp_fifo_priority_queue_scheduler");
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
 
@@ -534,18 +508,11 @@ namespace hpx { namespace threads
                         notifier_, i, name.c_str(), scheduler_mode,
                         thread_offset));
                 pools_.push_back(std::move(pool));
-#else
-                throw hpx::detail::command_line_error(
-                    "Command line option --hpx:queuing=abp-priority-fifo "
-                    "is not configured in this build. Please rebuild with "
-                    "'cmake -DHPX_WITH_THREAD_SCHEDULERS=abp-priority'.");
-#endif
                 break;
             }
 
             case resource::abp_priority_lifo:
             {
-#if defined(HPX_HAVE_ABP_SCHEDULER)
                 // set parameters for scheduler and pool instantiation and
                 // perform compatibility checks
                 std::size_t num_high_priority_queues =
@@ -554,7 +521,7 @@ namespace hpx { namespace threads
 
                 // instantiate the scheduler
                 typedef hpx::threads::policies::local_priority_queue_scheduler<
-                    compat::mutex, hpx::threads::policies::lockfree_lifo>
+                    compat::mutex, hpx::threads::policies::lockfree_abp_lifo>
                     local_sched_type;
                 local_sched_type::init_parameter_type init(num_threads_in_pool,
                     num_high_priority_queues, 1000, cfg_.numa_sensitive_,
@@ -570,12 +537,6 @@ namespace hpx { namespace threads
                         notifier_, i, name.c_str(), scheduler_mode,
                         thread_offset));
                 pools_.push_back(std::move(pool));
-#else
-                throw hpx::detail::command_line_error(
-                    "Command line option --hpx:queuing=abp-priority-lifo "
-                    "is not configured in this build. Please rebuild with "
-                    "'cmake -DHPX_WITH_THREAD_SCHEDULERS=abp-priority'.");
-#endif
                 break;
             }
 

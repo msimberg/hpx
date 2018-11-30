@@ -28,6 +28,7 @@
 
 #include <boost/lexical_cast.hpp>
 
+#include <algorithm>
 #include <atomic>
 #include <cstddef>
 #include <cstdint>
@@ -521,15 +522,7 @@ namespace hpx { namespace threads { namespace policies
             return cleanup_terminated_locked(false);
         }
 
-        // The maximum number of active threads this thread manager should
-        // create. This number will be a constraint only as long as the work
-        // items queue is not empty. Otherwise the number of active threads
-        // will be incremented in steps equal to the \a min_add_new_count
-        // specified above.
-        enum { max_thread_count = 1000 };
-
-        thread_queue(std::size_t queue_num = std::size_t(-1),
-                std::size_t max_count = max_thread_count)
+        thread_queue(std::size_t max_count)
           : min_tasks_to_steal_pending(detail::get_min_tasks_to_steal_pending()),
             min_tasks_to_steal_staged(detail::get_min_tasks_to_steal_staged()),
             min_add_new_count(detail::get_min_add_new_count()),
@@ -537,7 +530,7 @@ namespace hpx { namespace threads { namespace policies
             max_delete_count(detail::get_max_delete_count()),
             max_terminated_threads(detail::get_max_terminated_threads()),
             thread_map_count_(0),
-            work_items_(128, queue_num),
+            work_items_(128),
             work_items_count_(0),
 #ifdef HPX_HAVE_THREAD_QUEUE_WAITTIME
             work_items_wait_(0),
@@ -545,9 +538,7 @@ namespace hpx { namespace threads { namespace policies
 #endif
             terminated_items_(128),
             terminated_items_count_(0),
-            max_count_((0 == max_count)
-                      ? static_cast<std::size_t>(max_thread_count)
-                      : max_count),
+            max_count_((std::max)(std::size_t(0), max_count)),
             new_tasks_(128),
             new_tasks_count_(0),
 #ifdef HPX_HAVE_THREAD_QUEUE_WAITTIME
@@ -588,9 +579,9 @@ namespace hpx { namespace threads { namespace policies
                 delete t.get();
         }
 
-        void set_max_count(std::size_t max_count = max_thread_count)
+        void set_max_count(std::size_t max_count)
         {
-            max_count_ = (0 == max_count) ? max_thread_count : max_count; //-V105
+            max_count_ = (std::max)(std::size_t(0), max_count); //-V105
         }
 
 #ifdef HPX_HAVE_THREAD_CREATION_AND_CLEANUP_RATES

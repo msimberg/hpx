@@ -30,15 +30,21 @@ template class HPX_EXPORT hpx::threads::detail::scheduled_thread_pool<
 #endif
 
 #include <hpx/runtime/threads/policies/local_priority_queue_scheduler.hpp>
-template class HPX_EXPORT hpx::threads::policies::local_priority_queue_scheduler<
-    hpx::compat::mutex, hpx::threads::policies::lockfree_fifo>;
+template class HPX_EXPORT
+    hpx::threads::policies::local_priority_queue_scheduler<hpx::compat::mutex,
+        hpx::threads::policies::lockfree_fifo,
+        hpx::threads::policies::lockfree_fifo>;
 template class HPX_EXPORT hpx::threads::detail::scheduled_thread_pool<
     hpx::threads::policies::local_priority_queue_scheduler<hpx::compat::mutex,
+        hpx::threads::policies::lockfree_fifo,
         hpx::threads::policies::lockfree_fifo>>;
-template class HPX_EXPORT hpx::threads::policies::local_priority_queue_scheduler<
-    hpx::compat::mutex, hpx::threads::policies::lockfree_lifo>;
+template class HPX_EXPORT
+    hpx::threads::policies::local_priority_queue_scheduler<hpx::compat::mutex,
+        hpx::threads::policies::lockfree_fifo,
+        hpx::threads::policies::lockfree_lifo>;
 template class HPX_EXPORT hpx::threads::detail::scheduled_thread_pool<
     hpx::threads::policies::local_priority_queue_scheduler<hpx::compat::mutex,
+        hpx::threads::policies::lockfree_fifo,
         hpx::threads::policies::lockfree_lifo>>;
 
 #if defined(HPX_HAVE_ABP_SCHEDULER)
