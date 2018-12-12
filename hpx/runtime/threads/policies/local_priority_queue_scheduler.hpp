@@ -515,33 +515,44 @@ namespace hpx { namespace threads { namespace policies
             std::unique_lock<pu_mutex_type> l;
             num_thread = select_active_pu(l, num_thread);
 
-            // now create the thread
-            if (use_task_priorities_ &&
-                HPX_UNLIKELY(data.priority == thread_priority_high_recursive ||
-                    data.priority == thread_priority_high ||
-                    data.priority == thread_priority_boost))
+            // If not using task priorities everything goes on normal queue.
+            if (!use_task_priorities_)
             {
-                if (data.priority == thread_priority_boost)
-                {
-                    data.priority = thread_priority_normal;
-                }
+                HPX_ASSERT(num_thread < queue_size);
+                queues_[num_thread]->create_thread(
+                    data, id, initial_state, run_now, ec);
+                return;
+            }
+
+            // Otherwise we pick an appropriate queue.
+            switch (data.priority)
+            {
+            case thread_priority_normal:
+                HPX_ASSERT(num_thread < queue_size);
+                queues_[num_thread]->create_thread(
+                    data, id, initial_state, run_now, ec);
+                break;
+            case thread_priority_boost:
+                data.priority = thread_priority_normal;
+                HPX_FALLTHROUGH;
+            case thread_priority_high_recursive:
+                HPX_FALLTHROUGH;
+            case thread_priority_high:
+            {
                 std::size_t num = num_thread % high_priority_queues_.size();
-
-                high_priority_queues_[num]->create_thread(data, id,
-                    initial_state, run_now, ec);
-                return;
+                high_priority_queues_[num]->create_thread(
+                    data, id, initial_state, run_now, ec);
+                break;
             }
-
-            if (use_task_priorities_ && HPX_UNLIKELY(data.priority == thread_priority_low))
-            {
-                low_priority_queue_.create_thread(data, id, initial_state,
-                    run_now, ec);
-                return;
+            case thread_priority_low:
+                low_priority_queue_.create_thread(
+                    data, id, initial_state, run_now, ec);
+                break;
+            default:
+                HPX_THROW_EXCEPTION(bad_parameter,
+                    "local_priority_queue_scheduler::create_thread",
+                    "invalid thread priority " + std::to_string(data.priority));
             }
-
-            HPX_ASSERT(num_thread < queue_size);
-            queues_[num_thread]->create_thread(data, id, initial_state,
-                run_now, ec);
         }
 
         /// Return the next thread to be executed, return false if none is
@@ -653,23 +664,36 @@ namespace hpx { namespace threads { namespace policies
             std::unique_lock<pu_mutex_type> l;
             num_thread = select_active_pu(l, num_thread, allow_fallback);
 
-            if (use_task_priorities_ &&
-                HPX_UNLIKELY(priority == thread_priority_high_recursive ||
-                    priority == thread_priority_high ||
-                    priority == thread_priority_boost))
+            if (!use_task_priorities_)
             {
-                std::size_t num = num_thread % high_priority_queues_.size();
-                high_priority_queues_[num]->schedule_thread(thrd);
-            }
-            else if (use_task_priorities_ &&
-                HPX_UNLIKELY(priority == thread_priority_low))
-            {
-                low_priority_queue_.schedule_thread(thrd);
-            }
-            else
-            {
-                HPX_ASSERT(num_thread < queues_.size());
+                HPX_ASSERT(num_thread < queue_size);
                 queues_[num_thread]->schedule_thread(thrd);
+                return;
+            }
+
+            switch (priority)
+            {
+            case thread_priority_normal:
+                HPX_ASSERT(num_thread < queue_size);
+                queues_[num_thread]->schedule_thread(thrd);
+                break;
+            case thread_priority_boost:
+                HPX_FALLTHROUGH;
+            case thread_priority_high_recursive:
+                HPX_FALLTHROUGH;
+            case thread_priority_high:
+                {
+                    std::size_t num = num_thread % high_priority_queues_.size();
+                    high_priority_queues_[num]->schedule_thread(thrd);
+                    break;
+                }
+            case thread_priority_low:
+                low_priority_queue_.schedule_thread(thrd);
+                break;
+            default:
+                HPX_THROW_EXCEPTION(bad_parameter,
+                    "local_priority_queue_scheduler::schedule_thread",
+                    "invalid thread priority " + std::to_string(priority));
             }
         }
 
@@ -703,32 +727,46 @@ namespace hpx { namespace threads { namespace policies
             std::unique_lock<pu_mutex_type> l;
             num_thread = select_active_pu(l, num_thread, allow_fallback);
 
-            if (use_task_priorities_ &&
-                HPX_UNLIKELY(priority == thread_priority_high_recursive ||
-                    priority == thread_priority_high ||
-                    priority == thread_priority_boost))
+            if (!use_task_priorities_)
             {
-                std::size_t num = num_thread % high_priority_queues_.size();
-                high_priority_queues_[num]->schedule_thread(thrd, true);
-            }
-            else if (use_task_priorities_ &&
-                HPX_UNLIKELY(priority == thread_priority_low))
-            {
-                low_priority_queue_.schedule_thread(thrd, true);
-            }
-            else
-            {
-                HPX_ASSERT(num_thread < queues_.size());
+                HPX_ASSERT(num_thread < queue_size);
                 queues_[num_thread]->schedule_thread(thrd, true);
+                return;
+            }
+
+            switch (priority)
+            {
+            case thread_priority_normal:
+                HPX_ASSERT(num_thread < queue_size);
+                queues_[num_thread]->schedule_thread(thrd, true);
+                break;
+            case thread_priority_boost:
+                HPX_FALLTHROUGH;
+            case thread_priority_high_recursive:
+                HPX_FALLTHROUGH;
+            case thread_priority_high:
+                {
+                    std::size_t num = num_thread % high_priority_queues_.size();
+                    high_priority_queues_[num]->schedule_thread(thrd, true);
+                    break;
+                }
+            case thread_priority_low:
+                low_priority_queue_.schedule_thread(thrd, true);
+                break;
+            default:
+                HPX_THROW_EXCEPTION(bad_parameter,
+                    "local_priority_queue_scheduler::schedule_thread_last",
+                    "invalid thread priority " + std::to_string(priority));
             }
         }
 
         /// Destroy the passed thread as it has been terminated
-        void destroy_thread(
-            threads::thread_data* thrd, std::int64_t& busy_count) override
+        void destroy_thread(threads::thread_data* thrd,
+            std::int64_t& busy_count) override
         {
             HPX_ASSERT(thrd->get_scheduler_base() == this);
-            thrd->get_queue<thread_queue_type>().destroy_thread(thrd, busy_count);
+            thrd->get_queue<thread_queue_type>().destroy_thread(
+                thrd, busy_count);
         }
 
         ///////////////////////////////////////////////////////////////////////
