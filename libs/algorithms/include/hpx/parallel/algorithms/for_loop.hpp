@@ -272,6 +272,53 @@ namespace hpx { namespace parallel { inline namespace v2
                 hpx::util::get<sizeof...(Args)-1>(t), hpx::util::get<Is>(t)...);
         }
 
+        // To avoid ODR violations:
+        template <class T>
+        struct static_const_helper
+        {
+            static constexpr T value{};
+        };
+
+        template <class T>
+        constexpr T static_const_helper<T>::value;
+
+        // struct customizable_for_loop_fn
+        // {
+        //     template <typename Executor>
+        //     constexpr auto operator()(Executor&& e) const
+        //     {
+        //         return customizable_for_loop(std::forward<Executor>(e));
+        //     }
+        // };
+
+        template <typename Executor>
+        void customizable_for_loop_fn_no_struct(Executor&& e)
+        {
+            return customizable_for_loop(std::forward<Executor>(e));
+        }
+
+        // NOTE: Generic version must exist, otherwise ADL doesn't find customized version.
+        template <typename ExPolicy, typename B, typename E, typename S, typename ... Args>
+        void for_loop_custom(
+            ExPolicy&& policy, B first, E last, S stride, Args&&... args)
+        {
+            std::cout << "in generic hpx::parallel::detail::for_loop_custom" << std::endl;
+            using hpx::util::detail::make_index_pack;
+            return for_loop(
+                std::forward<ExPolicy>(policy), first, last, stride,
+                typename make_index_pack<sizeof...(Args)-1>::type(),
+                std::forward<Args>(args)...);
+        }
+
+        template <typename ExPolicy, typename B, typename E, typename S,
+            typename... Args>
+        void for_loop_custom_dispatch(
+            ExPolicy&& policy, B first, E last, S stride, Args&&... args)
+        {
+            for_loop_custom(std::forward<ExPolicy>(policy), first, last, stride,
+                std::forward<Args>(args)...);
+        }
+
         // reshuffle arguments, last argument is function object, will go first
         template <typename ExPolicy, typename B, typename Size, typename S,
             std::size_t... Is, typename... Args>
@@ -411,6 +458,53 @@ namespace hpx { namespace parallel { inline namespace v2
             std::forward<ExPolicy>(policy), first, last, 1,
             typename make_index_pack<sizeof...(Args)-1>::type(),
             std::forward<Args>(args)...);
+    }
+
+    template <typename ExPolicy, typename I, typename... Args>
+    void for_loop_custom(ExPolicy&& policy, typename std::decay<I>::type first,
+                         I last, Args&&... args)
+    {
+        return detail::for_loop_custom_dispatch(std::forward<ExPolicy>(policy),
+                                                first, last, 1,
+                                                std::forward<Args>(args)...);
+    }
+
+    // constexpr auto const& customizable_for_loop =
+    //     static_const_helper<detail::customizable_for_loop_fn>::value;
+
+    // template <typename Executor>
+    // void customizable_for_loop_2(Executor&& e)
+    // {
+    //     detail::customizable_for_loop_fn{}(std::forward<Executor>(e));
+    // }
+
+    template <typename Executor>
+    void customizable_for_loop(Executor&& e)
+    {
+        detail::customizable_for_loop_fn_no_struct(std::forward<Executor>(e));
+    }
+
+    ////////////////////////////////////////////
+    namespace detail {
+        // Define for loop for generic executors
+        template <typename Executor, typename I, typename F>
+        constexpr void customizable_for_loop_full(Executor&&, I i, F&& f)
+        {
+            std::cout << "in generic customizable_for_loop: " << f(2) << std::endl;
+        }
+
+        template <typename Executor, typename I, typename F>
+        void customizable_for_loop_full_fn(Executor&& e, I i, F && f)
+        {
+            return customizable_for_loop_full(std::forward<Executor>(e), i, std::forward<F>(f));
+        }
+    }
+
+    template <typename Executor, typename I, typename F>
+    void customizable_for_loop_full(Executor&& e, I i, F && f)
+    {
+        detail::customizable_for_loop_full_fn(
+            std::forward<Executor>(e), i, std::forward<F>(f));
     }
 
     /// The for_loop implements loop functionality over a range specified by
