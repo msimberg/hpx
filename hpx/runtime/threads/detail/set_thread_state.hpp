@@ -225,7 +225,9 @@ namespace hpx { namespace threads { namespace detail
                 << ")";
         } while (true);
 
-        if (new_state == pending) {
+        if (!(previous_state == pending || previous_state == pending_boost) &&
+            (new_state == pending || new_state == pending_boost))
+        {
             // REVIEW: Passing a specific target thread may interfere with the
             // round robin queuing.
 
