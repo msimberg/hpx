@@ -171,10 +171,12 @@ namespace hpx { namespace threads { namespace policies
         // number of terminated threads to collect before cleaning them up
         int const max_terminated_threads;
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
         // this is the type of a map holding all threads (except depleted ones)
         using thread_map_type = std::unordered_set<thread_id_type,
             std::hash<thread_id_type>, std::equal_to<thread_id_type>,
             util::internal_allocator<thread_id_type>>;
+#endif
 
         using thread_heap_type =
             std::list<thread_id_type, util::internal_allocator<thread_id_type>>;
@@ -207,7 +209,9 @@ namespace hpx { namespace threads { namespace policies
         void create_thread_object(threads::thread_id_type& thrd,
             threads::thread_init_data& data, thread_state_enum state, Lock& lk)
         {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             HPX_ASSERT(lk.owns_lock());
+#endif
             HPX_ASSERT(data.stacksize != 0);
 
             std::ptrdiff_t stacksize = data.stacksize;
@@ -269,7 +273,9 @@ namespace hpx { namespace threads { namespace policies
             }
             else
             {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                 hpx::util::unlock_guard<Lock> ull(lk);
+#endif
 
                 // Allocate a new thread object.
                 threads::thread_data* p = thread_alloc_.allocate(1);
@@ -286,7 +292,9 @@ namespace hpx { namespace threads { namespace policies
         std::size_t add_new(std::int64_t add_count, thread_queue* addfrom,
             std::unique_lock<mutex_type> &lk, bool steal = false)
         {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             HPX_ASSERT(lk.owns_lock());
+#endif
 
             if (HPX_UNLIKELY(0 == add_count))
                 return 0;
@@ -315,6 +323,7 @@ namespace hpx { namespace threads { namespace policies
                 task->~task_description();
                 task_description_alloc_.deallocate(task, 1);
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                 // add the new entry to the map of all threads
                 std::pair<thread_map_type::iterator, bool> p =
                     thread_map_.insert(thrd);
@@ -330,6 +339,10 @@ namespace hpx { namespace threads { namespace policies
 
                 ++thread_map_count_;
 
+                // this thread has to be in the map now
+                HPX_ASSERT(thread_map_.find(thrd) != thread_map_.end());
+#endif
+
                 // Decrement only after thread_map_count_ has been incremented
                 --addfrom->new_tasks_count_;
 
@@ -342,8 +355,6 @@ namespace hpx { namespace threads { namespace policies
                     schedule_thread(thrd.get());
                 }
 
-                // this thread has to be in the map now
-                HPX_ASSERT(thread_map_.find(thrd) != thread_map_.end());
                 HPX_ASSERT(&thrd->get_queue<thread_queue>() == this);
             }
 
@@ -357,7 +368,9 @@ namespace hpx { namespace threads { namespace policies
         bool add_new_always(std::size_t& added, thread_queue* addfrom,
             std::unique_lock<mutex_type> &lk, bool steal = false)
         {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             HPX_ASSERT(lk.owns_lock());
+#endif
 
 #ifdef HPX_HAVE_THREAD_CREATION_AND_CLEANUP_RATES
             util::tick_counter tc(add_new_time_);
@@ -369,7 +382,11 @@ namespace hpx { namespace threads { namespace policies
             // if we are desperate (no work in the queues), add some even if the
             // map holds more than max_count
             if (HPX_LIKELY(max_count_)) {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                 std::size_t count = thread_map_.size();
+#else
+                std::size_t count = new_tasks_count_;
+#endif
                 if (max_count_ >= count + min_add_new_count) { //-V104
                     HPX_ASSERT(max_count_ - count <
                         static_cast<std::size_t>(
@@ -464,6 +481,7 @@ namespace hpx { namespace threads { namespace policies
                     thread_id_type tid(todelete);
                     --terminated_items_count_;
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                     // this thread has to be in this map
                     HPX_ASSERT(thread_map_.find(tid) != thread_map_.end());
 
@@ -474,6 +492,9 @@ namespace hpx { namespace threads { namespace policies
                         --thread_map_count_;
                         HPX_ASSERT(thread_map_count_ >= 0);
                     }
+#else
+                    deallocate(todelete);
+#endif
                 }
             }
             else {
@@ -489,6 +510,7 @@ namespace hpx { namespace threads { namespace policies
                     thread_id_type tid(todelete);
                     --terminated_items_count_;
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                     thread_map_type::iterator it = thread_map_.find(tid);
 
                     // this thread has to be in this map
@@ -499,6 +521,9 @@ namespace hpx { namespace threads { namespace policies
                     thread_map_.erase(it);
                     --thread_map_count_;
                     HPX_ASSERT(thread_map_count_ >= 0);
+#else
+                    recycle_thread(tid);
+#endif
 
                     --delete_count;
                 }
@@ -516,7 +541,9 @@ namespace hpx { namespace threads { namespace policies
                 // do not lock mutex while deleting all threads, do it piece-wise
                 while (true)
                 {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                     std::lock_guard<mutex_type> lk(mtx_);
+#endif
                     if (cleanup_terminated_locked(false))
                     {
                         return true;
@@ -525,7 +552,9 @@ namespace hpx { namespace threads { namespace policies
                 return false;
             }
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             std::lock_guard<mutex_type> lk(mtx_);
+#endif
             return cleanup_terminated_locked(false);
         }
 
@@ -544,7 +573,9 @@ namespace hpx { namespace threads { namespace policies
             max_add_new_count(detail::get_max_add_new_count()),
             max_delete_count(detail::get_max_delete_count()),
             max_terminated_threads(detail::get_max_terminated_threads()),
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             thread_map_count_(0),
+#endif
             work_items_(128, queue_num),
             work_items_count_(0),
 #ifdef HPX_HAVE_THREAD_QUEUE_WAITTIME
@@ -744,10 +775,15 @@ namespace hpx { namespace threads { namespace policies
                 // created, as it might have that the current HPX thread gets
                 // suspended.
                 {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                     std::unique_lock<mutex_type> lk(mtx_);
+#else
+                    std::unique_lock<mutex_type> lk;
+#endif
 
                     create_thread_object(thrd, data, initial_state, lk);
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                     // add a new entry in the map for this thread
                     std::pair<thread_map_type::iterator, bool> p =
                         thread_map_.insert(thrd);
@@ -763,6 +799,8 @@ namespace hpx { namespace threads { namespace policies
 
                     // this thread has to be in the map now
                     HPX_ASSERT(thread_map_.find(thrd) != thread_map_.end());
+#endif
+
                     HPX_ASSERT(&thrd->get_queue<thread_queue>() == this);
 
                     // push the new thread in the pending queue thread
@@ -926,8 +964,9 @@ namespace hpx { namespace threads { namespace policies
                 return new_tasks_count_;
 
             if (unknown == state)
-                return thread_map_count_ + new_tasks_count_ - terminated_items_count_;
+                return work_items_count_ + new_tasks_count_;
 
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             // acquire lock only if absolutely necessary
             std::lock_guard<mutex_type> lk(mtx_);
 
@@ -940,11 +979,15 @@ namespace hpx { namespace threads { namespace policies
                     ++num_threads;
             }
             return num_threads;
+#else
+            return 0;
+#endif
         }
 
         ///////////////////////////////////////////////////////////////////////
         void abort_all_suspended_threads()
         {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             std::lock_guard<mutex_type> lk(mtx_);
             thread_map_type::iterator end =  thread_map_.end();
             for (thread_map_type::iterator it = thread_map_.begin();
@@ -956,12 +999,14 @@ namespace hpx { namespace threads { namespace policies
                     schedule_thread((*it).get());
                 }
             }
+#endif
         }
 
         bool enumerate_threads(
             util::function_nonser<bool(thread_id_type)> const& f,
             thread_state_enum state = unknown) const
         {
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
             std::uint64_t count = thread_map_count_;
             if (state == terminated)
             {
@@ -1006,6 +1051,7 @@ namespace hpx { namespace threads { namespace policies
                 if (!f(id))
                     return false;       // stop iteration
             }
+#endif
 
             return true;
         }
@@ -1052,9 +1098,13 @@ namespace hpx { namespace threads { namespace policies
                 // just falls through to the cleanup work below (no work is available)
                 // in which case the current thread (which failed to acquire
                 // the lock) will just retry to enter this loop.
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
                 std::unique_lock<mutex_type> lk(mtx_, std::try_to_lock);
                 if (!lk.owns_lock())
-                    return false;            // avoid long wait on lock
+                    return false;    // avoid long wait on lock
+#else
+                std::unique_lock<mutex_type> lk;
+#endif
 
                 // stop running after all HPX threads have been terminated
                 bool added_new = add_new_always(added, addfrom, lk, steal);
@@ -1091,16 +1141,16 @@ namespace hpx { namespace threads { namespace policies
         bool dump_suspended_threads(std::size_t num_thread
           , std::int64_t& idle_loop_count, bool running)
         {
-#ifndef HPX_HAVE_THREAD_MINIMAL_DEADLOCK_DETECTION
-            return false;
-#else
-            if (minimal_deadlock_detection) {
+#if defined(HPX_HAVE_THREAD_MINIMAL_DEADLOCK_DETECTION) &&                     \
+    defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
+            if (minimal_deadlock_detection)
+            {
                 std::lock_guard<mutex_type> lk(mtx_);
-                return detail::dump_suspended_threads(num_thread, thread_map_
-                  , idle_loop_count, running);
+                return detail::dump_suspended_threads(
+                    num_thread, thread_map_, idle_loop_count, running);
             }
-            return false;
 #endif
+            return false;
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -1109,10 +1159,12 @@ namespace hpx { namespace threads { namespace policies
         void on_error(std::size_t num_thread, std::exception_ptr const& e) {}
 
     private:
+#if defined(HPX_HAVE_SCHEDULER_THREAD_MAP)
         mutable mutex_type mtx_;            // mutex protecting the members
 
         thread_map_type thread_map_;        // mapping of thread id's to HPX-threads
         std::atomic<std::int64_t> thread_map_count_; // overall count of work items
+#endif
 
         work_items_type work_items_;        // list of active work items
         std::atomic<std::int64_t> work_items_count_; // count of active work items

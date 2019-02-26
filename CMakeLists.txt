@@ -518,6 +518,14 @@ hpx_option(HPX_WITH_THREAD_BACKTRACE_ON_SUSPENSION BOOL
   OFF
   CATEGORY "Thread Manager" ADVANCED)
 
+hpx_option(HPX_WITH_SCHEDULER_THREAD_MAP BOOL
+  "HPX keeps track of suspended threads for debugging (default: ON)"
+  ON
+  CATEGORY "Thread Manager" ADVANCED)
+if(HPX_WITH_SCHEDULER_THREAD_MAP)
+  hpx_add_config_define(HPX_HAVE_SCHEDULER_THREAD_MAP)
+endif()
+
 if(HPX_WITH_STACKTRACES OR HPX_WITH_THREAD_BACKTRACE_ON_SUSPENSION)
   hpx_info("Stack traces are enabled.")
   hpx_add_config_define(HPX_HAVE_STACKTRACES)
