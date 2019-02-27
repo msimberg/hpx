@@ -494,11 +494,14 @@ namespace hpx { namespace threads { namespace policies
                     // this thread has to be in this map
                     HPX_ASSERT(it != thread_map_.end());
 
-                    recycle_thread(*it);
-
-                    thread_map_.erase(it);
-                    --thread_map_count_;
-                    HPX_ASSERT(thread_map_count_ >= 0);
+                    bool deleted = thread_map_.erase(tid) != 0;
+                    HPX_ASSERT(deleted);
+                    if (deleted)
+                    {
+                        deallocate(todelete);
+                        --thread_map_count_;
+                        HPX_ASSERT(thread_map_count_ >= 0);
+                    }
 
                     --delete_count;
                 }
