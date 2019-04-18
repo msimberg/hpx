@@ -6,6 +6,7 @@
 # This file is auto generated. Please do not edit manually.
 
 set(HPX_LIBS
+  assertion
   config
   preprocessor
   CACHE INTERNAL "" FORCE
