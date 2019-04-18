@@ -8,13 +8,7 @@ file(GLOB_RECURSE headers "${PROJECT_SOURCE_DIR}/hpx/*hpp")
 
 set(all_headers)
 
-set(exclude_from_all_headers
-  "util/hardware/timestamp/msvc.hpp"
-  "util/hardware/timestamp/linux_x86_32.hpp"
-  "util/hardware/timestamp/linux_x86_64.hpp"
-  "util/hardware/timestamp/linux_generic.hpp"
-  "util/hardware/timestamp/bgq.hpp"
-)
+set(exclude_from_all_headers)
 
 # These files are either known to expose incomplete types or are known to
 # require special handling to avoid circular #include dependencies.
