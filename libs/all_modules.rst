@@ -16,4 +16,5 @@ All modules
    /libs/_example/docs/index.rst
    /libs/assertion/docs/index.rst
    /libs/config/docs/index.rst
+   /libs/hardware/docs/index.rst
    /libs/preprocessor/docs/index.rst
