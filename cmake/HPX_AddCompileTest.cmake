@@ -51,6 +51,10 @@ function(add_hpx_headers_compile_test category name)
 endfunction()
 
 function(add_hpx_lib_header_tests lib)
+  set(multi_value_args EXCLUDE)
+
+  cmake_parse_arguments(${lib} "" "" "${multi_value_args}" ${ARGN})
+
   file(GLOB_RECURSE headers ${DO_CONFIGURE_DEPENDS} "${PROJECT_SOURCE_DIR}/include/hpx/*hpp")
   set(all_headers)
   add_custom_target(tests.headers.${lib})
@@ -78,7 +82,11 @@ function(add_hpx_lib_header_tests lib)
         "int main(int argc, char** argv) { return 0; }\n"
         "#endif\n")
 
-      set(all_headers ${all_headers} "#include <hpx/${relpath}>\n")
+      set(exclude_pos -1)
+      list(FIND ${lib}_EXCLUDE "${relpath}" exclude_pos)
+      if(${exclude_pos} EQUAL -1)
+        set(all_headers ${all_headers} "#include <hpx/${relpath}>\n")
+      endif()
 
       add_library(tests.headers.${lib}.${test_name} ${CMAKE_CURRENT_BINARY_DIR}/${full_test_file})
       target_link_libraries(tests.headers.${lib}.${test_name} hpx_${lib})
