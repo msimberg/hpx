@@ -8,7 +8,7 @@
 #include <hpx/include/actions.hpp>
 #include <hpx/components/iostreams/standard_streams.hpp>
 #include <hpx/lcos/local/detail/sliding_semaphore.hpp>
-#include <hpx/util/format.hpp>
+#include <hpx/format.hpp>
 
 #include <boost/assert.hpp>
 

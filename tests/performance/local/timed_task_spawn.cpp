@@ -14,7 +14,7 @@
 #include <hpx/compat/condition_variable.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/util/bind.hpp>
-#include <hpx/util/format.hpp>
+#include <hpx/format.hpp>
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>

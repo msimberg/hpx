@@ -10,7 +10,6 @@ set(tests
     bind_action
     checkpoint
     config_entry
-    format
     function
     function_ref
     pack_traversal

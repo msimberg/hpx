@@ -10,7 +10,7 @@
 #include <hpx/hpx_main.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/dataflow.hpp>
-#include <hpx/util/format.hpp>
+#include <hpx/format.hpp>
 #include <hpx/util/unwrap.hpp>
 #include <hpx/include/iostreams.hpp>
 

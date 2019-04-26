@@ -8,6 +8,7 @@
 set(HPX_LIBS
   assertion
   config
+  format
   hardware
   preprocessor
   testing
