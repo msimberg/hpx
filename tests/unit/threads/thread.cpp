@@ -9,7 +9,7 @@
 #include <hpx/compat/mutex.hpp>
 #include <hpx/include/threadmanager.hpp>
 #include <hpx/include/lcos.hpp>
-#include <hpx/util/lightweight_test.hpp>
+#include <hpx/testing.hpp>
 
 #include <chrono>
 #include <functional>

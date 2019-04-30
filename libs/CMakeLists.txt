@@ -10,6 +10,7 @@ set(HPX_LIBS
   config
   hardware
   preprocessor
+  testing
   CACHE INTERNAL "" FORCE
 )
 
