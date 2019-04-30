@@ -20,3 +20,4 @@ All modules
    /libs/hardware/docs/index.rst
    /libs/preprocessor/docs/index.rst
    /libs/testing/docs/index.rst
+   /libs/util/docs/index.rst

@@ -6,8 +6,8 @@
 set(tests
     any
     any_serialization
-    boost_any
     bind_action
+    boost_any
     checkpoint
     config_entry
     function
@@ -15,17 +15,10 @@ set(tests
     pack_traversal
     pack_traversal_async
     parse_slurm_nodelist
-    range
     tagged
     tuple
     unwrap
    )
-
-if(HPX_WITH_CXX11_STD_INITIALIZER_LIST)
-  set(tests ${tests}
-    coordinate
-  )
-endif()
 
 set(subdirs
     bind

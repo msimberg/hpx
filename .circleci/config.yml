@@ -790,6 +790,7 @@ jobs:
               ninja -j2 -k 0 tests.unit.format
               ninja -j2 -k 0 tests.unit.hardware
               ninja -j2 -k 0 tests.unit.preprocessor
+              ninja -j2 -k 0 tests.unit.util
       - run:
           name: Running Unit Tests
           when: always
@@ -800,6 +801,7 @@ jobs:
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.format
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.hardware
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.preprocessor
+              ctest -T test --no-compress-output --output-on-failure -R tests.unit.util
       - run:
           <<: *convert_xml
       - run:
@@ -1040,6 +1042,7 @@ jobs:
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.format
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.hardware
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.preprocessor
+              ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.util
       - run:
           <<: *convert_xml
       - store_test_results:
