@@ -10,6 +10,7 @@ set(HPX_LIBS
   config
   format
   hardware
+  logging
   preprocessor
   testing
   util

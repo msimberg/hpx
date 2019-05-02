@@ -18,6 +18,7 @@ All modules
    /libs/config/docs/index.rst
    /libs/format/docs/index.rst
    /libs/hardware/docs/index.rst
+   /libs/logging/docs/index.rst
    /libs/preprocessor/docs/index.rst
    /libs/testing/docs/index.rst
    /libs/util/docs/index.rst

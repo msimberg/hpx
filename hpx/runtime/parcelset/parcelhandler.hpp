@@ -20,7 +20,7 @@
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/util/bind_front.hpp>
 #include <hpx/util/high_resolution_timer.hpp>
-#include <hpx/util/logging.hpp>
+#include <hpx/logging.hpp>
 #include <hpx/util_fwd.hpp>
 
 #include <hpx/plugins/parcelport_factory_base.hpp>

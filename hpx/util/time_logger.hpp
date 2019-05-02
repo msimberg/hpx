@@ -7,7 +7,7 @@
 #define HPX_UTIL_TIME_LOGGER_NOV_26_0548PM
 
 #include <hpx/config.hpp>
-#include <hpx/util/logging.hpp>
+#include <hpx/logging.hpp>
 
 #include <boost/version.hpp>
 #include <cstdint>

@@ -789,6 +789,7 @@ jobs:
               ninja -j2 -k 0 tests.unit.config
               ninja -j2 -k 0 tests.unit.format
               ninja -j2 -k 0 tests.unit.hardware
+              ninja -j2 -k 0 tests.unit.logging
               ninja -j2 -k 0 tests.unit.preprocessor
               ninja -j2 -k 0 tests.unit.util
       - run:
@@ -800,6 +801,7 @@ jobs:
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.config
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.format
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.hardware
+              ctest -T test --no-compress-output --output-on-failure -R tests.unit.logging
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.preprocessor
               ctest -T test --no-compress-output --output-on-failure -R tests.unit.util
       - run:
@@ -1041,6 +1043,7 @@ jobs:
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.config
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.format
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.hardware
+              ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.logging
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.preprocessor
               ctest -j2 -T test --no-compress-output --output-on-failure -R tests.headers.util
       - run:

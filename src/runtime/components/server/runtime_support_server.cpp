@@ -11,7 +11,7 @@
 #include <hpx/apply.hpp>
 #include <hpx/util/find_prefix.hpp>
 #include <hpx/util/ini.hpp>
-#include <hpx/util/logging.hpp>
+#include <hpx/logging.hpp>
 #include <hpx/util/unlock_guard.hpp>
 
 #include <hpx/lcos/wait_all.hpp>

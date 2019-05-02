@@ -20,7 +20,7 @@
 #include <hpx/util/bind.hpp>
 #include <hpx/util/bind_front.hpp>
 #include <hpx/util/io_service_pool.hpp>
-#include <hpx/util/logging.hpp>
+#include <hpx/logging.hpp>
 #include <hpx/util/steady_clock.hpp>
 
 #include <boost/asio/basic_waitable_timer.hpp>
