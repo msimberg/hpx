@@ -7,7 +7,8 @@
 #include <hpx/config.hpp>
 #include <hpx/assertion.hpp>
 #include <hpx/compat/mutex.hpp>
-#include <hpx/exception.hpp>
+#include <hpx/errors.hpp>
+#include <hpx/custom_exception_info.hpp>
 #include <hpx/performance_counters/counter_creators.hpp>
 #include <hpx/performance_counters/counters.hpp>
 #include <hpx/performance_counters/manage_counter_type.hpp>

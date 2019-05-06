@@ -7,7 +7,7 @@
 #include <hpx/config.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/runtime.hpp>
-#include <hpx/exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/apply.hpp>
 #include <hpx/util/find_prefix.hpp>
 #include <hpx/util/ini.hpp>

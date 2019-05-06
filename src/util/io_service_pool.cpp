@@ -13,7 +13,7 @@
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/config/asio.hpp>
-#include <hpx/exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/io_service_pool.hpp>
 #include <hpx/logging.hpp>
 

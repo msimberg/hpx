@@ -9,10 +9,9 @@
 #include <hpx/config.hpp>
 #include <hpx/compat/condition_variable.hpp>
 #include <hpx/compat/mutex.hpp>
-#include <hpx/exception_fwd.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/runtime/threads/thread_enums.hpp>
 #include <hpx/runtime/threads/thread_executor.hpp>
-#include <hpx/throw_exception.hpp>
 #include <hpx/util/atomic_count.hpp>
 #include <hpx/util/steady_clock.hpp>
 #include <hpx/util/thread_description.hpp>

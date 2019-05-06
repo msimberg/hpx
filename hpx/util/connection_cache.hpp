@@ -18,7 +18,7 @@
 #include <hpx/config.hpp>
 #include <hpx/assertion.hpp>
 #include <hpx/lcos/local/spinlock.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/get_and_reset_value.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/tuple.hpp>

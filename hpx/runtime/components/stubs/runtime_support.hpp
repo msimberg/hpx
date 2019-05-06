@@ -17,7 +17,7 @@
 #include <hpx/runtime/components/server/runtime_support.hpp>
 #include <hpx/runtime/naming/name.hpp>
 #include <hpx/runtime/serialization/vector.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/decay.hpp>
 #include <hpx/util/ini.hpp>
 

@@ -10,12 +10,11 @@
 #include <hpx/config.hpp>
 #include <hpx/assertion.hpp>
 #include <hpx/compat/mutex.hpp>
-#include <hpx/error_code.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/runtime/config_entry.hpp>
 #include <hpx/runtime/threads/policies/lockfree_queue_backends.hpp>
 #include <hpx/runtime/threads/policies/queue_helpers.hpp>
 #include <hpx/runtime/threads/thread_data.hpp>
-#include <hpx/throw_exception.hpp>
 #include <hpx/util/block_profiler.hpp>
 #include <hpx/util/cache_aligned_data.hpp>
 #include <hpx/util/function.hpp>

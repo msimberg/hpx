@@ -17,7 +17,7 @@
 #include <hpx/util/decay.hpp>
 #include <hpx/util/range.hpp>
 #include <hpx/util/tuple.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 
 #include <hpx/parallel/executors/execution.hpp>
 

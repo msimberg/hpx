@@ -7,7 +7,7 @@
 #define HPX_APPLIER_APPLY_CALLBACK_DEC_16_2012_1228PM
 
 #include <hpx/config.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/traits/action_is_target_valid.hpp>
 #include <hpx/traits/action_priority.hpp>
 #include <hpx/traits/extract_action.hpp>

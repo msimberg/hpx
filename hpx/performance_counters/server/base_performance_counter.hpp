@@ -13,7 +13,7 @@
 #include <hpx/runtime/actions/component_action.hpp>
 #include <hpx/runtime/components/component_type.hpp>
 #include <hpx/runtime/components/server/component.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/atomic_count.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -31,7 +31,7 @@ endif()
 
 if (HPX_WITH_TESTS_HEADERS)
   add_hpx_lib_header_tests(hardware
-     EXCLUDE
+    EXCLUDE
     "hardware/timestamp/msvc.hpp"
     "hardware/timestamp/linux_x86_32.hpp"
     "hardware/timestamp/linux_x86_64.hpp"

@@ -11,7 +11,7 @@
 #define HPX_RUNTIME_ACTIONS_BASIC_ACTION_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/lcos/sync_fwd.hpp>
 #include <hpx/preprocessor/cat.hpp>
 #include <hpx/preprocessor/expand.hpp>

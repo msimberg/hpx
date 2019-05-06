@@ -12,8 +12,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/error_code.hpp>
-#include <hpx/exception_fwd.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/runtime/naming_fwd.hpp>
 #include <hpx/runtime/threads/cpu_mask.hpp>
 #include <hpx/runtime/resource/partitioner_fwd.hpp>

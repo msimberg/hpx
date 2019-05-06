@@ -13,7 +13,7 @@
 #include <hpx/runtime/naming/id_type.hpp>
 #include <hpx/runtime/serialization/serialize.hpp>
 #include <hpx/runtime/serialization/unique_ptr.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/decay.hpp>
 #include <hpx/format.hpp>
 #include <hpx/util/result_of.hpp>

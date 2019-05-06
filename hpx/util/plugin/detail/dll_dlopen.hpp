@@ -13,8 +13,7 @@
 #include <hpx/config.hpp>
 #include <hpx/assertion.hpp>
 #include <hpx/compat/mutex.hpp>
-#include <hpx/error_code.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/plugin/config.hpp>
 
 #include <boost/filesystem/convenience.hpp>

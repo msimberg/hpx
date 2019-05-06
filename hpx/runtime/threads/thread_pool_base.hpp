@@ -11,8 +11,7 @@
 #include <hpx/compat/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/error_code.hpp>
-#include <hpx/exception_fwd.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/lcos/future.hpp>
 #include <hpx/lcos/local/no_mutex.hpp>
 #include <hpx/lcos/local/spinlock.hpp>

@@ -6,8 +6,8 @@
 #include <hpx/util/thread_mapper.hpp>
 
 #include <hpx/compat/thread.hpp>
-#include <hpx/error_code.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
+#include <hpx/errors.hpp>
 
 #include <cstdint>
 #include <mutex>

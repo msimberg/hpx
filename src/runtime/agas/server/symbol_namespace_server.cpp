@@ -17,7 +17,7 @@
 #include <hpx/runtime/agas/namespace_action_code.hpp>
 #include <hpx/runtime/agas/server/symbol_namespace.hpp>
 #include <hpx/runtime/naming/split_gid.hpp>
-#include <hpx/throw_exception.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/util/bind_back.hpp>
 #include <hpx/util/bind_front.hpp>
 #include <hpx/format.hpp>

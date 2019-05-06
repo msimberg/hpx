@@ -8,6 +8,7 @@
 set(HPX_LIBS
   assertion
   config
+  errors
   format
   hardware
   logging

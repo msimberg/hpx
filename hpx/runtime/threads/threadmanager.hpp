@@ -12,7 +12,7 @@
 #include <hpx/compat/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/exception_fwd.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/performance_counters/counters_fwd.hpp>
 #include <hpx/runtime/naming/name.hpp>
 #include <hpx/runtime/resource/detail/partitioner.hpp>

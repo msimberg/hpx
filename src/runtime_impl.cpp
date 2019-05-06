@@ -11,7 +11,8 @@
 #include <hpx/compat/condition_variable.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/exception.hpp>
+#include <hpx/errors.hpp>
+#include <hpx/custom_exception_info.hpp>
 #include <hpx/lcos/barrier.hpp>
 #include <hpx/lcos/latch.hpp>
 #include <hpx/runtime/agas/big_boot_barrier.hpp>

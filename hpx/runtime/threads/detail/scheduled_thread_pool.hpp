@@ -12,7 +12,7 @@
 #include <hpx/compat/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/error_code.hpp>
+#include <hpx/errors.hpp>
 #include <hpx/lcos/future.hpp>
 #include <hpx/runtime/threads/policies/callback_notifier.hpp>
 #include <hpx/runtime/threads/policies/scheduler_base.hpp>
