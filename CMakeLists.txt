@@ -304,6 +304,8 @@ else()
   set(hpx_library_link_mode SHARED)
 endif()
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 ################################################################################
 
 hpx_option(HPX_WITH_EXAMPLES BOOL "Build the HPX examples (default ON)" ON CATEGORY "Build Targets")
