@@ -28,7 +28,7 @@
 #include <hpx/runtime/threads/thread_helpers.hpp>
 #include <hpx/runtime/threads/thread_init_data.hpp>
 #include <hpx/runtime/threads/threadmanager.hpp>
-#include <hpx/runtime/threads/topology.hpp>
+#include <hpx/topology/topology.hpp>
 #include <hpx/util/bind_back.hpp>
 #include <hpx/util/bind_front.hpp>
 #include <hpx/util/block_profiler.hpp>

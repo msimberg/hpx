@@ -11,7 +11,7 @@
 #include <hpx/assertion.hpp>
 #include <hpx/lcos/local/detail/condition_variable.hpp>
 #include <hpx/lcos/local/spinlock.hpp>
-#include <hpx/util/cache_aligned_data.hpp>
+#include <hpx/topology/cache_aligned_data.hpp>
 
 #include <atomic>
 #include <cstddef>

@@ -8,7 +8,7 @@
 #define HPX_UTIL_CACHE_ALIGNED_DATA_MAR_17_2019_1103AM
 
 #include <hpx/config.hpp>
-#include <hpx/runtime/threads/topology.hpp>
+#include <hpx/topology/topology.hpp>
 
 namespace hpx { namespace util
 {

@@ -13,7 +13,7 @@
 #include <hpx/config.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/errors.hpp>
-#include <hpx/runtime/threads/cpu_mask.hpp>
+#include <hpx/topology/cpu_mask.hpp>
 #include <hpx/util/static.hpp>
 
 #include <boost/smart_ptr/detail/spinlock.hpp>

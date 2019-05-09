@@ -15,7 +15,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/lcos/local/spinlock.hpp>
-#include <hpx/util/cache_aligned_data.hpp>
+#include <hpx/topology/cache_aligned_data.hpp>
 #include <hpx/util/fibhash.hpp>
 
 #include <cstddef>

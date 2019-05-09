@@ -22,4 +22,5 @@ All modules
    /libs/logging/docs/index.rst
    /libs/preprocessor/docs/index.rst
    /libs/testing/docs/index.rst
+   /libs/topology/docs/index.rst
    /libs/util/docs/index.rst

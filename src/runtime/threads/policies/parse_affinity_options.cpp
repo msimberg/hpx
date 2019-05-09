@@ -7,7 +7,7 @@
 
 #include <hpx/assertion.hpp>
 #include <hpx/errors.hpp>
-#include <hpx/runtime/threads/topology.hpp>
+#include <hpx/topology/topology.hpp>
 #include <hpx/format.hpp>
 #include <hpx/util/tuple.hpp>
 

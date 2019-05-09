@@ -8,10 +8,10 @@
 
 #include <hpx/config.hpp>
 #include <hpx/runtime/get_os_thread_count.hpp>
-#include <hpx/runtime/threads/cpu_mask.hpp>
+#include <hpx/topology/cpu_mask.hpp>
 #include <hpx/runtime/threads/policies/scheduler_mode.hpp>
 #include <hpx/runtime/threads/thread_enums.hpp>
-#include <hpx/runtime/threads/topology.hpp>
+#include <hpx/topology/topology.hpp>
 #include <hpx/util/atomic_count.hpp>
 #include <hpx/util/steady_clock.hpp>
 #include <hpx/util/thread_description.hpp>
