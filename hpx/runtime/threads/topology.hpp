@@ -17,9 +17,9 @@
 #include <hpx/runtime/threads/cpu_mask.hpp>
 #include <hpx/runtime/resource/partitioner_fwd.hpp>
 #include <hpx/runtime/threads/thread_data_fwd.hpp>
-
-#include <hpx/util/spinlock.hpp>
 #include <hpx/util/static.hpp>
+
+#include <boost/smart_ptr/detail/spinlock.hpp>
 
 #include <cstddef>
 #include <iosfwd>
@@ -379,7 +379,12 @@ namespace hpx { namespace threads
 
         std::size_t num_of_pus_;
 
-        mutable hpx::util::spinlock topo_mtx;
+        using mutex_type = boost::detail::spinlock;
+#if defined(HPX_HAVE_CXX11_NSDMI)
+        mutable mutex_type topo_mtx = BOOST_DETAIL_SPINLOCK_INIT;
+#else
+        mutable mutex_type topo_mtx;
+#endif
 
         // Number masks:
         // Vectors of non-negative integers
