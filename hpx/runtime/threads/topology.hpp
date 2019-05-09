@@ -423,8 +423,6 @@ namespace hpx { namespace threads
 
     HPX_API_EXPORT std::size_t hardware_concurrency();
 
-    HPX_API_EXPORT topology const& get_topology();
-
     HPX_API_EXPORT void parse_affinity_options(std::string const& spec,
         std::vector<mask_type>& affinities,
         std::size_t used_cores,

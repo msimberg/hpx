@@ -1426,6 +1426,17 @@ namespace hpx { namespace threads
     {
         get_runtime().get_thread_manager().remove_scheduler_mode(m);
     }
+
+    HPX_API_EXPORT topology const& get_topology()
+    {
+        hpx::runtime* rt = hpx::get_runtime_ptr();
+        if (rt == nullptr)
+        {
+            HPX_THROW_EXCEPTION(invalid_status, "hpx::threads::get_topology",
+                "the hpx runtime system has not been initialized yet");
+        }
+        return rt->get_topology();
+    }
 }}
 
 ///////////////////////////////////////////////////////////////////////////////
