@@ -14,8 +14,6 @@
 #include <hpx/compat/thread.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/runtime/threads/cpu_mask.hpp>
-#include <hpx/runtime/resource/partitioner_fwd.hpp>
-#include <hpx/runtime/threads/thread_data_fwd.hpp>
 #include <hpx/util/static.hpp>
 
 #include <boost/smart_ptr/detail/spinlock.hpp>
@@ -76,6 +74,8 @@ namespace hpx { namespace threads
         // the raw bitmap object
         hwloc_bitmap_t bmp_;
     };
+
+    using hwloc_bitmap_ptr = std::shared_ptr<hpx_hwloc_bitmap_wrapper>;
 
     /// \brief Please see hwloc documentation for the corresponding
     /// enums HWLOC_MEMBIND_XXX
