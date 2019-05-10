@@ -16,7 +16,7 @@
 #include <hpx/errors.hpp>
 #include <hpx/util/decay.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 #include <hpx/util/unused.hpp>
 
 #include <memory>

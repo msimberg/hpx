@@ -16,8 +16,8 @@
 #include <hpx/lcos/local/spinlock.hpp>
 #include <hpx/lcos/when_all.hpp>
 #include <hpx/traits/is_future.hpp>
-#include <hpx/util/bind.hpp>
-#include <hpx/util/bind_back.hpp>
+#include <hpx/functional/bind.hpp>
+#include <hpx/functional/bind_back.hpp>
 #include <hpx/util/decay.hpp>
 
 #include <hpx/parallel/exception_list.hpp>

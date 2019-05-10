@@ -20,7 +20,7 @@
 #include <hpx/util/annotated_function.hpp>
 #include <hpx/util/decay.hpp>
 #include <hpx/util/detail/pack.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/tuple.hpp>
 #include <hpx/util/unused.hpp>
 

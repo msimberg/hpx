@@ -12,7 +12,7 @@
 #include <hpx/traits/concepts.hpp>
 #include <hpx/traits/is_callable.hpp>
 #include <hpx/traits/is_iterator.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 
 #include <hpx/parallel/algorithms/detail/dispatch.hpp>
 #include <hpx/parallel/execution_policy.hpp>

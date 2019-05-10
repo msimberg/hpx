@@ -8,7 +8,7 @@
 #include <hpx/runtime/actions/continuation.hpp>
 #include <hpx/runtime/agas/interface.hpp>
 #include <hpx/runtime/launch_policy.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/format.hpp>
 #include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/util/unlock_guard.hpp>

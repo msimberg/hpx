@@ -20,7 +20,7 @@
 #include <hpx/runtime/parcelset/parcelport.hpp>
 #include <hpx/runtime/threads/thread.hpp>
 #include <hpx/util/atomic_count.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/util/connection_cache.hpp>
 #include <hpx/util/deferred_call.hpp>
 #include <hpx/util/detail/yield_k.hpp>

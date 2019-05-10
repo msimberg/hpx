@@ -11,6 +11,7 @@ set(HPX_LIBS
   config
   errors
   format
+  functional
   hardware
   logging
   preprocessor

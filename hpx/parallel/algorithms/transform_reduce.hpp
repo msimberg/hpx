@@ -14,7 +14,7 @@
 #include <hpx/traits/is_iterator.hpp>
 #include <hpx/traits/segmented_iterator_traits.hpp>
 #include <hpx/util/range.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 #include <hpx/util/unwrap.hpp>
 
 #include <hpx/parallel/algorithms/detail/dispatch.hpp>

@@ -26,14 +26,14 @@
 #include <hpx/runtime_impl.hpp>
 #include <hpx/util/apex.hpp>
 #include <hpx/util/bind_action.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/util/command_line_handling.hpp>
 #include <hpx/util/debugging.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/custom_exception_info.hpp>
 #include <hpx/format.hpp>
 #include <hpx/testing.hpp>
-#include <hpx/util/function.hpp>
+#include <hpx/functional/function.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/query_counters.hpp>
 

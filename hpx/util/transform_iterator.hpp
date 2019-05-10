@@ -10,7 +10,7 @@
 #include <hpx/util/identity.hpp>
 #include <hpx/util/iterator_adaptor.hpp>
 #include <hpx/util/lazy_conditional.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 
 #include <iterator>
 #include <type_traits>

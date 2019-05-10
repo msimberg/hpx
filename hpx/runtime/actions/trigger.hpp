@@ -9,7 +9,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/runtime/actions/continuation_fwd.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/unused.hpp>
 
 #include <exception>

@@ -13,8 +13,8 @@
 #include <hpx/util/always_void.hpp>
 #include <hpx/util/detail/container_category.hpp>
 #include <hpx/util/detail/pack.hpp>
-#include <hpx/util/invoke.hpp>
-#include <hpx/util/invoke_fused.hpp>
+#include <hpx/functional/invoke.hpp>
+#include <hpx/functional/invoke_fused.hpp>
 #include <hpx/util/tuple.hpp>
 
 #include <boost/intrusive_ptr.hpp>

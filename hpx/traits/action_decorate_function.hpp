@@ -10,7 +10,7 @@
 #include <hpx/runtime/threads/thread_data_fwd.hpp>
 #include <hpx/traits/detail/wrap_int.hpp>
 #include <hpx/traits/has_xxx.hpp>
-#include <hpx/util/unique_function.hpp>
+#include <hpx/functional/unique_function.hpp>
 
 #include <utility>
 

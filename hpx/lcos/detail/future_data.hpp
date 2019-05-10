@@ -21,10 +21,10 @@
 #include <hpx/util/annotated_function.hpp>
 #include <hpx/util/assert_owns_lock.hpp>
 #include <hpx/util/atomic_count.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/util/decay.hpp>
 #include <hpx/timing/steady_clock.hpp>
-#include <hpx/util/unique_function.hpp>
+#include <hpx/functional/unique_function.hpp>
 #include <hpx/util/unused.hpp>
 
 #include <boost/container/small_vector.hpp>

@@ -19,7 +19,7 @@
 #include <hpx/traits/component_type_database.hpp>
 #include <hpx/util/atomic_count.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/unique_function.hpp>
+#include <hpx/functional/unique_function.hpp>
 
 #include <cstdint>
 #include <string>

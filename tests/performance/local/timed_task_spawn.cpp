@@ -13,7 +13,7 @@
 #include <hpx/hpx_init.hpp>
 #include <hpx/compat/condition_variable.hpp>
 #include <hpx/compat/mutex.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/format.hpp>
 
 #include <boost/algorithm/string/split.hpp>

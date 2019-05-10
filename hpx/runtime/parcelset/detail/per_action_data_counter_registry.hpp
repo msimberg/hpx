@@ -12,7 +12,7 @@
 #include <hpx/performance_counters/counters_fwd.hpp>
 
 #include <hpx/preprocessor/cat.hpp>
-#include <hpx/util/function.hpp>
+#include <hpx/functional/function.hpp>
 #include <hpx/util/jenkins_hash.hpp>
 #include <hpx/util/static.hpp>
 

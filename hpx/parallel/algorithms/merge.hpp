@@ -10,7 +10,7 @@
 #include <hpx/assertion.hpp>
 #include <hpx/traits/concepts.hpp>
 #include <hpx/traits/is_iterator.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/tagged_tuple.hpp>
 
 #include <hpx/parallel/algorithms/detail/dispatch.hpp>

@@ -15,7 +15,7 @@
 #include <hpx/traits/is_distribution_policy.hpp>
 #include <hpx/traits/promise_local_result.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 
 #ifndef HPX_MSVC
 #include <type_traits>

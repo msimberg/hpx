@@ -13,7 +13,7 @@
 #include <hpx/runtime/threads/thread_pool_base.hpp>
 #include <hpx/topology/topology.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/function.hpp>
+#include <hpx/functional/function.hpp>
 #include <hpx/util/static.hpp>
 
 #include <atomic>

@@ -15,7 +15,7 @@
 #include <hpx/traits/executor_traits.hpp>
 #include <hpx/traits/is_launch_policy.hpp>
 #include <hpx/timing/steady_clock.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/util/decay.hpp>
 
 #include <hpx/parallel/execution_policy.hpp>

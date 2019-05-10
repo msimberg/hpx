@@ -17,10 +17,10 @@
 
 #include <hpx/lcos/dataflow.hpp>
 #include <hpx/lcos/when_all.hpp>
-#include <hpx/util/invoke.hpp>
-#include <hpx/util/invoke_fused.hpp>
+#include <hpx/functional/invoke.hpp>
+#include <hpx/functional/invoke_fused.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 #include <hpx/util/tuple.hpp>
 #include <hpx/util/deferred_call.hpp>
 #include <hpx/util/pack_traversal.hpp>

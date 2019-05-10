@@ -11,7 +11,7 @@
 #include <hpx/runtime/naming/id_type.hpp>
 #include <hpx/runtime/serialization/access.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 
 #include <utility>
 

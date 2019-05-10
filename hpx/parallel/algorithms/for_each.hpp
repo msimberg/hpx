@@ -20,7 +20,7 @@
 #include <hpx/traits/segmented_iterator_traits.hpp>
 #include <hpx/util/annotated_function.hpp>
 #include <hpx/util/identity.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 
 #include <hpx/parallel/algorithms/detail/dispatch.hpp>
 #include <hpx/parallel/algorithms/detail/is_negative.hpp>

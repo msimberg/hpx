@@ -8,7 +8,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 
 #include <utility>
 

@@ -29,8 +29,8 @@
 #include <hpx/runtime/threads/thread_init_data.hpp>
 #include <hpx/runtime/threads/threadmanager.hpp>
 #include <hpx/topology/topology.hpp>
-#include <hpx/util/bind_back.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_back.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/util/detail/yield_k.hpp>
 #include <hpx/hardware/timestamp.hpp>
 #include <hpx/concurrency/itt_notify.hpp>

@@ -15,7 +15,7 @@
 #include <hpx/runtime/threads/thread_helpers.hpp>
 #include <hpx/util/activate_counters.hpp>
 #include <hpx/util/apex.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/format.hpp>
 #include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/util/unwrap.hpp>

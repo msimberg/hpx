@@ -12,7 +12,7 @@
 #include <hpx/errors.hpp>
 #include <hpx/util/atomic_count.hpp>
 #include <hpx/util/reinitializable_static.hpp>
-#include <hpx/util/unique_function.hpp>
+#include <hpx/functional/unique_function.hpp>
 
 #include <cstddef>
 #include <cstdint>

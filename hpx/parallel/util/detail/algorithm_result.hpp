@@ -10,7 +10,7 @@
 #include <hpx/lcos/future.hpp>
 #include <hpx/parallel/execution_policy_fwd.hpp>
 #include <hpx/traits/concepts.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/unused.hpp>
 
 #include <type_traits>

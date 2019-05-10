@@ -30,7 +30,7 @@
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <hpx/assertion.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/format.hpp>
 #include <hpx/timing/high_resolution_timer.hpp>
 

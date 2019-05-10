@@ -16,8 +16,8 @@
 #include <hpx/runtime/threads/thread_data.hpp>
 #include <hpx/runtime/threads/thread_helpers.hpp>
 #include <hpx/runtime_fwd.hpp>
-#include <hpx/util/bind.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/util/io_service_pool.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/timing/steady_clock.hpp>

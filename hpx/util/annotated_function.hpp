@@ -14,7 +14,7 @@
 #include <hpx/traits/get_function_address.hpp>
 #include <hpx/traits/get_function_annotation.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/thread_description.hpp>
 
 #if HPX_HAVE_ITTNOTIFY != 0

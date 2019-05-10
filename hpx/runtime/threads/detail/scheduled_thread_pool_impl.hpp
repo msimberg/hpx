@@ -32,7 +32,7 @@
 #include <hpx/state.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/util/deferred_call.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/unlock_guard.hpp>
 #include <hpx/util/yield_while.hpp>
 

@@ -15,7 +15,7 @@
 #include <hpx/compute/cuda/detail/scoped_active_target.hpp>
 #include <hpx/compute/cuda/target.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/invoke_fused.hpp>
+#include <hpx/functional/invoke_fused.hpp>
 #include <hpx/util/unused.hpp>
 
 #include <cuda_runtime.h>

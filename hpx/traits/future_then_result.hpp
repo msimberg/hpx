@@ -12,7 +12,7 @@
 #include <hpx/util/detail/pack.hpp>
 #include <hpx/util/identity.hpp>
 #include <hpx/util/lazy_conditional.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 #include <hpx/traits/is_executor.hpp>
 #include <hpx/traits/is_future.hpp>
 #include <hpx/traits/future_traits.hpp>

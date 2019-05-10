@@ -11,7 +11,7 @@
 #include <hpx/config.hpp>
 #include <hpx/traits/is_iterator.hpp>
 #include <hpx/traits/segmented_iterator_traits.hpp>
-#include <hpx/util/bind_back.hpp>
+#include <hpx/functional/bind_back.hpp>
 #include <hpx/util/range.hpp>
 #include <hpx/util/unwrap.hpp>
 

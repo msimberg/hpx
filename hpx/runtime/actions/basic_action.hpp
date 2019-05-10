@@ -41,7 +41,7 @@
 #include <hpx/traits/promise_local_result.hpp>
 #include <hpx/util/detail/pack.hpp>
 #include <hpx/util/get_and_reset_value.hpp>
-#include <hpx/util/invoke_fused.hpp>
+#include <hpx/functional/invoke_fused.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/tuple.hpp>
 #if HPX_HAVE_ITTNOTIFY != 0 && !defined(HPX_HAVE_APEX)

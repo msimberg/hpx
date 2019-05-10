@@ -16,7 +16,7 @@
 
 #include <hpx/util/decay.hpp>
 #include <hpx/util/detail/pack.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 
 #include <type_traits>
 #include <utility>

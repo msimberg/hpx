@@ -15,7 +15,7 @@
 #include <hpx/runtime/threads/thread_enums.hpp>
 #include <hpx/state.hpp>
 #include <hpx/errors.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/concurrency/register_locks.hpp>
 #include <hpx/timing/steady_clock.hpp>
 

@@ -24,11 +24,11 @@
 #include <hpx/runtime/threads/thread_helpers.hpp>
 #include <hpx/traits/future_traits.hpp>
 #include <hpx/traits/is_executor.hpp>
-#include <hpx/util/bind_back.hpp>
+#include <hpx/functional/bind_back.hpp>
 #include <hpx/util/deferred_call.hpp>
 #include <hpx/util/internal_allocator.hpp>
-#include <hpx/util/invoke.hpp>
-#include <hpx/util/one_shot.hpp>
+#include <hpx/functional/invoke.hpp>
+#include <hpx/functional/one_shot.hpp>
 #include <hpx/util/range.hpp>
 #include <hpx/util/unwrap.hpp>
 

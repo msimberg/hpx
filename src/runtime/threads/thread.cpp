@@ -14,11 +14,11 @@
 #include <hpx/runtime/threads/thread_init_data.hpp>
 #include <hpx/runtime/threads/threadmanager.hpp>
 #include <hpx/runtime_fwd.hpp>
-#include <hpx/util/bind.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/concurrency/register_locks.hpp>
 #include <hpx/timing/steady_clock.hpp>
-#include <hpx/util/unique_function.hpp>
+#include <hpx/functional/unique_function.hpp>
 #include <hpx/util/unlock_guard.hpp>
 
 #include <boost/intrusive_ptr.hpp>

@@ -23,8 +23,8 @@
 #include <hpx/runtime/naming/resolver_client.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/util/assert_owns_lock.hpp>
-#include <hpx/util/bind_back.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_back.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/format.hpp>
 #include <hpx/util/get_and_reset_value.hpp>
 #include <hpx/util/insert_checked.hpp>

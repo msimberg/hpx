@@ -9,7 +9,7 @@
 #include <hpx/config.hpp>
 #include <hpx/parallel/util/cancellation_token.hpp>
 #include <hpx/traits/is_execution_policy.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/tuple.hpp>
 
 #include <algorithm>

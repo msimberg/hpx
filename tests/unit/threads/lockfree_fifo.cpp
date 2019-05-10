@@ -8,7 +8,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 
 #include <boost/program_options.hpp>
 

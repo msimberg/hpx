@@ -16,7 +16,7 @@
 #include <hpx/runtime/threads/policies/queue_helpers.hpp>
 #include <hpx/runtime/threads/thread_data.hpp>
 #include <hpx/topology/cache_aligned_data.hpp>
-#include <hpx/util/function.hpp>
+#include <hpx/functional/function.hpp>
 #include <hpx/util/get_and_reset_value.hpp>
 #include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/util/internal_allocator.hpp>

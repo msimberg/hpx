@@ -11,7 +11,7 @@
 #include <hpx/runtime/get_lva.hpp>
 #include <hpx/runtime/threads/coroutines/coroutine.hpp>
 #include <hpx/traits/action_decorate_function.hpp>
-#include <hpx/util/bind_front.hpp>
+#include <hpx/functional/bind_front.hpp>
 #include <hpx/concurrency/register_locks.hpp>
 #include <hpx/util/unlock_guard.hpp>
 

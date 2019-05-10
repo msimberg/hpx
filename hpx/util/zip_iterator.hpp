@@ -14,7 +14,7 @@
 #include <hpx/util/detail/pack.hpp>
 #include <hpx/util/functional/segmented_iterator_helpers.hpp>
 #include <hpx/util/iterator_facade.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 #include <hpx/util/tuple.hpp>
 
 #include <cstddef>

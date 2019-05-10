@@ -37,7 +37,7 @@
 #include <hpx/util/annotated_function.hpp>
 #include <hpx/util/deferred_call.hpp>
 #include <hpx/util/internal_allocator.hpp>
-#include <hpx/util/invoke_fused.hpp>
+#include <hpx/functional/invoke_fused.hpp>
 #include <hpx/util/pack_traversal_async.hpp>
 #include <hpx/util/thread_description.hpp>
 #include <hpx/util/tuple.hpp>

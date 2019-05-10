@@ -21,7 +21,7 @@
 #include <hpx/runtime/threads/executors/thread_pool_attached_executors.hpp>
 #include <hpx/topology/topology.hpp>
 #include <hpx/util/functional/new.hpp>
-#include <hpx/util/invoke_fused.hpp>
+#include <hpx/functional/invoke_fused.hpp>
 #include <hpx/util/range.hpp>
 #include <hpx/util/tuple.hpp>
 

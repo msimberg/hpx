@@ -13,7 +13,7 @@
 #include <hpx/lcos/future.hpp>
 #include <hpx/traits/is_iterator.hpp>
 #include <hpx/traits/segmented_iterator_traits.hpp>
-#include <hpx/util/invoke.hpp>
+#include <hpx/functional/invoke.hpp>
 #include <hpx/util/tuple.hpp>
 #include <hpx/util/unused.hpp>
 #include <hpx/util/unwrap.hpp>

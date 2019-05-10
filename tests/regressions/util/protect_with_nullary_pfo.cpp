@@ -8,9 +8,9 @@
 #include <hpx/include/actions.hpp>
 #include <hpx/include/util.hpp>
 #include <hpx/include/lcos.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/util/iterator_range.hpp>
-#include <hpx/util/protect.hpp>
+#include <hpx/functional/protect.hpp>
 
 #include <cstddef>
 #include <iostream>

@@ -22,7 +22,7 @@
 #include <hpx/errors.hpp>
 #include <hpx/traits/is_bitwise_serializable.hpp>
 #include <hpx/util/assert_owns_lock.hpp>
-#include <hpx/util/bind.hpp>
+#include <hpx/functional/bind.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/unlock_guard.hpp>
 

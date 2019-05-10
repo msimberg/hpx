@@ -9,7 +9,7 @@
 #include <hpx/config.hpp>
 #include <hpx/traits/is_range.hpp>
 #include <hpx/util/decay.hpp>
-#include <hpx/util/result_of.hpp>
+#include <hpx/functional/result_of.hpp>
 
 #include <hpx/parallel/traits/projected.hpp>
 
