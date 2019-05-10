@@ -25,7 +25,7 @@
 #include <hpx/traits/is_continuation.hpp>
 #include <hpx/util/decay.hpp>
 #include <hpx/logging.hpp>
-#include <hpx/util/unique_function.hpp>
+#include <hpx/util/serializable_unique_function.hpp>
 
 #include <exception>
 #include <type_traits>
