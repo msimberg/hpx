@@ -163,6 +163,7 @@ namespace hpx { namespace lcos { namespace local
                 counter_.fetch_add(n, std::memory_order_acq_rel);
 
             HPX_ASSERT(old_count > 0);
+            HPX_UNUSED(old_count);
         }
 
         /// Reset counter_ to n. Does not block.
@@ -178,6 +179,7 @@ namespace hpx { namespace lcos { namespace local
                 counter_.exchange(n, std::memory_order_acq_rel);
 
             HPX_ASSERT(old_count == 0);
+            HPX_UNUSED(old_count);
 
             std::unique_lock<mutex_type> l(mtx_.data_);
             HPX_ASSERT(notified_);
