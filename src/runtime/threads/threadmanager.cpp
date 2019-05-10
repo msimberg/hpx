@@ -31,7 +31,6 @@
 #include <hpx/topology/topology.hpp>
 #include <hpx/util/bind_back.hpp>
 #include <hpx/util/bind_front.hpp>
-#include <hpx/util/block_profiler.hpp>
 #include <hpx/util/detail/yield_k.hpp>
 #include <hpx/hardware/timestamp.hpp>
 #include <hpx/concurrency/itt_notify.hpp>
