@@ -14,7 +14,8 @@ foreach(tool ${tools})
     SOURCES ${tool}.cpp ${${tool}}
     FOLDER "Tools/${tool}")
   add_hpx_pseudo_dependencies(tools ${tool})
-  target_link_libraries(${tool} ${HPX_TLL_PUBLIC} ${Boost_LIBRARIES} hpx_config)
+  target_link_libraries(${tool} ${HPX_TLL_PUBLIC} ${Boost_LIBRARIES}
+      hpx_config hpx_hardware)
 endforeach()
 
 foreach(subdir ${subdirs})

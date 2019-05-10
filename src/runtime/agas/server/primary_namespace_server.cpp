@@ -30,7 +30,7 @@
 #include <hpx/util/insert_checked.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/concurrency/register_locks.hpp>
-#include <hpx/util/scoped_timer.hpp>
+#include <hpx/timing/scoped_timer.hpp>
 
 #include <atomic>
 #include <cstddef>

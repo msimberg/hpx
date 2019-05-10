@@ -14,7 +14,7 @@
 #include <hpx/runtime/applier/apply.hpp>
 #include <hpx/runtime/parcelset/parcelhandler.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/scoped_timer.hpp>
+#include <hpx/timing/scoped_timer.hpp>
 
 #include <atomic>
 #include <cstddef>

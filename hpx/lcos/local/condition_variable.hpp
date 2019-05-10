@@ -16,7 +16,7 @@
 #include <hpx/util/assert_owns_lock.hpp>
 #include <hpx/topology/cache_aligned_data.hpp>
 #include <hpx/concurrency/register_locks.hpp>
-#include <hpx/util/steady_clock.hpp>
+#include <hpx/timing/steady_clock.hpp>
 #include <hpx/util/unlock_guard.hpp>
 
 #include <mutex>

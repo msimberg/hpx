@@ -32,7 +32,7 @@
 #include <hpx/util/backtrace.hpp>
 #include <hpx/util/command_line_handling.hpp>
 #include <hpx/util/debugging.hpp>
-#include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/query_counters.hpp>
 #include <hpx/util/static_reinit.hpp>

@@ -87,7 +87,7 @@ set(skynet_FLAGS DEPENDENCIES iostreams_component)
 set(wait_all_timings_FLAGS DEPENDENCIES iostreams_component)
 
 set(delay_baseline_FLAGS NOLIBS
-    DEPENDENCIES ${boost_library_dependencies} hpx_config hpx_format)
+    DEPENDENCIES ${boost_library_dependencies} hpx_config hpx_format hpx_timing)
 
 set(delay_baseline_threaded_FLAGS
     DEPENDENCIES ${boost_library_dependencies} hpx_format)

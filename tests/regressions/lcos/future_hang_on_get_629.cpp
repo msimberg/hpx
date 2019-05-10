@@ -10,7 +10,7 @@
 #include <hpx/include/async.hpp>
 #include <hpx/include/runtime.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/high_resolution_timer.hpp>
+#include <hpx/timing/high_resolution_timer.hpp>
 
 
 #include <cstdint>

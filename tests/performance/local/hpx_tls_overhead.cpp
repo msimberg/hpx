@@ -7,7 +7,7 @@
 
 #include <hpx/compat/thread.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/high_resolution_timer.hpp>
+#include <hpx/timing/high_resolution_timer.hpp>
 #include <hpx/util/thread_specific_ptr.hpp>
 
 #include <boost/config.hpp>

@@ -18,7 +18,7 @@
 #include <hpx/topology/cache_aligned_data.hpp>
 #include <hpx/util/function.hpp>
 #include <hpx/util/get_and_reset_value.hpp>
-#include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/util/internal_allocator.hpp>
 #include <hpx/util/unlock_guard.hpp>
 

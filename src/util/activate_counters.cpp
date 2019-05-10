@@ -17,7 +17,7 @@
 #include <hpx/util/apex.hpp>
 #include <hpx/util/bind_front.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/util/unwrap.hpp>
 
 #include <cstddef>

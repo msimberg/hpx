@@ -12,7 +12,7 @@
 #include <hpx/include/parallel_merge.hpp>
 #include <hpx/include/parallel_sort.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/testing.hpp>
 
 #include <boost/program_options.hpp>

@@ -24,7 +24,7 @@
 #include <hpx/runtime/threads/thread_init_data.hpp>
 #include <hpx/topology/topology.hpp>
 #include <hpx/state.hpp>
-#include <hpx/util/steady_clock.hpp>
+#include <hpx/timing/steady_clock.hpp>
 #include <hpx/util_fwd.hpp>
 
 #include <cstddef>

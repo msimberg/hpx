@@ -15,6 +15,7 @@ set(HPX_LIBS
   logging
   preprocessor
   testing
+  timing
   topology
   util
   CACHE INTERNAL "" FORCE

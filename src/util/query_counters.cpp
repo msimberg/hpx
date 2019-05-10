@@ -17,7 +17,7 @@
 #include <hpx/util/apex.hpp>
 #include <hpx/util/bind_front.hpp>
 #include <hpx/format.hpp>
-#include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/timing/high_resolution_clock.hpp>
 #include <hpx/util/query_counters.hpp>
 #include <hpx/util/unlock_guard.hpp>
 

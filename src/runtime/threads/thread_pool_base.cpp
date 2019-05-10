@@ -15,7 +15,7 @@
 #include <hpx/state.hpp>
 #include <hpx/util/bind.hpp>
 #include <hpx/hardware/timestamp.hpp>
-#include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/timing/high_resolution_clock.hpp>
 
 #include <cstddef>
 #include <cstdint>

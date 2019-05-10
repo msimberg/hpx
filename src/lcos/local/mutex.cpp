@@ -14,7 +14,7 @@
 #include <hpx/runtime/threads/thread_enums.hpp>
 #include <hpx/concurrency/itt_notify.hpp>
 #include <hpx/concurrency/register_locks.hpp>
-#include <hpx/util/steady_clock.hpp>
+#include <hpx/timing/steady_clock.hpp>
 
 #include <mutex>
 #include <utility>

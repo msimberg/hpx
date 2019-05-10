@@ -19,7 +19,7 @@
 #include <hpx/runtime/parcelset/parcelport.hpp>
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/util/bind_front.hpp>
-#include <hpx/util/high_resolution_timer.hpp>
+#include <hpx/timing/high_resolution_timer.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util_fwd.hpp>
 

@@ -20,7 +20,7 @@
 #include <hpx/util_fwd.hpp>
 #include <hpx/util/unique_function.hpp>
 #include <hpx/concurrency/register_locks.hpp>
-#include <hpx/util/steady_clock.hpp>
+#include <hpx/timing/steady_clock.hpp>
 #include <hpx/util/thread_description.hpp>
 
 #include <atomic>
