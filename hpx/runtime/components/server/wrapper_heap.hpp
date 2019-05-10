@@ -14,7 +14,7 @@
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/util/generate_unique_ids.hpp>
 #include <hpx/util/internal_allocator.hpp>
-#include <hpx/util/itt_notify.hpp>
+#include <hpx/concurrency/itt_notify.hpp>
 #include <hpx/util/wrapper_heap_base.hpp>
 
 #include <cstddef>

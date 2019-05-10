@@ -34,7 +34,7 @@
 #include <hpx/util/block_profiler.hpp>
 #include <hpx/util/detail/yield_k.hpp>
 #include <hpx/hardware/timestamp.hpp>
-#include <hpx/util/itt_notify.hpp>
+#include <hpx/concurrency/itt_notify.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/runtime_configuration.hpp>
 

@@ -7,7 +7,7 @@
 #define HPX_IO_SERVICE_THREAD_POOL_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/lcos/future.hpp>
 #include <hpx/runtime/threads/policies/callback_notifier.hpp>

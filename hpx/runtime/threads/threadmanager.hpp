@@ -9,7 +9,7 @@
 #define HPX_THREADMANAGER_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/errors.hpp>
@@ -23,7 +23,7 @@
 #include <hpx/state.hpp>
 #include <hpx/util/block_profiler.hpp>
 #include <hpx/util/io_service_pool.hpp>
-#include <hpx/util/spinlock.hpp>
+#include <hpx/concurrency/spinlock.hpp>
 
 #include <atomic>
 #include <cstddef>

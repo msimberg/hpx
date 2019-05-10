@@ -10,7 +10,7 @@
 
 #include <hpx/config.hpp>
 
-#include <hpx/util/lockfree/deque.hpp>
+#include <hpx/concurrency/deque.hpp>
 
 #include <cstddef>
 #include <cstdint>

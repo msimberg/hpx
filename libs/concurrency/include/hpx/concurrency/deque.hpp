@@ -20,8 +20,8 @@
 
 #include <hpx/config.hpp>
 #include <hpx/compat/thread.hpp>
-#include <hpx/util/lockfree/detail/tagged_ptr_pair.hpp>
-#include <hpx/util/lockfree/freelist.hpp>
+#include <hpx/concurrency/detail/tagged_ptr_pair.hpp>
+#include <hpx/concurrency/detail/freelist.hpp>
 
 #include <boost/lockfree/detail/tagged_ptr.hpp>
 

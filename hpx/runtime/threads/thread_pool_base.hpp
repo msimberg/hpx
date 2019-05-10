@@ -8,7 +8,7 @@
 #define HPX_RUNTIME_THREADS_DETAIL_THREAD_POOL_JUN_11_2015_1137AM
 
 #include <hpx/config.hpp>
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/errors.hpp>

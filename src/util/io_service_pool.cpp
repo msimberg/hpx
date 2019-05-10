@@ -9,7 +9,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/assertion.hpp>
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/config/asio.hpp>

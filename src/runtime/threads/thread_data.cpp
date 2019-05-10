@@ -11,7 +11,7 @@
 #include <hpx/errors.hpp>
 #include <hpx/runtime/naming/address.hpp>
 #include <hpx/util/function.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 #include <hpx/util/unlock_guard.hpp>
 #if defined(HPX_HAVE_APEX)
 #include <hpx/util/apex.hpp>

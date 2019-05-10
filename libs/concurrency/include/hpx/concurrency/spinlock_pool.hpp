@@ -20,9 +20,9 @@
 
 #include <hpx/config.hpp>
 #include <hpx/util/fibhash.hpp>
-#include <hpx/util/itt_notify.hpp>
+#include <hpx/concurrency/itt_notify.hpp>
 #include <hpx/topology/cache_aligned_data.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 
 #include <boost/smart_ptr/detail/spinlock.hpp>
 #include <boost/version.hpp>

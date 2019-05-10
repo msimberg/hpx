@@ -19,9 +19,9 @@
 #include <hpx/util/atomic_count.hpp>
 #include <hpx/util/detail/yield_k.hpp>
 #include <hpx/util/internal_allocator.hpp>
-#include <hpx/util/itt_notify.hpp>
-#include <hpx/util/register_locks.hpp>
-#include <hpx/util/spinlock_pool.hpp>
+#include <hpx/concurrency/itt_notify.hpp>
+#include <hpx/concurrency/register_locks.hpp>
+#include <hpx/concurrency/spinlock_pool.hpp>
 
 #include <cstddef>
 #include <cstdint>

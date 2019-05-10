@@ -8,7 +8,7 @@
 #include <hpx/util/ini.hpp>
 #include <hpx/logging.hpp>
 #include <hpx/util/static.hpp>
-#include <hpx/util/spinlock.hpp>
+#include <hpx/concurrency/spinlock.hpp>
 #include <hpx/util/tuple.hpp>
 #include <hpx/lcos/base_lco_with_value.hpp>
 #include <hpx/runtime/actions/continuation.hpp>

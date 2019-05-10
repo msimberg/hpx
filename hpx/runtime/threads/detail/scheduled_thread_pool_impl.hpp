@@ -10,7 +10,7 @@
 #include <hpx/apply.hpp>
 #include <hpx/assertion.hpp>
 #include <hpx/async.hpp>
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/errors.hpp>

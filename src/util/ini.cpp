@@ -29,7 +29,7 @@
 #include <hpx/runtime/serialization/map.hpp>
 #include <hpx/runtime/serialization/serialize.hpp>
 #include <hpx/util/ini.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 #include <hpx/util/unlock_guard.hpp>
 
 #include <boost/algorithm/string/classification.hpp>

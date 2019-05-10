@@ -5,7 +5,7 @@
 
 #include "worker_timed.hpp"
 
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/format.hpp>
 #include <hpx/util/high_resolution_timer.hpp>

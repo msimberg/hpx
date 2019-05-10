@@ -9,7 +9,7 @@
 // depending on the rest of HPX.
 #define HPX_USE_BOOST_ASSERT
 
-#include <hpx/compat/barrier.hpp>
+#include <hpx/concurrency/barrier.hpp>
 #include <hpx/compat/thread.hpp>
 #include <hpx/format.hpp>
 #include <hpx/util/high_resolution_timer.hpp>

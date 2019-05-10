@@ -13,7 +13,7 @@
 #include <hpx/runtime/naming/name.hpp>
 #include <hpx/runtime/threads/threadmanager.hpp>
 #include <hpx/state.hpp>
-#include <hpx/util/spinlock.hpp>
+#include <hpx/concurrency/spinlock.hpp>
 #include <hpx/util/static.hpp>
 
 #include <atomic>

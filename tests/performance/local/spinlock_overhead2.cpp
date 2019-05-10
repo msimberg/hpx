@@ -12,7 +12,7 @@
 #include <hpx/runtime/actions/continuation.hpp>
 #include <hpx/format.hpp>
 #include <hpx/util/high_resolution_timer.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 #include <hpx/include/async.hpp>
 #include <hpx/include/iostreams.hpp>
 #include <hpx/testing.hpp>

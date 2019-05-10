@@ -18,7 +18,7 @@
 #include <hpx/util/assert_owns_lock.hpp>
 #include <hpx/util/atomic_count.hpp>
 #include <hpx/util/iterator_facade.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 #include <hpx/util/unlock_guard.hpp>
 #include <hpx/util/unused.hpp>
 

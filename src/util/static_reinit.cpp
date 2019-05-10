@@ -7,7 +7,7 @@
 #include <hpx/util/reinitializable_static.hpp>
 #include <hpx/util/static_reinit.hpp>
 #include <hpx/util/static.hpp>
-#include <hpx/util/spinlock.hpp>
+#include <hpx/concurrency/spinlock.hpp>
 
 #include <mutex>
 #include <utility>

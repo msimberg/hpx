@@ -23,7 +23,7 @@
 #include <hpx/util/debugging.hpp>
 #include <hpx/format.hpp>
 #include <hpx/logging.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 #include <hpx/version.hpp>
 #include <hpx/custom_exception_info.hpp>
 

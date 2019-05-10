@@ -16,7 +16,7 @@
 #include <hpx/state.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/util/bind.hpp>
-#include <hpx/util/register_locks.hpp>
+#include <hpx/concurrency/register_locks.hpp>
 #include <hpx/util/steady_clock.hpp>
 
 #include <boost/intrusive_ptr.hpp>

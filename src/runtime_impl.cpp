@@ -11,6 +11,7 @@
 #include <hpx/compat/condition_variable.hpp>
 #include <hpx/compat/mutex.hpp>
 #include <hpx/compat/thread.hpp>
+#include <hpx/concurrency/thread_name.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/custom_exception_info.hpp>
 #include <hpx/lcos/barrier.hpp>
@@ -61,11 +62,6 @@ namespace hpx
 
     std::list<shutdown_function_type> global_pre_shutdown_functions;
     std::list<shutdown_function_type> global_shutdown_functions;
-
-    namespace detail
-    {
-        extern std::string& runtime_thread_name();
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     void register_pre_startup_function(startup_function_type f)
@@ -785,7 +781,7 @@ namespace hpx
         this->runtime::init_tss();
 
         // set the thread's name, if it's not already set
-        HPX_ASSERT(detail::runtime_thread_name().empty());
+        HPX_ASSERT(detail::thread_name().empty());
 
         std::string fullname = std::string(locality);
         if (!locality.empty())
@@ -794,9 +790,9 @@ namespace hpx
         if (postfix && *postfix)
             fullname += postfix;
         fullname += "#" + std::to_string(num);
-        detail::runtime_thread_name() = std::move(fullname);
+        detail::thread_name() = std::move(fullname);
 
-        char const* name = detail::runtime_thread_name().c_str();
+        char const* name = detail::thread_name().c_str();
 
         // initialize thread mapping for external libraries (i.e. PAPI)
         thread_support_->register_thread(name, ec);
@@ -844,7 +840,7 @@ namespace hpx
 //                         , hpx::util::format(
 //                             "failed to set thread affinity mask ("
 //                             HPX_CPU_MASK_PREFIX "{:x}) for service thread: {}",
-//                             used_processing_units, detail::runtime_thread_name()));
+//                             used_processing_units, detail::thread_name()));
 //                 }
             }
 #endif
@@ -866,7 +862,7 @@ namespace hpx
         thread_support_->unregister_thread();
 
         // reset thread local storage
-        detail::runtime_thread_name().clear();
+        detail::thread_name().clear();
     }
 
     naming::gid_type
@@ -948,7 +944,7 @@ namespace hpx
         if (nullptr != get_runtime_ptr())
             return false;       // never registered
 
-        deinit_tss(detail::runtime_thread_name().c_str(), hpx::get_worker_thread_num());
+        deinit_tss(detail::thread_name().c_str(), hpx::get_worker_thread_num());
         return true;
     }
 

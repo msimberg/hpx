@@ -7,6 +7,7 @@
 
 set(HPX_LIBS
   assertion
+  concurrency
   config
   errors
   format

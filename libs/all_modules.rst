@@ -15,6 +15,7 @@ All modules
 
    /libs/_example/docs/index.rst
    /libs/assertion/docs/index.rst
+   /libs/concurrency/docs/index.rst
    /libs/config/docs/index.rst
    /libs/errors/docs/index.rst
    /libs/format/docs/index.rst
