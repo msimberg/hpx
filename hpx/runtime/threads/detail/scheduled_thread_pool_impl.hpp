@@ -37,6 +37,10 @@
 
 #include <boost/system/system_error.hpp>
 
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+#include <omp.h>
+#endif
+
 #include <algorithm>
 #include <atomic>
 #include <cstddef>
@@ -183,8 +187,10 @@ namespace hpx { namespace threads { namespace detail
 
         if (!threads_.empty())
         {
+#if !defined(HPX_HAVE_OPENMP_WORKER_THREADS)
             // wake up if suspended
             resume_internal(blocking, throws);
+#endif
 
             // set state to stopping
             sched_->Scheduler::set_all_states_at_least(state_stopping);
@@ -205,6 +211,10 @@ namespace hpx { namespace threads { namespace detail
 
                     sched_->Scheduler::do_some_work(std::size_t(-1));
 
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+                    HPX_ASSERT(i == 0);
+                    threads_[i].join();
+#else
                     LTM_(info) << "stop: " << id_.name() << " join:" << i;
 
                     {
@@ -212,6 +222,7 @@ namespace hpx { namespace threads { namespace detail
                         util::unlock_guard<Lock> ul(l);
                         remove_processing_unit_internal(i);
                     }
+#endif
                 }
                 threads_.clear();
             }
@@ -264,6 +275,49 @@ namespace hpx { namespace threads { namespace detail
             std::make_shared<util::barrier>(pool_threads + 1);
         try
         {
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+            auto openmp_master_thread_func = [this, pool_threads, startup]() {
+#pragma omp parallel num_threads(pool_threads)
+                {
+                    // Nested parallelism
+                    const std::size_t nested_parallelism(2);
+                    omp_set_num_threads(nested_parallelism);
+
+                    std::size_t virt_core = omp_get_thread_num();
+                    std::size_t thread_num = omp_get_thread_num();
+
+                    {
+                        std::unique_lock<typename Scheduler::pu_mutex_type> l(
+                            sched_->Scheduler::get_pu_mutex(virt_core));
+
+                        std::atomic<hpx::state>& state =
+                            sched_->Scheduler::get_state(virt_core);
+                        hpx::state oldstate = state.exchange(state_initialized);
+                        HPX_ASSERT(oldstate == state_stopped ||
+                            oldstate == state_initialized);
+                    }
+
+                    this->scheduled_thread_pool::thread_func(
+                        virt_core, thread_num, std::move(startup));
+                }
+            };
+
+            if (threads_.empty())
+                threads_.resize(1);
+
+            if (threads_[0].joinable())
+            {
+                l.unlock();
+                HPX_THROW_EXCEPTION(bad_parameter,
+                    "scheduled_thread_pool<Scheduler>::add_processing_unit",
+                    "the given virtual core has already been added to this "
+                    "thread pool");
+                return false;
+            }
+
+            threads_[0] =
+                compat::thread(openmp_master_thread_func);
+#else
             auto const& rp = resource::get_partitioner();
 
             for (/**/; thread_num != pool_threads; ++thread_num)
@@ -296,6 +350,7 @@ namespace hpx { namespace threads { namespace detail
                         << global_thread_num << " was explicitly disabled.";
                 }
             }
+#endif
 
             // wait for all threads to have started up
             startup->wait();
@@ -326,6 +381,11 @@ namespace hpx { namespace threads { namespace detail
     void scheduled_thread_pool<Scheduler>::resume_internal(bool blocking,
         error_code& ec)
     {
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+        HPX_THROW_EXCEPTION(invalid_status,
+            "scheduled_thread_pool<Scheduler>::resume_internal",
+            "cannot resume worker threads when using OpenMP worker threads");
+#else
         for (std::size_t virt_core = 0; virt_core != threads_.size();
              ++virt_core)
         {
@@ -343,6 +403,7 @@ namespace hpx { namespace threads { namespace detail
                 }
             }
         }
+#endif
     }
 
     template <typename Scheduler>
@@ -400,6 +461,11 @@ namespace hpx { namespace threads { namespace detail
     template <typename Scheduler>
     void scheduled_thread_pool<Scheduler>::suspend_internal(error_code& ec)
     {
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+        HPX_THROW_EXCEPTION(invalid_status,
+            "scheduled_thread_pool<Scheduler>::suspend_internal",
+            "cannot suspend worker threads when using OpenMP worker threads");
+#else
         util::yield_while([this]()
             {
                 return this->sched_->Scheduler::get_thread_count() >
@@ -418,6 +484,7 @@ namespace hpx { namespace threads { namespace detail
         {
             suspend_processing_unit_internal(i, ec);
         }
+#endif
     }
 
     template <typename Scheduler>
@@ -1935,6 +2002,13 @@ namespace hpx { namespace threads { namespace detail
         std::size_t virt_core, std::size_t thread_num,
         std::shared_ptr<util::barrier> startup, error_code& ec)
     {
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+        HPX_THROW_EXCEPTION(invalid_status,
+            "scheduled_thread_pool<Scheduler>::add_processing_unit_internal",
+            "Cannot use this function to add worker threads when using OpenMP "
+            "worker threads. This is a bug. Please report it on "
+            "https://github.com/STEllAR-GROUP/hpx/issues.");
+#else
         std::unique_lock<typename Scheduler::pu_mutex_type>
             l(sched_->Scheduler::get_pu_mutex(virt_core));
 
@@ -1959,12 +2033,12 @@ namespace hpx { namespace threads { namespace detail
         HPX_ASSERT(oldstate == state_stopped || oldstate == state_initialized);
         HPX_UNUSED(oldstate);
 
-        threads_[virt_core] =
-            std::thread(&scheduled_thread_pool::thread_func, this,
-                virt_core, thread_num, std::move(startup));
+        threads_[virt_core] = std::thread(&scheduled_thread_pool::thread_func,
+            this, virt_core, thread_num, std::move(startup));
 
         if (&ec != &throws)
             ec = make_success_code();
+#endif
     }
 
     template <typename Scheduler>
@@ -2179,6 +2253,13 @@ namespace hpx { namespace threads { namespace detail
     void scheduled_thread_pool<Scheduler>::resume_processing_unit_internal(
         std::size_t virt_core, error_code& ec)
     {
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+        HPX_THROW_EXCEPTION(invalid_status,
+            "scheduled_thread_pool<Scheduler>::resume_processing_unit_internal",
+            "Cannot resume threads when using OpenMP worker threads. This is a "
+            "bug. Please report it on "
+            "https://github.com/STEllAR-GROUP/hpx/issues.");
+#else
         // Yield to other HPX threads if lock is not available to avoid
         // deadlocks when multiple HPX threads try to resume or suspend pus.
         std::unique_lock<typename Scheduler::pu_mutex_type>
@@ -2210,6 +2291,7 @@ namespace hpx { namespace threads { namespace detail
                 return state.load() == state_sleeping;
             }, "scheduled_thread_pool::resume_processing_unit_internal",
             hpx::threads::pending);
+#endif
     }
 
     template <typename Scheduler>

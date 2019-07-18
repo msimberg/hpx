@@ -12,12 +12,12 @@ if(HPX_WITH_CUDA)
      )
 endif()
 
-    message("HPX_WITH_KOKKOS=${HPX_WITH_KOKKOS}")
-if(HPX_WITH_KOKKOS)
+message("HPX_WITH_KOKKOS=${HPX_WITH_KOKKOS}")
+#if(HPX_WITH_KOKKOS)
   set(subdirs ${subdirs}
       kokkos
      )
-endif()
+#endif()
 
 foreach(subdir ${subdirs})
   if(HPX_WITH_TESTS AND HPX_WITH_TESTS_EXAMPLES)

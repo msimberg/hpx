@@ -378,6 +378,8 @@ hpx_option(HPX_WITH_SYCL BOOL
   "Enable sycl support (default: OFF)" OFF ADVANCED)
 hpx_option(HPX_WITH_KOKKOS BOOL
   "Enable Kokkos support (default: OFF)" OFF ADVANCED)
+hpx_option(HPX_WITH_THRUST BOOL
+  "Enable Thrust support (default: OFF)" OFF ADVANCED)
 
 ################################################################################
 # HPX datapar configuration
@@ -509,6 +511,11 @@ hpx_option(HPX_WITH_MORE_THAN_64_THREADS BOOL
 if(HPX_WITH_MORE_THAN_64_THREADS)
   hpx_add_config_define(HPX_HAVE_MORE_THAN_64_THREADS)
 endif()
+
+hpx_option(HPX_WITH_OPENMP_WORKER_THREADS BOOL
+  "Use OpenMP for HPX worker threads"
+  OFF
+  CATEGORY "Thread Manager" ADVANCED)
 
 hpx_option(HPX_WITH_THREAD_STACK_MMAP BOOL
   "Use mmap for stack allocation on appropriate platforms"
@@ -896,6 +903,13 @@ endif()
 
 if(NOT WIN32 AND HPX_WITH_THREAD_STACK_MMAP)
   hpx_add_config_define(HPX_HAVE_THREAD_STACK_MMAP)
+endif()
+
+if(HPX_WITH_OPENMP_WORKER_THREADS)
+  hpx_warn("__________________________________")
+  hpx_warn("${OpenMP_CXX_FLAGS}")
+  hpx_warn("__________________________________")
+  hpx_add_config_define(HPX_HAVE_OPENMP_WORKER_THREADS)
 endif()
 
 if(HPX_WITH_THREAD_MANAGER_IDLE_BACKOFF)
@@ -1555,6 +1569,14 @@ else()
   endif()
 endif()
 
+if(HPX_WITH_OPENMP_WORKER_THREADS)
+  hpx_warn("__________________________________")
+  hpx_warn("${OpenMP_CXX_FLAGS}")
+  hpx_warn("__________________________________")
+  hpx_add_compile_flag_if_available("${OpenMP_CXX_FLAGS}" LANGUAGES CXX)
+  hpx_add_link_flag_if_available("${OpenMP_CXX_FLAGS}" TARGETS SHARED EXE)
+endif()
+
 ################################################################################
 
 ################################################################################
@@ -1709,6 +1731,7 @@ if(HPX_WITH_HPXMP)
 endif()
 
 if(HPX_WITH_KOKKOS)
+  hpx_warn("HPX_WITH_KOKKOS=ON")
   set(_hpx_kokkos_no_update)
   if(HPX_WITH_KOKKOS_NO_UPDATE)
     set(_hpx_kokkos_no_update NO_UPDATE)
@@ -1737,12 +1760,36 @@ if(HPX_WITH_KOKKOS)
     set(KOKKOS_ENABLE_CUDA ON)
   endif()
 
-  LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/apex/cmake/Modules")
   add_subdirectory(kokkos ${HPX_BINARY_DIR}/kokkos)
   include_directories(${Kokkos_INCLUDE_DIRS_RET})
   set(HPX_ADDITIONAL_PRIVATE_RUNTIME_DEPENDENCIES
       ${HPX_ADDITIONAL_PRIVATE_RUNTIME_DEPENDENCIES} kokkos)
   hpx_add_config_define(HPX_HAVE_KOKKOS)
+endif()
+
+if(HPX_WITH_THRUST)
+  hpx_warn("HPX_WITH_THRUST=ON")
+  set(_hpx_thrust_no_update)
+  if(HPX_WITH_THRUST_NO_UPDATE)
+    set(_hpx_thrust_no_update NO_UPDATE)
+  endif()
+  set(_hpx_thrust_tag "1.8.3")
+  if(HPX_WITH_THRUST_TAG)
+    message("Overriding THRUST git tag ${_hpx_thrust_tag} with ${HPX_WITH_THRUST_TAG}")
+    set(_hpx_thrust_tag ${HPX_WITH_THRUST_TAG})
+  endif()
+
+  # handle Thrust library
+  include(GitExternal)
+  git_external(thrust
+    https://github.com/thrust/thrust.git
+    ${_hpx_thrust_tag}
+    ${_hpx_thrust_no_update}
+    VERBOSE)
+
+  hpx_warn("including \"${CMAKE_CURRENT_SOURCE_DIR}/thrust\"")
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR/thrust})
+  hpx_add_config_define(HPX_HAVE_THRUST)
 endif()
 
 if(HPX_WITH_GOOGLE_PERFTOOLS)

@@ -8,9 +8,20 @@
 
 #include <hpx/compute/cuda.hpp>
 #include <hpx/compute/host.hpp>
-#include <hpx/compute/kokkos.hpp>
 #include <hpx/compute/serialization/vector.hpp>
 #include <hpx/compute/vector.hpp>
+
+#if defined(HPX_HAVE_KOKKOS)
+#include <hpx/compute/kokkos.hpp>
+#endif
+
+#if defined(HPX_HAVE_OPENMP_WORKER_THREADS)
+#include <hpx/compute/openmp.hpp>
+#endif
+
+#if defined(HPX_HAVE_THRUST)
+#include <hpx/compute/thrust.hpp>
+#endif
 
 #endif
 
