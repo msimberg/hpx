@@ -38,9 +38,6 @@
 #include <hpx/util/get_and_reset_value.hpp>
 #include <hpx/type_support/unused.hpp>
 
-#include <boost/system/error_code.hpp>
-#include <boost/system/system_error.hpp>
-
 #include <atomic>
 #include <cstddef>
 #include <cstdint>
@@ -210,12 +207,8 @@ namespace hpx { namespace threads { namespace coroutines
                         static_cast<LPVOID>(this));
                 if (nullptr == m_ctx)
                 {
-                    throw boost::system::system_error(
-                        boost::system::error_code(
-                            GetLastError(),
-                            boost::system::system_category()
-                            )
-                        );
+                    throw std::runtime_error(hpx::util::format(
+                        "could not create fiber: {1}", GetLastError()));
                 }
             }
 
