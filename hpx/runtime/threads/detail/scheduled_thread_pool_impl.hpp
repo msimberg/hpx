@@ -32,8 +32,6 @@
 #include <hpx/thread_support/unlock_guard.hpp>
 #include <hpx/util/yield_while.hpp>
 
-#include <boost/system/system_error.hpp>
-
 #include <algorithm>
 #include <atomic>
 #include <cstddef>
@@ -529,17 +527,6 @@ namespace hpx { namespace threads { namespace detail
                     << "thread_func: " << id_.name()
                     << " thread_num:" << global_thread_num    //-V128
                     << " : caught hpx::exception: " << e.what()
-                    << ", aborted thread execution";
-
-                report_error(global_thread_num, std::current_exception());
-                return;
-            }
-            catch (boost::system::system_error const& e)
-            {
-                LFATAL_    //-V128
-                    << "thread_func: " << id_.name()
-                    << " thread_num:" << global_thread_num    //-V128
-                    << " : caught boost::system::system_error: " << e.what()
                     << ", aborted thread execution";
 
                 report_error(global_thread_num, std::current_exception());
