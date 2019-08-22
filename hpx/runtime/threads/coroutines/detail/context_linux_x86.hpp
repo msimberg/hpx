@@ -205,11 +205,16 @@ namespace hpx { namespace threads { namespace coroutines
                             m_stack_size, EXEC_PAGESIZE));
                 }
 
-                if (0 >= m_stack_size)
+                if (0 > m_stack_size)
                 {
                     throw std::runtime_error(
                         hpx::util::format("stack size of {1} is invalid",
                             m_stack_size));
+                }
+
+                if (m_stack_size == 0)
+                {
+                    return;
                 }
 
                 m_stack = posix::alloc_stack(static_cast<std::size_t>(m_stack_size));
@@ -319,7 +324,13 @@ namespace hpx { namespace threads { namespace coroutines
 
             void reset_stack()
             {
-                HPX_ASSERT(m_stack);
+                HPX_ASSERT(m_stack || m_stack_size == 0);
+
+                if (m_stack_size == 0)
+                {
+                    return;
+                }
+
                 if (posix::reset_stack(
                     m_stack, static_cast<std::size_t>(m_stack_size)))
                     increment_stack_unbind_count();
@@ -327,7 +338,13 @@ namespace hpx { namespace threads { namespace coroutines
 
             void rebind_stack()
             {
-                HPX_ASSERT(m_stack);
+                HPX_ASSERT(m_stack || m_stack_size == 0);
+
+                if (m_stack_size == 0)
+                {
+                    return;
+                }
+
                 increment_stack_recycle_count();
 
                 // On rebind, we initialize our stack to ensure a virgin stack
@@ -391,6 +408,8 @@ namespace hpx { namespace threads { namespace coroutines
             friend void swap_context(x86_linux_context_impl_base& from,
                 x86_linux_context_impl_base const& to, yield_hint);
 
+        public:
+            std::ptrdiff_t m_stack_size;
         private:
             void set_sigsegv_handler()
             {
@@ -460,7 +479,6 @@ namespace hpx { namespace threads { namespace coroutines
             static const std::size_t funp_idx = 4;
 #endif
 
-            std::ptrdiff_t m_stack_size;
             void* m_stack;
 
 #if defined(HPX_HAVE_STACKOVERFLOW_DETECTION) &&                               \
@@ -478,7 +496,6 @@ namespace hpx { namespace threads { namespace coroutines
         inline void swap_context(x86_linux_context_impl_base& from,
             x86_linux_context_impl_base const& to, default_hint)
         {
-            //        HPX_ASSERT(*(void**)to.m_stack == (void*)~0);
             to.prefetch();
             swapcontext_stack(&from.m_sp, to.m_sp);
         }
@@ -486,7 +503,6 @@ namespace hpx { namespace threads { namespace coroutines
         inline void swap_context(x86_linux_context_impl_base& from,
             x86_linux_context_impl_base const& to, yield_hint)
         {
-            //        HPX_ASSERT(*(void**)from.m_stack == (void*)~0);
             to.prefetch();
 #ifndef HPX_COROUTINE_NO_SEPARATE_CALL_SITES
             swapcontext_stack2(&from.m_sp, to.m_sp);

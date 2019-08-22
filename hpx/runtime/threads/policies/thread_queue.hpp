@@ -205,13 +205,16 @@ namespace hpx { namespace threads { namespace policies
             threads::thread_init_data& data, thread_state_enum state, Lock& lk)
         {
             HPX_ASSERT(lk.owns_lock());
-            HPX_ASSERT(data.stacksize != 0);
 
             std::ptrdiff_t stacksize = data.stacksize;
 
             thread_heap_type* heap = nullptr;
 
-            if (stacksize == get_stack_size(thread_stacksize_small))
+            if (stacksize == get_stack_size(thread_stacksize_none))
+            {
+                heap = &thread_heap_none_;
+            }
+            else if (stacksize == get_stack_size(thread_stacksize_small))
             {
                 heap = &thread_heap_small_;
             }
@@ -227,29 +230,10 @@ namespace hpx { namespace threads { namespace policies
             {
                 heap = &thread_heap_huge_;
             }
-            else {
-                switch(stacksize) {
-                case thread_stacksize_small:
-                    heap = &thread_heap_small_;
-                    break;
-
-                case thread_stacksize_medium:
-                    heap = &thread_heap_medium_;
-                    break;
-
-                case thread_stacksize_large:
-                    heap = &thread_heap_large_;
-                    break;
-
-                case thread_stacksize_huge:
-                    heap = &thread_heap_huge_;
-                    break;
-
-                default:
-                    break;
-                }
+            else
+            {
+                HPX_ASSERT(false);
             }
-            HPX_ASSERT(heap);
 
             if (state == pending_do_not_schedule || state == pending_boost)
             {
@@ -393,7 +377,11 @@ namespace hpx { namespace threads { namespace policies
         {
             std::ptrdiff_t stacksize = thrd->get_stack_size();
 
-            if (stacksize == get_stack_size(thread_stacksize_small))
+            if (stacksize == get_stack_size(thread_stacksize_none))
+            {
+                thread_heap_none_.push_front(thrd);
+            }
+            else if (stacksize == get_stack_size(thread_stacksize_small))
             {
                 thread_heap_small_.push_front(thrd);
             }
@@ -409,29 +397,8 @@ namespace hpx { namespace threads { namespace policies
             {
                 thread_heap_huge_.push_front(thrd);
             }
-            else
-            {
-                switch(stacksize) {
-                case thread_stacksize_small:
-                    thread_heap_small_.push_front(thrd);
-                    break;
-
-                case thread_stacksize_medium:
-                    thread_heap_medium_.push_front(thrd);
-                    break;
-
-                case thread_stacksize_large:
-                    thread_heap_large_.push_front(thrd);
-                    break;
-
-                case thread_stacksize_huge:
-                    thread_heap_huge_.push_front(thrd);
-                    break;
-
-                default:
+            else {
                     HPX_ASSERT(false);
-                    break;
-                }
             }
         }
 
@@ -1160,6 +1127,7 @@ namespace hpx { namespace threads { namespace policies
         std::atomic<std::int64_t> new_tasks_wait_count_; // overall number tasks waited
 #endif
 
+        thread_heap_type thread_heap_none_;
         thread_heap_type thread_heap_small_;
         thread_heap_type thread_heap_medium_;
         thread_heap_type thread_heap_large_;

@@ -34,6 +34,7 @@
 
 #include <hpx/assertion.hpp>
 #include <hpx/runtime/threads/coroutines/coroutine_fwd.hpp>
+#include <hpx/runtime/threads/coroutines/detail/context_base.hpp>
 #include <hpx/runtime/threads/coroutines/detail/coroutine_accessor.hpp>
 #include <hpx/runtime/threads/coroutines/detail/coroutine_impl.hpp>
 #include <hpx/runtime/threads/coroutines/detail/coroutine_self.hpp>
@@ -117,13 +118,53 @@ namespace hpx { namespace threads { namespace coroutines
 
         HPX_FORCEINLINE result_type operator()(arg_type arg = arg_type())
         {
-            HPX_ASSERT(impl_.is_ready());
+            if (HPX_LIKELY(impl_.m_stack_size == 0))
+            {
+                // std::cout << "no stack" << std::endl;
+                //  reset_on_exit on_exit = reset_on_exit(*this);
+                // HPX_UNUSED(on_exit);
 
-            impl_.bind_args(&arg);
+                // result_type result = f_(arg0);   // invoke wrapped function
 
-            impl_.invoke();
+                // // we always have to run to completion
+                // reset();
 
-            return impl_.result();
+                // result_type result = impl_.m_fun(impl_.m_arg);
+
+                //coroutine_self* old_self = coroutine_self::get_self();
+                //coroutine_self self(this, old_self);
+                //reset_self_on_exit on_exit(&self, old_self);
+
+                result_type result;
+                std::exception_ptr tinfo;
+                detail::context_base<impl_type>::context_exit_status status = detail::context_base<impl_type>::ctx_exited_return;
+                try
+                {
+                    result = impl_.m_fun(arg);
+                    HPX_ASSERT(result.first == thread_state_enum::terminated);
+                }
+                catch (...) {
+                    status = detail::context_base<impl_type>::ctx_exited_abnormally;
+                    tinfo = std::current_exception();
+                }
+
+                impl_.reset();
+                impl_.do_return(status, std::move(tinfo));
+
+                return result;
+            }
+            else
+            {
+                // std::cout << "normal stack" << std::endl;
+                HPX_ASSERT(impl_.is_ready());
+
+                impl_.bind_args(&arg);
+
+                impl_.invoke();
+
+                return impl_.result();
+            }
+
         }
 
         bool is_ready() const

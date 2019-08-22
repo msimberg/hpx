@@ -96,10 +96,7 @@ namespace hpx { namespace threads
             schedulehint(rhs.schedulehint),
             stacksize(rhs.stacksize),
             scheduler_base(rhs.scheduler_base)
-        {
-            if (stacksize == 0)
-                stacksize = get_default_stack_size();
-        }
+        {}
 
         template <typename F>
         thread_init_data(F && f, util::thread_description const& desc,
@@ -127,10 +124,7 @@ namespace hpx { namespace threads
             stacksize(stacksize_ == std::ptrdiff_t(-1) ?
                 get_default_stack_size() : stacksize_),
             scheduler_base(scheduler_base_)
-        {
-            if (stacksize == 0)
-                stacksize = get_default_stack_size();
-        }
+        {}
 
         threads::thread_function_type func;
 

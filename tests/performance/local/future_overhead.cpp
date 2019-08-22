@@ -238,6 +238,48 @@ void measure_function_futures_thread_count(
     print_stats("apply", "ThreadCount", ExecName(exec), count, duration, csv);
 }
 
+void measure_function_futures_thread_count_no_stack(
+    std::uint64_t count, bool csv)
+{
+    hpx::parallel::execution::default_executor exec(
+        hpx::threads::thread_stacksize_none);
+
+    std::vector<future<double>> futures;
+    futures.reserve(count);
+
+    std::atomic<std::uint64_t> sanity_check(count);
+    auto this_pool = hpx::this_thread::get_pool();
+
+    // start the clock
+    high_resolution_timer walltime;
+    for (std::uint64_t i = 0; i < count; ++i)
+    {
+        hpx::apply(exec, [&sanity_check]() {
+            null_function();
+            sanity_check--;
+        });
+    }
+
+    // Yield until there is only this and background threads left.
+    hpx::util::yield_while([this_pool]() {
+        auto u = this_pool->get_thread_count_unknown(std::size_t(-1), false);
+        auto b = this_pool->get_background_thread_count() + 1;
+        return u > b;
+    });
+
+    // stop the clock
+    const double duration = walltime.elapsed();
+
+    if (sanity_check != 0)
+    {
+        int count = this_pool->get_thread_count_unknown(std::size_t(-1), false);
+        throw std::runtime_error(
+            "This test is faulty " + std::to_string(count));
+    }
+
+    print_stats("apply", "ThreadCountNoStack", ExecName(exec), count, duration, csv);
+}
+
 template <typename Executor>
 void measure_function_futures_limiting_executor(
     std::uint64_t count, bool csv, Executor exec)
@@ -330,21 +372,22 @@ int hpx_main(variables_map& vm)
 
         for (int i = 0; i < nl; i++)
         {
-            if (test_all)
-            {
-                measure_action_futures_wait_each(count, csv);
-                measure_action_futures_wait_all(count, csv);
-                measure_function_futures_wait_each(count, csv, def);
-                measure_function_futures_wait_each(count, csv, par);
-                measure_function_futures_wait_all(count, csv, def);
-                measure_function_futures_wait_all(count, csv, par);
+            //if (test_all)
+            //{
+                // measure_action_futures_wait_each(count, csv);
+                // measure_action_futures_wait_all(count, csv);
+                // measure_function_futures_wait_each(count, csv, def);
+                // measure_function_futures_wait_each(count, csv, par);
+                // measure_function_futures_wait_all(count, csv, def);
+                // measure_function_futures_wait_all(count, csv, par);
+                measure_function_futures_thread_count_no_stack(count, csv);
                 measure_function_futures_thread_count(count, csv, def);
                 measure_function_futures_thread_count(count, csv, par);
-                measure_function_futures_sliding_semaphore(count, csv, def);
-                measure_function_futures_sliding_semaphore(count, csv, par);
-            }
-            measure_function_futures_limiting_executor(count, csv, def);
-            measure_function_futures_limiting_executor(count, csv, par);
+                // measure_function_futures_sliding_semaphore(count, csv, def);
+                // measure_function_futures_sliding_semaphore(count, csv, par);
+            //}
+            // measure_function_futures_limiting_executor(count, csv, def);
+            // measure_function_futures_limiting_executor(count, csv, par);
         }
     }
 
@@ -366,6 +409,7 @@ int main(int argc, char* argv[])
          "number of iterations in the delay loop")
 
         ("csv", "output results as csv (format: count,duration)")
+        ("test-all", "run all tests")
 
         ("info", value<std::string>()->default_value("none"),
          "extra info for plot output (e.g. branch name)");

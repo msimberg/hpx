@@ -1148,6 +1148,9 @@ namespace hpx { namespace util
         case threads::thread_stacksize_huge:
             return huge_stacksize;
 
+        case threads::thread_stacksize_none:
+            return 0;
+
         default:
         case threads::thread_stacksize_small:
             break;

@@ -103,6 +103,7 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail
 
         context_base(std::ptrdiff_t stack_size, thread_id_type id)
           : default_context_impl<CoroutineImpl>(stack_size)
+          , m_stack_size(stack_size)
           , m_caller()
           , m_state(ctx_ready)
           , m_exit_state(ctx_exit_not_requested)
@@ -331,7 +332,6 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail
             ctx_exited    // context is finished.
         };
 
-    protected:
         // exit request state
         enum context_exit_state
         {
@@ -348,6 +348,7 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail
             ctx_exited_abnormally // process exited uncleanly.
         };
 
+    protected:
         void rebind_base(thread_id_type id)
         {
             HPX_ASSERT(exited());
@@ -372,18 +373,20 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail
         }
 
         // Nothrow.
+    public:
         void do_return(context_exit_status status, std::exception_ptr && info)
             noexcept
         {
             HPX_ASSERT(status != ctx_not_exited);
-            HPX_ASSERT(m_state == ctx_running);
+            HPX_ASSERT(m_state == ctx_running || m_stack_size == 0);
             m_type_info = std::move(info);
             m_state = ctx_exited;
             m_exit_status = status;
 #if defined(HPX_HAVE_ADDRESS_SANITIZER)
             this->start_yield_fiber(&this->asan_fake_stack, m_caller);
 #endif
-            do_yield();
+            if (m_stack_size != 0)
+            {do_yield();}
         }
 
     protected:
@@ -414,6 +417,9 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail
 #endif
         }
 
+    public:
+        std::ptrdiff_t m_stack_size;
+    protected:
         typedef typename default_context_impl<CoroutineImpl>::context_impl_base ctx_type;
         ctx_type m_caller;
 

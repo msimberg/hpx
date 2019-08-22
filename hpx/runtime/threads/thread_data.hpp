@@ -561,7 +561,6 @@ namespace hpx { namespace threads
 
             coroutine_.rebind(std::move(init_data.func), thread_id_type(this));
 
-            HPX_ASSERT(init_data.stacksize != 0);
             HPX_ASSERT(coroutine_.is_ready());
         }
 
@@ -620,7 +619,6 @@ namespace hpx { namespace threads
 #if defined(HPX_HAVE_APEX)
             set_apex_data(init_data.apex_data);
 #endif
-            HPX_ASSERT(init_data.stacksize != 0);
             HPX_ASSERT(coroutine_.is_ready());
         }
 

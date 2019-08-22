@@ -138,16 +138,20 @@ namespace hpx { namespace threads
     enum thread_stacksize
     {
         thread_stacksize_unknown = -1,
-        thread_stacksize_small = 1,         ///< use small stack size
-        thread_stacksize_medium = 2,        ///< use medium sized stack size
-        thread_stacksize_large = 3,         ///< use large stack size
-        thread_stacksize_huge = 4,          ///< use very large stack size
+        thread_stacksize_small = 1,     ///< use small stack size
+        thread_stacksize_medium = 2,    ///< use medium sized stack size
+        thread_stacksize_large = 3,     ///< use large stack size
+        thread_stacksize_huge = 4,      ///< use very large stack size
 
-        thread_stacksize_current = 5,      ///< use size of current thread's stack
+        thread_stacksize_current = 5,    ///< use size of current thread's stack
+        thread_stacksize_none = 6,       ///< do not use a separate stack at all
 
-        thread_stacksize_default = thread_stacksize_small,  ///< use default stack size
-        thread_stacksize_minimal = thread_stacksize_small,  ///< use minimally stack size
-        thread_stacksize_maximal = thread_stacksize_huge,   ///< use maximally stack size
+        thread_stacksize_default =
+            thread_stacksize_small,    ///< use default stack size
+        thread_stacksize_minimal =
+            thread_stacksize_small,    ///< use minimally stack size
+        thread_stacksize_maximal =
+            thread_stacksize_huge,    ///< use maximally stack size
     };
 
     ///////////////////////////////////////////////////////////////////////////

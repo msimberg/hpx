@@ -128,6 +128,7 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail
         result_type m_result;
         arg_type* m_arg;
 
+    public:
         functor_type m_fun;
     };
 }}}}
