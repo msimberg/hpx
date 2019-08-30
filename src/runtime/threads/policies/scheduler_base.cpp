@@ -69,13 +69,13 @@ namespace hpx { namespace threads { namespace policies
     void scheduler_base::idle_callback(std::size_t num_thread)
     {
 #if defined(HPX_HAVE_THREAD_MANAGER_IDLE_BACKOFF)
-        if (modes_[num_thread].data_.load(std::memory_order_relaxed) &
+        if (pu_datas_[num_thread].mode_.load(std::memory_order_relaxed) &
                 policies::enable_idle_backoff)
         {
             // Put this thread to sleep for some time, additionally it gets
             // woken up on new work.
 
-            idle_backoff_data& data = wait_counts_[num_thread].data_;
+            idle_backoff_data& data = pu_datas_[num_thread].wait_count_.data_;
 
             // Exponential back-off with a maximum sleep time.
             double exponent = (std::min)(double(data.wait_count_),
@@ -86,7 +86,7 @@ namespace hpx { namespace threads { namespace policies
 
             ++data.wait_count_;
 
-            std::unique_lock<pu_mutex_type> l(mtx_);
+            std::unique_lock<pu_mutex_type> l(pu_datas_[num_thread].idle_mtx_);
             if (cond_.wait_for(l, period) == std::cv_status::no_timeout)
             {
                 // reset counter if thread was woken up

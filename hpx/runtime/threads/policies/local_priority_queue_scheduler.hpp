@@ -176,7 +176,7 @@ namespace hpx { namespace threads { namespace policies {
 
         bool numa_sensitive() const override
         {
-            return numa_sensitive_ != 0;
+            return numa_sensitive_.data_ != 0;
         }
 
         static std::string get_scheduler_name()
@@ -195,7 +195,7 @@ namespace hpx { namespace threads { namespace policies {
                     high_priority_queues_[i].data_->get_creation_time(reset);
             }
 
-            time += low_priority_queue_.get_creation_time(reset);
+            time += low_priority_queue_.get().get_creation_time(reset);
 
             for (std::size_t i = 0; i != num_queues_; ++i)
             {
@@ -213,7 +213,7 @@ namespace hpx { namespace threads { namespace policies {
                 time += high_priority_queues_[i].data_->get_cleanup_time(reset);
             }
 
-            time += low_priority_queue_.get_cleanup_time(reset);
+            time += low_priority_queue_.get().get_cleanup_time(reset);
 
             for (std::size_t i = 0; i != num_queues_; ++i)
             {
@@ -242,7 +242,7 @@ namespace hpx { namespace threads { namespace policies {
                         queues_[i].data_->get_num_pending_misses(reset);
                 }
                 num_pending_misses +=
-                    low_priority_queue_.get_num_pending_misses(reset);
+                    low_priority_queue_.get().get_num_pending_misses(reset);
 
                 return num_pending_misses;
             }
@@ -258,7 +258,7 @@ namespace hpx { namespace threads { namespace policies {
             if (num_thread == num_queues_ - 1)
             {
                 num_pending_misses +=
-                    low_priority_queue_.get_num_pending_misses(reset);
+                    low_priority_queue_.get().get_num_pending_misses(reset);
             }
             return num_pending_misses;
         }
@@ -281,7 +281,7 @@ namespace hpx { namespace threads { namespace policies {
                         queues_[i].data_->get_num_pending_accesses(reset);
                 }
                 num_pending_accesses +=
-                    low_priority_queue_.get_num_pending_accesses(reset);
+                    low_priority_queue_.get().get_num_pending_accesses(reset);
 
                 return num_pending_accesses;
             }
@@ -298,7 +298,7 @@ namespace hpx { namespace threads { namespace policies {
             if (num_thread == num_queues_ - 1)
             {
                 num_pending_accesses +=
-                    low_priority_queue_.get_num_pending_accesses(reset);
+                    low_priority_queue_.get().get_num_pending_accesses(reset);
             }
             return num_pending_accesses;
         }
@@ -321,7 +321,7 @@ namespace hpx { namespace threads { namespace policies {
                         queues_[i].data_->get_num_stolen_from_pending(reset);
                 }
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_from_pending(reset);
+                    low_priority_queue_.get().get_num_stolen_from_pending(reset);
 
                 return num_stolen_threads;
             }
@@ -338,7 +338,7 @@ namespace hpx { namespace threads { namespace policies {
             if (num_thread == num_queues_ - 1)
             {
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_from_pending(reset);
+                    low_priority_queue_.get().get_num_stolen_from_pending(reset);
             }
             return num_stolen_threads;
         }
@@ -361,7 +361,7 @@ namespace hpx { namespace threads { namespace policies {
                         queues_[i].data_->get_num_stolen_to_pending(reset);
                 }
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_to_pending(reset);
+                    low_priority_queue_.get().get_num_stolen_to_pending(reset);
 
                 return num_stolen_threads;
             }
@@ -378,7 +378,7 @@ namespace hpx { namespace threads { namespace policies {
             if (num_thread == num_queues_ - 1)
             {
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_to_pending(reset);
+                    low_priority_queue_.get().get_num_stolen_to_pending(reset);
             }
             return num_stolen_threads;
         }
@@ -402,7 +402,7 @@ namespace hpx { namespace threads { namespace policies {
                         queues_[i].data_->get_num_stolen_from_staged(reset);
                 }
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_from_staged(reset);
+                    low_priority_queue_.get().get_num_stolen_from_staged(reset);
 
                 return num_stolen_threads;
             }
@@ -419,7 +419,7 @@ namespace hpx { namespace threads { namespace policies {
             if (num_thread == num_queues_ - 1)
             {
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_from_staged(reset);
+                    low_priority_queue_.get().get_num_stolen_from_staged(reset);
             }
             return num_stolen_threads;
         }
@@ -442,7 +442,7 @@ namespace hpx { namespace threads { namespace policies {
                         queues_[i].data_->get_num_stolen_to_staged(reset);
                 }
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_to_staged(reset);
+                    low_priority_queue_.get().get_num_stolen_to_staged(reset);
 
                 return num_stolen_threads;
             }
@@ -459,7 +459,7 @@ namespace hpx { namespace threads { namespace policies {
             if (num_thread == num_queues_ - 1)
             {
                 num_stolen_threads +=
-                    low_priority_queue_.get_num_stolen_to_staged(reset);
+                    low_priority_queue_.get().get_num_stolen_to_staged(reset);
             }
             return num_stolen_threads;
         }
@@ -475,7 +475,7 @@ namespace hpx { namespace threads { namespace policies {
             {
                 high_priority_queues_[i].data_->abort_all_suspended_threads();
             }
-            low_priority_queue_.abort_all_suspended_threads();
+            low_priority_queue_.get().abort_all_suspended_threads();
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -536,7 +536,7 @@ namespace hpx { namespace threads { namespace policies {
 
             if (std::size_t(-1) == num_thread)
             {
-                num_thread = curr_queue_++ % num_queues_;
+                num_thread = curr_queue_.data_++ % num_queues_;
             }
             else if (num_thread >= num_queues_)
             {
@@ -669,7 +669,7 @@ namespace hpx { namespace threads { namespace policies {
 
             if (std::size_t(-1) == num_thread)
             {
-                num_thread = curr_queue_++ % num_queues_;
+                num_thread = curr_queue_.data_++ % num_queues_;
             }
             else if (num_thread >= num_queues_)
             {
@@ -715,7 +715,7 @@ namespace hpx { namespace threads { namespace policies {
 
             if (std::size_t(-1) == num_thread)
             {
-                num_thread = curr_queue_++ % num_queues_;
+                num_thread = curr_queue_.data_++ % num_queues_;
             }
             else if (num_thread >= num_queues_)
             {
@@ -1256,7 +1256,7 @@ namespace hpx { namespace threads { namespace policies {
             });
 
             // check for the rest and if we are NUMA aware
-            if (numa_sensitive_ != 2 && any(first_mask & pu_mask))
+            if (numa_sensitive_.data_ != 2 && any(first_mask & pu_mask))
             {
                 iterate([&](std::size_t other_num_thread) {
                     return !any(numa_mask & numa_masks[other_num_thread]);
@@ -1293,25 +1293,24 @@ namespace hpx { namespace threads { namespace policies {
 
         void reset_thread_distribution() override
         {
-            curr_queue_.store(0);
+            curr_queue_.data_.store(0);
         }
 
     protected:
-        std::atomic<std::size_t> curr_queue_;
-        std::size_t numa_sensitive_;
-
+        // Read-only data (most of the time)
+        util::cache_aligned_data<std::size_t> numa_sensitive_;
         detail::affinity_data const& affinity_data_;
-
         std::size_t const num_queues_;
         std::size_t const num_high_priority_queues_;
-
-        thread_queue_type low_priority_queue_;
-
+        std::vector<util::cache_line_data<std::vector<std::size_t>>>
+            victim_threads_;
         std::vector<util::cache_line_data<thread_queue_type*>> queues_;
         std::vector<util::cache_line_data<thread_queue_type*>>
             high_priority_queues_;
-        std::vector<util::cache_line_data<std::vector<std::size_t>>>
-            victim_threads_;
+
+        // Frequently modified data
+        util::cache_aligned_data<std::atomic<std::size_t>> curr_queue_;
+        util::cache_aligned_data<thread_queue_type> low_priority_queue_;
     };
 }}}    // namespace hpx::threads::policies
 

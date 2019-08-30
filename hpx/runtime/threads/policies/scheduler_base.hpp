@@ -76,7 +76,7 @@ namespace hpx { namespace threads { namespace policies {
 
         char const* get_description() const
         {
-            return description_;
+            return description_.data_;
         }
 
         void idle_callback(std::size_t num_thread);
@@ -106,7 +106,7 @@ namespace hpx { namespace threads { namespace policies {
         // get/set scheduler mode
         virtual scheduler_mode get_scheduler_mode(std::size_t num_thread) const
         {
-            return modes_[num_thread].data_.load(std::memory_order_relaxed);
+            return pu_datas_[num_thread].data_.mode_.load(std::memory_order_relaxed);
         }
 
         void set_scheduler_mode(scheduler_mode mode);
@@ -117,8 +117,8 @@ namespace hpx { namespace threads { namespace policies {
 
         pu_mutex_type& get_pu_mutex(std::size_t num_thread)
         {
-            HPX_ASSERT(num_thread < pu_mtxs_.size());
-            return pu_mtxs_[num_thread];
+            HPX_ASSERT(num_thread < pu_datas_.size());
+            return pu_datas_[num_thread].data_.pu_mtx_;
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -250,38 +250,32 @@ namespace hpx { namespace threads { namespace policies {
         }
 
     protected:
-        // the scheduler mode is simply replicated across the cores to
-        // avoid false sharing, we ignore benign data races related to this
-        // variable
-        std::vector<util::cache_line_data<std::atomic<scheduler_mode>>> modes_;
-
-#if defined(HPX_HAVE_THREAD_MANAGER_IDLE_BACKOFF)
-        // support for suspension on idle queues
-        pu_mutex_type mtx_;
-        std::condition_variable cond_;
-        struct idle_backoff_data
-        {
-            std::uint32_t wait_count_;
-            double max_idle_backoff_time_;
-        };
-        std::vector<util::cache_line_data<idle_backoff_data>> wait_counts_;
-#endif
-
-        // support for suspension of pus
-        std::vector<pu_mutex_type> suspend_mtxs_;
-        std::vector<std::condition_variable> suspend_conds_;
-
-        std::vector<pu_mutex_type> pu_mtxs_;
-
-        std::vector<std::atomic<hpx::state>> states_;
-        char const* description_;
-
+        // Read-only data
+        util::cache_aligned_data<char const*> description_;
+        threads::thread_pool_base* parent_pool_;
         thread_queue_init_parameters thread_queue_init_;
 
-        // the pool that owns this scheduler
-        threads::thread_pool_base* parent_pool_;
+        // Frequently changing per-pu data.
+        struct pu_data
+        {
+            std::atomic<scheduler_mode> mode_;
+            pu_mutex_type suspend_mtx_;
+            std::condition_variable suspend_cond_;
+            pu_mutex_type pu_mtx_;
+            hpx::state state_;
+#if defined(HPX_HAVE_THREAD_MANAGER_IDLE_BACKOFF)
+            std::uint32_t wait_count_;
+            double max_idle_backoff_time_;
+            pu_mutex_type idle_mtx_;
+            std::condition_variable idle_cond_;
+#endif
+        };
 
-        std::atomic<std::int64_t> background_thread_count_;
+        std::vector<util::cache_line_data<pu_data>> pu_datas_;
+
+        // Frequently changing shared data
+        util::cache_aligned_data<std::atomic<std::int64_t>>
+            background_thread_count_;
 
 #if defined(HPX_HAVE_SCHEDULER_LOCAL_STORAGE)
     public:
