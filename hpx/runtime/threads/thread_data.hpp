@@ -492,6 +492,11 @@ namespace hpx { namespace threads
             return stacksize_;
         }
 
+        thread_schedule_hint get_initial_hint() const
+        {
+            return initial_hint_;
+        }
+
         template <typename ThreadQueue>
         ThreadQueue& get_queue()
         {
@@ -527,7 +532,7 @@ namespace hpx { namespace threads
 
         std::size_t get_thread_data() const
         {
-            return coroutine_.get_thread_data();
+            return coroutine_.get_thread_data();,
         }
 
         std::size_t set_thread_data(std::size_t data)
@@ -589,6 +594,7 @@ namespace hpx { namespace threads
             ran_exit_funcs_(false),
             scheduler_base_(init_data.scheduler_base),
             stacksize_(init_data.stacksize),
+            initial_hint_(init_data.hint),
             coroutine_(std::move(init_data.func),
                 thread_id_type(this_()), init_data.stacksize),
             queue_(queue)
@@ -711,6 +717,7 @@ namespace hpx { namespace threads
         policies::scheduler_base* scheduler_base_;
 
         std::ptrdiff_t stacksize_;
+        thread_schedule_hint initial_hint_;
 
         coroutine_type coroutine_;
         void* queue_;

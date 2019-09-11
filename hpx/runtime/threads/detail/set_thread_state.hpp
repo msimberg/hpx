@@ -255,7 +255,7 @@ namespace hpx { namespace threads { namespace detail
             // round robin queuing.
 
             thrd->get_scheduler_base()->schedule_thread(thrd.get(),
-                schedulehint, false, thrd.get()->get_priority());
+                thrd.get()->get_initial_hint(), false, thrd.get()->get_priority());
             // NOTE: Don't care if the hint is a NUMA hint, just want to wake up
             // a thread.
             thrd->get_scheduler_base()->do_some_work(schedulehint.hint);

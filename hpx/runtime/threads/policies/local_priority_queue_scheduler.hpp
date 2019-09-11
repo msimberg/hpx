@@ -543,6 +543,9 @@ namespace hpx { namespace threads { namespace policies {
                 num_thread %= num_queues_;
             }
 
+            data.schedulehint.mode = thread_schedule_hint_mode_thread;
+            data.schedulehint.hint = num_thread;
+
             std::unique_lock<pu_mutex_type> l;
             num_thread = select_active_pu(l, num_thread);
 
