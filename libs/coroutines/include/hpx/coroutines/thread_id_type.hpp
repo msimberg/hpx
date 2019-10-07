@@ -18,8 +18,6 @@
 
 namespace hpx { namespace threads {
 
-    class HPX_EXPORT thread_data;
-
     template <typename T>
     struct thread_id
     {
@@ -127,24 +125,6 @@ namespace hpx { namespace threads {
     private:
         T* thrd_;
     };
-
-    typedef thread_id<thread_data> thread_id_type;
-
-    HPX_CONSTEXPR_OR_CONST thread_id_type invalid_thread_id;
-
 }}    // namespace hpx::threads
-
-namespace std {
-    template <>
-    struct hash<::hpx::threads::thread_id_type>
-    {
-        std::size_t operator()(::hpx::threads::thread_id_type const& v) const
-            noexcept
-        {
-            std::hash<const ::hpx::threads::thread_data*> hasher_;
-            return hasher_(v.get());
-        }
-    };
-}    // namespace std
 
 #endif

@@ -9,6 +9,9 @@
 #include <hpx/config.hpp>
 #include <hpx/coroutines/thread_id_type.hpp>
 
+// TODO: Template apex functions?
+#include <hpx/runtime/threads/thread_data_fwd.hpp>
+
 #ifdef HPX_HAVE_APEX
 #include "apex_api.hpp"
 #include <memory>

@@ -44,8 +44,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace hpx { namespace threads
 {
-    class thread_data;
-
     namespace detail
     {
         ///////////////////////////////////////////////////////////////////////
@@ -539,11 +537,11 @@ namespace hpx { namespace threads
 #if defined(HPX_HAVE_APEX)
         apex_task_wrapper get_apex_data() const
         {
-            return coroutine_.get_apex_data();
+            return apex_data_;
         }
         void set_apex_data(apex_task_wrapper data)
         {
-            return coroutine_.set_apex_data(data);
+            apex_data_ = data;
         }
 #endif
 
@@ -715,6 +713,9 @@ namespace hpx { namespace threads
 
         coroutine_type coroutine_;
         void* queue_;
+#if defined(HPX_HAVE_APEX)
+        apex_task_wrapper apex_data_;
+#endif
     };
 }}
 
