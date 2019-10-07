@@ -106,7 +106,7 @@ namespace detail {
     inline std::ostream& operator<<(
         std::ostream& os, const rdma_thread_print_helper&)
     {
-        if (hpx::threads::get_self_id()==hpx::threads::invalid_thread_id) {
+        if (hpx::threads::get_self_id()==hpx::threads::thread_id_type{}) {
             os << "------------------ ";
         }
         else {

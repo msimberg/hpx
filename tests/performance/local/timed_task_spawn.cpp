@@ -206,7 +206,7 @@ hpx::threads::thread_result_type invoke_worker_timed_no_suspension(
 {
     worker_timed(delay * 1000);
     return hpx::threads::thread_result_type(hpx::threads::terminated,
-        hpx::threads::invalid_thread_id);
+        hpx::threads::thread_id_type{});
 }
 
 hpx::threads::thread_result_type invoke_worker_timed_suspension(
@@ -219,7 +219,7 @@ hpx::threads::thread_result_type invoke_worker_timed_suspension(
     hpx::this_thread::suspend(hpx::threads::suspended, "suspend", ec);
 
     return hpx::threads::thread_result_type(hpx::threads::terminated,
-        hpx::threads::invalid_thread_id);
+        hpx::threads::thread_id_type{});
 }
 
 ///////////////////////////////////////////////////////////////////////////////

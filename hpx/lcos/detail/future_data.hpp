@@ -831,7 +831,7 @@ namespace detail
             error_code& /*ec*/)
         {
             HPX_ASSERT(false);      // shouldn't ever be called
-            return threads::invalid_thread_id;
+            return threads::thread_id_type{};
         }
 
     protected:
@@ -885,11 +885,11 @@ namespace detail
 
     public:
         cancelable_task_base()
-          : id_(threads::invalid_thread_id)
+          : id_(threads::thread_id_type{})
         {}
 
         cancelable_task_base(init_no_addref no_addref)
-          : task_base<Result>(no_addref), id_(threads::invalid_thread_id)
+          : task_base<Result>(no_addref), id_(threads::thread_id_type{})
         {}
 
     private:
@@ -902,7 +902,7 @@ namespace detail
             }
             ~reset_id()
             {
-                target_.set_thread_id(threads::invalid_thread_id);
+                target_.set_thread_id(threads::thread_id_type{});
             }
             cancelable_task_base& target_;
         };
@@ -931,7 +931,7 @@ namespace detail
                 if (this->is_ready())
                     return;   // nothing we can do
 
-                if (id_ != threads::invalid_thread_id) {
+                if (id_) {
                     // interrupt the executing thread
                     threads::interrupt_thread(id_);
 

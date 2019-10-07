@@ -91,7 +91,7 @@ namespace hpx { namespace components
             threads::thread_function_type f, threads::thread_arg_type state)
         {
             threads::thread_result_type result(threads::unknown,
-                threads::invalid_thread_id);
+                threads::thread_id_type{});
 
             // now lock the mutex and execute the action
             std::unique_lock<mutex_type> l(mtx_);

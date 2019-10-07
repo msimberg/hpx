@@ -46,7 +46,7 @@ namespace hpx { namespace applier
             HPX_THROWS_IF(ec, invalid_status,
                 "hpx::applier::register_thread_plain",
                 "global applier object is not accessible");
-            return threads::invalid_thread_id;
+            return threads::thread_id_type{};
         }
 
         util::thread_description d =
@@ -55,7 +55,7 @@ namespace hpx { namespace applier
         threads::thread_init_data data(std::move(func), d, priority,
             schedulehint, threads::get_stack_size(stacksize));
 
-        threads::thread_id_type id = threads::invalid_thread_id;
+        threads::thread_id_type id = threads::thread_id_type{};
         app->get_thread_manager().register_thread(data, id, state, run_now, ec);
         return id;
     }
@@ -70,10 +70,10 @@ namespace hpx { namespace applier
             HPX_THROWS_IF(ec, invalid_status,
                 "hpx::applier::register_thread_plain",
                 "global applier object is not accessible");
-            return threads::invalid_thread_id;
+            return threads::thread_id_type{};
         }
 
-        threads::thread_id_type id = threads::invalid_thread_id;
+        threads::thread_id_type id = threads::thread_id_type{};
         app->get_thread_manager().register_thread(data, id, state, run_now, ec);
         return id;
     }

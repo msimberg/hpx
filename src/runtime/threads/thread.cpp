@@ -44,7 +44,7 @@ namespace hpx {
     }
 
     thread::thread() noexcept
-      : id_(hpx::threads::invalid_thread_id)
+      : id_(hpx::threads::thread_id_type{})
     {
     }
 
@@ -52,7 +52,7 @@ namespace hpx {
     {
         std::lock_guard<mutex_type> l(rhs.mtx_);
         id_ = rhs.id_;
-        rhs.id_ = threads::invalid_thread_id;
+        rhs.id_ = threads::thread_id_type{};
     }
 
     thread& thread::operator=(thread&& rhs) noexcept
@@ -67,7 +67,7 @@ namespace hpx {
                 "thread::operator=", "destroying running thread");
         }
         id_ = rhs.id_;
-        rhs.id_ = threads::invalid_thread_id;
+        rhs.id_ = threads::thread_id_type{};
         return *this;
     }
 
@@ -93,7 +93,7 @@ namespace hpx {
             }
         }
 
-        HPX_ASSERT(id_ == threads::invalid_thread_id);
+        HPX_ASSERT(id_ == threads::thread_id_type{});
     }
 
     void thread::swap(thread& rhs) noexcept
@@ -106,7 +106,7 @@ namespace hpx {
     static void run_thread_exit_callbacks()
     {
         threads::thread_id_type id = threads::get_self_id();
-        if (id == threads::invalid_thread_id)
+        if (id == threads::thread_id_type{})
         {
             HPX_THROW_EXCEPTION(null_thread_id, "run_thread_exit_callbacks",
                 "null thread id encountered");
@@ -148,7 +148,7 @@ namespace hpx {
         run_thread_exit_callbacks();
 
         return threads::thread_result_type(
-            threads::terminated, threads::invalid_thread_id);
+            threads::terminated, threads::thread_id_type{});
     }
 
     thread::id thread::get_id() const noexcept
@@ -271,7 +271,7 @@ namespace hpx {
 
             bool valid() const
             {
-                return id_ != threads::invalid_thread_id;
+                return id_ != threads::thread_id_type{};
             }
 
             // cancellation support
@@ -288,7 +288,7 @@ namespace hpx {
                     threads::interrupt_thread(id_);
                     this->set_error(thread_cancelled,
                         "thread_task_base::cancel", "future has been canceled");
-                    id_ = threads::invalid_thread_id;
+                    id_ = threads::thread_id_type{};
                 }
             }
 
@@ -299,7 +299,7 @@ namespace hpx {
                 std::lock_guard<mutex_type> l(this->mtx_);
                 if (!this->is_ready())
                     this->set_data(result_type());
-                id_ = threads::invalid_thread_id;
+                id_ = threads::thread_id_type{};
             }
 
         private:
@@ -309,7 +309,7 @@ namespace hpx {
 
     lcos::future<void> thread::get_future(error_code& ec)
     {
-        if (id_ == threads::invalid_thread_id)
+        if (id_ == threads::thread_id_type{})
         {
             HPX_THROWS_IF(ec, null_thread_id, "thread::get_future",
                 "null thread id encountered");

@@ -102,7 +102,7 @@ struct simple_refcnt_monitor
         // Suspend this thread.
         threads::get_self().yield(
             threads::thread_result_type(threads::suspended,
-                threads::invalid_thread_id)
+                threads::thread_id_type{})
         );
 
         return flag_.is_ready();

@@ -187,14 +187,14 @@ namespace hpx { namespace util { namespace detail
             {
                 // object has been finalized, exit
                 return threads::thread_result_type(threads::terminated,
-                    threads::invalid_thread_id);
+                    threads::thread_id_type{});
             }
 
             if (id_ != nullptr && id_ != threads::get_self_id())
             {
                 // obsolete timer thread
                 return threads::thread_result_type(threads::terminated,
-                    threads::invalid_thread_id);
+                    threads::thread_id_type{});
             }
 
             id_.reset();
@@ -224,7 +224,7 @@ namespace hpx { namespace util { namespace detail
 
         // do not re-schedule this thread
         return threads::thread_result_type(threads::terminated,
-            threads::invalid_thread_id);
+            threads::thread_id_type{});
     }
 
     // schedule a high priority task after a given time interval

@@ -204,7 +204,7 @@ namespace hpx { namespace lcos { namespace detail
             }
             ~reset_id()
             {
-                target_.set_id(threads::invalid_thread_id);
+                target_.set_id(threads::thread_id_type{});
             }
             continuation& target_;
         };
@@ -217,14 +217,14 @@ namespace hpx { namespace lcos { namespace detail
                 !std::is_same<typename std::decay<Func>::type,
                     continuation>::value>::type>
         continuation(Func && f)
-          : started_(false), id_(threads::invalid_thread_id)
+          : started_(false), id_(threads::thread_id_type{})
           , f_(std::forward<Func>(f))
         {}
 
         template <typename Func>
         continuation(init_no_addref no_addref, Func && f)
           : base_type(no_addref),
-            started_(false), id_(threads::invalid_thread_id),
+            started_(false), id_(threads::thread_id_type{}),
             f_(std::forward<Func>(f))
         {}
 
@@ -507,7 +507,7 @@ namespace hpx { namespace lcos { namespace detail
                 if (this->is_ready())
                     return;   // nothing we can do
 
-                if (id_ != threads::invalid_thread_id) {
+                if (id_ != threads::thread_id_type{}) {
                     // interrupt the executing thread
                     threads::interrupt_thread(id_);
 

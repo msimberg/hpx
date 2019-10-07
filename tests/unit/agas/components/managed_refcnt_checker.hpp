@@ -102,7 +102,7 @@ struct managed_refcnt_monitor
         // Suspend this pxthread.
         threads::get_self().yield(
             threads::thread_result_type(threads::suspended,
-                hpx::threads::invalid_thread_id)
+                hpx::threads::thread_id_type{})
         );
 
         return flag_.is_ready();

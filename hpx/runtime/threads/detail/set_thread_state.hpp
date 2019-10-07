@@ -52,7 +52,7 @@ namespace hpx { namespace threads { namespace detail
             HPX_THROW_EXCEPTION(null_thread_id,
                 "threads::detail::set_active_state",
                 "null thread id encountered");
-            return thread_result_type(terminated, invalid_thread_id);
+            return thread_result_type(terminated, thread_id_type{});
         }
 
         // make sure that the thread has not been suspended and set active again
@@ -69,7 +69,7 @@ namespace hpx { namespace threads { namespace detail
                 << thrd << "), description("
                 << thrd->get_description() << "), new state("
                 << get_thread_state_name(newstate) << ")";
-            return thread_result_type(terminated, invalid_thread_id);
+            return thread_result_type(terminated, thread_id_type{});
         }
 
         // just retry, set_state will create new thread if target is still active
@@ -77,7 +77,7 @@ namespace hpx { namespace threads { namespace detail
         detail::set_thread_state(thrd, newstate, newstate_ex, priority,
             thread_schedule_hint(), true, ec);
 
-        return thread_result_type(terminated, invalid_thread_id);
+        return thread_result_type(terminated, thread_id_type{});
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -281,13 +281,13 @@ namespace hpx { namespace threads { namespace detail
             HPX_THROW_EXCEPTION(null_thread_id,
                 "threads::detail::wake_timer_thread",
                 "null thread id encountered (id)");
-            return thread_result_type(terminated, invalid_thread_id);
+            return thread_result_type(terminated, thread_id_type{});
         }
         if (HPX_UNLIKELY(!timer_id)) {
             HPX_THROW_EXCEPTION(null_thread_id,
                 "threads::detail::wake_timer_thread",
                 "null thread id encountered (timer_id)");
-            return thread_result_type(terminated, invalid_thread_id);
+            return thread_result_type(terminated, thread_id_type{});
         }
 
         HPX_ASSERT(my_statex == wait_abort || my_statex == wait_timeout);
@@ -300,7 +300,7 @@ namespace hpx { namespace threads { namespace detail
                 ec);
         }
 
-        return thread_result_type(terminated, invalid_thread_id);
+        return thread_result_type(terminated, thread_id_type{});
     }
 
     /// This thread function initiates the required set_state action (on
@@ -316,7 +316,7 @@ namespace hpx { namespace threads { namespace detail
             HPX_THROW_EXCEPTION(null_thread_id,
                 "threads::detail::at_timer",
                 "null thread id encountered");
-            return thread_result_type(terminated, invalid_thread_id);
+            return thread_result_type(terminated, thread_id_type{});
         }
 
         // create a new thread in suspended state, which will execute the
@@ -333,7 +333,7 @@ namespace hpx { namespace threads { namespace detail
                 self_id, triggered, retry_on_active),
             "wake_timer", priority);
 
-        thread_id_type wake_id = invalid_thread_id;
+        thread_id_type wake_id = thread_id_type{};
         create_thread(&scheduler, data, wake_id, suspended);
 
         // create timer firing in correspondence with given time
@@ -365,7 +365,7 @@ namespace hpx { namespace threads { namespace detail
         // if it returns signaled the timer has been canceled, otherwise
         // the timer fired and the wake_timer_thread above has been executed
         thread_state_ex_enum statex =
-            get_self().yield(thread_result_type(suspended, invalid_thread_id));
+            get_self().yield(thread_result_type(suspended, thread_id_type{}));
 
         HPX_ASSERT(statex == wait_abort || statex == wait_timeout);
 
@@ -380,7 +380,7 @@ namespace hpx { namespace threads { namespace detail
             detail::set_thread_state(thrd, newstate, newstate_ex, priority);
         }
 
-        return thread_result_type(terminated, invalid_thread_id);
+        return thread_result_type(terminated, thread_id_type{});
     }
 
     /// Set a timer to set the state of the given \a thread to the given
@@ -396,7 +396,7 @@ namespace hpx { namespace threads { namespace detail
             HPX_THROWS_IF(ec, null_thread_id,
                 "threads::detail::set_thread_state",
                 "null thread id encountered");
-            return invalid_thread_id;
+            return thread_id_type{};
         }
 
         // this creates a new thread which creates the timer and handles the
@@ -407,7 +407,7 @@ namespace hpx { namespace threads { namespace detail
                 priority, started, retry_on_active),
                 "at_timer (expire at)", priority, schedulehint);
 
-        thread_id_type newid = invalid_thread_id;
+        thread_id_type newid = thread_id_type{};
         create_thread(&scheduler, data, newid, pending, true, ec); //-V601
         return newid;
     }

@@ -410,7 +410,7 @@ namespace hpx { namespace threads { namespace detail
                         hpx::threads::pending, "background_work");
                 }
 
-                return thread_result_type(terminated, invalid_thread_id);
+                return thread_result_type(terminated, thread_id_type{});
             },
             hpx::util::thread_description("background_work"),
             thread_priority_high_recursive, schedulehint,

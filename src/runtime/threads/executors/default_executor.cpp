@@ -64,7 +64,7 @@ namespace hpx { namespace threads { namespace executors { namespace detail
             priority_, schedulehint_, stacksize, ec);
         if (ec) return;
 
-        HPX_ASSERT(invalid_thread_id != id);    // would throw otherwise
+        HPX_ASSERT(thread_id_type{} != id);    // would throw otherwise
 
         // now schedule new thread for execution
         set_thread_state(id, abs_time);

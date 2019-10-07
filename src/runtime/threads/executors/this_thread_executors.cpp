@@ -129,7 +129,7 @@ namespace hpx { namespace threads { namespace executors { namespace detail
         util::force_error_on_lock();
 
         return threads::thread_result_type(threads::terminated,
-            threads::invalid_thread_id);
+            threads::thread_id_type{});
     }
 
     // Schedule the specified function for execution in this executor.
@@ -159,7 +159,7 @@ namespace hpx { namespace threads { namespace executors { namespace detail
         // update statistics
         ++tasks_scheduled_;
 
-        threads::thread_id_type id = threads::invalid_thread_id;
+        threads::thread_id_type id = threads::thread_id_type{};
         threads::detail::create_thread(&scheduler_, data, id, initial_state, //-V601
             run_now, ec);
         if (ec) {
@@ -195,11 +195,11 @@ namespace hpx { namespace threads { namespace executors { namespace detail
             this, std::move(f))), desc);
         data.stacksize = threads::get_stack_size(stacksize);
 
-        threads::thread_id_type id = threads::invalid_thread_id;
+        threads::thread_id_type id = threads::thread_id_type{};
         threads::detail::create_thread( //-V601
             &scheduler_, data, id, suspended, true, ec);
         if (ec) return;
-        HPX_ASSERT(invalid_thread_id != id);    // would throw otherwise
+        HPX_ASSERT(thread_id_type{} != id);    // would throw otherwise
 
         // update statistics
         ++tasks_scheduled_;

@@ -144,7 +144,7 @@ namespace hpx { namespace actions
                 util::force_error_on_lock();
 
                 return threads::thread_result_type(threads::terminated,
-                    threads::invalid_thread_id);
+                    threads::thread_id_type{});
             }
 
         private:
@@ -187,7 +187,7 @@ namespace hpx { namespace actions
                     std::move(args_));
 
                 return threads::thread_result_type(threads::terminated,
-                    threads::invalid_thread_id);
+                    threads::thread_id_type{});
             }
 
         private:

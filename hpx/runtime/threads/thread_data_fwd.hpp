@@ -42,7 +42,7 @@ namespace hpx { namespace threads
     //  TODO: Right place for these?
     using thread_id_type = thread_id<thread_data>;
 
-    HPX_CONSTEXPR_OR_CONST thread_id_type invalid_thread_id;
+    HPX_CONSTEXPR_OR_CONST thread_id_type thread_id_type{};
 
     /// \cond NOINTERNAL
     class HPX_EXPORT threadmanager;

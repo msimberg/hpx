@@ -154,7 +154,7 @@ namespace hpx { namespace threads
         if (HPX_LIKELY(nullptr != self))
             return self->get_thread_id();
 
-        return threads::invalid_thread_id;
+        return threads::thread_id_type{};
     }
 
     std::size_t get_self_stacksize()
@@ -166,7 +166,7 @@ namespace hpx { namespace threads
 #ifndef HPX_HAVE_THREAD_PARENT_REFERENCE
     thread_id_type get_parent_id()
     {
-        return threads::invalid_thread_id;
+        return threads::thread_id_type{};
     }
 
     std::size_t get_parent_phase()
@@ -184,7 +184,7 @@ namespace hpx { namespace threads
         thread_self* self = get_self_ptr();
         if (HPX_LIKELY(nullptr != self))
             return self->get_thread_id()->get_parent_thread_id();
-        return threads::invalid_thread_id;
+        return threads::thread_id_type{};
     }
 
     std::size_t get_parent_phase()

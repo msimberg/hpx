@@ -48,7 +48,7 @@ namespace hpx { namespace threads { namespace executors
             // execute the actual thread function
             func();
             return threads::thread_result_type(threads::terminated,
-                threads::invalid_thread_id);
+                threads::thread_id_type{});
         }
 
         // Return the requested policy element
@@ -87,12 +87,12 @@ namespace hpx { namespace threads { namespace executors
             data.priority = priority_;
             data.schedulehint = schedulehint;
 
-            threads::thread_id_type id = threads::invalid_thread_id;
+            threads::thread_id_type id = threads::thread_id_type{};
             pool_.create_thread(data, id, initial_state, run_now, ec);
             if (ec)
                 return;
 
-            HPX_ASSERT(invalid_thread_id != id || !run_now);
+            HPX_ASSERT(thread_id_type{} != id || !run_now);
 
             if (&ec != &throws)
                 ec = make_success_code();
@@ -120,12 +120,12 @@ namespace hpx { namespace threads { namespace executors
             data.stacksize = pool_.get_scheduler()->get_stack_size(stacksize);
             data.priority = priority_;
 
-            threads::thread_id_type id = threads::invalid_thread_id;
+            threads::thread_id_type id = threads::thread_id_type{};
             pool_.create_thread(data, id, suspended, true, ec);
             if (ec)
                 return;
 
-            HPX_ASSERT(invalid_thread_id != id);    // would throw otherwise
+            HPX_ASSERT(thread_id_type{} != id);    // would throw otherwise
 
             // now schedule new thread for execution
             pool_.set_state(abs_time, id, pending, wait_timeout,

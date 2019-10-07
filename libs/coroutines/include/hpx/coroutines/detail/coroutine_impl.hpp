@@ -91,7 +91,6 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail {
         coroutine_impl(
             functor_type&& f, thread_id_type id, std::ptrdiff_t stack_size)
           : super_type(stack_size, id)
-          // TODO: invalid_thread_id defined further up...
           , m_result(unknown, thread_id_type{})
           , m_arg(nullptr)
           , m_fun(std::move(f))
@@ -112,7 +111,6 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail {
 
             // yield value once the thread function has finished executing
             result_type result_last(
-                // TODO: invalid_thread_id
                 thread_state_enum::terminated, thread_id_type{});
 
             // loop as long this coroutine has been rebound

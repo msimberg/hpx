@@ -497,7 +497,7 @@ namespace hpx { namespace this_thread
                 nextid->get_scheduler_base()->schedule_thread(
                     nextid.get(), threads::thread_schedule_hint());
                 statex = self.yield(threads::thread_result_type(state,
-                    threads::invalid_thread_id));
+                    threads::thread_id_type{}));
             }
             else
             {
@@ -569,7 +569,7 @@ namespace hpx { namespace this_thread
                     nextid.get(), threads::thread_schedule_hint());
                 statex = self.yield(
                     threads::thread_result_type(threads::suspended,
-                        threads::invalid_thread_id));
+                        threads::thread_id_type{}));
             }
             else
             {

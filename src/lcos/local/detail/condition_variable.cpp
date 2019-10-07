@@ -73,10 +73,10 @@ namespace hpx { namespace lcos { namespace local { namespace detail
             threads::thread_id_type id = queue_.front().id_;
 
             // remove item from queue before error handling
-            queue_.front().id_ = threads::invalid_thread_id;
+            queue_.front().id_ = threads::thread_id_type{};
             queue_.pop_front();
 
-            if (HPX_UNLIKELY(id == threads::invalid_thread_id))
+            if (HPX_UNLIKELY(id == threads::thread_id_type{}))
             {
                 lock.unlock();
 
@@ -121,10 +121,10 @@ namespace hpx { namespace lcos { namespace local { namespace detail
                 threads::thread_id_type id = queue.front().id_;
 
                 // remove item from queue before error handling
-                queue.front().id_ = threads::invalid_thread_id;
+                queue.front().id_ = threads::thread_id_type{};
                 queue.pop_front();
 
-                if (HPX_UNLIKELY(id == threads::invalid_thread_id))
+                if (HPX_UNLIKELY(id == threads::thread_id_type{}))
                 {
                     prepend_entries(lock, queue);
                     lock.unlock();
@@ -193,7 +193,7 @@ namespace hpx { namespace lcos { namespace local { namespace detail
             if (ec) return threads::wait_unknown;
         }
 
-        return (f.id_ != threads::invalid_thread_id) ?
+        return (f.id_ != threads::thread_id_type{}) ?
             threads::wait_timeout : reason;
     }
 
@@ -218,7 +218,7 @@ namespace hpx { namespace lcos { namespace local { namespace detail
             if (ec) return threads::wait_unknown;
         }
 
-        return (f.id_ != threads::invalid_thread_id) ?
+        return (f.id_ != threads::thread_id_type{}) ?
             threads::wait_timeout : reason;
     }
 
@@ -240,10 +240,10 @@ namespace hpx { namespace lcos { namespace local { namespace detail
             {
                 threads::thread_id_type id = queue.front().id_;
 
-                queue.front().id_ = threads::invalid_thread_id;
+                queue.front().id_ = threads::thread_id_type{};
                 queue.pop_front();
 
-                if (HPX_UNLIKELY(id == threads::invalid_thread_id))
+                if (HPX_UNLIKELY(id == threads::thread_id_type{}))
                 {
                     LERR_(fatal)
                         << "condition_variable::abort_all:"

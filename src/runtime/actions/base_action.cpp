@@ -136,7 +136,7 @@ namespace hpx { namespace actions
     /// Return the thread id of the parent thread
     threads::thread_id_type base_action_data::get_parent_thread_id() const
     {
-        return threads::invalid_thread_id;
+        return threads::thread_id_type{};
     }
 
     /// Return the phase of the parent thread

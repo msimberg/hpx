@@ -128,7 +128,7 @@ namespace hpx { namespace lcos { namespace local
                     util::thread_description(f_, "task_object::apply"),
                     threads::pending, false, priority, schedulehint,
                     stacksize, ec);
-                return threads::invalid_thread_id;
+                return threads::thread_id_type{};
             }
         };
 
@@ -248,7 +248,7 @@ namespace hpx { namespace lcos { namespace local
                         util::deferred_call(
                             &base_type::run_impl, std::move(this_)),
                             schedulehint);
-                    return threads::invalid_thread_id;
+                    return threads::thread_id_type{};
                 }
                 else if (policy == launch::fork) {
                     return threads::register_thread_nullary(
@@ -270,7 +270,7 @@ namespace hpx { namespace lcos { namespace local
                         threads::pending, false, priority,
                         schedulehint,
                         stacksize, ec);
-                    return threads::invalid_thread_id;
+                    return threads::thread_id_type{};
                 }
             }
         };
@@ -768,7 +768,7 @@ namespace hpx { namespace lcos { namespace local
                 HPX_THROW_EXCEPTION(task_moved,
                     "futures_factory<Result()>::apply()",
                     "futures_factory invalid (has it been moved?)");
-                return threads::invalid_thread_id;
+                return threads::thread_id_type{};
             }
             return task_->apply(policy, priority, stacksize, schedulehint, ec);
         }

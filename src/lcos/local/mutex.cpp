@@ -24,7 +24,7 @@ namespace hpx { namespace lcos { namespace local
 {
     ///////////////////////////////////////////////////////////////////////////
     mutex::mutex(char const* const description)
-      : owner_id_(threads::invalid_thread_id)
+      : owner_id_(threads::thread_id_type{})
     {
         HPX_ITT_SYNC_CREATE(this, "lcos::local::mutex", description);
         HPX_ITT_SYNC_RENAME(this, "lcos::local::mutex");
@@ -52,7 +52,7 @@ namespace hpx { namespace lcos { namespace local
             return;
         }
 
-        while (owner_id_ != threads::invalid_thread_id)
+        while (owner_id_ != threads::thread_id_type{})
         {
             cond_.wait(l, ec);
             if (ec) { HPX_ITT_SYNC_CANCEL(this); return; }
@@ -70,7 +70,7 @@ namespace hpx { namespace lcos { namespace local
         HPX_ITT_SYNC_PREPARE(this);
         std::unique_lock<mutex_type> l(mtx_);
 
-        if (owner_id_ != threads::invalid_thread_id)
+        if (owner_id_ != threads::thread_id_type{})
         {
             HPX_ITT_SYNC_CANCEL(this);
             return false;
@@ -102,7 +102,7 @@ namespace hpx { namespace lcos { namespace local
 
         util::unregister_lock(this);
         HPX_ITT_SYNC_RELEASED(this);
-        owner_id_ = threads::invalid_thread_id;
+        owner_id_ = threads::thread_id_type{};
 
         cond_.notify_one(std::move(l), threads::thread_priority_boost, ec);
     }
@@ -124,7 +124,7 @@ namespace hpx { namespace lcos { namespace local
         std::unique_lock<mutex_type> l(mtx_);
 
         threads::thread_id_type self_id = threads::get_self_id();
-        if (owner_id_ != threads::invalid_thread_id)
+        if (owner_id_ != threads::thread_id_type{})
         {
             threads::thread_state_ex_enum const reason =
                 cond_.wait_until(l, abs_time, ec);
@@ -136,7 +136,7 @@ namespace hpx { namespace lcos { namespace local
                 return false;
             }
 
-            if (owner_id_ != threads::invalid_thread_id) //-V110
+            if (owner_id_ != threads::thread_id_type{}) //-V110
             {
                 HPX_ITT_SYNC_CANCEL(this);
                 return false;

@@ -69,7 +69,7 @@ namespace hpx { namespace lcos { namespace local { namespace detail
 
             ~reset_queue_entry()
             {
-                if (e_.id_ != threads::invalid_thread_id)
+                if (e_.id_)
                 {
                     queue_type* q = static_cast<queue_type*>(e_.q_);
                     q->erase(last_);     // remove entry from queue

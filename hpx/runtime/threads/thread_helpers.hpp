@@ -550,7 +550,7 @@ namespace hpx { namespace this_thread
             util::thread_description("this_thread::suspend"),
         error_code& ec = throws)
     {
-        return suspend(state, threads::invalid_thread_id, description, ec);
+        return suspend(state, threads::thread_id_type{}, description, ec);
     }
 
     /// The function \a suspend will return control to the thread manager
@@ -600,7 +600,7 @@ namespace hpx { namespace this_thread
             util::thread_description("this_thread::suspend"),
         error_code& ec = throws)
     {
-        return suspend(abs_time, threads::invalid_thread_id, description, ec);
+        return suspend(abs_time, threads::thread_id_type{}, description, ec);
     }
 
     /// The function \a suspend will return control to the thread manager
@@ -626,7 +626,7 @@ namespace hpx { namespace this_thread
             util::thread_description("this_thread::suspend"),
         error_code& ec = throws)
     {
-        return suspend(rel_time.from_now(), threads::invalid_thread_id,
+        return suspend(rel_time.from_now(), threads::thread_id_type{},
             description, ec);
     }
 
@@ -679,7 +679,7 @@ namespace hpx { namespace this_thread
             util::thread_description("this_thread::suspend"),
         error_code& ec = throws)
     {
-        return suspend(std::chrono::milliseconds(ms), threads::invalid_thread_id,
+        return suspend(std::chrono::milliseconds(ms), threads::thread_id_type{},
             description, ec);
     }
 
@@ -769,7 +769,7 @@ namespace hpx { namespace applier
     ///                   the function will throw on error instead.
     ///
     /// \returns This function will return the internal id of the newly created
-    ///          HPX-thread or threads#invalid_thread_id (if run_now is set to
+    ///          HPX-thread or threads#thread_id_type{} (if run_now is set to
     ///          `false`).
     ///
     /// \note The value returned by the thread function will be interpreted by
@@ -843,7 +843,7 @@ namespace hpx { namespace applier
                 util::force_error_on_lock();
 
                 return threads::thread_result_type(threads::terminated,
-                    threads::invalid_thread_id);
+                    threads::thread_id_type{});
             }
         };
 
@@ -863,7 +863,7 @@ namespace hpx { namespace applier
                 util::force_error_on_lock();
 
                 return threads::thread_result_type(threads::terminated,
-                    threads::invalid_thread_id);
+                    threads::thread_id_type{});
             }
         };
     }

@@ -126,11 +126,11 @@ namespace hpx
     private:
         bool joinable_locked() const noexcept
         {
-            return threads::invalid_thread_id != id_;
+            return threads::thread_id_type{} != id_;
         }
         void detach_locked()
         {
-            id_ = threads::invalid_thread_id;
+            id_ = threads::thread_id_type{};
         }
         void start_thread(threads::thread_pool_base* pool,
             util::unique_function_nonser<void()>&& func);
@@ -166,7 +166,7 @@ namespace hpx
         friend class thread;
 
     public:
-        id() noexcept : id_(threads::invalid_thread_id) {}
+        id() noexcept : id_(threads::thread_id_type{}) {}
         explicit id(threads::thread_id_type const& i) noexcept
           : id_(i)
         {}

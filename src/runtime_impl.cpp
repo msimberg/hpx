@@ -342,7 +342,7 @@ namespace hpx
             lbt_ << "runtime_impl::run_helper: bootstrap "
                     "aborted, bailing out";
             return threads::thread_result_type(threads::terminated,
-                threads::invalid_thread_id);
+                                               threads::thread_id_type{});
         }
 
         lbt_ << "(4th stage) runtime_impl::run_helper: bootstrap complete";
@@ -395,7 +395,7 @@ namespace hpx
             result = func();
         }
         return threads::thread_result_type(threads::terminated,
-            threads::invalid_thread_id);
+                                           threads::thread_id_type{});
     }
 
     int runtime_impl::start(
@@ -453,7 +453,7 @@ namespace hpx
             threads::get_stack_size(threads::thread_stacksize_large));
 
         this->runtime::starting();
-        threads::thread_id_type id = threads:: invalid_thread_id;
+        threads::thread_id_type id{};
         thread_manager_->register_thread(data, id);
 
         // }}}

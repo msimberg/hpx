@@ -110,7 +110,7 @@ namespace hpx { namespace util
             if (nullptr != self) {
                 // called from inside a HPX thread
                 threads::thread_id_type id = threads::get_self_id();
-                if (id != threads::invalid_thread_id) {
+                if (id != threads::thread_id_type{}) {
                     std::stringstream out;
                     out << std::hex << std::setw(sizeof(void*)*2)
                         << std::setfill('0')
@@ -180,7 +180,7 @@ namespace hpx { namespace util
         void operator()(param str) const
         {
             threads::thread_id_type parent_id = threads::get_parent_id();
-            if (nullptr != parent_id && threads::invalid_thread_id != parent_id) {
+            if (nullptr != parent_id && threads::thread_id_type{} != parent_id) {
                 // called from inside a HPX thread
                 std::stringstream out;
                 out << std::hex << std::setw(sizeof(void*)*2)
