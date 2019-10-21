@@ -42,6 +42,7 @@ set(HPX_LIBS
   statistics
   testing
   thread_support
+  threadmanager
   timing
   topology
   type_support
