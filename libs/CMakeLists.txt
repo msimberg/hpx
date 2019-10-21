@@ -38,6 +38,7 @@ set(HPX_LIBS
   preprocessor
   program_options
   resiliency
+  resource_partitioner
   segmented_algorithms
   serialization
   statistics
