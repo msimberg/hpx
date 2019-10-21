@@ -92,7 +92,7 @@ namespace hpx {
               );
 
         /// Common initialization for different constructors
-        void init(bool init_threadmanager);
+        void init(bool init_all);
 
     public:
 

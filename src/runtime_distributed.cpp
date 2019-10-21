@@ -389,6 +389,32 @@ namespace hpx {
 
         // this initializes the used_processing_units_ mask
         thread_manager_->init();
+
+        // copy over all startup functions registered so far
+        for (startup_function_type& f : detail::global_pre_startup_functions)
+        {
+            add_pre_startup_function(std::move(f));
+        }
+        detail::global_pre_startup_functions.clear();
+
+        for (startup_function_type& f : detail::global_startup_functions)
+        {
+            add_startup_function(std::move(f));
+        }
+        detail::global_startup_functions.clear();
+
+        for (shutdown_function_type& f : detail::global_pre_shutdown_functions)
+        {
+            add_pre_shutdown_function(std::move(f));
+        }
+        detail::global_pre_shutdown_functions.clear();
+
+        for (shutdown_function_type& f : detail::global_shutdown_functions)
+        {
+            add_shutdown_function(std::move(f));
+        }
+        detail::global_shutdown_functions.clear();
+
         agas_client_.bootstrap(parcel_handler_, ini_);
 
         components::server::get_error_dispatcher().set_error_sink(

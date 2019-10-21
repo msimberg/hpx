@@ -311,7 +311,7 @@ namespace hpx {
         init(false);
     }
 
-    void runtime::init(bool init_threadmanager)
+    void runtime::init(bool init_all)
     {
         LPROGRESS_;
 
@@ -322,42 +322,42 @@ namespace hpx {
         LPROGRESS_;
 
         // TODO: Better way to handle delaying this?
-        if (init_threadmanager)
+        if (init_all)
         {
             // now create all threadmanager pools
             thread_manager_->create_pools();
 
             // this initializes the used_processing_units_ mask
             thread_manager_->init();
-        }
 
-        // copy over all startup functions registered so far
-        for (startup_function_type& f : detail::global_pre_startup_functions)
-        {
-            add_pre_startup_function(std::move(f));
-        }
-        detail::global_pre_startup_functions.clear();
+            // copy over all startup functions registered so far
+            for (startup_function_type& f : detail::global_pre_startup_functions)
+            {
+                add_pre_startup_function(std::move(f));
+            }
+            detail::global_pre_startup_functions.clear();
 
-        for (startup_function_type& f : detail::global_startup_functions)
-        {
-            add_startup_function(std::move(f));
-        }
-        detail::global_startup_functions.clear();
+            for (startup_function_type& f : detail::global_startup_functions)
+            {
+                add_startup_function(std::move(f));
+            }
+            detail::global_startup_functions.clear();
 
-        for (shutdown_function_type& f : detail::global_pre_shutdown_functions)
-        {
-            add_pre_shutdown_function(std::move(f));
-        }
-        detail::global_pre_shutdown_functions.clear();
+            for (shutdown_function_type& f : detail::global_pre_shutdown_functions)
+            {
+                add_pre_shutdown_function(std::move(f));
+            }
+            detail::global_pre_shutdown_functions.clear();
 
-        for (shutdown_function_type& f : detail::global_shutdown_functions)
-        {
-            add_shutdown_function(std::move(f));
-        }
-        detail::global_shutdown_functions.clear();
+            for (shutdown_function_type& f : detail::global_shutdown_functions)
+            {
+                add_shutdown_function(std::move(f));
+            }
+            detail::global_shutdown_functions.clear();
 
-        // set state to initialized
-        set_state(state_initialized);
+            // set state to initialized
+            set_state(state_initialized);
+        }
     }
 
     runtime::~runtime()
@@ -1062,6 +1062,8 @@ namespace hpx {
         util::function_nonser<runtime::hpx_main_function_type> const& func,
         int& result)
     {
+        // TODO: Call startup functions.
+
         lbt_ << "(4th stage) runtime::run_helper: bootstrap complete";
         set_state(state_running);
 
