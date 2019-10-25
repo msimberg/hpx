@@ -9,7 +9,7 @@
 
 #include <hpx/config.hpp>
 #include <hpx/assertion.hpp>
-#include <hpx/topology.hpp>
+#include <hpx/topology/topology.hpp>
 
 #include <atomic>
 #include <cstddef>
