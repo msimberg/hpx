@@ -15,6 +15,7 @@ set(HPX_LIBS
   algorithms
   allocator_support
   assertion
+  batch_environments
   cache
   collectives
   compute
