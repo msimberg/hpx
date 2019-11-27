@@ -14,8 +14,8 @@ if [ "$TRAVIS_OS_NAME" = "windows" ]; then
         -- -verbosity:minimal -maxcpucount:4 -nologo
 elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
     cmake --build build --target core
-    cmake --build build --target examples
-    ctest --output-on-failure -R tests.examples
+    cmake --build build --target examples.quickstart
+    ./build/bin/hello_world_distributed --hpx:bind=none
 else
     echo "no scripts set up for \"$TRAVIS_OS_NAME\""
     exit 1
