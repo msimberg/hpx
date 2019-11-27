@@ -12,6 +12,12 @@ if [ "$TRAVIS_OS_NAME" = "windows" ]; then
         --config Debug \
         --target core \
         -- -verbosity:minimal -maxcpucount:4 -nologo
+    cmake \
+        --build build \
+        --config Debug \
+        --target hello_world_distributed \
+        -- -verbosity:minimal -maxcpucount:4 -nologo
+    ./build/Debug/bin/hello_world_distributed.exe --hpx:bind=none
 elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
     cmake --build build --target core
     cmake --build build --target examples.quickstart

@@ -13,8 +13,8 @@ if [ "$TRAVIS_OS_NAME" = "windows" ]; then
         -G'Visual Studio 15 2017 Win64' \
         -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_TOOLCHAIN_FILE='C:/projects/vcpkg/scripts/buildsystems/vcpkg.cmake' \
-        -DHPX_WITH_PSEUDO_DEPENDENCIES=ON \
-        -DHPX_WITH_EXAMPLES=OFF \
+        -DHPX_WITH_PSEUDO_DEPENDENCIES=OFF \
+        -DHPX_WITH_EXAMPLES=ON \
         -DHPX_WITH_TESTS=OFF \
         -DHPX_WITH_DEPRECATION_WARNINGS=OFF
 elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
