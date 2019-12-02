@@ -52,8 +52,9 @@ set(HPX_LIBS
   statistics
   synchronization
   testing
-  threading_base
+  thread_pools
   thread_support
+  threading_base
   threadmanager
   timing
   topology
