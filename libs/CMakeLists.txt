@@ -35,6 +35,7 @@ set(HPX_LIBS
   functional
   hardware
   hashing
+  io_service
   iterator_support
   local_lcos
   logging
