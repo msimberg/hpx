@@ -56,6 +56,7 @@ All modules
    /libs/statistics/docs/index.rst
    /libs/synchronization/docs/index.rst
    /libs/testing/docs/index.rst
+   /libs/thread/docs/index.rst
    /libs/thread_data/docs/index.rst
    /libs/thread_pools/docs/index.rst
    /libs/thread_support/docs/index.rst

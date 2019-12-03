@@ -53,6 +53,7 @@ set(HPX_LIBS
   statistics
   synchronization
   testing
+  thread
   thread_pools
   thread_support
   threading_base
