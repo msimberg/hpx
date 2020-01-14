@@ -242,9 +242,7 @@ namespace hpx { namespace threads {
             init_data, register_data.initial_state, ec);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    // All of the following overloads are provided for compatibility only.
-
+#if defined(HPX_HAVE_REGISTER_THREAD_OVERLOADS_COMPATIBILITY)
     inline threads::thread_id_type register_thread_plain(
         threads::thread_pool_base* pool, threads::thread_init_data& data,
         threads::thread_state_enum initial_state = threads::pending,
@@ -395,8 +393,7 @@ namespace hpx { namespace threads {
     ///                   of hpx#exception.
     inline threads::thread_id_type register_thread_plain(
         threads::thread_function_type&& func,
-        util::thread_description const& description =
-            util::thread_description(),
+        util::thread_description const& description,
         threads::thread_state_enum initial_state = threads::pending,
         bool run_now = true,
         threads::thread_priority priority = threads::thread_priority_normal,
@@ -428,8 +425,7 @@ namespace hpx { namespace threads {
 
     template <typename F>
     threads::thread_id_type register_thread(F&& func,
-        util::thread_description const& description =
-            util::thread_description(),
+        util::thread_description const& description,
         threads::thread_state_enum initial_state = threads::pending,
         bool run_now = true,
         threads::thread_priority priority = threads::thread_priority_normal,
@@ -477,8 +473,7 @@ namespace hpx { namespace threads {
     ///
     template <typename F>
     threads::thread_id_type register_thread_nullary(F&& func,
-        util::thread_description const& description =
-            util::thread_description(),
+        util::thread_description const& description,
         threads::thread_state_enum initial_state = threads::pending,
         bool run_now = true,
         threads::thread_priority priority = threads::thread_priority_normal,
@@ -682,8 +677,7 @@ namespace hpx { namespace threads {
     /// \throws invalid_status if the runtime system has not been started yet.
     ///
     inline void register_work_plain(threads::thread_function_type&& func,
-        util::thread_description const& description =
-            util::thread_description(),
+        util::thread_description const& description,
         threads::thread_state_enum initial_state = threads::pending,
         threads::thread_priority priority = threads::thread_priority_normal,
         threads::thread_schedule_hint schedulehint =
@@ -725,8 +719,7 @@ namespace hpx { namespace threads {
     ///
     template <typename F>
     void register_work(F&& func,
-        util::thread_description const& description =
-            util::thread_description(),
+        util::thread_description const& description,
         threads::thread_state_enum initial_state = threads::pending,
         threads::thread_priority priority = threads::thread_priority_normal,
         threads::thread_schedule_hint os_thread =
@@ -773,8 +766,7 @@ namespace hpx { namespace threads {
     ///
     template <typename F>
     void register_work_nullary(F&& func,
-        util::thread_description const& description =
-            util::thread_description(),
+        util::thread_description const& description,
         threads::thread_state_enum initial_state = threads::pending,
         threads::thread_priority priority = threads::thread_priority_normal,
         threads::thread_schedule_hint os_thread =
@@ -842,6 +834,7 @@ namespace hpx { namespace threads {
         register_non_suspendable_work_plain(pool, std::move(thread_func),
             description, initial_state, priority, os_thread, ec);
     }
+#endif
 }}    // namespace hpx::threads
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -849,10 +842,12 @@ namespace hpx { namespace threads {
 namespace hpx { namespace applier {
     using threads::register_thread;
     using threads::register_thread_nullary;
-    using threads::register_thread_plain;
 
     using threads::register_work;
     using threads::register_work_nullary;
+
+#if defined(HPX_HAVE_REGISTER_THREAD_OVERLOADS_COMPATIBILITY)
+    using threads::register_thread_plain;
     using threads::register_work_plain;
 
     using threads::register_non_suspendable_thread;
@@ -862,6 +857,7 @@ namespace hpx { namespace applier {
     using threads::register_non_suspendable_work;
     using threads::register_non_suspendable_work_nullary;
     using threads::register_non_suspendable_work_plain;
+#endif
 }}    // namespace hpx::applier
 #endif
 

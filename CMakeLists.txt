@@ -1061,6 +1061,13 @@ hpx_option(HPX_WITH_INIT_START_OVERLOADS_COMPATIBILITY BOOL
     ON ADVANCED)
 if(HPX_WITH_INIT_START_OVERLOADS_COMPATIBILITY)
   hpx_add_config_define(HPX_HAVE_INIT_START_OVERLOADS_COMPATIBILITY)
+
+# HPX_WITH_REGISTER_THREAD_COMPATIBILITY: introduced in V1.5.0
+hpx_option(HPX_WITH_REGISTER_THREAD_OVERLOADS_COMPATIBILITY BOOL
+    "Enable deprecated register_thread/work overloads which take individual arguments instead of the register_thread_data struct (default: ON)"
+    ON ADVANCED)
+if(HPX_WITH_REGISTER_THREAD_OVERLOADS_COMPATIBILITY)
+  hpx_add_config_define(HPX_HAVE_REGISTER_THREAD_OVERLOADS_COMPATIBILITY)
 endif()
 
 ################################################################################
