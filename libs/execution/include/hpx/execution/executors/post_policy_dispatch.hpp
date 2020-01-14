@@ -25,6 +25,7 @@ namespace hpx { namespace parallel { namespace execution { namespace detail {
     template <typename Policy>
     struct post_policy_dispatch
     {
+        // TODO: Use register_thread_data struct.
         template <typename F, typename... Ts>
         static void call(Policy const& policy,
             hpx::util::thread_description const& desc,
@@ -32,10 +33,16 @@ namespace hpx { namespace parallel { namespace execution { namespace detail {
             threads::thread_stacksize stacksize,
             threads::thread_schedule_hint hint, F&& f, Ts&&... ts)
         {
-            threads::register_thread_nullary(pool,
+            threads::register_thread_data register_data;
+            register_data.pool = pool;
+            register_data.description = desc;
+            register_data.priority = priority;
+            register_data.hint = hint;
+            register_data.stacksize = stacksize;
+            threads::register_work_nullary(
                 hpx::util::deferred_call(
                     std::forward<F>(f), std::forward<Ts>(ts)...),
-                desc, threads::pending, false, priority, hint, stacksize);
+                register_data);
         }
 
         template <typename F, typename... Ts>
@@ -45,20 +52,28 @@ namespace hpx { namespace parallel { namespace execution { namespace detail {
             threads::thread_stacksize stacksize,
             threads::thread_schedule_hint hint, F&& f, Ts&&... ts)
         {
-            threads::register_thread_nullary(
+            threads::register_thread_data register_data;
+            register_data.description = desc;
+            register_data.priority = priority;
+            register_data.hint = hint;
+            register_data.stacksize = stacksize;
+            threads::register_work_nullary(
                 hpx::util::deferred_call(
                     std::forward<F>(f), std::forward<Ts>(ts)...),
-                desc, threads::pending, false, priority, hint, stacksize);
+                register_data);
         }
 
         template <typename F, typename... Ts>
         static void call(Policy const& policy,
             hpx::util::thread_description const& desc, F&& f, Ts&&... ts)
         {
-            threads::register_thread_nullary(
+            threads::register_thread_data register_data;
+            register_data.description = desc;
+            register_data.priority = policy.priority();
+            threads::register_work_nullary(
                 hpx::util::deferred_call(
                     std::forward<F>(f), std::forward<Ts>(ts)...),
-                desc, threads::pending, false, policy.priority());
+                register_data);
         }
     };
 
@@ -72,15 +87,17 @@ namespace hpx { namespace parallel { namespace execution { namespace detail {
             threads::thread_stacksize stacksize,
             threads::thread_schedule_hint hint, F&& f, Ts&&... ts)
         {
-            hint.mode = threads::thread_schedule_hint_mode_thread;
-            hint.hint = static_cast<std::int16_t>(get_worker_thread_num());
-            threads::thread_id_type tid = threads::register_thread_nullary(pool,
+            register_data.pool = pool;
+            register_data.description = desc;
+            register_data.priority = priority;
+            register_data.hint = threads::thread_schedule_hint(
+                static_cast<std::int16_t>(get_worker_thread_num()));
+            register_data.stacksize = stacksize;
+            register_data.initial_state = threads::pending_do_not_schedule;
+            threads::thread_id_type tid = threads::register_thread_nullary(
                 hpx::util::deferred_call(
                     std::forward<F>(f), std::forward<Ts>(ts)...),
-                desc, threads::pending_do_not_schedule, true, priority,
-                threads::thread_schedule_hint(
-                    static_cast<std::int16_t>(get_worker_thread_num())),
-                stacksize);
+                register_data);
             threads::thread_id_type tid_self = threads::get_self_id();
 
             // make sure this thread is executed last

@@ -29,7 +29,10 @@ namespace hpx { namespace traits
                     threads::thread_init_data& data,
                     threads::thread_state_enum initial_state)
             {
-                hpx::threads::register_work_plain(data, initial_state); //-V106
+                threads::thread_pool_base* pool =
+                    threads::detail::get_self_or_default_pool();
+                HPX_ASSERT(pool);
+                pool->create_work(data, initial_state, hpx::throws);
             }
 
             // forward the call if the component implements the function

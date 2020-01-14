@@ -459,13 +459,13 @@ namespace hpx { namespace parcelset
                         parcel p, write_handler_type f
                     ) = &parcelhandler::put_parcel;
 
+                threads::register_thread_data register_data;
+                register_data.description = "parcelhander::put_parcel";
+                register_data.priority = threads::thread_priority_boost;
+                register_data.stacksize = threads::thread_stacksize_medium;
                 threads::register_thread_nullary(
                     util::deferred_call(put_parcel_ptr, this,
-                        std::move(p), std::move(f)),
-                    "parcelhandler::put_parcel", threads::pending, true,
-                    threads::thread_priority_boost,
-                    threads::thread_schedule_hint(),
-                    threads::thread_stacksize_medium);
+                        std::move(p), std::move(f)), register_data);
                 return;
             }
         }
@@ -555,13 +555,13 @@ namespace hpx { namespace parcelset
                         std::vector<parcel>, std::vector<write_handler_type>
                     ) = &parcelhandler::put_parcels;
 
+                threads::register_thread_data register_data;
+                register_data.description = "parcelhander::put_parcels";
+                register_data.priority = threads::thread_priority_boost;
+                register_data.stacksize = threads::thread_stacksize_medium;
                 threads::register_thread_nullary(
                     util::deferred_call(put_parcels_ptr, this,
-                        std::move(parcels), std::move(handlers)),
-                    "parcelhandler::put_parcels", threads::pending, true,
-                    threads::thread_priority_boost,
-                    threads::thread_schedule_hint(),
-                    threads::thread_stacksize_medium);
+                        std::move(parcels), std::move(handlers)), register_data);
                 return;
             }
         }

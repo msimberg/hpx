@@ -115,24 +115,28 @@ namespace hpx { namespace lcos { namespace local {
                 typedef typename Base::future_base_type future_base_type;
                 future_base_type this_(this);
 
+                threads::register_thread_data register_data;
+
+                register_data.pool = pool;
+                register_data.stacksize = stacksize;
+                register_data.priority = priority;
+                register_data.description = util::thread_description(f_, annotation);
+
                 if (policy == launch::fork)
                 {
-                    return threads::register_thread_nullary(pool,
-                        util::deferred_call(
-                            &base_type::run_impl, std::move(this_)),
-                        util::thread_description(f_, annotation),
-                        threads::pending_do_not_schedule, true,
-                        threads::thread_priority_boost,
-                        threads::thread_schedule_hint(
-                            static_cast<std::int16_t>(get_worker_thread_num())),
-                        stacksize, ec);
+                    threads::register_thread_data p;
+
+                    register_data.initial_state = threads::pending_do_not_schedule;
+                    register_data.hint = threads::thread_schedule_hint(static_cast<std::int16_t>(get_worker_thread_num()));
+
+                    return threads::register_thread_nullary(util::deferred_call(
+                            &base_type::run_impl, std::move(this_)), register_data, ec);
                 }
 
-                threads::register_thread_nullary(pool,
-                    util::deferred_call(&base_type::run_impl, std::move(this_)),
-                    util::thread_description(f_, annotation),
-                    threads::pending, false, priority, schedulehint, stacksize,
-                    ec);
+                register_data.hint = schedulehint;
+
+                threads::register_work_nullary(
+                    util::deferred_call(&base_type::run_impl, std::move(this_)), register_data, ec);
                 return threads::invalid_thread_id;
             }
         };
@@ -247,6 +251,7 @@ namespace hpx { namespace lcos { namespace local {
 
         protected:
             // run in a separate thread
+                // TODO: Also pass register_thread struct through here.
             threads::thread_id_type apply(threads::thread_pool_base* pool,
                 const char *annotation,
                 launch policy, threads::thread_priority priority,
@@ -268,9 +273,41 @@ namespace hpx { namespace lcos { namespace local {
                     return threads::invalid_thread_id;
                 }
 
-                return this->base_type::apply(
-                    pool, annotation, policy, priority, stacksize,
-                    schedulehint, ec);
+                // TODO: Why did this change? Do not merge!
+                //return this->base_type::apply(
+                //    pool, annotation, policy, priority, stacksize,
+                //    schedulehint, ec);
+
+                else if (policy == launch::fork)
+                {
+                    threads::register_thread_data register_data;
+
+                    register_data.pool = pool;
+                    register_data.initial_state = threads::pending_do_not_schedule;
+                    register_data.stacksize = stacksize;
+                    register_data.priority = priority;
+                    register_data.hint = threads::thread_schedule_hint(static_cast<std::int16_t>(get_worker_thread_num()));
+                    register_data.description = util::thread_description(this->f_, annotation);
+
+                    return threads::register_thread_nullary(
+                        util::deferred_call(
+                            &base_type::run_impl, std::move(this_)), register_data, ec);
+                }
+                else
+                {
+                    threads::register_thread_data register_data;
+
+                    register_data.pool = pool;
+                    register_data.stacksize = stacksize;
+                    register_data.priority = priority;
+                    register_data.hint = schedulehint;
+                    register_data.description = util::thread_description(this->f_, annotation);
+
+                    threads::register_work_nullary(
+                        util::deferred_call(
+                            &base_type::run_impl, std::move(this_)), register_data, ec);
+                    return threads::invalid_thread_id;
+                }
             }
         };
 

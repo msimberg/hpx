@@ -450,14 +450,13 @@ namespace hpx { namespace threads { namespace executors { namespace detail {
         if (state.compare_exchange_strong(expected, state_starting))
         {
             ++curr_punits_;
+            threads::register_thread_data register_data;
+            register_data.description = "embedded_thread_pool_executor thread";
+            register_data.hint = threads::thread_schedule_hint(
+                static_cast<std::int16_t>(thread_num));
             register_thread_nullary(
                 util::deferred_call(&embedded_thread_pool_executor::run, this,
-                    virt_core, thread_num),
-                "embedded_thread_pool_executor thread", threads::pending, true,
-                threads::thread_priority_normal,
-                threads::thread_schedule_hint(
-                    static_cast<std::int16_t>(thread_num)),
-                threads::thread_stacksize_default, ec);
+                    virt_core, thread_num), register_data, ec);
         }
     }
 

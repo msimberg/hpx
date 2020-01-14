@@ -1513,13 +1513,12 @@ void addressing_service::route(
             threads::thread_priority
         ) = &addressing_service::route;
 
+        threads::register_thread_data register_data;
+        register_data.description = "addressing_service::route";
         threads::register_thread_nullary(
             util::deferred_call(
                 route_ptr, this, std::move(p), std::move(f), local_priority),
-            "addressing_service::route", threads::pending, true,
-            threads::thread_priority_normal,
-            threads::thread_schedule_hint(),
-            threads::thread_stacksize_default);
+            register_data);
         return;
     }
 
@@ -1665,14 +1664,12 @@ void addressing_service::decref(
     if (HPX_UNLIKELY(nullptr == threads::get_self_ptr()))
     {
         // reschedule this call as an HPX thread
+        threads::register_thread_data register_data;
+        register_data.description = "addressing_service::decref";
         threads::register_thread_nullary(
             [=]() -> void {
                 return decref(raw, credit, throws);
-            },
-            "addressing_service::decref", threads::pending, true,
-            threads::thread_priority_normal,
-            threads::thread_schedule_hint(),
-            threads::thread_stacksize_default, ec);
+            }, register_data, ec);
 
         return;
     }
@@ -1930,14 +1927,12 @@ void addressing_service::update_cache_entry(
         {
             return;
         }
+        threads::register_thread_data register_data;
+        register_data.description = "addressing_service::update_cache_entry";
         threads::register_thread_nullary(
             [=]() -> void {
                 return update_cache_entry(id, g, throws);
-            },
-            "addressing_service::update_cache_entry", threads::pending, true,
-            threads::thread_priority_normal,
-            threads::thread_schedule_hint(),
-            threads::thread_stacksize_default, ec);
+            }, register_data, ec);
     }
 
     try {

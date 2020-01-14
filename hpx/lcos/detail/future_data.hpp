@@ -741,16 +741,16 @@ namespace hpx { namespace lcos { namespace detail {
         {
             hpx::intrusive_ptr<timed_future_data> this_(this);
 
+            threads::register_thread_data register_data;
+            register_data.initial_state = threads::suspended;
+            register_data.priority = threads::thread_priority_boost;
+            register_data.description = "timed_future_data<Result>::timed_future_data";
             error_code ec;
             threads::thread_id_type id = threads::register_thread_nullary(
                 [this_ = std::move(this_),
                     init = std::forward<Result_>(init)]() {
                     this_->set_value(init);
-                },
-                "timed_future_data<Result>::timed_future_data",
-                threads::suspended, true, threads::thread_priority_boost,
-                threads::thread_schedule_hint(),
-                threads::thread_stacksize_current, ec);
+                }, register_data, ec);
             if (ec)
             {
                 // thread creation failed, report error to the new future

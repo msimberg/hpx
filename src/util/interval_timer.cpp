@@ -284,13 +284,13 @@ namespace hpx { namespace util { namespace detail
             // lock here would be the right thing but leads to crashes and hangs
             // at shutdown.
             //util::unlock_guard<std::unique_lock<mutex_type> > ul(l);
-            id = hpx::threads::register_thread_plain(
+            threads::register_thread_data register_data;
+            register_data.description = description_.c_str();
+            register_data.initial_state = threads::suspended;
+            register_data.priority = threads::thread_priority_boost;
+            id = hpx::threads::register_thread(
                 util::bind_front(&interval_timer::evaluate,
-                    this->shared_from_this()),
-                description_.c_str(), threads::suspended, true,
-                threads::thread_priority_boost,
-                threads::thread_schedule_hint(),
-                threads::thread_stacksize_default, ec);
+                    this->shared_from_this()), register_data, ec);
         }
 
         if (ec) {

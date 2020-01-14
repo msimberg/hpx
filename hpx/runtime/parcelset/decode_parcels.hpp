@@ -215,18 +215,18 @@ namespace hpx { namespace parcelset
                         for (std::size_t i = 1; i != deferred_parcels.size(); ++i)
                         {
                             // schedule all but the first parcel on a new thread.
+                            threads::register_thread_data register_data;
+                            register_data.description = "schedule_parcel";
+                            register_data.priority = threads::thread_priority_boost;
+                            register_data.hint = threads::thread_schedule_hint(
+                                static_cast<std::int16_t>(num_thread));
                             hpx::threads::register_thread_nullary(
                                 util::deferred_call(
                                     [num_thread](parcel&& p)
                                     {
                                         p.schedule_action(num_thread);
                                     }, std::move(deferred_parcels[i])),
-                                "schedule_parcel",
-                                threads::pending, true,
-                                threads::thread_priority_boost,
-                                threads::thread_schedule_hint(
-                                    static_cast<std::int16_t>(num_thread)),
-                                threads::thread_stacksize_default);
+                                register_data);
                         }
                         // If we are the first deferred parcel, we don't need to spin
                         // a new thread...

@@ -79,11 +79,13 @@ namespace hpx { namespace plugins { namespace parcel { namespace detail
                             std::vector<parcelset::write_handler_type>
                         ) = &parcelport::put_parcels;
 
+                    threads::register_thread_data register_data;
+                    register_data.description = "parcelhandler::put_parcel";
+                    register_data.run_now = true;
+                    register_data.priority = threads::thread_priority_boost;
                     threads::register_thread_nullary(
                         util::deferred_call(put_parcel_ptr, pp,
-                            dest_, std::move(messages_), std::move(handlers_)),
-                        "parcelhandler::put_parcel", threads::pending, true,
-                        threads::thread_priority_boost);
+                            dest_, std::move(messages_), std::move(handlers_)), register_data);
                     return;
                 }
 
