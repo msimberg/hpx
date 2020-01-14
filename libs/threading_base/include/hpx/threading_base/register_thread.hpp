@@ -105,6 +105,146 @@ namespace hpx { namespace threads {
         HPX_EXPORT boost::asio::io_service* get_default_timer_service();
     }    // namespace detail
 
+    struct register_thread_data
+    {
+        threads::thread_stacksize stacksize = threads::thread_stacksize_default;
+        threads::thread_priority priority = threads::thread_priority_normal;
+        threads::thread_schedule_hint hint = threads::thread_schedule_hint{};
+        util::thread_description description = util::thread_description{};
+        threads::thread_pool_base* pool = detail::get_self_or_default_pool();
+        threads::thread_state_enum initial_state = threads::pending;
+    };
+
+    // The following six functions are the main helper functions to create work
+    // on thread pools. All other overloads are provided for compatibility only.
+    inline threads::thread_id_type register_thread(
+        threads::thread_function_type&& f,
+        register_thread_data const& register_data = {}, error_code& ec = throws)
+    {
+        HPX_ASSERT(register_data.pool);
+
+        threads::thread_init_data init_data(std::move(f),
+            register_data.description, register_data.priority,
+            register_data.hint,
+            register_data.pool->get_scheduler()->get_stack_size(
+                register_data.stacksize),
+            register_data.pool->get_scheduler());
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        register_data.pool->create_thread(
+            init_data, id, register_data.initial_state, true, ec);
+
+        return id;
+    }
+
+    template <typename F>
+    inline threads::thread_id_type register_thread(F&& f,
+        register_thread_data const& register_data = {}, error_code& ec = throws)
+    {
+        HPX_ASSERT(register_data.pool);
+
+        threads::thread_init_data init_data(
+            threads::thread_function_type(
+                detail::thread_function<typename std::decay<F>::type>{
+                    std::forward<F>(f)}),
+            register_data.description, register_data.priority,
+            register_data.hint,
+            register_data.pool->get_scheduler()->get_stack_size(
+                register_data.stacksize),
+            register_data.pool->get_scheduler());
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        register_data.pool->create_thread(
+            init_data, id, register_data.initial_state, true, ec);
+
+        return id;
+    }
+
+    template <typename F>
+    inline threads::thread_id_type register_thread_nullary(F&& f,
+        register_thread_data const& register_data = {}, error_code& ec = throws)
+    {
+        HPX_ASSERT(register_data.pool);
+
+        threads::thread_init_data init_data(
+            threads::thread_function_type(
+                detail::thread_function_nullary<typename std::decay<F>::type>{
+                    std::forward<F>(f)}),
+            register_data.description, register_data.priority,
+            register_data.hint,
+            register_data.pool->get_scheduler()->get_stack_size(
+                register_data.stacksize),
+            register_data.pool->get_scheduler());
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        register_data.pool->create_thread(
+            init_data, id, register_data.initial_state, true, ec);
+
+        return id;
+    }
+
+    inline void register_work(threads::thread_function_type&& f,
+        register_thread_data const& register_data = {}, error_code& ec = throws)
+    {
+        HPX_ASSERT(register_data.pool);
+
+        threads::thread_init_data init_data(std::move(f),
+            register_data.description, register_data.priority,
+            register_data.hint,
+            register_data.pool->get_scheduler()->get_stack_size(
+                register_data.stacksize),
+            register_data.pool->get_scheduler());
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        register_data.pool->create_work(
+            init_data, register_data.initial_state, ec);
+    }
+
+    template <typename F>
+    inline void register_work(F&& f, register_thread_data const& register_data = {},
+        error_code& ec = throws)
+    {
+        HPX_ASSERT(register_data.pool);
+
+        threads::thread_init_data init_data(
+            threads::thread_function_type(
+                detail::thread_function<typename std::decay<F>::type>{
+                    std::forward<F>(f)}),
+            register_data.description, register_data.priority,
+            register_data.hint,
+            register_data.pool->get_scheduler()->get_stack_size(
+                register_data.stacksize),
+            register_data.pool->get_scheduler());
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        register_data.pool->create_work(
+            init_data, register_data.initial_state, ec);
+    }
+
+    template <typename F>
+    inline void register_work_nullary(F&& f,
+        register_thread_data const& register_data = {}, error_code& ec = throws)
+    {
+        HPX_ASSERT(register_data.pool);
+
+        threads::thread_init_data init_data(
+            threads::thread_function_type(
+                detail::thread_function_nullary<typename std::decay<F>::type>{
+                    std::forward<F>(f)}),
+            register_data.description, register_data.priority,
+            register_data.hint,
+            register_data.pool->get_scheduler()->get_stack_size(
+                register_data.stacksize),
+            register_data.pool->get_scheduler());
+
+        threads::thread_id_type id = threads::invalid_thread_id;
+        register_data.pool->create_work(
+            init_data, register_data.initial_state, ec);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // All of the following overloads are provided for compatibility only.
+
     inline threads::thread_id_type register_thread_plain(
         threads::thread_pool_base* pool, threads::thread_init_data& data,
         threads::thread_state_enum initial_state = threads::pending,
