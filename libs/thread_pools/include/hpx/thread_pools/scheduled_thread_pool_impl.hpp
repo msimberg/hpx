@@ -10,24 +10,24 @@
 
 #include <hpx/affinity/affinity_data.hpp>
 #include <hpx/assertion.hpp>
+#include <hpx/basic_execution/this_thread.hpp>
 #include <hpx/concurrency/barrier.hpp>
 #include <hpx/errors.hpp>
 #include <hpx/functional/deferred_call.hpp>
 #include <hpx/functional/invoke.hpp>
-#include <hpx/threading_base/create_thread.hpp>
-#include <hpx/threading_base/create_work.hpp>
+#include <hpx/schedulers.hpp>
 #include <hpx/thread_pools/scheduled_thread_pool.hpp>
 #include <hpx/thread_pools/scheduling_loop.hpp>
-#include <hpx/threading_base/set_thread_state.hpp>
 #include <hpx/threading_base/callback_notifier.hpp>
+#include <hpx/threading_base/create_thread.hpp>
+#include <hpx/threading_base/create_work.hpp>
 #include <hpx/threading_base/scheduler_base.hpp>
 #include <hpx/threading_base/scheduler_mode.hpp>
-#include <hpx/schedulers.hpp>
 #include <hpx/threading_base/scheduler_state.hpp>
+#include <hpx/threading_base/set_thread_state.hpp>
 #include <hpx/threading_base/thread_data.hpp>
 #include <hpx/threading_base/thread_helpers.hpp>
 #include <hpx/topology/topology.hpp>
-#include <hpx/basic_execution/this_thread.hpp>
 
 #include <boost/system/system_error.hpp>
 
@@ -157,7 +157,8 @@ namespace hpx { namespace threads { namespace detail {
         // background_work inside the os executors
         if (thread_count_ != 0)
         {
-            std::size_t num_thread = detail::get_thread_num_tss() % thread_count_;
+            std::size_t num_thread =
+                detail::get_thread_num_tss() % thread_count_;
             if (num_thread != std::size_t(-1))
                 return get_state(num_thread);
         }
@@ -349,7 +350,8 @@ namespace hpx { namespace threads { namespace detail {
             [this]() {
                 return this->sched_->Scheduler::get_thread_count() >
                     this->get_background_thread_count();
-            }, "scheduled_thread_pool::suspend_internal");
+            },
+            "scheduled_thread_pool::suspend_internal");
 
         for (std::size_t i = 0; i != threads_.size(); ++i)
         {
@@ -1936,7 +1938,8 @@ namespace hpx { namespace threads { namespace detail {
             util::yield_while(
                 [thread_num]() {
                     return thread_num == hpx::get_worker_thread_num();
-                }, "scheduled_thread_pool::remove_processing_unit_internal");
+                },
+                "scheduled_thread_pool::remove_processing_unit_internal");
         }
 
         t.join();
@@ -1951,11 +1954,8 @@ namespace hpx { namespace threads { namespace detail {
         std::unique_lock<typename Scheduler::pu_mutex_type> l(
             sched_->Scheduler::get_pu_mutex(virt_core), std::defer_lock);
 
-        util::yield_while(
-            [&l]()
-            {
-                return !l.try_lock();
-            }, "scheduled_thread_pool::suspend_processing_unit_direct");
+        util::yield_while([&l]() { return !l.try_lock(); },
+            "scheduled_thread_pool::suspend_processing_unit_direct");
 
         if (threads_.size() <= virt_core || !threads_[virt_core].joinable())
         {
@@ -1980,10 +1980,9 @@ namespace hpx { namespace threads { namespace detail {
         HPX_ASSERT(expected == state_running || expected == state_pre_sleep ||
             expected == state_sleeping);
 
-        util::yield_while([&state]()
-            {
-                return state.load() == state_pre_sleep;
-            }, "scheduled_thread_pool::suspend_processing_unit_direct");
+        util::yield_while(
+            [&state]() { return state.load() == state_pre_sleep; },
+            "scheduled_thread_pool::suspend_processing_unit_direct");
     }
     template <typename Scheduler>
     void scheduled_thread_pool<Scheduler>::resume_processing_unit_direct(
@@ -1991,12 +1990,10 @@ namespace hpx { namespace threads { namespace detail {
     {
         // Yield to other HPX threads if lock is not available to avoid
         // deadlocks when multiple HPX threads try to resume or suspend pus.
-        std::unique_lock<typename Scheduler::pu_mutex_type>
-            l(sched_->Scheduler::get_pu_mutex(virt_core), std::defer_lock);
-        util::yield_while([&l]()
-            {
-                return !l.try_lock();
-            }, "scheduled_thread_pool::resume_processing_unit_direct");
+        std::unique_lock<typename Scheduler::pu_mutex_type> l(
+            sched_->Scheduler::get_pu_mutex(virt_core), std::defer_lock);
+        util::yield_while([&l]() { return !l.try_lock(); },
+            "scheduled_thread_pool::resume_processing_unit_direct");
 
         if (threads_.size() <= virt_core || !threads_[virt_core].joinable())
         {
@@ -2017,7 +2014,8 @@ namespace hpx { namespace threads { namespace detail {
             [this, &state, virt_core]() {
                 this->sched_->Scheduler::resume(virt_core);
                 return state.load() == state_sleeping;
-            }, "scheduled_thread_pool::resume_processing_unit_direct");
+            },
+            "scheduled_thread_pool::resume_processing_unit_direct");
     }
 }}}    // namespace hpx::threads::detail
 
