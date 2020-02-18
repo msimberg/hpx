@@ -16,7 +16,7 @@
 #include <hpx/preprocessor/stringize.hpp>
 #include <hpx/runtime.hpp>
 #include <hpx/runtime/parcelset/parcelhandler.hpp>
-#include <hpx/runtime/threads/thread.hpp>
+#include <hpx/thread.hpp>
 #include <hpx/runtime/threads/threadmanager.hpp>
 #include <hpx/topology/cpu_mask.hpp>
 #include <hpx/topology/topology.hpp>

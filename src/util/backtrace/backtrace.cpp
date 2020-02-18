@@ -15,7 +15,7 @@
 
 #define HPX_BACKTRACE_SOURCE
 #include <hpx/async.hpp>
-#include <hpx/runtime/threads/thread.hpp>
+#include <hpx/thread.hpp>
 
 #include <boost/config.hpp>
 

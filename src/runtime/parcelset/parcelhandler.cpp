@@ -40,7 +40,7 @@
 #include <hpx/threading_base/external_timer.hpp>
 #include <hpx/util/from_string.hpp>
 #include <hpx/util/get_entry_as.hpp>
-#include <hpx/util/io_service_pool.hpp>
+#include <hpx/io_service/io_service_pool.hpp>
 #include <hpx/util/runtime_configuration.hpp>
 
 #include <hpx/plugins/parcelport_factory_base.hpp>
