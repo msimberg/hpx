@@ -31,8 +31,7 @@ cmake_header = f'''# Copyright (c) 2019 The STE||AR-Group
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 '''
 
-readme_template = f'''
-..
+readme_template = f'''..
     Copyright (c) 2019 The STE||AR-Group
 
     SPDX-License-Identifier: BSL-1.0

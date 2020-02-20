@@ -18,6 +18,7 @@
 #endif
 
 #include <hpx/errors.hpp>
+#include <hpx/module_support.hpp>
 #include <hpx/preprocessor/stringize.hpp>
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/util/command_line_handling.hpp>
@@ -186,7 +187,14 @@ namespace hpx
         strm << "\n";
 
         // print module configurations
-        module_config_strings const* ms = hpx::config_strings_modules;
+        std::vector<module_config_entry> const& ms = module_support::detail::get_module_config_entries();
+        for (module_config_entry const& e : ms) {
+                strm << "Module " << e.name << ":\n";
+                for (auto const& s : e.config_strings) {
+                        strm << s << std::endl;
+                }
+                std::cout << std::endl;
+        }
         while (ms->name)
         {
             strm << "Module " << ms->name << ":\n";

@@ -142,15 +142,20 @@ function(add_hpx_module name)
     hpx_debug(${header_file})
   endforeach(header_file)
 
+  set(module_support_source)
+  if(NOT "${name}" STREQUAL "module_support")
+    set(module_support_source "${CMAKE_CURRENT_BINARY_DIR}/src/module_support.cpp")
+  endif()
+
   # create library modules
   if(${name}_CUDA AND HPX_WITH_CUDA)
     cuda_add_library(hpx_${name} STATIC
-      ${sources} ${force_linking_source}
+      ${sources} ${force_linking_source} ${module_support_source}
       ${headers} ${force_linking_header}
       ${generated_headers} ${compat_headers})
   else()
     add_library(hpx_${name} STATIC
-      ${sources} ${force_linking_source}
+        ${sources} ${force_linking_source} ${module_support_source}
       ${headers} ${force_linking_header}
       ${generated_headers} ${compat_headers})
   endif()
@@ -160,6 +165,11 @@ function(add_hpx_module name)
     $<BUILD_INTERFACE:${HEADER_ROOT}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
     $<INSTALL_INTERFACE:include>)
+
+  if(NOT "${name}" STREQUAL "module_support")
+    target_link_libraries(hpx_${name} PRIVATE hpx_module_support)
+
+  endif()
 
   target_link_libraries(hpx_${name} PRIVATE hpx_internal_flags)
 

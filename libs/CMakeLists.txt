@@ -39,6 +39,7 @@ set(HPX_LIBS
   local_lcos
   logging
   memory
+  module_support
   naming_base
   plugin
   preprocessor
@@ -51,8 +52,8 @@ set(HPX_LIBS
   statistics
   synchronization
   testing
-  threading_base
   thread_support
+  threading_base
   threadmanager
   timing
   topology
@@ -91,7 +92,7 @@ if(HPX_WITH_TESTS)
   endif()
 
   if (HPX_WITH_TESTS_HEADERS)
-    add_hpx_pseudo_target(tests.headers.modules)
+    add_custom_target(tests.headers.modules)
     add_hpx_pseudo_dependencies(tests.headers tests.headers.modules)
   endif()
 endif()
@@ -116,23 +117,9 @@ foreach(lib ${HPX_LIBS})
 
   set(MODULE_FORCE_LINKING_CALLS
     "${MODULE_FORCE_LINKING_CALLS}\n        ${lib}::force_linking();")
-
-  set(CONFIG_STRINGS_MODULES_INCLUDES
-    "${CONFIG_STRINGS_MODULES_INCLUDES}#include <hpx/${lib}/config/config_strings.hpp>\n")
-  set(CONFIG_STRINGS_MODULES_ENTRIES
-    "${CONFIG_STRINGS_MODULES_ENTRIES}\n        { \"${lib}\", ${lib}::config_strings },")
 endforeach()
 
 configure_file(
     "${PROJECT_SOURCE_DIR}/cmake/templates/modules.cpp.in"
     "${PROJECT_BINARY_DIR}/libs/modules.cpp"
     @ONLY)
-
-configure_file(
-  "${PROJECT_SOURCE_DIR}/cmake/templates/config_defines_strings_modules.hpp.in"
-  "${PROJECT_BINARY_DIR}/hpx/config/config_defines_strings_modules.hpp"
-  @ONLY)
-configure_file(
-  "${PROJECT_SOURCE_DIR}/cmake/templates/config_defines_strings_modules.hpp.in"
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/hpx/config/config_defines_strings_modules.hpp"
-  @ONLY)

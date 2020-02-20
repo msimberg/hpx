@@ -81,5 +81,11 @@ function(create_configuration_summary message module_name)
     "${HPX_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/${_base_dir}/config_strings.hpp"
     @ONLY)
 
+  if(NOT "${module_name}" STREQUAL "module_support")
+    set(module_support_source "${CMAKE_CURRENT_BINARY_DIR}/src/module_support.cpp")
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/module_support.cpp.in"
+      "${module_support_source}" @ONLY)
+  endif()
+
 endfunction()
 
