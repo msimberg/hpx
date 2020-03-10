@@ -53,10 +53,11 @@ set(HPX_LIBS
   serialization
   static_reinit
   statistics
+  string
   synchronization
   testing
-  threading_base
   thread_support
+  threading_base
   threadmanager
   timing
   topology

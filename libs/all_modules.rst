@@ -56,10 +56,11 @@ All modules
    /libs/serialization/docs/index.rst
    /libs/static_reinit/docs/index.rst
    /libs/statistics/docs/index.rst
+   /libs/string/docs/index.rst
    /libs/synchronization/docs/index.rst
    /libs/testing/docs/index.rst
-   /libs/thread_data/docs/index.rst
    /libs/thread_support/docs/index.rst
+   /libs/threading_base/docs/index.rst
    /libs/threadmanager/docs/index.rst
    /libs/timing/docs/index.rst
    /libs/topology/docs/index.rst
