@@ -83,11 +83,11 @@ namespace hpx { namespace string { namespace detail {
           : m_Size(0)
         {
             // Prepare storage
-            m_Storage.m_dynSet = 0;
+            m_Storage.m_dynSet = nullptr;
 
             std::size_t Size = ::boost::distance(Range);
             m_Size = Size;
-            set_value_type* Storage = 0;
+            set_value_type* Storage = nullptr;
 
             if (use_fixed_storage(m_Size))
             {
@@ -111,9 +111,9 @@ namespace hpx { namespace string { namespace detail {
           : m_Size(Other.m_Size)
         {
             // Prepare storage
-            m_Storage.m_dynSet = 0;
-            const set_value_type* SrcStorage = 0;
-            set_value_type* DestStorage = 0;
+            m_Storage.m_dynSet = nullptr;
+            const set_value_type* SrcStorage = nullptr;
+            set_value_type* DestStorage = nullptr;
 
             if (use_fixed_storage(m_Size))
             {
@@ -137,7 +137,7 @@ namespace hpx { namespace string { namespace detail {
         // Destructor
         ~is_any_ofF()
         {
-            if (!use_fixed_storage(m_Size) && m_Storage.m_dynSet != 0)
+            if (!use_fixed_storage(m_Size) && m_Storage.m_dynSet != nullptr)
             {
                 delete[] m_Storage.m_dynSet;
             }
@@ -186,8 +186,8 @@ namespace hpx { namespace string { namespace detail {
                 else
                 {
                     // Using dynamic storage, check if can reuse
-                    if (m_Storage.m_dynSet != 0 && m_Size >= Other.m_Size &&
-                        m_Size < Other.m_Size * 2)
+                    if (m_Storage.m_dynSet != nullptr &&
+                        m_Size >= Other.m_Size && m_Size < Other.m_Size * 2)
                     {
                         // Reuse the current storage
                         DestStorage = m_Storage.m_dynSet;
@@ -201,7 +201,7 @@ namespace hpx { namespace string { namespace detail {
                         DestStorage = pTemp;
 
                         // Delete old storage if necessary
-                        if (m_Storage.m_dynSet != 0)
+                        if (m_Storage.m_dynSet != nullptr)
                         {
                             delete[] m_Storage.m_dynSet;
                         }
