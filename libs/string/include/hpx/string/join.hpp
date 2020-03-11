@@ -14,8 +14,8 @@
 #include <hpx/config.hpp>
 #include <hpx/string/detail/sequence.hpp>
 
-#include <boost/range/value_type.hpp>
 #include <boost/range/as_literal.hpp>
+#include <boost/range/value_type.hpp>
 
 /*! \file
     Defines join algorithm.
@@ -26,13 +26,12 @@
     by providing a predicate.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  join --------------------------------------------------------------//
+    //  join --------------------------------------------------------------//
 
-        //! Join algorithm
-        /*!
+    //! Join algorithm
+    /*!
             This algorithm joins all strings in a 'list' into one long string.
             Segments are concatenated by given separator.
 
@@ -42,45 +41,45 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template< typename SequenceSequenceT, typename Range1T>
-        inline typename boost::range_value<SequenceSequenceT>::type
-        join(
-            const SequenceSequenceT& Input,
-            const Range1T& Separator)
+    template <typename SequenceSequenceT, typename Range1T>
+    inline typename boost::range_value<SequenceSequenceT>::type join(
+        const SequenceSequenceT& Input, const Range1T& Separator)
+    {
+        // Define working types
+        typedef typename boost::range_value<SequenceSequenceT>::type ResultT;
+        typedef typename boost::range_const_iterator<SequenceSequenceT>::type
+            InputIteratorT;
+
+        // Parse input
+        InputIteratorT itBegin = ::boost::begin(Input);
+        InputIteratorT itEnd = ::boost::end(Input);
+
+        // Construct container to hold the result
+        ResultT Result;
+
+        // Append first element
+        if (itBegin != itEnd)
         {
-            // Define working types
-            typedef typename boost::range_value<SequenceSequenceT>::type ResultT;
-            typedef typename boost::range_const_iterator<SequenceSequenceT>::type InputIteratorT;
-
-            // Parse input
-            InputIteratorT itBegin=::boost::begin(Input);
-            InputIteratorT itEnd=::boost::end(Input);
-
-            // Construct container to hold the result
-            ResultT Result;
-
-            // Append first element
-            if(itBegin!=itEnd)
-            {
-                detail::insert(Result, ::boost::end(Result), *itBegin);
-                ++itBegin;
-            }
-
-            for(;itBegin!=itEnd; ++itBegin)
-            {
-                // Add separator
-                detail::insert(Result, ::boost::end(Result), ::boost::as_literal(Separator));
-                // Add element
-                detail::insert(Result, ::boost::end(Result), *itBegin);
-            }
-
-            return Result;
+            detail::insert(Result, ::boost::end(Result), *itBegin);
+            ++itBegin;
         }
 
-// join_if ----------------------------------------------------------//
+        for (; itBegin != itEnd; ++itBegin)
+        {
+            // Add separator
+            detail::insert(
+                Result, ::boost::end(Result), ::boost::as_literal(Separator));
+            // Add element
+            detail::insert(Result, ::boost::end(Result), *itBegin);
+        }
 
-        //! Conditional join algorithm
-        /*!
+        return Result;
+    }
+
+    // join_if ----------------------------------------------------------//
+
+    //! Conditional join algorithm
+    /*!
             This algorithm joins all strings in a 'list' into one long string.
             Segments are concatenated by given separator. Only segments that
             satisfy the predicate will be added to the result.
@@ -92,50 +91,48 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template< typename SequenceSequenceT, typename Range1T, typename PredicateT>
-        inline typename boost::range_value<SequenceSequenceT>::type
-        join_if(
-            const SequenceSequenceT& Input,
-            const Range1T& Separator,
-            PredicateT Pred)
+    template <typename SequenceSequenceT, typename Range1T, typename PredicateT>
+    inline typename boost::range_value<SequenceSequenceT>::type join_if(
+        const SequenceSequenceT& Input, const Range1T& Separator,
+        PredicateT Pred)
+    {
+        // Define working types
+        typedef typename boost::range_value<SequenceSequenceT>::type ResultT;
+        typedef typename boost::range_const_iterator<SequenceSequenceT>::type
+            InputIteratorT;
+
+        // Parse input
+        InputIteratorT itBegin = ::boost::begin(Input);
+        InputIteratorT itEnd = ::boost::end(Input);
+
+        // Construct container to hold the result
+        ResultT Result;
+
+        // Roll to the first element that will be added
+        while (itBegin != itEnd && !Pred(*itBegin))
+            ++itBegin;
+        // Add this element
+        if (itBegin != itEnd)
         {
-            // Define working types
-            typedef typename boost::range_value<SequenceSequenceT>::type ResultT;
-            typedef typename boost::range_const_iterator<SequenceSequenceT>::type InputIteratorT;
-
-            // Parse input
-            InputIteratorT itBegin=::boost::begin(Input);
-            InputIteratorT itEnd=::boost::end(Input);
-
-            // Construct container to hold the result
-            ResultT Result;
-
-            // Roll to the first element that will be added
-            while(itBegin!=itEnd && !Pred(*itBegin)) ++itBegin;
-            // Add this element
-            if(itBegin!=itEnd)
-            {
-                detail::insert(Result, ::boost::end(Result), *itBegin);
-                ++itBegin;
-            }
-
-            for(;itBegin!=itEnd; ++itBegin)
-            {
-                if(Pred(*itBegin))
-                {
-                    // Add separator
-                    detail::insert(Result, ::boost::end(Result), ::boost::as_literal(Separator));
-                    // Add element
-                    detail::insert(Result, ::boost::end(Result), *itBegin);
-                }
-            }
-
-            return Result;
+            detail::insert(Result, ::boost::end(Result), *itBegin);
+            ++itBegin;
         }
 
-    } // namespace string
-} // namespace hpx
+        for (; itBegin != itEnd; ++itBegin)
+        {
+            if (Pred(*itBegin))
+            {
+                // Add separator
+                detail::insert(Result, ::boost::end(Result),
+                    ::boost::as_literal(Separator));
+                // Add element
+                detail::insert(Result, ::boost::end(Result), *itBegin);
+            }
+        }
 
+        return Result;
+    }
 
-#endif  // HPX_STRING_JOIN_HPP
+}}    // namespace hpx::string
 
+#endif    // HPX_STRING_JOIN_HPP

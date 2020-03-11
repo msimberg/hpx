@@ -18,114 +18,105 @@
 #include <boost/range/end.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
 
-#include <locale>
 #include <functional>
+#include <locale>
 
-namespace hpx {
-    namespace string {
-        namespace detail {
+namespace hpx { namespace string { namespace detail {
 
-//  case conversion functors -----------------------------------------------//
+    //  case conversion functors -----------------------------------------------//
 
 #if defined(HPX_MSVC_WARNING_PRAGMA)
 #pragma warning(push)
-#pragma warning(disable:4512) //assignment operator could not be generated
+#pragma warning(disable : 4512)    //assignment operator could not be generated
 #endif
 
-            // a tolower functor
-            template<typename CharT>
-            struct to_lowerF
-            {
-                typedef CharT argument_type;
-                typedef CharT result_type;
-                // Constructor
-                to_lowerF( const std::locale& Loc ) : m_Loc( &Loc ) {}
+    // a tolower functor
+    template <typename CharT>
+    struct to_lowerF
+    {
+        typedef CharT argument_type;
+        typedef CharT result_type;
+        // Constructor
+        to_lowerF(const std::locale& Loc)
+          : m_Loc(&Loc)
+        {
+        }
 
-                // Operation
-                CharT operator ()( CharT Ch ) const
-                {
-                    #if defined(__BORLANDC__) && (__BORLANDC__ >= 0x560) && (__BORLANDC__ <= 0x564) && !defined(_USE_OLD_RW_STL)
-                        return std::tolower( static_cast<typename boost::make_unsigned <CharT>::type> ( Ch ));
-                    #else
-                        return std::tolower<CharT>( Ch, *m_Loc );
-                    #endif
-                }
-            private:
-                const std::locale* m_Loc;
-            };
+        // Operation
+        CharT operator()(CharT Ch) const
+        {
+#if defined(__BORLANDC__) && (__BORLANDC__ >= 0x560) &&                        \
+    (__BORLANDC__ <= 0x564) && !defined(_USE_OLD_RW_STL)
+            return std::tolower(
+                static_cast<typename boost::make_unsigned<CharT>::type>(Ch));
+#else
+            return std::tolower<CharT>(Ch, *m_Loc);
+#endif
+        }
 
-            // a toupper functor
-            template<typename CharT>
-            struct to_upperF
-            {
-                typedef CharT argument_type;
-                typedef CharT result_type;
-                // Constructor
-                to_upperF( const std::locale& Loc ) : m_Loc( &Loc ) {}
+    private:
+        const std::locale* m_Loc;
+    };
 
-                // Operation
-                CharT operator ()( CharT Ch ) const
-                {
-                    #if defined(__BORLANDC__) && (__BORLANDC__ >= 0x560) && (__BORLANDC__ <= 0x564) && !defined(_USE_OLD_RW_STL)
-                        return std::toupper( static_cast<typename boost::make_unsigned <CharT>::type> ( Ch ));
-                    #else
-                        return std::toupper<CharT>( Ch, *m_Loc );
-                    #endif
-                }
-            private:
-                const std::locale* m_Loc;
-            };
+    // a toupper functor
+    template <typename CharT>
+    struct to_upperF
+    {
+        typedef CharT argument_type;
+        typedef CharT result_type;
+        // Constructor
+        to_upperF(const std::locale& Loc)
+          : m_Loc(&Loc)
+        {
+        }
+
+        // Operation
+        CharT operator()(CharT Ch) const
+        {
+#if defined(__BORLANDC__) && (__BORLANDC__ >= 0x560) &&                        \
+    (__BORLANDC__ <= 0x564) && !defined(_USE_OLD_RW_STL)
+            return std::toupper(
+                static_cast<typename boost::make_unsigned<CharT>::type>(Ch));
+#else
+            return std::toupper<CharT>(Ch, *m_Loc);
+#endif
+        }
+
+    private:
+        const std::locale* m_Loc;
+    };
 
 #if HPX_MSVC_WARNING_PRAGMA
 #pragma warning(pop)
 #endif
 
-// algorithm implementation -------------------------------------------------------------------------
+    // algorithm implementation -------------------------------------------------------------------------
 
-            // Transform a range
-            template<typename OutputIteratorT, typename RangeT, typename FunctorT>
-            OutputIteratorT transform_range_copy(
-                OutputIteratorT Output,
-                const RangeT& Input,
-                FunctorT Functor)
-            {
-                return std::transform(
-                    ::boost::begin(Input),
-                    ::boost::end(Input),
-                    Output,
-                    Functor);
-            }
+    // Transform a range
+    template <typename OutputIteratorT, typename RangeT, typename FunctorT>
+    OutputIteratorT transform_range_copy(
+        OutputIteratorT Output, const RangeT& Input, FunctorT Functor)
+    {
+        return std::transform(
+            ::boost::begin(Input), ::boost::end(Input), Output, Functor);
+    }
 
-            // Transform a range (in-place)
-            template<typename RangeT, typename FunctorT>
-            void transform_range(
-                const RangeT& Input,
-                FunctorT Functor)
-            {
-                std::transform(
-                    ::boost::begin(Input),
-                    ::boost::end(Input),
-                    ::boost::begin(Input),
-                    Functor);
-            }
+    // Transform a range (in-place)
+    template <typename RangeT, typename FunctorT>
+    void transform_range(const RangeT& Input, FunctorT Functor)
+    {
+        std::transform(::boost::begin(Input), ::boost::end(Input),
+            ::boost::begin(Input), Functor);
+    }
 
-            template<typename SequenceT, typename RangeT, typename FunctorT>
-            inline SequenceT transform_range_copy(
-                const RangeT& Input,
-                FunctorT Functor)
-            {
-                return SequenceT(
-                    ::boost::make_transform_iterator(
-                        ::boost::begin(Input),
-                        Functor),
-                    ::boost::make_transform_iterator(
-                        ::boost::end(Input),
-                        Functor));
-            }
+    template <typename SequenceT, typename RangeT, typename FunctorT>
+    inline SequenceT transform_range_copy(const RangeT& Input, FunctorT Functor)
+    {
+        return SequenceT(
+            ::boost::make_transform_iterator(::boost::begin(Input), Functor),
+            ::boost::make_transform_iterator(::boost::end(Input), Functor));
+    }
 
-        } // namespace detail
-    } // namespace string
-} // namespace hpx
+}}}    // namespace hpx::string::detail
 
-
-#endif  // HPX_STRING_CASE_CONV_DETAIL_HPP
+#endif    // HPX_STRING_CASE_CONV_DETAIL_HPP

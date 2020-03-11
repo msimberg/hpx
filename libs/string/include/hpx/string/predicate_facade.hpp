@@ -20,23 +20,22 @@
  composition operators.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  predicate facade ------------------------------------------------------//
+    //  predicate facade ------------------------------------------------------//
 
-        //! Predicate facade
-        /*!
+    //! Predicate facade
+    /*!
             This class allows to recognize classification
             predicates, so that they can be combined using
             composition operators.
             Every classification predicate must be derived from this class.
         */
-        template<typename Derived>
-        struct predicate_facade {};
+    template <typename Derived>
+    struct predicate_facade
+    {
+    };
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_CLASSIFICATION_DETAIL_HPP
+#endif    // HPX_STRING_CLASSIFICATION_DETAIL_HPP

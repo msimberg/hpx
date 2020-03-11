@@ -15,7 +15,7 @@
     This file includes sequence traits for stl containers.
 */
 
-#include <hpx/string/std/string_traits.hpp>
 #include <hpx/string/std/list_traits.hpp>
+#include <hpx/string/std/string_traits.hpp>
 
-#endif  // HPX_STRING_STD_CONTAINERS_TRAITS_HPP
+#endif    // HPX_STRING_STD_CONTAINERS_TRAITS_HPP

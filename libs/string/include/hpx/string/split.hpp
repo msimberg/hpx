@@ -12,9 +12,9 @@
 #define HPX_STRING_SPLIT_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/string/iter_find.hpp>
-#include <hpx/string/finder.hpp>
 #include <hpx/string/compare.hpp>
+#include <hpx/string/finder.hpp>
+#include <hpx/string/iter_find.hpp>
 
 /*! \file
     Defines basic split algorithms.
@@ -30,13 +30,12 @@
     or \c std::list<boost::iterator_range<std::string::iterator>>
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  find_all  ------------------------------------------------------------//
+    //  find_all  ------------------------------------------------------------//
 
-        //! Find all algorithm
-        /*!
+    //! Find all algorithm
+    /*!
             This algorithm finds all occurrences of the search string
             in the input.
 
@@ -57,24 +56,21 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template< typename SequenceSequenceT, typename Range1T, typename Range2T >
-        inline SequenceSequenceT& find_all(
-            SequenceSequenceT& Result,
+    template <typename SequenceSequenceT, typename Range1T, typename Range2T>
+    inline SequenceSequenceT& find_all(SequenceSequenceT& Result,
 #if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
-            Range1T&& Input,
+        Range1T&& Input,
 #else
-            Range1T& Input,
+        Range1T& Input,
 #endif
-            const Range2T& Search)
-        {
-            return ::hpx::string::iter_find(
-                Result,
-                Input,
-                ::hpx::string::first_finder(Search) );
-        }
+        const Range2T& Search)
+    {
+        return ::hpx::string::iter_find(
+            Result, Input, ::hpx::string::first_finder(Search));
+    }
 
-        //! Find all algorithm ( case insensitive )
-        /*!
+    //! Find all algorithm ( case insensitive )
+    /*!
             This algorithm finds all occurrences of the search string
             in the input.
             Each part is copied and added as a new element to the
@@ -96,28 +92,23 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template< typename SequenceSequenceT, typename Range1T, typename Range2T >
-        inline SequenceSequenceT& ifind_all(
-            SequenceSequenceT& Result,
+    template <typename SequenceSequenceT, typename Range1T, typename Range2T>
+    inline SequenceSequenceT& ifind_all(SequenceSequenceT& Result,
 #if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
-            Range1T&& Input,
+        Range1T&& Input,
 #else
-            Range1T& Input,
+        Range1T& Input,
 #endif
-            const Range2T& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::iter_find(
-                Result,
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc) ) );
-        }
+        const Range2T& Search, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::iter_find(
+            Result, Input, ::hpx::string::first_finder(Search, is_iequal(Loc)));
+    }
 
+    //  tokenize  -------------------------------------------------------------//
 
-//  tokenize  -------------------------------------------------------------//
-
-        //! Split algorithm
-        /*!
+    //! Split algorithm
+    /*!
             Tokenize expression. This function is equivalent to C strtok. Input
             sequence is split into tokens, separated by separators. Separators
             are given by means of the predicate.
@@ -143,26 +134,20 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template< typename SequenceSequenceT, typename RangeT, typename PredicateT >
-        inline SequenceSequenceT& split(
-            SequenceSequenceT& Result,
+    template <typename SequenceSequenceT, typename RangeT, typename PredicateT>
+    inline SequenceSequenceT& split(SequenceSequenceT& Result,
 #if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
-            RangeT&& Input,
+        RangeT&& Input,
 #else
-            RangeT& Input,
+        RangeT& Input,
 #endif
-            PredicateT Pred,
-            token_compress_mode_type eCompress=token_compress_off )
-        {
-            return ::hpx::string::iter_split(
-                Result,
-                Input,
-                ::hpx::string::token_finder( Pred, eCompress ) );
-        }
+        PredicateT Pred,
+        token_compress_mode_type eCompress = token_compress_off)
+    {
+        return ::hpx::string::iter_split(
+            Result, Input, ::hpx::string::token_finder(Pred, eCompress));
+    }
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_SPLIT_HPP
-
+#endif    // HPX_STRING_SPLIT_HPP

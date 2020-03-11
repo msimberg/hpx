@@ -13,16 +13,16 @@
 
 #include <hpx/config.hpp>
 #include <hpx/string/concept.hpp>
-#include <hpx/string/find_iterator.hpp>
 #include <hpx/string/detail/util.hpp>
+#include <hpx/string/find_iterator.hpp>
 
 #include <boost/iterator/transform_iterator.hpp>
-#include <boost/range/iterator_range_core.hpp>
+#include <boost/range/as_literal.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/iterator.hpp>
+#include <boost/range/iterator_range_core.hpp>
 #include <boost/range/value_type.hpp>
-#include <boost/range/as_literal.hpp>
 
 #include <algorithm>
 #include <iterator>
@@ -38,13 +38,12 @@
     substrings, the other one over the gaps between these matches.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  iterate find ---------------------------------------------------//
+    //  iterate find ---------------------------------------------------//
 
-        //! Iter find algorithm
-        /*!
+    //! Iter find algorithm
+    /*!
             This algorithm executes a given finder in iteration on the input,
             until the end of input is reached, or no match is found.
             Iteration is done using built-in find_iterator, so the real
@@ -64,61 +63,51 @@ namespace hpx {
 
             \note Prior content of the result will be overwritten.
         */
-        template<
-            typename SequenceSequenceT,
-            typename RangeT,
-            typename FinderT >
-        inline SequenceSequenceT&
-        iter_find(
-            SequenceSequenceT& Result,
+    template <typename SequenceSequenceT, typename RangeT, typename FinderT>
+    inline SequenceSequenceT& iter_find(SequenceSequenceT& Result,
 #if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
-            RangeT&& Input,
+        RangeT&& Input,
 #else
-            RangeT& Input,
+        RangeT& Input,
 #endif
-            FinderT Finder )
-        {
-            BOOST_CONCEPT_ASSERT((
-                FinderConcept<
-                    FinderT,
-                    typename boost::range_iterator<RangeT>::type>
-                ));
+        FinderT Finder)
+    {
+        BOOST_CONCEPT_ASSERT((FinderConcept<FinderT,
+            typename boost::range_iterator<RangeT>::type>) );
 
-            boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
+        boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+            lit_input(::boost::as_literal(Input));
 
-            typedef typename
-                boost::range_iterator<RangeT>::type input_iterator_type;
-            typedef find_iterator<input_iterator_type> find_iterator_type;
-            typedef detail::copy_iterator_rangeF<
-                typename
-                    boost::range_value<SequenceSequenceT>::type,
-                input_iterator_type> copy_range_type;
+        typedef
+            typename boost::range_iterator<RangeT>::type input_iterator_type;
+        typedef find_iterator<input_iterator_type> find_iterator_type;
+        typedef detail::copy_iterator_rangeF<
+            typename boost::range_value<SequenceSequenceT>::type,
+            input_iterator_type>
+            copy_range_type;
 
-            input_iterator_type InputEnd=::boost::end(lit_input);
+        input_iterator_type InputEnd = ::boost::end(lit_input);
 
-            typedef boost::transform_iterator<copy_range_type, find_iterator_type>
-                transform_iter_type;
+        typedef boost::transform_iterator<copy_range_type, find_iterator_type>
+            transform_iter_type;
 
-            transform_iter_type itBegin=
-                ::boost::make_transform_iterator(
-                    find_iterator_type( ::boost::begin(lit_input), InputEnd, Finder ),
-                    copy_range_type());
+        transform_iter_type itBegin = ::boost::make_transform_iterator(
+            find_iterator_type(::boost::begin(lit_input), InputEnd, Finder),
+            copy_range_type());
 
-            transform_iter_type itEnd=
-                ::boost::make_transform_iterator(
-                    find_iterator_type(),
-                    copy_range_type());
+        transform_iter_type itEnd = ::boost::make_transform_iterator(
+            find_iterator_type(), copy_range_type());
 
-            SequenceSequenceT Tmp(itBegin, itEnd);
+        SequenceSequenceT Tmp(itBegin, itEnd);
 
-            Result.swap(Tmp);
-            return Result;
-        }
+        Result.swap(Tmp);
+        return Result;
+    }
 
-//  iterate split ---------------------------------------------------//
+    //  iterate split ---------------------------------------------------//
 
-        //! Split find algorithm
-        /*!
+    //! Split find algorithm
+    /*!
             This algorithm executes a given finder in iteration on the input,
             until the end of input is reached, or no match is found.
             Iteration is done using built-in find_iterator, so the real
@@ -139,58 +128,47 @@ namespace hpx {
 
             \note Prior content of the result will be overwritten.
         */
-        template<
-            typename SequenceSequenceT,
-            typename RangeT,
-            typename FinderT >
-        inline SequenceSequenceT&
-        iter_split(
-            SequenceSequenceT& Result,
+    template <typename SequenceSequenceT, typename RangeT, typename FinderT>
+    inline SequenceSequenceT& iter_split(SequenceSequenceT& Result,
 #if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
-            RangeT&& Input,
+        RangeT&& Input,
 #else
-            RangeT& Input,
+        RangeT& Input,
 #endif
-            FinderT Finder )
-        {
-            BOOST_CONCEPT_ASSERT((
-                FinderConcept<FinderT,
-                typename boost::range_iterator<RangeT>::type>
-                ));
+        FinderT Finder)
+    {
+        BOOST_CONCEPT_ASSERT((FinderConcept<FinderT,
+            typename boost::range_iterator<RangeT>::type>) );
 
-            boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
+        boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+            lit_input(::boost::as_literal(Input));
 
-            typedef typename
-                boost::range_iterator<RangeT>::type input_iterator_type;
-            typedef split_iterator<input_iterator_type> find_iterator_type;
-            typedef detail::copy_iterator_rangeF<
-                typename
-                    boost::range_value<SequenceSequenceT>::type,
-                input_iterator_type> copy_range_type;
+        typedef
+            typename boost::range_iterator<RangeT>::type input_iterator_type;
+        typedef split_iterator<input_iterator_type> find_iterator_type;
+        typedef detail::copy_iterator_rangeF<
+            typename boost::range_value<SequenceSequenceT>::type,
+            input_iterator_type>
+            copy_range_type;
 
-            input_iterator_type InputEnd=::boost::end(lit_input);
+        input_iterator_type InputEnd = ::boost::end(lit_input);
 
-            typedef boost::transform_iterator<copy_range_type, find_iterator_type>
-                transform_iter_type;
+        typedef boost::transform_iterator<copy_range_type, find_iterator_type>
+            transform_iter_type;
 
-            transform_iter_type itBegin=
-                ::boost::make_transform_iterator(
-                    find_iterator_type( ::boost::begin(lit_input), InputEnd, Finder ),
-                    copy_range_type() );
+        transform_iter_type itBegin = ::boost::make_transform_iterator(
+            find_iterator_type(::boost::begin(lit_input), InputEnd, Finder),
+            copy_range_type());
 
-            transform_iter_type itEnd=
-                ::boost::make_transform_iterator(
-                    find_iterator_type(),
-                    copy_range_type() );
+        transform_iter_type itEnd = ::boost::make_transform_iterator(
+            find_iterator_type(), copy_range_type());
 
-            SequenceSequenceT Tmp(itBegin, itEnd);
+        SequenceSequenceT Tmp(itBegin, itEnd);
 
-            Result.swap(Tmp);
-            return Result;
-        }
+        Result.swap(Tmp);
+        return Result;
+    }
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_ITER_FIND_HPP
+#endif    // HPX_STRING_ITER_FIND_HPP

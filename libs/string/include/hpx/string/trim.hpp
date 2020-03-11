@@ -12,13 +12,13 @@
 #define HPX_STRING_TRIM_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/string/detail/trim.hpp>
 #include <hpx/string/classification.hpp>
+#include <hpx/string/detail/trim.hpp>
 
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-#include <boost/range/const_iterator.hpp>
 #include <boost/range/as_literal.hpp>
+#include <boost/range/begin.hpp>
+#include <boost/range/const_iterator.hpp>
+#include <boost/range/end.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
 #include <locale>
@@ -35,14 +35,12 @@
 
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
     //  left trim  -----------------------------------------------//
 
-
-        //! Left trim - parametric
-        /*!
+    //! Left trim - parametric
+    /*!
             Remove all leading spaces from the input.
             The supplied predicate is used to determine which characters are considered spaces.
             The result is a trimmed copy of the input. It is returned as a sequence
@@ -57,42 +55,37 @@ namespace hpx {
 
                \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT, typename PredicateT>
-        inline OutputIteratorT trim_left_copy_if(
-            OutputIteratorT Output,
-            const RangeT& Input,
-            PredicateT IsSpace)
-        {
-            boost::iterator_range<typename boost::range_const_iterator<RangeT>::type> lit_range(::boost::as_literal(Input));
+    template <typename OutputIteratorT, typename RangeT, typename PredicateT>
+    inline OutputIteratorT trim_left_copy_if(
+        OutputIteratorT Output, const RangeT& Input, PredicateT IsSpace)
+    {
+        boost::iterator_range<
+            typename boost::range_const_iterator<RangeT>::type>
+            lit_range(::boost::as_literal(Input));
 
-            std::copy(
-                ::hpx::string::detail::trim_begin(
-                    ::boost::begin(lit_range),
-                    ::boost::end(lit_range),
-                    IsSpace ),
-                ::boost::end(lit_range),
-                Output);
+        std::copy(::hpx::string::detail::trim_begin(::boost::begin(lit_range),
+                      ::boost::end(lit_range), IsSpace),
+            ::boost::end(lit_range), Output);
 
-            return Output;
-        }
+        return Output;
+    }
 
-        //! Left trim - parametric
-        /*!
+    //! Left trim - parametric
+    /*!
             \overload
         */
-        template<typename SequenceT, typename PredicateT>
-        inline SequenceT trim_left_copy_if(const SequenceT& Input, PredicateT IsSpace)
-        {
-            return SequenceT(
-                ::hpx::string::detail::trim_begin(
-                    ::boost::begin(Input),
-                    ::boost::end(Input),
-                    IsSpace ),
-                ::boost::end(Input));
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline SequenceT trim_left_copy_if(
+        const SequenceT& Input, PredicateT IsSpace)
+    {
+        return SequenceT(
+            ::hpx::string::detail::trim_begin(
+                ::boost::begin(Input), ::boost::end(Input), IsSpace),
+            ::boost::end(Input));
+    }
 
-        //! Left trim - parametric
-        /*!
+    //! Left trim - parametric
+    /*!
             Remove all leading spaces from the input.
             The result is a trimmed copy of the input.
 
@@ -102,17 +95,15 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename SequenceT>
-        inline SequenceT trim_left_copy(const SequenceT& Input, const std::locale& Loc=std::locale())
-        {
-            return
-                ::hpx::string::trim_left_copy_if(
-                    Input,
-                    is_space(Loc));
-        }
+    template <typename SequenceT>
+    inline SequenceT trim_left_copy(
+        const SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::trim_left_copy_if(Input, is_space(Loc));
+    }
 
-        //! Left trim
-        /*!
+    //! Left trim
+    /*!
             Remove all leading spaces from the input. The supplied predicate is
             used to determine which characters are considered spaces.
             The input sequence is modified in-place.
@@ -120,37 +111,33 @@ namespace hpx {
             \param Input An input sequence
             \param IsSpace A unary predicate identifying spaces
         */
-        template<typename SequenceT, typename PredicateT>
-        inline void trim_left_if(SequenceT& Input, PredicateT IsSpace)
-        {
-            Input.erase(
-                ::boost::begin(Input),
-                ::hpx::string::detail::trim_begin(
-                    ::boost::begin(Input),
-                    ::boost::end(Input),
-                    IsSpace));
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline void trim_left_if(SequenceT& Input, PredicateT IsSpace)
+    {
+        Input.erase(::boost::begin(Input),
+            ::hpx::string::detail::trim_begin(
+                ::boost::begin(Input), ::boost::end(Input), IsSpace));
+    }
 
-        //! Left trim
-        /*!
+    //! Left trim
+    /*!
             Remove all leading spaces from the input.
             The Input sequence is modified in-place.
 
             \param Input An input sequence
             \param Loc A locale used for 'space' classification
         */
-        template<typename SequenceT>
-        inline void trim_left(SequenceT& Input, const std::locale& Loc=std::locale())
-        {
-            ::hpx::string::trim_left_if(
-                Input,
-                is_space(Loc));
-        }
+    template <typename SequenceT>
+    inline void trim_left(
+        SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::trim_left_if(Input, is_space(Loc));
+    }
 
     //  right trim  -----------------------------------------------//
 
-        //! Right trim - parametric
-        /*!
+    //! Right trim - parametric
+    /*!
             Remove all trailing spaces from the input.
             The supplied predicate is used to determine which characters are considered spaces.
             The result is a trimmed copy of the input. It is returned as a sequence
@@ -165,43 +152,37 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT, typename PredicateT>
-        inline OutputIteratorT trim_right_copy_if(
-            OutputIteratorT Output,
-            const RangeT& Input,
-            PredicateT IsSpace )
-        {
-            boost::iterator_range<typename boost::range_const_iterator<RangeT>::type> lit_range(::boost::as_literal(Input));
+    template <typename OutputIteratorT, typename RangeT, typename PredicateT>
+    inline OutputIteratorT trim_right_copy_if(
+        OutputIteratorT Output, const RangeT& Input, PredicateT IsSpace)
+    {
+        boost::iterator_range<
+            typename boost::range_const_iterator<RangeT>::type>
+            lit_range(::boost::as_literal(Input));
 
-            std::copy(
-                ::boost::begin(lit_range),
-                ::hpx::string::detail::trim_end(
-                    ::boost::begin(lit_range),
-                    ::boost::end(lit_range),
-                    IsSpace ),
-                Output );
+        std::copy(::boost::begin(lit_range),
+            ::hpx::string::detail::trim_end(
+                ::boost::begin(lit_range), ::boost::end(lit_range), IsSpace),
+            Output);
 
-            return Output;
-        }
+        return Output;
+    }
 
-        //! Right trim - parametric
-        /*!
+    //! Right trim - parametric
+    /*!
             \overload
          */
-        template<typename SequenceT, typename PredicateT>
-        inline SequenceT trim_right_copy_if(const SequenceT& Input, PredicateT IsSpace)
-        {
-            return SequenceT(
-                ::boost::begin(Input),
-                ::hpx::string::detail::trim_end(
-                    ::boost::begin(Input),
-                    ::boost::end(Input),
-                    IsSpace)
-                );
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline SequenceT trim_right_copy_if(
+        const SequenceT& Input, PredicateT IsSpace)
+    {
+        return SequenceT(::boost::begin(Input),
+            ::hpx::string::detail::trim_end(
+                ::boost::begin(Input), ::boost::end(Input), IsSpace));
+    }
 
-        //! Right trim
-        /*!
+    //! Right trim
+    /*!
             Remove all trailing spaces from the input.
             The result is a trimmed copy of the input
 
@@ -211,18 +192,15 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename SequenceT>
-        inline SequenceT trim_right_copy(const SequenceT& Input, const std::locale& Loc=std::locale())
-        {
-            return
-                ::hpx::string::trim_right_copy_if(
-                    Input,
-                    is_space(Loc));
-        }
+    template <typename SequenceT>
+    inline SequenceT trim_right_copy(
+        const SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::trim_right_copy_if(Input, is_space(Loc));
+    }
 
-
-        //! Right trim - parametric
-        /*!
+    //! Right trim - parametric
+    /*!
             Remove all trailing spaces from the input.
             The supplied predicate is used to determine which characters are considered spaces.
             The input sequence is modified in-place.
@@ -230,39 +208,33 @@ namespace hpx {
             \param Input An input sequence
             \param IsSpace A unary predicate identifying spaces
         */
-        template<typename SequenceT, typename PredicateT>
-        inline void trim_right_if(SequenceT& Input, PredicateT IsSpace)
-        {
-            Input.erase(
-                ::hpx::string::detail::trim_end(
-                    ::boost::begin(Input),
-                    ::boost::end(Input),
-                    IsSpace ),
-                ::boost::end(Input)
-                );
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline void trim_right_if(SequenceT& Input, PredicateT IsSpace)
+    {
+        Input.erase(::hpx::string::detail::trim_end(
+                        ::boost::begin(Input), ::boost::end(Input), IsSpace),
+            ::boost::end(Input));
+    }
 
-
-        //! Right trim
-        /*!
+    //! Right trim
+    /*!
             Remove all trailing spaces from the input.
             The input sequence is modified in-place.
 
             \param Input An input sequence
             \param Loc A locale used for 'space' classification
         */
-        template<typename SequenceT>
-        inline void trim_right(SequenceT& Input, const std::locale& Loc=std::locale())
-        {
-            ::hpx::string::trim_right_if(
-                Input,
-                is_space(Loc) );
-        }
+    template <typename SequenceT>
+    inline void trim_right(
+        SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::trim_right_if(Input, is_space(Loc));
+    }
 
     //  both side trim  -----------------------------------------------//
 
-        //! Trim - parametric
-        /*!
+    //! Trim - parametric
+    /*!
             Remove all trailing and leading spaces from the input.
             The supplied predicate is used to determine which characters are considered spaces.
             The result is a trimmed copy of the input. It is returned as a sequence
@@ -277,56 +249,43 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT, typename PredicateT>
-        inline OutputIteratorT trim_copy_if(
-            OutputIteratorT Output,
-            const RangeT& Input,
-            PredicateT IsSpace)
-        {
-            boost::iterator_range<typename boost::range_const_iterator<RangeT>::type> lit_range(::boost::as_literal(Input));
+    template <typename OutputIteratorT, typename RangeT, typename PredicateT>
+    inline OutputIteratorT trim_copy_if(
+        OutputIteratorT Output, const RangeT& Input, PredicateT IsSpace)
+    {
+        boost::iterator_range<
+            typename boost::range_const_iterator<RangeT>::type>
+            lit_range(::boost::as_literal(Input));
 
-            typename
-                boost::range_const_iterator<RangeT>::type TrimEnd=
-                ::hpx::string::detail::trim_end(
-                    ::boost::begin(lit_range),
-                    ::boost::end(lit_range),
-                    IsSpace);
+        typename boost::range_const_iterator<RangeT>::type TrimEnd =
+            ::hpx::string::detail::trim_end(
+                ::boost::begin(lit_range), ::boost::end(lit_range), IsSpace);
 
-            std::copy(
-                detail::trim_begin(
-                    ::boost::begin(lit_range), TrimEnd, IsSpace),
-                TrimEnd,
-                Output
-                );
+        std::copy(
+            detail::trim_begin(::boost::begin(lit_range), TrimEnd, IsSpace),
+            TrimEnd, Output);
 
-            return Output;
-        }
+        return Output;
+    }
 
-        //! Trim - parametric
-        /*!
+    //! Trim - parametric
+    /*!
             \overload
          */
-        template<typename SequenceT, typename PredicateT>
-        inline SequenceT trim_copy_if(const SequenceT& Input, PredicateT IsSpace)
-        {
-            typename
-                boost::range_const_iterator<SequenceT>::type TrimEnd=
-                    ::hpx::string::detail::trim_end(
-                        ::boost::begin(Input),
-                        ::boost::end(Input),
-                        IsSpace);
+    template <typename SequenceT, typename PredicateT>
+    inline SequenceT trim_copy_if(const SequenceT& Input, PredicateT IsSpace)
+    {
+        typename boost::range_const_iterator<SequenceT>::type TrimEnd =
+            ::hpx::string::detail::trim_end(
+                ::boost::begin(Input), ::boost::end(Input), IsSpace);
 
-            return SequenceT(
-                detail::trim_begin(
-                    ::boost::begin(Input),
-                    TrimEnd,
-                    IsSpace),
-                TrimEnd
-                );
-        }
+        return SequenceT(
+            detail::trim_begin(::boost::begin(Input), TrimEnd, IsSpace),
+            TrimEnd);
+    }
 
-        //! Trim
-        /*!
+    //! Trim
+    /*!
             Remove all leading and trailing spaces from the input.
             The result is a trimmed copy of the input
 
@@ -336,17 +295,15 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename SequenceT>
-        inline SequenceT trim_copy( const SequenceT& Input, const std::locale& Loc=std::locale() )
-        {
-            return
-                ::hpx::string::trim_copy_if(
-                    Input,
-                    is_space(Loc) );
-        }
+    template <typename SequenceT>
+    inline SequenceT trim_copy(
+        const SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::trim_copy_if(Input, is_space(Loc));
+    }
 
-        //! Trim
-        /*!
+    //! Trim
+    /*!
             Remove all leading and trailing spaces from the input.
             The supplied predicate is used to determine which characters are considered spaces.
             The input sequence is modified in-place.
@@ -354,30 +311,27 @@ namespace hpx {
             \param Input An input sequence
             \param IsSpace A unary predicate identifying spaces
         */
-        template<typename SequenceT, typename PredicateT>
-        inline void trim_if(SequenceT& Input, PredicateT IsSpace)
-        {
-            ::hpx::string::trim_right_if( Input, IsSpace );
-            ::hpx::string::trim_left_if( Input, IsSpace );
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline void trim_if(SequenceT& Input, PredicateT IsSpace)
+    {
+        ::hpx::string::trim_right_if(Input, IsSpace);
+        ::hpx::string::trim_left_if(Input, IsSpace);
+    }
 
-        //! Trim
-        /*!
+    //! Trim
+    /*!
             Remove all leading and trailing spaces from the input.
             The input sequence is modified in-place.
 
             \param Input An input sequence
             \param Loc A locale used for 'space' classification
         */
-        template<typename SequenceT>
-        inline void trim(SequenceT& Input, const std::locale& Loc=std::locale())
-        {
-            ::hpx::string::trim_if(
-                Input,
-                is_space( Loc ) );
-        }
+    template <typename SequenceT>
+    inline void trim(SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::trim_if(Input, is_space(Loc));
+    }
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-#endif  // HPX_STRING_TRIM_HPP
+#endif    // HPX_STRING_TRIM_HPP

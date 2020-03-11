@@ -12,15 +12,15 @@
 #define HPX_STRING_FIND_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/string/finder.hpp>
 #include <hpx/string/compare.hpp>
 #include <hpx/string/constants.hpp>
+#include <hpx/string/finder.hpp>
 
-#include <boost/range/iterator_range_core.hpp>
+#include <boost/range/as_literal.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/iterator.hpp>
-#include <boost/range/as_literal.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
 /*! \file
     Defines a set of find algorithms. The algorithms are searching
@@ -28,13 +28,12 @@
     delimiting the substring.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  Generic find -----------------------------------------------//
+    //  Generic find -----------------------------------------------//
 
-        //! Generic find algorithm
-        /*!
+    //! Generic find algorithm
+    /*!
             Search the input using the given finder.
 
             \param Input A string which will be searched.
@@ -45,22 +44,20 @@ namespace hpx {
                 \c RangeT::const_iterator, depending on the constness of
                 the input parameter.
         */
-        template<typename RangeT, typename FinderT>
-        inline boost::iterator_range<
-            typename boost::range_iterator<RangeT>::type>
-        find(
-            RangeT& Input,
-            const FinderT& Finder)
-        {
-            boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
+    template <typename RangeT, typename FinderT>
+    inline boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+    find(RangeT& Input, const FinderT& Finder)
+    {
+        boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+            lit_input(::boost::as_literal(Input));
 
-            return Finder(::boost::begin(lit_input),::boost::end(lit_input));
-        }
+        return Finder(::boost::begin(lit_input), ::boost::end(lit_input));
+    }
 
-//  find_first  -----------------------------------------------//
+    //  find_first  -----------------------------------------------//
 
-        //! Find first algorithm
-        /*!
+    //! Find first algorithm
+    /*!
             Search for the first occurrence of the substring in the input.
 
             \param Input A string which will be searched.
@@ -73,18 +70,15 @@ namespace hpx {
 
               \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
-        inline boost::iterator_range<
-            typename boost::range_iterator<Range1T>::type>
-        find_first(
-            Range1T& Input,
-            const Range2T& Search)
-        {
-            return ::hpx::string::find(Input, ::hpx::string::first_finder(Search));
-        }
+    template <typename Range1T, typename Range2T>
+    inline boost::iterator_range<typename boost::range_iterator<Range1T>::type>
+    find_first(Range1T& Input, const Range2T& Search)
+    {
+        return ::hpx::string::find(Input, ::hpx::string::first_finder(Search));
+    }
 
-        //! Find first algorithm ( case insensitive )
-        /*!
+    //! Find first algorithm ( case insensitive )
+    /*!
             Search for the first occurrence of the substring in the input.
             Searching is case insensitive.
 
@@ -99,21 +93,19 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
-        inline boost::iterator_range<
-            typename boost::range_iterator<Range1T>::type>
-        ifind_first(
-            Range1T& Input,
-            const Range2T& Search,
-            const std::locale& Loc=std::locale())
-        {
-            return ::hpx::string::find(Input, ::hpx::string::first_finder(Search,is_iequal(Loc)));
-        }
+    template <typename Range1T, typename Range2T>
+    inline boost::iterator_range<typename boost::range_iterator<Range1T>::type>
+    ifind_first(Range1T& Input, const Range2T& Search,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find(
+            Input, ::hpx::string::first_finder(Search, is_iequal(Loc)));
+    }
 
-//  find_last  -----------------------------------------------//
+    //  find_last  -----------------------------------------------//
 
-        //! Find last algorithm
-        /*!
+    //! Find last algorithm
+    /*!
             Search for the last occurrence of the substring in the input.
 
             \param Input A string which will be searched.
@@ -126,18 +118,15 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
-        inline boost::iterator_range<
-            typename boost::range_iterator<Range1T>::type>
-        find_last(
-            Range1T& Input,
-            const Range2T& Search)
-        {
-            return ::hpx::string::find(Input, ::hpx::string::last_finder(Search));
-        }
+    template <typename Range1T, typename Range2T>
+    inline boost::iterator_range<typename boost::range_iterator<Range1T>::type>
+    find_last(Range1T& Input, const Range2T& Search)
+    {
+        return ::hpx::string::find(Input, ::hpx::string::last_finder(Search));
+    }
 
-        //! Find last algorithm ( case insensitive )
-        /*!
+    //! Find last algorithm ( case insensitive )
+    /*!
             Search for the last match a string in the input.
             Searching is case insensitive.
 
@@ -152,21 +141,19 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
-        inline boost::iterator_range<
-            typename boost::range_iterator<Range1T>::type>
-        ifind_last(
-            Range1T& Input,
-            const Range2T& Search,
-            const std::locale& Loc=std::locale())
-        {
-            return ::hpx::string::find(Input, ::hpx::string::last_finder(Search, is_iequal(Loc)));
-        }
+    template <typename Range1T, typename Range2T>
+    inline boost::iterator_range<typename boost::range_iterator<Range1T>::type>
+    ifind_last(Range1T& Input, const Range2T& Search,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find(
+            Input, ::hpx::string::last_finder(Search, is_iequal(Loc)));
+    }
 
-//  find_nth ----------------------------------------------------------------------//
+    //  find_nth ----------------------------------------------------------------------//
 
-        //! Find n-th algorithm
-        /*!
+    //! Find n-th algorithm
+    /*!
             Search for the n-th (zero-indexed) occurrence of the substring in the
             input.
 
@@ -180,19 +167,16 @@ namespace hpx {
                 \c Range1T::const_iterator, depending on the constness of
                 the input parameter.
         */
-        template<typename Range1T, typename Range2T>
-        inline boost::iterator_range<
-            typename boost::range_iterator<Range1T>::type>
-        find_nth(
-            Range1T& Input,
-            const Range2T& Search,
-            int Nth)
-        {
-            return ::hpx::string::find(Input, ::hpx::string::nth_finder(Search,Nth));
-        }
+    template <typename Range1T, typename Range2T>
+    inline boost::iterator_range<typename boost::range_iterator<Range1T>::type>
+    find_nth(Range1T& Input, const Range2T& Search, int Nth)
+    {
+        return ::hpx::string::find(
+            Input, ::hpx::string::nth_finder(Search, Nth));
+    }
 
-        //! Find n-th algorithm ( case insensitive ).
-        /*!
+    //! Find n-th algorithm ( case insensitive ).
+    /*!
             Search for the n-th (zero-indexed) occurrence of the substring in the
             input. Searching is case insensitive.
 
@@ -210,22 +194,19 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename Range1T, typename Range2T>
-        inline boost::iterator_range<
-            typename boost::range_iterator<Range1T>::type>
-        ifind_nth(
-            Range1T& Input,
-            const Range2T& Search,
-            int Nth,
-            const std::locale& Loc=std::locale())
-        {
-            return ::hpx::string::find(Input, ::hpx::string::nth_finder(Search,Nth,is_iequal(Loc)));
-        }
+    template <typename Range1T, typename Range2T>
+    inline boost::iterator_range<typename boost::range_iterator<Range1T>::type>
+    ifind_nth(Range1T& Input, const Range2T& Search, int Nth,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find(
+            Input, ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)));
+    }
 
-//  find_head ----------------------------------------------------------------------//
+    //  find_head ----------------------------------------------------------------------//
 
-        //! Find head algorithm
-        /*!
+    //! Find head algorithm
+    /*!
             Get the head of the input. Head is a prefix of the string of the
             given size. If the input is shorter then required, whole input is considered
             to be the head.
@@ -242,20 +223,17 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename RangeT>
-        inline boost::iterator_range<
-            typename boost::range_iterator<RangeT>::type>
-        find_head(
-            RangeT& Input,
-            int N)
-        {
-            return ::hpx::string::find(Input, ::hpx::string::head_finder(N));
-        }
+    template <typename RangeT>
+    inline boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+    find_head(RangeT& Input, int N)
+    {
+        return ::hpx::string::find(Input, ::hpx::string::head_finder(N));
+    }
 
-//  find_tail ----------------------------------------------------------------------//
+    //  find_tail ----------------------------------------------------------------------//
 
-        //! Find tail algorithm
-        /*!
+    //! Find tail algorithm
+    /*!
             Get the tail of the input. Tail is a suffix of the string of the
             given size. If the input is shorter then required, whole input is considered
             to be the tail.
@@ -273,20 +251,17 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename RangeT>
-        inline boost::iterator_range<
-            typename boost::range_iterator<RangeT>::type>
-        find_tail(
-            RangeT& Input,
-            int N)
-        {
-            return ::hpx::string::find(Input, ::hpx::string::tail_finder(N));
-        }
+    template <typename RangeT>
+    inline boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+    find_tail(RangeT& Input, int N)
+    {
+        return ::hpx::string::find(Input, ::hpx::string::tail_finder(N));
+    }
 
-//  find_token --------------------------------------------------------------------//
+    //  find_token --------------------------------------------------------------------//
 
-        //! Find token algorithm
-        /*!
+    //! Find token algorithm
+    /*!
             Look for a given token in the string. Token is a character that matches the
             given predicate.
             If the "token compress mode" is enabled, adjacent tokens are considered to be one match.
@@ -302,19 +277,15 @@ namespace hpx {
 
             \note This function provides the strong exception-safety guarantee
         */
-        template<typename RangeT, typename PredicateT>
-        inline boost::iterator_range<
-            typename boost::range_iterator<RangeT>::type>
-        find_token(
-            RangeT& Input,
-            PredicateT Pred,
-            token_compress_mode_type eCompress=token_compress_off)
-        {
-            return ::hpx::string::find(Input, ::hpx::string::token_finder(Pred, eCompress));
-        }
+    template <typename RangeT, typename PredicateT>
+    inline boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+    find_token(RangeT& Input, PredicateT Pred,
+        token_compress_mode_type eCompress = token_compress_off)
+    {
+        return ::hpx::string::find(
+            Input, ::hpx::string::token_finder(Pred, eCompress));
+    }
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_FIND_HPP
+#endif    // HPX_STRING_FIND_HPP

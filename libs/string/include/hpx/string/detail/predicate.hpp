@@ -15,64 +15,46 @@
 
 #include <iterator>
 
-namespace hpx {
-    namespace string {
-        namespace detail {
+namespace hpx { namespace string { namespace detail {
 
-//  ends_with predicate implementation ----------------------------------//
+    //  ends_with predicate implementation ----------------------------------//
 
-            template<
-                typename ForwardIterator1T,
-                typename ForwardIterator2T,
-                typename PredicateT>
-            inline bool ends_with_iter_select(
-                ForwardIterator1T Begin,
-                ForwardIterator1T End,
-                ForwardIterator2T SubBegin,
-                ForwardIterator2T SubEnd,
-                PredicateT Comp,
-                std::bidirectional_iterator_tag)
-            {
-                ForwardIterator1T it=End;
-                ForwardIterator2T pit=SubEnd;
-                for(;it!=Begin && pit!=SubBegin;)
-                {
-                    if( !(Comp(*(--it),*(--pit))) )
-                        return false;
-                }
+    template <typename ForwardIterator1T, typename ForwardIterator2T,
+        typename PredicateT>
+    inline bool ends_with_iter_select(ForwardIterator1T Begin,
+        ForwardIterator1T End, ForwardIterator2T SubBegin,
+        ForwardIterator2T SubEnd, PredicateT Comp,
+        std::bidirectional_iterator_tag)
+    {
+        ForwardIterator1T it = End;
+        ForwardIterator2T pit = SubEnd;
+        for (; it != Begin && pit != SubBegin;)
+        {
+            if (!(Comp(*(--it), *(--pit))))
+                return false;
+        }
 
-                return pit==SubBegin;
-            }
+        return pit == SubBegin;
+    }
 
-            template<
-                typename ForwardIterator1T,
-                typename ForwardIterator2T,
-                typename PredicateT>
-            inline bool ends_with_iter_select(
-                ForwardIterator1T Begin,
-                ForwardIterator1T End,
-                ForwardIterator2T SubBegin,
-                ForwardIterator2T SubEnd,
-                PredicateT Comp,
-                std::forward_iterator_tag)
-            {
-                if ( SubBegin==SubEnd )
-                {
-                    // empty subsequence check
-                    return true;
-                }
+    template <typename ForwardIterator1T, typename ForwardIterator2T,
+        typename PredicateT>
+    inline bool ends_with_iter_select(ForwardIterator1T Begin,
+        ForwardIterator1T End, ForwardIterator2T SubBegin,
+        ForwardIterator2T SubEnd, PredicateT Comp, std::forward_iterator_tag)
+    {
+        if (SubBegin == SubEnd)
+        {
+            // empty subsequence check
+            return true;
+        }
 
-                boost::iterator_range<ForwardIterator1T> Result
-                    =last_finder(
-                        ::boost::make_iterator_range(SubBegin, SubEnd),
-                        Comp)(Begin, End);
+        boost::iterator_range<ForwardIterator1T> Result = last_finder(
+            ::boost::make_iterator_range(SubBegin, SubEnd), Comp)(Begin, End);
 
-                return !Result.empty() && Result.end()==End;
-            }
+        return !Result.empty() && Result.end() == End;
+    }
 
-        } // namespace detail
-    } // namespace string
-} // namespace hpx
+}}}    // namespace hpx::string::detail
 
-
-#endif  // HPX_STRING_PREDICATE_DETAIL_HPP
+#endif    // HPX_STRING_PREDICATE_DETAIL_HPP

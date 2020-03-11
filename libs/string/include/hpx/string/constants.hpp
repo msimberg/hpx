@@ -11,8 +11,7 @@
 #ifndef HPX_STRING_CONSTANTS_HPP
 #define HPX_STRING_CONSTANTS_HPP
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
     //! Token compression mode
     /*!
@@ -21,11 +20,9 @@ namespace hpx {
     enum token_compress_mode_type
     {
         token_compress_on,    //!< Compress adjacent tokens
-        token_compress_off  //!< Do not compress adjacent tokens
+        token_compress_off    //!< Do not compress adjacent tokens
     };
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-#endif  // HPX_STRING_CONSTANTS_HPP
-
+#endif    // HPX_STRING_CONSTANTS_HPP

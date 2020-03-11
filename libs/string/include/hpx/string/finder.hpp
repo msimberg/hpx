@@ -12,15 +12,15 @@
 #define HPX_STRING_FINDER_HPP
 
 #include <hpx/config.hpp>
+#include <hpx/string/compare.hpp>
 #include <hpx/string/constants.hpp>
 #include <hpx/string/detail/finder.hpp>
-#include <hpx/string/compare.hpp>
 
-#include <boost/range/iterator_range_core.hpp>
 #include <boost/range/begin.hpp>
+#include <boost/range/const_iterator.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/iterator.hpp>
-#include <boost/range/const_iterator.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
 /*! \file
     Defines Finder generators. Finder object is a functor which is able to
@@ -30,13 +30,12 @@
     for finders provided in this library.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  Finder generators ------------------------------------------//
+    //  Finder generators ------------------------------------------//
 
-        //! "First" finder
-        /*!
+    //! "First" finder
+    /*!
             Construct the \c first_finder. The finder searches for the first
             occurrence of the string in a given input.
             The result is given as an \c boost::iterator_range delimiting the match.
@@ -44,39 +43,32 @@ namespace hpx {
             \param Search A substring to be searched for.
             \return An instance of the \c first_finder object
         */
-        template<typename RangeT>
-        inline detail::first_finderF<
-            typename boost::range_const_iterator<RangeT>::type,
-            is_equal>
-        first_finder( const RangeT& Search )
-        {
-            return
-                detail::first_finderF<
-                    typename
-                        boost::range_const_iterator<RangeT>::type,
-                        is_equal>( ::boost::as_literal(Search), is_equal() ) ;
-        }
+    template <typename RangeT>
+    inline detail::first_finderF<
+        typename boost::range_const_iterator<RangeT>::type, is_equal>
+    first_finder(const RangeT& Search)
+    {
+        return detail::first_finderF<
+            typename boost::range_const_iterator<RangeT>::type, is_equal>(
+            ::boost::as_literal(Search), is_equal());
+    }
 
-        //! "First" finder
-        /*!
+    //! "First" finder
+    /*!
             \overload
         */
-        template<typename RangeT,typename PredicateT>
-        inline detail::first_finderF<
-            typename boost::range_const_iterator<RangeT>::type,
-            PredicateT>
-        first_finder(
-            const RangeT& Search, PredicateT Comp )
-        {
-            return
-                detail::first_finderF<
-                    typename
-                        boost::range_const_iterator<RangeT>::type,
-                    PredicateT>( ::boost::as_literal(Search), Comp );
-        }
+    template <typename RangeT, typename PredicateT>
+    inline detail::first_finderF<
+        typename boost::range_const_iterator<RangeT>::type, PredicateT>
+    first_finder(const RangeT& Search, PredicateT Comp)
+    {
+        return detail::first_finderF<
+            typename boost::range_const_iterator<RangeT>::type, PredicateT>(
+            ::boost::as_literal(Search), Comp);
+    }
 
-        //! "Last" finder
-        /*!
+    //! "Last" finder
+    /*!
             Construct the \c last_finder. The finder searches for the last
             occurrence of the string in a given input.
             The result is given as an \c boost::iterator_range delimiting the match.
@@ -84,37 +76,31 @@ namespace hpx {
             \param Search A substring to be searched for.
             \return An instance of the \c last_finder object
         */
-        template<typename RangeT>
-        inline detail::last_finderF<
-            typename boost::range_const_iterator<RangeT>::type,
-            is_equal>
-        last_finder( const RangeT& Search )
-        {
-            return
-                detail::last_finderF<
-                    typename
-                        boost::range_const_iterator<RangeT>::type,
-                    is_equal>( ::boost::as_literal(Search), is_equal() );
-        }
-        //! "Last" finder
-        /*!
+    template <typename RangeT>
+    inline detail::last_finderF<
+        typename boost::range_const_iterator<RangeT>::type, is_equal>
+    last_finder(const RangeT& Search)
+    {
+        return detail::last_finderF<
+            typename boost::range_const_iterator<RangeT>::type, is_equal>(
+            ::boost::as_literal(Search), is_equal());
+    }
+    //! "Last" finder
+    /*!
             \overload
         */
-        template<typename RangeT, typename PredicateT>
-        inline detail::last_finderF<
-            typename boost::range_const_iterator<RangeT>::type,
-            PredicateT>
-        last_finder( const RangeT& Search, PredicateT Comp )
-        {
-            return
-                detail::last_finderF<
-                    typename
-                        boost::range_const_iterator<RangeT>::type,
-                    PredicateT>( ::boost::as_literal(Search), Comp ) ;
-        }
+    template <typename RangeT, typename PredicateT>
+    inline detail::last_finderF<
+        typename boost::range_const_iterator<RangeT>::type, PredicateT>
+    last_finder(const RangeT& Search, PredicateT Comp)
+    {
+        return detail::last_finderF<
+            typename boost::range_const_iterator<RangeT>::type, PredicateT>(
+            ::boost::as_literal(Search), Comp);
+    }
 
-        //! "Nth" finder
-        /*!
+    //! "Nth" finder
+    /*!
             Construct the \c nth_finder. The finder searches for the n-th (zero-indexed)
             occurrence of the string in a given input.
             The result is given as an \c boost::iterator_range delimiting the match.
@@ -123,42 +109,31 @@ namespace hpx {
             \param Nth An index of the match to be find
             \return An instance of the \c nth_finder object
         */
-        template<typename RangeT>
-        inline detail::nth_finderF<
-            typename boost::range_const_iterator<RangeT>::type,
-            is_equal>
-        nth_finder(
-            const RangeT& Search,
-            int Nth)
-        {
-            return
-                detail::nth_finderF<
-                    typename
-                        boost::range_const_iterator<RangeT>::type,
-                    is_equal>( ::boost::as_literal(Search), Nth, is_equal() ) ;
-        }
-        //! "Nth" finder
-        /*!
+    template <typename RangeT>
+    inline detail::nth_finderF<
+        typename boost::range_const_iterator<RangeT>::type, is_equal>
+    nth_finder(const RangeT& Search, int Nth)
+    {
+        return detail::nth_finderF<
+            typename boost::range_const_iterator<RangeT>::type, is_equal>(
+            ::boost::as_literal(Search), Nth, is_equal());
+    }
+    //! "Nth" finder
+    /*!
             \overload
         */
-        template<typename RangeT, typename PredicateT>
-        inline detail::nth_finderF<
-            typename boost::range_const_iterator<RangeT>::type,
-            PredicateT>
-        nth_finder(
-            const RangeT& Search,
-            int Nth,
-            PredicateT Comp )
-        {
-            return
-                detail::nth_finderF<
-                    typename
-                        boost::range_const_iterator<RangeT>::type,
-                    PredicateT>( ::boost::as_literal(Search), Nth, Comp );
-        }
+    template <typename RangeT, typename PredicateT>
+    inline detail::nth_finderF<
+        typename boost::range_const_iterator<RangeT>::type, PredicateT>
+    nth_finder(const RangeT& Search, int Nth, PredicateT Comp)
+    {
+        return detail::nth_finderF<
+            typename boost::range_const_iterator<RangeT>::type, PredicateT>(
+            ::boost::as_literal(Search), Nth, Comp);
+    }
 
-        //! "Head" finder
-        /*!
+    //! "Head" finder
+    /*!
             Construct the \c head_finder. The finder returns a head of a given
             input. The head is a prefix of a string up to n elements in
             size. If an input has less then n elements, whole input is
@@ -168,14 +143,13 @@ namespace hpx {
             \param N The size of the head
             \return An instance of the \c head_finder object
         */
-        inline detail::head_finderF
-        head_finder( int N )
-        {
-            return detail::head_finderF(N);
-        }
+    inline detail::head_finderF head_finder(int N)
+    {
+        return detail::head_finderF(N);
+    }
 
-        //! "Tail" finder
-        /*!
+    //! "Tail" finder
+    /*!
             Construct the \c tail_finder. The finder returns a tail of a given
             input. The tail is a suffix of a string up to n elements in
             size. If an input has less then n elements, whole input is
@@ -185,14 +159,13 @@ namespace hpx {
             \param N The size of the head
             \return An instance of the \c tail_finder object
         */
-        inline detail::tail_finderF
-        tail_finder( int N )
-        {
-            return detail::tail_finderF(N);
-        }
+    inline detail::tail_finderF tail_finder(int N)
+    {
+        return detail::tail_finderF(N);
+    }
 
-        //! "Token" finder
-        /*!
+    //! "Token" finder
+    /*!
             Construct the \c token_finder. The finder searches for a token
             specified by a predicate. It is similar to std::find_if
             algorithm, with an exception that it return a range of
@@ -209,17 +182,15 @@ namespace hpx {
             \param eCompress Compress flag
             \return An instance of the \c token_finder object
         */
-        template< typename PredicateT >
-        inline detail::token_finderF<PredicateT>
-        token_finder(
-            PredicateT Pred,
-            token_compress_mode_type eCompress=token_compress_off )
-        {
-            return detail::token_finderF<PredicateT>( Pred, eCompress );
-        }
+    template <typename PredicateT>
+    inline detail::token_finderF<PredicateT> token_finder(PredicateT Pred,
+        token_compress_mode_type eCompress = token_compress_off)
+    {
+        return detail::token_finderF<PredicateT>(Pred, eCompress);
+    }
 
-        //! "Range" finder
-        /*!
+    //! "Range" finder
+    /*!
             Construct the \c range_finder. The finder does not perform
             any operation. It simply returns the given range for
             any input.
@@ -228,28 +199,24 @@ namespace hpx {
             \param End End of the range
             \return An instance of the \c range_finger object
         */
-        template< typename ForwardIteratorT >
-        inline detail::range_finderF<ForwardIteratorT>
-        range_finder(
-            ForwardIteratorT Begin,
-            ForwardIteratorT End )
-        {
-            return detail::range_finderF<ForwardIteratorT>( Begin, End );
-        }
+    template <typename ForwardIteratorT>
+    inline detail::range_finderF<ForwardIteratorT> range_finder(
+        ForwardIteratorT Begin, ForwardIteratorT End)
+    {
+        return detail::range_finderF<ForwardIteratorT>(Begin, End);
+    }
 
-        //! "Range" finder
-        /*!
+    //! "Range" finder
+    /*!
             \overload
         */
-        template< typename ForwardIteratorT >
-        inline detail::range_finderF<ForwardIteratorT>
-        range_finder( boost::iterator_range<ForwardIteratorT> Range )
-        {
-            return detail::range_finderF<ForwardIteratorT>( Range );
-        }
+    template <typename ForwardIteratorT>
+    inline detail::range_finderF<ForwardIteratorT> range_finder(
+        boost::iterator_range<ForwardIteratorT> Range)
+    {
+        return detail::range_finderF<ForwardIteratorT>(Range);
+    }
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_FINDER_HPP
+#endif    // HPX_STRING_FINDER_HPP

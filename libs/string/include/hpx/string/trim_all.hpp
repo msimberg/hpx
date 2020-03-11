@@ -12,11 +12,11 @@
 #define HPX_STRING_TRIM_ALL_HPP
 
 #include <hpx/config.hpp>
-#include <hpx/string/trim.hpp>
 #include <hpx/string/classification.hpp>
 #include <hpx/string/find_format.hpp>
-#include <hpx/string/formatter.hpp>
 #include <hpx/string/finder.hpp>
+#include <hpx/string/formatter.hpp>
+#include <hpx/string/trim.hpp>
 
 #include <locale>
 
@@ -37,13 +37,12 @@
 
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-        // multi line trim  ----------------------------------------------- //
+    // multi line trim  ----------------------------------------------- //
 
-        //! Trim All - parametric
-        /*!
+    //! Trim All - parametric
+    /*!
             Remove all leading and trailing spaces from the input and
             compress all other spaces to a single character.
             The result is a trimmed copy of the input
@@ -52,19 +51,19 @@ namespace hpx {
              \param IsSpace A unary predicate identifying spaces
             \return A trimmed copy of the input
         */
-        template<typename SequenceT, typename PredicateT>
-        inline SequenceT trim_all_copy_if(const SequenceT& Input, PredicateT IsSpace)
-        {
-            return
-                ::hpx::string::find_format_all_copy(
-                    ::hpx::string::trim_copy_if(Input, IsSpace),
-                    ::hpx::string::token_finder(IsSpace, ::hpx::string::token_compress_on),
-                    ::hpx::string::dissect_formatter(::hpx::string::head_finder(1)));
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline SequenceT trim_all_copy_if(
+        const SequenceT& Input, PredicateT IsSpace)
+    {
+        return ::hpx::string::find_format_all_copy(
+            ::hpx::string::trim_copy_if(Input, IsSpace),
+            ::hpx::string::token_finder(
+                IsSpace, ::hpx::string::token_compress_on),
+            ::hpx::string::dissect_formatter(::hpx::string::head_finder(1)));
+    }
 
-
-        //! Trim All
-        /*!
+    //! Trim All
+    /*!
             Remove all leading and trailing spaces from the input and
             compress all other spaces to a single character.
             The input sequence is modified in-place.
@@ -72,19 +71,18 @@ namespace hpx {
             \param Input An input sequence
             \param IsSpace A unary predicate identifying spaces
         */
-        template<typename SequenceT, typename PredicateT>
-        inline void trim_all_if(SequenceT& Input, PredicateT IsSpace)
-        {
-            ::hpx::string::trim_if(Input, IsSpace);
-            ::hpx::string::find_format_all(
-                Input,
-                ::hpx::string::token_finder(IsSpace, ::hpx::string::token_compress_on),
-                ::hpx::string::dissect_formatter(::hpx::string::head_finder(1)));
-        }
+    template <typename SequenceT, typename PredicateT>
+    inline void trim_all_if(SequenceT& Input, PredicateT IsSpace)
+    {
+        ::hpx::string::trim_if(Input, IsSpace);
+        ::hpx::string::find_format_all(Input,
+            ::hpx::string::token_finder(
+                IsSpace, ::hpx::string::token_compress_on),
+            ::hpx::string::dissect_formatter(::hpx::string::head_finder(1)));
+    }
 
-
-        //! Trim All
-        /*!
+    //! Trim All
+    /*!
             Remove all leading and trailing spaces from the input and
             compress all other spaces to a single character.
             The result is a trimmed copy of the input
@@ -93,15 +91,15 @@ namespace hpx {
             \param Loc A locale used for 'space' classification
             \return A trimmed copy of the input
         */
-        template<typename SequenceT>
-        inline SequenceT trim_all_copy(const SequenceT& Input, const std::locale& Loc =std::locale())
-        {
-            return trim_all_copy_if(Input, ::hpx::string::is_space(Loc));
-        }
+    template <typename SequenceT>
+    inline SequenceT trim_all_copy(
+        const SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        return trim_all_copy_if(Input, ::hpx::string::is_space(Loc));
+    }
 
-
-        //! Trim All
-        /*!
+    //! Trim All
+    /*!
             Remove all leading and trailing spaces from the input and
             compress all other spaces to a single character.
             The input sequence is modified in-place.
@@ -110,15 +108,15 @@ namespace hpx {
             \param Loc A locale used for 'space' classification
             \return A trimmed copy of the input
         */
-        template<typename SequenceT>
-        inline void trim_all(SequenceT& Input, const std::locale& Loc =std::locale())
-        {
-            trim_all_if(Input, ::hpx::string::is_space(Loc));
-        }
+    template <typename SequenceT>
+    inline void trim_all(
+        SequenceT& Input, const std::locale& Loc = std::locale())
+    {
+        trim_all_if(Input, ::hpx::string::is_space(Loc));
+    }
 
-
-        //! Trim Fill - parametric
-        /*!
+    //! Trim Fill - parametric
+    /*!
             Remove all leading and trailing spaces from the input and
             replace all every block of consecutive spaces with a fill string
             defined by user.
@@ -129,19 +127,19 @@ namespace hpx {
             \param IsSpace A unary predicate identifying spaces
             \return A trimmed copy of the input
         */
-        template<typename SequenceT, typename RangeT, typename PredicateT>
-        inline SequenceT trim_fill_copy_if(const SequenceT& Input, const RangeT& Fill, PredicateT IsSpace)
-        {
-            return
-                ::hpx::string::find_format_all_copy(
-                    ::hpx::string::trim_copy_if(Input, IsSpace),
-                    ::hpx::string::token_finder(IsSpace, ::hpx::string::token_compress_on),
-                    ::hpx::string::const_formatter(::boost::as_literal(Fill)));
-        }
+    template <typename SequenceT, typename RangeT, typename PredicateT>
+    inline SequenceT trim_fill_copy_if(
+        const SequenceT& Input, const RangeT& Fill, PredicateT IsSpace)
+    {
+        return ::hpx::string::find_format_all_copy(
+            ::hpx::string::trim_copy_if(Input, IsSpace),
+            ::hpx::string::token_finder(
+                IsSpace, ::hpx::string::token_compress_on),
+            ::hpx::string::const_formatter(::boost::as_literal(Fill)));
+    }
 
-
-        //! Trim Fill
-        /*!
+    //! Trim Fill
+    /*!
             Remove all leading and trailing spaces from the input and
             replace all every block of consecutive spaces with a fill string
             defined by user.
@@ -151,19 +149,19 @@ namespace hpx {
             \param Fill A string used to fill the inner spaces
             \param IsSpace A unary predicate identifying spaces
         */
-        template<typename SequenceT, typename RangeT, typename PredicateT>
-        inline void trim_fill_if(SequenceT& Input, const RangeT& Fill, PredicateT IsSpace)
-        {
-            ::hpx::string::trim_if(Input, IsSpace);
-            ::hpx::string::find_format_all(
-                Input,
-                ::hpx::string::token_finder(IsSpace, ::hpx::string::token_compress_on),
-                ::hpx::string::const_formatter(::boost::as_literal(Fill)));
-        }
+    template <typename SequenceT, typename RangeT, typename PredicateT>
+    inline void trim_fill_if(
+        SequenceT& Input, const RangeT& Fill, PredicateT IsSpace)
+    {
+        ::hpx::string::trim_if(Input, IsSpace);
+        ::hpx::string::find_format_all(Input,
+            ::hpx::string::token_finder(
+                IsSpace, ::hpx::string::token_compress_on),
+            ::hpx::string::const_formatter(::boost::as_literal(Fill)));
+    }
 
-
-        //! Trim Fill
-        /*!
+    //! Trim Fill
+    /*!
             Remove all leading and trailing spaces from the input and
             replace all every block of consecutive spaces with a fill string
             defined by user.
@@ -174,15 +172,15 @@ namespace hpx {
             \param Loc A locale used for 'space' classification
             \return A trimmed copy of the input
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT trim_fill_copy(const SequenceT& Input, const RangeT& Fill, const std::locale& Loc =std::locale())
-        {
-            return trim_fill_copy_if(Input, Fill, ::hpx::string::is_space(Loc));
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT trim_fill_copy(const SequenceT& Input, const RangeT& Fill,
+        const std::locale& Loc = std::locale())
+    {
+        return trim_fill_copy_if(Input, Fill, ::hpx::string::is_space(Loc));
+    }
 
-
-        //! Trim Fill
-        /*!
+    //! Trim Fill
+    /*!
             Remove all leading and trailing spaces from the input and
             replace all every block of consecutive spaces with a fill string
             defined by user.
@@ -193,14 +191,13 @@ namespace hpx {
             \param Loc A locale used for 'space' classification
             \return A trimmed copy of the input
         */
-        template<typename SequenceT, typename RangeT>
-        inline void trim_fill(SequenceT& Input, const RangeT& Fill, const std::locale& Loc =std::locale())
-        {
-            trim_fill_if(Input, Fill, ::hpx::string::is_space(Loc));
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void trim_fill(SequenceT& Input, const RangeT& Fill,
+        const std::locale& Loc = std::locale())
+    {
+        trim_fill_if(Input, Fill, ::hpx::string::is_space(Loc));
+    }
 
+}}    // namespace hpx::string
 
-    } // namespace string
-} // namespace hpx
-
-#endif  // HPX_STRING_TRIM_ALL_HPP
+#endif    // HPX_STRING_TRIM_ALL_HPP

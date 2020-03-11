@@ -11,47 +11,42 @@
 #ifndef HPX_STRING_STD_LIST_TRAITS_HPP
 #define HPX_STRING_STD_LIST_TRAITS_HPP
 
-#include <hpx/string/yes_no_type.hpp>
 #include <hpx/string/sequence_traits.hpp>
+#include <hpx/string/yes_no_type.hpp>
 
 #include <list>
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  std::list<> traits  -----------------------------------------------//
+    //  std::list<> traits  -----------------------------------------------//
 
+    // stable iterators trait
+    template <typename T, typename AllocT>
+    class has_stable_iterators<::std::list<T, AllocT>>
+    {
+    public:
+        static const bool value = true;
+        typedef boost::mpl::bool_<has_stable_iterators<T>::value> type;
+    };
 
-        // stable iterators trait
-        template<typename T, typename AllocT>
-        class has_stable_iterators< ::std::list<T,AllocT> >
-        {
-        public:
-            static const bool value = true;
-            typedef boost::mpl::bool_<has_stable_iterators<T>::value> type;
-        };
+    // const time insert trait
+    template <typename T, typename AllocT>
+    class has_const_time_insert<::std::list<T, AllocT>>
+    {
+    public:
+        static const bool value = true;
+        typedef boost::mpl::bool_<has_const_time_insert<T>::value> type;
+    };
 
-        // const time insert trait
-        template<typename T, typename AllocT>
-        class has_const_time_insert< ::std::list<T,AllocT> >
-        {
-        public:
-            static const bool value = true;
-            typedef boost::mpl::bool_<has_const_time_insert<T>::value> type;
-        };
+    // const time erase trait
+    template <typename T, typename AllocT>
+    class has_const_time_erase<::std::list<T, AllocT>>
+    {
+    public:
+        static const bool value = true;
+        typedef boost::mpl::bool_<has_const_time_erase<T>::value> type;
+    };
 
-        // const time erase trait
-        template<typename T, typename AllocT>
-        class has_const_time_erase< ::std::list<T,AllocT> >
-        {
-        public:
-            static const bool value = true;
-            typedef boost::mpl::bool_<has_const_time_erase<T>::value> type;
-        };
+}}    // namespace hpx::string
 
-
-    } // namespace string
-} // namespace hpx
-
-
-#endif  // HPX_STRING_STD_LIST_TRAITS_HPP
+#endif    // HPX_STRING_STD_LIST_TRAITS_HPP

@@ -7,11 +7,11 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <hpx/string/trim.hpp>
 #include <hpx/string/classification.hpp>
+#include <hpx/string/trim.hpp>
 
-#include <string>
 #include <iostream>
+#include <string>
 
 int main()
 {
@@ -22,22 +22,25 @@ int main()
     std::string str3("123abs343");
 
     // Simple left trim
-    std::cout << "trim_left copy of str1: " << "\"" << hpx::string::trim_left_copy( str1 ) << "\"" << std::endl;
+    std::cout << "trim_left copy of str1: "
+              << "\"" << hpx::string::trim_left_copy(str1) << "\"" << std::endl;
 
     // Inplace right trim
-    hpx::string::trim_right( str1 );
-    std::cout << "trim_right on str1: " << "\"" << str1 << "\"" << std::endl;
+    hpx::string::trim_right(str1);
+    std::cout << "trim_right on str1: "
+              << "\"" << str1 << "\"" << std::endl;
 
     // Parametric trim. 'Space' is defined using is_any_of predicate
-    std::cout
-        << "trimmed copy of str4 ( space='<>' ): "
-        << "\""<< hpx::string::trim_copy_if( str2, hpx::string::is_any_of("<>") ) << "\"" << std::endl;
-
+    std::cout << "trimmed copy of str4 ( space='<>' ): "
+              << "\""
+              << hpx::string::trim_copy_if(str2, hpx::string::is_any_of("<>"))
+              << "\"" << std::endl;
 
     // Parametric trim. 'Space' is defined using is_digit predicate
-    std::cout
-        << "trimmed copy of str5 ( space=digit ): "
-        << "\"" << hpx::string::trim_copy_if( str3, hpx::string::is_digit() ) << "\"" << std::endl;
+    std::cout << "trimmed copy of str5 ( space=digit ): "
+              << "\""
+              << hpx::string::trim_copy_if(str3, hpx::string::is_digit())
+              << "\"" << std::endl;
 
     std::cout << std::endl;
 

@@ -11,23 +11,21 @@
 #ifndef HPX_STRING_YES_NO_TYPE_DETAIL_HPP
 #define HPX_STRING_YES_NO_TYPE_DETAIL_HPP
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-        // taken from boost mailing-list
-        // when yes_no_type will become officially
-        // a part of boost distribution, this header
-        // will be deprecated
-        template<int I> struct size_descriptor 
-        {
-            typedef char (& type)[I];
-        }; 
+    // taken from boost mailing-list
+    // when yes_no_type will become officially
+    // a part of boost distribution, this header
+    // will be deprecated
+    template <int I>
+    struct size_descriptor
+    {
+        typedef char (&type)[I];
+    };
 
-        typedef size_descriptor<1>::type yes_type;
-        typedef size_descriptor<2>::type no_type;
+    typedef size_descriptor<1>::type yes_type;
+    typedef size_descriptor<2>::type no_type;
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_YES_NO_TYPE_DETAIL_HPP
+#endif    // HPX_STRING_YES_NO_TYPE_DETAIL_HPP

@@ -7,14 +7,14 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <hpx/testing.hpp>
-#include <hpx/string/join.hpp>
 #include <hpx/string/classification.hpp>
+#include <hpx/string/join.hpp>
 #include <hpx/string/predicate.hpp>
+#include <hpx/testing.hpp>
 
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
 
 using namespace hpx::string;
 
@@ -47,22 +47,22 @@ void join_test()
 
     std::vector<std::string> empty_tokens;
 
-    std::vector<std::vector<int> > vtokens;
-    for(unsigned int n=0; n<tokens2.size(); ++n)
+    std::vector<std::vector<int>> vtokens;
+    for (unsigned int n = 0; n < tokens2.size(); ++n)
     {
-        vtokens.push_back(std::vector<int>(tokens2[n].begin(), tokens2[n].end()));
+        vtokens.push_back(
+            std::vector<int>(tokens2[n].begin(), tokens2[n].end()));
     }
 
-    HPX_TEST( equals(join(tokens1, "-"), "xx-abc-xx") );
-    HPX_TEST( equals(join(tokens2, "-"), "-xx-abc--abc-xx-") );
-    HPX_TEST( equals(join(vtokens, "-"), "-xx-abc--abc-xx-") );
-    HPX_TEST( equals(join(empty_tokens, "-"), "") );
+    HPX_TEST(equals(join(tokens1, "-"), "xx-abc-xx"));
+    HPX_TEST(equals(join(tokens2, "-"), "-xx-abc--abc-xx-"));
+    HPX_TEST(equals(join(vtokens, "-"), "-xx-abc--abc-xx-"));
+    HPX_TEST(equals(join(empty_tokens, "-"), ""));
 
-    HPX_TEST( equals(join_if(tokens2, "-", is_not_empty), "xx-abc-abc-xx") );
-    HPX_TEST( equals(join_if(empty_tokens, "-", is_not_empty), "") );
-    HPX_TEST( equals(join_if(tokens3, "-", is_not_empty), "") );
+    HPX_TEST(equals(join_if(tokens2, "-", is_not_empty), "xx-abc-abc-xx"));
+    HPX_TEST(equals(join_if(empty_tokens, "-", is_not_empty), ""));
+    HPX_TEST(equals(join_if(tokens3, "-", is_not_empty), ""));
 }
-
 
 int main()
 {

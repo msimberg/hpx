@@ -15,262 +15,204 @@
 #include <hpx/string/detail/find_format_store.hpp>
 #include <hpx/string/detail/replace_storage.hpp>
 
-#include <boost/range/iterator_range_core.hpp>
 #include <boost/range/const_iterator.hpp>
+#include <boost/range/iterator_range_core.hpp>
 #include <boost/range/value_type.hpp>
 
 #include <deque>
 
-namespace hpx {
-    namespace string {
-        namespace detail {
+namespace hpx { namespace string { namespace detail {
 
-// find_format_all_copy (iterator variant) implementation ---------------------------//
+    // find_format_all_copy (iterator variant) implementation ---------------------------//
 
-           template<
-                typename OutputIteratorT,
-                typename InputT,
-                typename FinderT,
-                typename FormatterT,
-                typename FindResultT,
-                typename FormatResultT >
-            inline OutputIteratorT find_format_all_copy_impl2(
-                OutputIteratorT Output,
-                const InputT& Input,
-                FinderT Finder,
-                FormatterT Formatter,
-                const FindResultT& FindResult,
-                const FormatResultT& FormatResult )
-            {
-                typedef typename
-                    boost::range_const_iterator<InputT>::type input_iterator_type;
+    template <typename OutputIteratorT, typename InputT, typename FinderT,
+        typename FormatterT, typename FindResultT, typename FormatResultT>
+    inline OutputIteratorT find_format_all_copy_impl2(OutputIteratorT Output,
+        const InputT& Input, FinderT Finder, FormatterT Formatter,
+        const FindResultT& FindResult, const FormatResultT& FormatResult)
+    {
+        typedef typename boost::range_const_iterator<InputT>::type
+            input_iterator_type;
 
-                typedef find_format_store<
-                        input_iterator_type,
-                        FormatterT,
-                        FormatResultT > store_type;
+        typedef find_format_store<input_iterator_type, FormatterT,
+            FormatResultT>
+            store_type;
 
-                // Create store for the find result
-                store_type M( FindResult, FormatResult, Formatter );
+        // Create store for the find result
+        store_type M(FindResult, FormatResult, Formatter);
 
-                // Initialize last match
-                input_iterator_type LastMatch=::boost::begin(Input);
+        // Initialize last match
+        input_iterator_type LastMatch = ::boost::begin(Input);
 
-                // Iterate through all matches
-                while( M )
-                {
-                    // Copy the beginning of the sequence
-                    Output = std::copy( LastMatch, M.begin(), Output );
-                    // Copy formatted result
-                    Output = std::copy( ::boost::begin(M.format_result()), ::boost::end(M.format_result()), Output );
+        // Iterate through all matches
+        while (M)
+        {
+            // Copy the beginning of the sequence
+            Output = std::copy(LastMatch, M.begin(), Output);
+            // Copy formatted result
+            Output = std::copy(::boost::begin(M.format_result()),
+                ::boost::end(M.format_result()), Output);
 
-                    // Proceed to the next match
-                    LastMatch=M.end();
-                    M=Finder( LastMatch, ::boost::end(Input) );
-                }
+            // Proceed to the next match
+            LastMatch = M.end();
+            M = Finder(LastMatch, ::boost::end(Input));
+        }
 
-                // Copy the rest of the sequence
-                Output = std::copy( LastMatch, ::boost::end(Input), Output );
+        // Copy the rest of the sequence
+        Output = std::copy(LastMatch, ::boost::end(Input), Output);
 
-                return Output;
-            }
+        return Output;
+    }
 
-            template<
-                typename OutputIteratorT,
-                typename InputT,
-                typename FinderT,
-                typename FormatterT,
-                typename FindResultT >
-            inline OutputIteratorT find_format_all_copy_impl(
-                OutputIteratorT Output,
-                const InputT& Input,
-                FinderT Finder,
-                FormatterT Formatter,
-                const FindResultT& FindResult )
-            {
-                if( ::hpx::string::detail::check_find_result(Input, FindResult) ) {
-                    return ::hpx::string::detail::find_format_all_copy_impl2(
-                        Output,
-                        Input,
-                        Finder,
-                        Formatter,
-                        FindResult,
-                        Formatter(FindResult) );
-                } else {
-                    return std::copy( ::boost::begin(Input), ::boost::end(Input), Output );
-                }
-            }
+    template <typename OutputIteratorT, typename InputT, typename FinderT,
+        typename FormatterT, typename FindResultT>
+    inline OutputIteratorT find_format_all_copy_impl(OutputIteratorT Output,
+        const InputT& Input, FinderT Finder, FormatterT Formatter,
+        const FindResultT& FindResult)
+    {
+        if (::hpx::string::detail::check_find_result(Input, FindResult))
+        {
+            return ::hpx::string::detail::find_format_all_copy_impl2(Output,
+                Input, Finder, Formatter, FindResult, Formatter(FindResult));
+        }
+        else
+        {
+            return std::copy(
+                ::boost::begin(Input), ::boost::end(Input), Output);
+        }
+    }
 
- // find_format_all_copy implementation ----------------------------------------------//
+    // find_format_all_copy implementation ----------------------------------------------//
 
-           template<
-                typename InputT,
-                typename FinderT,
-                typename FormatterT,
-                typename FindResultT,
-                typename FormatResultT >
-            inline InputT find_format_all_copy_impl2(
-                const InputT& Input,
-                FinderT Finder,
-                FormatterT Formatter,
-                const FindResultT& FindResult,
-                const FormatResultT& FormatResult)
-            {
-                typedef typename
-                    boost::range_const_iterator<InputT>::type input_iterator_type;
+    template <typename InputT, typename FinderT, typename FormatterT,
+        typename FindResultT, typename FormatResultT>
+    inline InputT find_format_all_copy_impl2(const InputT& Input,
+        FinderT Finder, FormatterT Formatter, const FindResultT& FindResult,
+        const FormatResultT& FormatResult)
+    {
+        typedef typename boost::range_const_iterator<InputT>::type
+            input_iterator_type;
 
-                typedef find_format_store<
-                        input_iterator_type,
-                        FormatterT,
-                        FormatResultT > store_type;
+        typedef find_format_store<input_iterator_type, FormatterT,
+            FormatResultT>
+            store_type;
 
-                // Create store for the find result
-                store_type M( FindResult, FormatResult, Formatter );
+        // Create store for the find result
+        store_type M(FindResult, FormatResult, Formatter);
 
-                // Initialize last match
-                input_iterator_type LastMatch=::boost::begin(Input);
+        // Initialize last match
+        input_iterator_type LastMatch = ::boost::begin(Input);
 
-                // Output temporary
-                InputT Output;
+        // Output temporary
+        InputT Output;
 
-                // Iterate through all matches
-                while( M )
-                {
-                    // Copy the beginning of the sequence
-                    hpx::string::detail::insert( Output, ::boost::end(Output), LastMatch, M.begin() );
-                    // Copy formatted result
-                    hpx::string::detail::insert( Output, ::boost::end(Output), M.format_result() );
+        // Iterate through all matches
+        while (M)
+        {
+            // Copy the beginning of the sequence
+            hpx::string::detail::insert(
+                Output, ::boost::end(Output), LastMatch, M.begin());
+            // Copy formatted result
+            hpx::string::detail::insert(
+                Output, ::boost::end(Output), M.format_result());
 
-                    // Proceed to the next match
-                    LastMatch=M.end();
-                    M=Finder( LastMatch, ::boost::end(Input) );
-                }
+            // Proceed to the next match
+            LastMatch = M.end();
+            M = Finder(LastMatch, ::boost::end(Input));
+        }
 
-                // Copy the rest of the sequence
-                ::hpx::string::detail::insert( Output, ::boost::end(Output), LastMatch, ::boost::end(Input) );
+        // Copy the rest of the sequence
+        ::hpx::string::detail::insert(
+            Output, ::boost::end(Output), LastMatch, ::boost::end(Input));
 
-                return Output;
-            }
+        return Output;
+    }
 
-            template<
-                typename InputT,
-                typename FinderT,
-                typename FormatterT,
-                typename FindResultT >
-            inline InputT find_format_all_copy_impl(
-                const InputT& Input,
-                FinderT Finder,
-                FormatterT Formatter,
-                const FindResultT& FindResult)
-            {
-                if( ::hpx::string::detail::check_find_result(Input, FindResult) ) {
-                    return ::hpx::string::detail::find_format_all_copy_impl2(
-                        Input,
-                        Finder,
-                        Formatter,
-                        FindResult,
-                        Formatter(FindResult) );
-                } else {
-                    return Input;
-                }
-            }
+    template <typename InputT, typename FinderT, typename FormatterT,
+        typename FindResultT>
+    inline InputT find_format_all_copy_impl(const InputT& Input, FinderT Finder,
+        FormatterT Formatter, const FindResultT& FindResult)
+    {
+        if (::hpx::string::detail::check_find_result(Input, FindResult))
+        {
+            return ::hpx::string::detail::find_format_all_copy_impl2(
+                Input, Finder, Formatter, FindResult, Formatter(FindResult));
+        }
+        else
+        {
+            return Input;
+        }
+    }
 
- // find_format_all implementation ------------------------------------------------//
+    // find_format_all implementation ------------------------------------------------//
 
-            template<
-                typename InputT,
-                typename FinderT,
-                typename FormatterT,
-                typename FindResultT,
-                typename FormatResultT >
-            inline void find_format_all_impl2(
-                InputT& Input,
-                FinderT Finder,
-                FormatterT Formatter,
-                FindResultT FindResult,
-                FormatResultT FormatResult)
-            {
-                typedef typename
-                    boost::range_iterator<InputT>::type input_iterator_type;
-                typedef find_format_store<
-                        input_iterator_type,
-                        FormatterT,
-                        FormatResultT > store_type;
+    template <typename InputT, typename FinderT, typename FormatterT,
+        typename FindResultT, typename FormatResultT>
+    inline void find_format_all_impl2(InputT& Input, FinderT Finder,
+        FormatterT Formatter, FindResultT FindResult,
+        FormatResultT FormatResult)
+    {
+        typedef
+            typename boost::range_iterator<InputT>::type input_iterator_type;
+        typedef find_format_store<input_iterator_type, FormatterT,
+            FormatResultT>
+            store_type;
 
-                // Create store for the find result
-                store_type M( FindResult, FormatResult, Formatter );
+        // Create store for the find result
+        store_type M(FindResult, FormatResult, Formatter);
 
-                // Instantiate replacement storage
-                std::deque<
-                    typename boost::range_value<InputT>::type> Storage;
+        // Instantiate replacement storage
+        std::deque<typename boost::range_value<InputT>::type> Storage;
 
-                // Initialize replacement iterators
-                input_iterator_type InsertIt=::boost::begin(Input);
-                input_iterator_type SearchIt=::boost::begin(Input);
+        // Initialize replacement iterators
+        input_iterator_type InsertIt = ::boost::begin(Input);
+        input_iterator_type SearchIt = ::boost::begin(Input);
 
-                while( M )
-                {
-                    // process the segment
-                    InsertIt=process_segment(
-                        Storage,
-                        Input,
-                        InsertIt,
-                        SearchIt,
-                        M.begin() );
+        while (M)
+        {
+            // process the segment
+            InsertIt =
+                process_segment(Storage, Input, InsertIt, SearchIt, M.begin());
 
-                    // Adjust search iterator
-                    SearchIt=M.end();
+            // Adjust search iterator
+            SearchIt = M.end();
 
-                    // Copy formatted replace to the storage
-                    ::hpx::string::detail::copy_to_storage( Storage, M.format_result() );
+            // Copy formatted replace to the storage
+            ::hpx::string::detail::copy_to_storage(Storage, M.format_result());
 
-                    // Find range for a next match
-                    M=Finder( SearchIt, ::boost::end(Input) );
-                }
+            // Find range for a next match
+            M = Finder(SearchIt, ::boost::end(Input));
+        }
 
-                // process the last segment
-                InsertIt=::hpx::string::detail::process_segment(
-                    Storage,
-                    Input,
-                    InsertIt,
-                    SearchIt,
-                    ::boost::end(Input) );
+        // process the last segment
+        InsertIt = ::hpx::string::detail::process_segment(
+            Storage, Input, InsertIt, SearchIt, ::boost::end(Input));
 
-                if ( Storage.empty() )
-                {
-                    // Truncate input
-                    ::hpx::string::detail::erase( Input, InsertIt, ::boost::end(Input) );
-                }
-                else
-                {
-                    // Copy remaining data to the end of input
-                    ::hpx::string::detail::insert( Input, ::boost::end(Input), Storage.begin(), Storage.end() );
-                }
-            }
+        if (Storage.empty())
+        {
+            // Truncate input
+            ::hpx::string::detail::erase(Input, InsertIt, ::boost::end(Input));
+        }
+        else
+        {
+            // Copy remaining data to the end of input
+            ::hpx::string::detail::insert(
+                Input, ::boost::end(Input), Storage.begin(), Storage.end());
+        }
+    }
 
-            template<
-                typename InputT,
-                typename FinderT,
-                typename FormatterT,
-                typename FindResultT >
-            inline void find_format_all_impl(
-                InputT& Input,
-                FinderT Finder,
-                FormatterT Formatter,
-                FindResultT FindResult)
-            {
-                if( ::hpx::string::detail::check_find_result(Input, FindResult) ) {
-                    ::hpx::string::detail::find_format_all_impl2(
-                        Input,
-                        Finder,
-                        Formatter,
-                        FindResult,
-                        Formatter(FindResult) );
-                }
-            }
+    template <typename InputT, typename FinderT, typename FormatterT,
+        typename FindResultT>
+    inline void find_format_all_impl(InputT& Input, FinderT Finder,
+        FormatterT Formatter, FindResultT FindResult)
+    {
+        if (::hpx::string::detail::check_find_result(Input, FindResult))
+        {
+            ::hpx::string::detail::find_format_all_impl2(
+                Input, Finder, Formatter, FindResult, Formatter(FindResult));
+        }
+    }
 
-        } // namespace detail
-    } // namespace string
-} // namespace hpx
+}}}    // namespace hpx::string::detail
 
-#endif  // HPX_STRING_FIND_FORMAT_ALL_DETAIL_HPP
+#endif    // HPX_STRING_FIND_FORMAT_ALL_DETAIL_HPP

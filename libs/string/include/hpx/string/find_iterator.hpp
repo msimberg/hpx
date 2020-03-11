@@ -14,13 +14,13 @@
 #include <hpx/config.hpp>
 #include <hpx/string/detail/find_iterator.hpp>
 
-#include <boost/iterator/iterator_facade.hpp>
 #include <boost/iterator/iterator_categories.hpp>
-#include <boost/range/iterator_range_core.hpp>
+#include <boost/iterator/iterator_facade.hpp>
+#include <boost/range/as_literal.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/iterator.hpp>
-#include <boost/range/as_literal.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
 /*! \file
     Defines find iterator classes. Find iterator repeatedly applies a Finder
@@ -29,13 +29,12 @@
     match depending on the iterator used.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  find_iterator -----------------------------------------------//
+    //  find_iterator -----------------------------------------------//
 
-        //! find_iterator
-        /*!
+    //! find_iterator
+    /*!
             Find iterator encapsulates a Finder and allows
             for incremental searching in a string.
             Each increment moves the iterator to the next match.
@@ -45,165 +44,152 @@ namespace hpx {
             Dereferencing the iterator yields an boost::iterator_range delimiting
             the current match.
         */
-        template<typename IteratorT>
-        class find_iterator :
-            public boost::iterator_facade<
-                find_iterator<IteratorT>,
-                const boost::iterator_range<IteratorT>,
-                boost::forward_traversal_tag >,
-            private detail::find_iterator_base<IteratorT>
-        {
-        private:
-            // facade support
-            friend class ::boost::iterator_core_access;
+    template <typename IteratorT>
+    class find_iterator
+      : public boost::iterator_facade<find_iterator<IteratorT>,
+            const boost::iterator_range<IteratorT>,
+            boost::forward_traversal_tag>
+      , private detail::find_iterator_base<IteratorT>
+    {
+    private:
+        // facade support
+        friend class ::boost::iterator_core_access;
 
-        private:
+    private:
         // typedefs
 
-            typedef detail::find_iterator_base<IteratorT> base_type;
-            typedef typename
-                base_type::input_iterator_type input_iterator_type;
-            typedef typename
-                base_type::match_type match_type;
+        typedef detail::find_iterator_base<IteratorT> base_type;
+        typedef typename base_type::input_iterator_type input_iterator_type;
+        typedef typename base_type::match_type match_type;
 
-        public:
-            //! Default constructor
-            /*!
+    public:
+        //! Default constructor
+        /*!
                 Construct null iterator. All null iterators are equal.
 
                 \post eof()==true
             */
-            find_iterator() {}
+        find_iterator() {}
 
-            //! Copy constructor
-            /*!
+        //! Copy constructor
+        /*!
                 Construct a copy of the find_iterator
             */
-            find_iterator( const find_iterator& Other ) :
-                base_type(Other),
-                m_Match(Other.m_Match),
-                m_End(Other.m_End) {}
+        find_iterator(const find_iterator& Other)
+          : base_type(Other)
+          , m_Match(Other.m_Match)
+          , m_End(Other.m_End)
+        {
+        }
 
-            find_iterator& operator=(const find_iterator& Other)
+        find_iterator& operator=(const find_iterator& Other)
+        {
+            if (&Other == this)
             {
-                if (&Other == this)
-                {
-                    return *this;
-                }
-
-                m_Match = Other.m_Match;
-                m_End = Other.m_End;
-
                 return *this;
             }
 
-            //! Constructor
-            /*!
+            m_Match = Other.m_Match;
+            m_End = Other.m_End;
+
+            return *this;
+        }
+
+        //! Constructor
+        /*!
                 Construct new find_iterator for a given finder
                 and a range.
             */
-            template<typename FinderT>
-            find_iterator(
-                    IteratorT Begin,
-                    IteratorT End,
-                    FinderT Finder ) :
-                detail::find_iterator_base<IteratorT>(Finder,0),
-                m_Match(Begin,Begin),
-                m_End(End)
-            {
-                increment();
-            }
+        template <typename FinderT>
+        find_iterator(IteratorT Begin, IteratorT End, FinderT Finder)
+          : detail::find_iterator_base<IteratorT>(Finder, 0)
+          , m_Match(Begin, Begin)
+          , m_End(End)
+        {
+            increment();
+        }
 
-            //! Constructor
-            /*!
+        //! Constructor
+        /*!
                 Construct new find_iterator for a given finder
                 and a range.
             */
-            template<typename FinderT, typename RangeT>
-            find_iterator(
-                    RangeT& Col,
-                    FinderT Finder ) :
-                detail::find_iterator_base<IteratorT>(Finder,0)
-            {
-                boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_col(::boost::as_literal(Col));
-                m_Match=::boost::make_iterator_range(::boost::begin(lit_col), ::boost::begin(lit_col));
-                m_End=::boost::end(lit_col);
+        template <typename FinderT, typename RangeT>
+        find_iterator(RangeT& Col, FinderT Finder)
+          : detail::find_iterator_base<IteratorT>(Finder, 0)
+        {
+            boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+                lit_col(::boost::as_literal(Col));
+            m_Match = ::boost::make_iterator_range(
+                ::boost::begin(lit_col), ::boost::begin(lit_col));
+            m_End = ::boost::end(lit_col);
 
-                increment();
-            }
+            increment();
+        }
 
-        private:
+    private:
         // iterator operations
 
-            // dereference
-            const match_type& dereference() const
-            {
-                return m_Match;
-            }
+        // dereference
+        const match_type& dereference() const
+        {
+            return m_Match;
+        }
 
-            // increment
-            void increment()
-            {
-                m_Match=this->do_find(m_Match.end(),m_End);
-            }
+        // increment
+        void increment()
+        {
+            m_Match = this->do_find(m_Match.end(), m_End);
+        }
 
-            // comparison
-            bool equal( const find_iterator& Other ) const
-            {
-                bool bEof=eof();
-                bool bOtherEof=Other.eof();
+        // comparison
+        bool equal(const find_iterator& Other) const
+        {
+            bool bEof = eof();
+            bool bOtherEof = Other.eof();
 
-                return bEof || bOtherEof ? bEof==bOtherEof :
-                    (
-                        m_Match==Other.m_Match &&
-                        m_End==Other.m_End
-                    );
-            }
+            return bEof || bOtherEof ?
+                bEof == bOtherEof :
+                (m_Match == Other.m_Match && m_End == Other.m_End);
+        }
 
-        public:
+    public:
         // operations
 
-            //! Eof check
-            /*!
+        //! Eof check
+        /*!
                 Check the eof condition. Eof condition means that
                 there is nothing more to be searched i.e. find_iterator
                 is after the last match.
             */
-            bool eof() const
-            {
-                return
-                    this->is_null() ||
-                    (
-                        m_Match.begin() == m_End &&
-                        m_Match.end() == m_End
-                    );
-            }
-
-        private:
-        // Attributes
-            match_type m_Match;
-            input_iterator_type m_End;
-        };
-
-        //! find iterator construction helper
-        /*!
-         *    Construct a find iterator to iterate through the specified string
-         */
-        template<typename RangeT, typename FinderT>
-        inline find_iterator<
-            typename boost::range_iterator<RangeT>::type>
-        make_find_iterator(
-            RangeT& Collection,
-            FinderT Finder)
+        bool eof() const
         {
-            return find_iterator<typename boost::range_iterator<RangeT>::type>(
-                Collection, Finder);
+            return this->is_null() ||
+                (m_Match.begin() == m_End && m_Match.end() == m_End);
         }
 
-//  split iterator -----------------------------------------------//
+    private:
+        // Attributes
+        match_type m_Match;
+        input_iterator_type m_End;
+    };
 
-        //! split_iterator
-        /*!
+    //! find iterator construction helper
+    /*!
+         *    Construct a find iterator to iterate through the specified string
+         */
+    template <typename RangeT, typename FinderT>
+    inline find_iterator<typename boost::range_iterator<RangeT>::type>
+    make_find_iterator(RangeT& Collection, FinderT Finder)
+    {
+        return find_iterator<typename boost::range_iterator<RangeT>::type>(
+            Collection, Finder);
+    }
+
+    //  split iterator -----------------------------------------------//
+
+    //! split_iterator
+    /*!
             Split iterator encapsulates a Finder and allows
             for incremental searching in a string.
             Unlike the find iterator, split iterator iterates
@@ -214,195 +200,182 @@ namespace hpx {
             Dereferencing the iterator yields an boost::iterator_range delimiting
             the current match.
         */
-        template<typename IteratorT>
-        class split_iterator :
-            public boost::iterator_facade<
-                split_iterator<IteratorT>,
-                const boost::iterator_range<IteratorT>,
-                boost::forward_traversal_tag >,
-            private detail::find_iterator_base<IteratorT>
-        {
-        private:
-            // facade support
-            friend class ::boost::iterator_core_access;
+    template <typename IteratorT>
+    class split_iterator
+      : public boost::iterator_facade<split_iterator<IteratorT>,
+            const boost::iterator_range<IteratorT>,
+            boost::forward_traversal_tag>
+      , private detail::find_iterator_base<IteratorT>
+    {
+    private:
+        // facade support
+        friend class ::boost::iterator_core_access;
 
-        private:
+    private:
         // typedefs
 
-            typedef detail::find_iterator_base<IteratorT> base_type;
-            typedef typename
-                base_type::input_iterator_type input_iterator_type;
-            typedef typename
-                base_type::match_type match_type;
+        typedef detail::find_iterator_base<IteratorT> base_type;
+        typedef typename base_type::input_iterator_type input_iterator_type;
+        typedef typename base_type::match_type match_type;
 
-        public:
-            //! Default constructor
-            /*!
+    public:
+        //! Default constructor
+        /*!
                 Construct null iterator. All null iterators are equal.
 
                 \post eof()==true
             */
-            split_iterator() :
-                m_Next(),
-                m_End(),
-                m_bEof(true)
-            {}
+        split_iterator()
+          : m_Next()
+          , m_End()
+          , m_bEof(true)
+        {
+        }
 
-            //! Copy constructor
-            /*!
+        //! Copy constructor
+        /*!
                 Construct a copy of the split_iterator
             */
-            split_iterator( const split_iterator& Other ) :
-                base_type(Other),
-                m_Match(Other.m_Match),
-                m_Next(Other.m_Next),
-                m_End(Other.m_End),
-                m_bEof(Other.m_bEof)
-            {}
+        split_iterator(const split_iterator& Other)
+          : base_type(Other)
+          , m_Match(Other.m_Match)
+          , m_Next(Other.m_Next)
+          , m_End(Other.m_End)
+          , m_bEof(Other.m_bEof)
+        {
+        }
 
-            split_iterator& operator=(const split_iterator& Other)
+        split_iterator& operator=(const split_iterator& Other)
+        {
+            if (&Other == this)
             {
-                if (&Other == this)
-                {
-                    return *this;
-                }
-
-                m_Match = Other.m_Match;
-                m_Next = Other.m_Next;
-                m_End = Other.m_End;
-                m_bEof = Other.m_bEof;
-
                 return *this;
             }
 
-            //! Constructor
-            /*!
+            m_Match = Other.m_Match;
+            m_Next = Other.m_Next;
+            m_End = Other.m_End;
+            m_bEof = Other.m_bEof;
+
+            return *this;
+        }
+
+        //! Constructor
+        /*!
                 Construct new split_iterator for a given finder
                 and a range.
             */
-            template<typename FinderT>
-            split_iterator(
-                    IteratorT Begin,
-                    IteratorT End,
-                    FinderT Finder ) :
-                detail::find_iterator_base<IteratorT>(Finder,0),
-                m_Match(Begin,Begin),
-                m_Next(Begin),
-                m_End(End),
-                m_bEof(false)
+        template <typename FinderT>
+        split_iterator(IteratorT Begin, IteratorT End, FinderT Finder)
+          : detail::find_iterator_base<IteratorT>(Finder, 0)
+          , m_Match(Begin, Begin)
+          , m_Next(Begin)
+          , m_End(End)
+          , m_bEof(false)
+        {
+            // force the correct behavior for empty sequences and yield at least one token
+            if (Begin != End)
             {
-                // force the correct behavior for empty sequences and yield at least one token
-                if(Begin!=End)
-                {
-                    increment();
-                }
+                increment();
             }
-            //! Constructor
-            /*!
+        }
+        //! Constructor
+        /*!
                 Construct new split_iterator for a given finder
                 and a collection.
             */
-            template<typename FinderT, typename RangeT>
-            split_iterator(
-                    RangeT& Col,
-                    FinderT Finder ) :
-                detail::find_iterator_base<IteratorT>(Finder,0),
-                m_bEof(false)
+        template <typename FinderT, typename RangeT>
+        split_iterator(RangeT& Col, FinderT Finder)
+          : detail::find_iterator_base<IteratorT>(Finder, 0)
+          , m_bEof(false)
+        {
+            boost::iterator_range<typename boost::range_iterator<RangeT>::type>
+                lit_col(::boost::as_literal(Col));
+            m_Match = boost::make_iterator_range(
+                ::boost::begin(lit_col), ::boost::begin(lit_col));
+            m_Next = ::boost::begin(lit_col);
+            m_End = ::boost::end(lit_col);
+
+            // force the correct behavior for empty sequences and yield at least one token
+            if (m_Next != m_End)
             {
-                boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_col(::boost::as_literal(Col));
-                m_Match=boost::make_iterator_range(::boost::begin(lit_col), ::boost::begin(lit_col));
-                m_Next=::boost::begin(lit_col);
-                m_End=::boost::end(lit_col);
-
-                // force the correct behavior for empty sequences and yield at least one token
-                if(m_Next!=m_End)
-                {
-                    increment();
-                }
+                increment();
             }
+        }
 
-
-        private:
+    private:
         // iterator operations
 
-            // dereference
-            const match_type& dereference() const
-            {
-                return m_Match;
-            }
+        // dereference
+        const match_type& dereference() const
+        {
+            return m_Match;
+        }
 
-            // increment
-            void increment()
-            {
-                match_type FindMatch=this->do_find( m_Next, m_End );
+        // increment
+        void increment()
+        {
+            match_type FindMatch = this->do_find(m_Next, m_End);
 
-                if(FindMatch.begin()==m_End && FindMatch.end()==m_End)
+            if (FindMatch.begin() == m_End && FindMatch.end() == m_End)
+            {
+                if (m_Match.end() == m_End)
                 {
-                    if(m_Match.end()==m_End)
-                    {
-                        // Mark iterator as eof
-                        m_bEof=true;
-                    }
+                    // Mark iterator as eof
+                    m_bEof = true;
                 }
-
-                m_Match=match_type( m_Next, FindMatch.begin() );
-                m_Next=FindMatch.end();
             }
 
-            // comparison
-            bool equal( const split_iterator& Other ) const
-            {
-                bool bEof=eof();
-                bool bOtherEof=Other.eof();
+            m_Match = match_type(m_Next, FindMatch.begin());
+            m_Next = FindMatch.end();
+        }
 
-                return bEof || bOtherEof ? bEof==bOtherEof :
-                    (
-                        m_Match==Other.m_Match &&
-                        m_Next==Other.m_Next &&
-                        m_End==Other.m_End
-                    );
-            }
+        // comparison
+        bool equal(const split_iterator& Other) const
+        {
+            bool bEof = eof();
+            bool bOtherEof = Other.eof();
 
-        public:
+            return bEof || bOtherEof ?
+                bEof == bOtherEof :
+                (m_Match == Other.m_Match && m_Next == Other.m_Next &&
+                    m_End == Other.m_End);
+        }
+
+    public:
         // operations
 
-            //! Eof check
-            /*!
+        //! Eof check
+        /*!
                 Check the eof condition. Eof condition means that
                 there is nothing more to be searched i.e. find_iterator
                 is after the last match.
             */
-            bool eof() const
-            {
-                return this->is_null() || m_bEof;
-            }
-
-        private:
-        // Attributes
-            match_type m_Match;
-            input_iterator_type m_Next;
-            input_iterator_type m_End;
-            bool m_bEof;
-        };
-
-        //! split iterator construction helper
-        /*!
-         *    Construct a split iterator to iterate through the specified collection
-         */
-        template<typename RangeT, typename FinderT>
-        inline split_iterator<
-            typename boost::range_iterator<RangeT>::type>
-        make_split_iterator(
-            RangeT& Collection,
-            FinderT Finder)
+        bool eof() const
         {
-            return split_iterator<typename boost::range_iterator<RangeT>::type>(
-                Collection, Finder);
+            return this->is_null() || m_bEof;
         }
 
+    private:
+        // Attributes
+        match_type m_Match;
+        input_iterator_type m_Next;
+        input_iterator_type m_End;
+        bool m_bEof;
+    };
 
-    } // namespace string
-} // namespace hpx
+    //! split iterator construction helper
+    /*!
+         *    Construct a split iterator to iterate through the specified collection
+         */
+    template <typename RangeT, typename FinderT>
+    inline split_iterator<typename boost::range_iterator<RangeT>::type>
+    make_split_iterator(RangeT& Collection, FinderT Finder)
+    {
+        return split_iterator<typename boost::range_iterator<RangeT>::type>(
+            Collection, Finder);
+    }
 
+}}    // namespace hpx::string
 
-#endif  // HPX_STRING_FIND_ITERATOR_HPP
+#endif    // HPX_STRING_FIND_ITERATOR_HPP

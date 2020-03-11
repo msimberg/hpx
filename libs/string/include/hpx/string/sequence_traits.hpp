@@ -32,72 +32,65 @@
     header which contains specializations for all stl containers.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  sequence traits  -----------------------------------------------//
+    //  sequence traits  -----------------------------------------------//
 
-
-        //! Native replace trait
-        /*!
+    //! Native replace trait
+    /*!
             This trait specifies that the sequence has \c std::string like replace method
         */
-        template< typename T >
-        class has_native_replace
-        {
+    template <typename T>
+    class has_native_replace
+    {
+    public:
+        static constexpr bool value = false;
 
-        public:
-            static constexpr bool value = false;
+        typedef boost::mpl::bool_<has_native_replace<T>::value> type;
+    };
 
-            typedef boost::mpl::bool_<has_native_replace<T>::value> type;
-        };
-
-        //! Stable iterators trait
-        /*!
+    //! Stable iterators trait
+    /*!
             This trait specifies that the sequence has stable iterators. It means
             that operations like insert/erase/replace do not invalidate iterators.
         */
-        template< typename T >
-        class has_stable_iterators
-        {
-        public:
-            static const bool value = false;
+    template <typename T>
+    class has_stable_iterators
+    {
+    public:
+        static const bool value = false;
 
-            typedef boost::mpl::bool_<has_stable_iterators<T>::value> type;
-        };
+        typedef boost::mpl::bool_<has_stable_iterators<T>::value> type;
+    };
 
-
-        //! Const time insert trait
-        /*!
+    //! Const time insert trait
+    /*!
             This trait specifies that the sequence's insert method has
             constant time complexity.
         */
-        template< typename T >
-        class has_const_time_insert
-        {
-        public:
-            static const bool value = false;
+    template <typename T>
+    class has_const_time_insert
+    {
+    public:
+        static const bool value = false;
 
-            typedef boost::mpl::bool_<has_const_time_insert<T>::value> type;
-        };
+        typedef boost::mpl::bool_<has_const_time_insert<T>::value> type;
+    };
 
-
-        //! Const time erase trait
-        /*!
+    //! Const time erase trait
+    /*!
             This trait specifies that the sequence's erase method has
             constant time complexity.
         */
-        template< typename T >
-        class has_const_time_erase
-        {
-        public:
-            static const bool value = false;
+    template <typename T>
+    class has_const_time_erase
+    {
+    public:
+        static const bool value = false;
 
-            typedef boost::mpl::bool_<has_const_time_erase<T>::value> type;
-        };
+        typedef boost::mpl::bool_<has_const_time_erase<T>::value> type;
+    };
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_STRING_SEQUENCE_TRAITS_HPP
+#endif    // HPX_STRING_SEQUENCE_TRAITS_HPP

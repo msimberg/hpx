@@ -11,30 +11,24 @@
 #ifndef HPX_STRING_STD_STRING_TRAITS_HPP
 #define HPX_STRING_STD_STRING_TRAITS_HPP
 
-#include <hpx/string/yes_no_type.hpp>
 #include <hpx/string/sequence_traits.hpp>
+#include <hpx/string/yes_no_type.hpp>
 
 #include <string>
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  std::basic_string<> traits  -----------------------------------------------//
-
+    //  std::basic_string<> traits  -----------------------------------------------//
 
     // native replace trait
-        template<typename T, typename TraitsT, typename AllocT>
-        class has_native_replace< std::basic_string<T, TraitsT, AllocT> >
-        {
-        public:
-            static const bool value = true;
-            typedef boost::mpl::bool_<has_native_replace<T>::value> type;
-        };
+    template <typename T, typename TraitsT, typename AllocT>
+    class has_native_replace<std::basic_string<T, TraitsT, AllocT>>
+    {
+    public:
+        static const bool value = true;
+        typedef boost::mpl::bool_<has_native_replace<T>::value> type;
+    };
 
+}}    // namespace hpx::string
 
-
-    } // namespace string
-} // namespace hpx
-
-
-#endif  // HPX_STRING_LIST_TRAITS_HPP
+#endif    // HPX_STRING_LIST_TRAITS_HPP

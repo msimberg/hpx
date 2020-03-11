@@ -14,9 +14,9 @@
 #include <hpx/string/detail/formatter.hpp>
 
 #include <boost/detail/iterator.hpp>
-#include <boost/range/value_type.hpp>
-#include <boost/range/iterator_range_core.hpp>
 #include <boost/range/as_literal.hpp>
+#include <boost/range/iterator_range_core.hpp>
+#include <boost/range/value_type.hpp>
 
 /*! \file
     Defines Formatter generators. Formatter is a functor which formats
@@ -29,50 +29,46 @@
     This header contains generator functions for the Formatters provided in this library.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-// generic formatters  ---------------------------------------------------------------//
+    // generic formatters  ---------------------------------------------------------------//
 
-        //! Constant formatter
-        /*!
+    //! Constant formatter
+    /*!
             Constructs a \c const_formatter. Const formatter always returns
             the same value, regardless of the parameter.
 
             \param Format A predefined value used as a result for formatting
             \return An instance of the \c const_formatter object.
         */
-        template<typename RangeT>
-        inline detail::const_formatF<
-            boost::iterator_range<
-                typename boost::range_const_iterator<RangeT>::type> >
-        const_formatter(const RangeT& Format)
-        {
-            return detail::const_formatF<
-                boost::iterator_range<
-                    typename boost::range_const_iterator<RangeT>::type> >(::boost::as_literal(Format));
-        }
+    template <typename RangeT>
+    inline detail::const_formatF<boost::iterator_range<
+        typename boost::range_const_iterator<RangeT>::type>>
+    const_formatter(const RangeT& Format)
+    {
+        return detail::const_formatF<boost::iterator_range<
+            typename boost::range_const_iterator<RangeT>::type>>(
+            ::boost::as_literal(Format));
+    }
 
-        //! Identity formatter
-        /*!
+    //! Identity formatter
+    /*!
             Constructs an \c identity_formatter. Identity formatter always returns
             the parameter.
 
             \return An instance of the \c identity_formatter object.
         */
-        template<typename RangeT>
-        inline detail::identity_formatF<
-            boost::iterator_range<
-                typename boost::range_const_iterator<RangeT>::type> >
-        identity_formatter()
-        {
-            return detail::identity_formatF<
-                boost::iterator_range<
-                    typename boost::range_const_iterator<RangeT>::type> >();
-        }
+    template <typename RangeT>
+    inline detail::identity_formatF<boost::iterator_range<
+        typename boost::range_const_iterator<RangeT>::type>>
+    identity_formatter()
+    {
+        return detail::identity_formatF<boost::iterator_range<
+            typename boost::range_const_iterator<RangeT>::type>>();
+    }
 
-        //! Empty formatter
-        /*!
+    //! Empty formatter
+    /*!
             Constructs an \c empty_formatter. Empty formatter always returns an empty
             sequence.
 
@@ -80,17 +76,16 @@ namespace hpx {
                          resulting empty_container<>.
             \return An instance of the \c empty_formatter object.
         */
-        template<typename RangeT>
-        inline detail::empty_formatF<
-            typename boost::range_value<RangeT>::type>
-        empty_formatter(const RangeT&)
-        {
-            return detail::empty_formatF<
-                typename boost::range_value<RangeT>::type>();
-        }
+    template <typename RangeT>
+    inline detail::empty_formatF<typename boost::range_value<RangeT>::type>
+    empty_formatter(const RangeT&)
+    {
+        return detail::empty_formatF<
+            typename boost::range_value<RangeT>::type>();
+    }
 
-        //! Empty formatter
-        /*!
+    //! Empty formatter
+    /*!
             Constructs a \c dissect_formatter. Dissect formatter uses a specified finder
             to extract a portion of the formatted sequence. The first finder's match is returned
             as a result
@@ -98,16 +93,13 @@ namespace hpx {
             \param Finder a finder used to select a portion of the formatted sequence
             \return An instance of the \c dissect_formatter object.
         */
-        template<typename FinderT>
-        inline detail::dissect_formatF< FinderT >
-        dissect_formatter(const FinderT& Finder)
-        {
-            return detail::dissect_formatF<FinderT>(Finder);
-        }
+    template <typename FinderT>
+    inline detail::dissect_formatF<FinderT> dissect_formatter(
+        const FinderT& Finder)
+    {
+        return detail::dissect_formatF<FinderT>(Finder);
+    }
 
+}}    // namespace hpx::string
 
-    } // namespace string
-} // namespace hpx
-
-
-#endif  // HPX_FORMATTER_HPP
+#endif    // HPX_FORMATTER_HPP

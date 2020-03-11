@@ -16,24 +16,23 @@
 #include <hpx/string/finder.hpp>
 #include <hpx/string/formatter.hpp>
 
-#include <boost/range/iterator_range_core.hpp>
 #include <boost/range/begin.hpp>
+#include <boost/range/const_iterator.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/iterator.hpp>
-#include <boost/range/const_iterator.hpp>
+#include <boost/range/iterator_range_core.hpp>
 
 /*! \file
     Defines various erase algorithms. Each algorithm removes
     part(s) of the input according to a searching criteria.
 */
 
-namespace hpx {
-    namespace string {
+namespace hpx { namespace string {
 
-//  erase_range -------------------------------------------------------//
+    //  erase_range -------------------------------------------------------//
 
-        //! Erase range algorithm
-        /*!
+    //! Erase range algorithm
+    /*!
             Remove the given range from the input. The result is a modified copy of
             the input. It is returned as a sequence or copied to the output iterator.
 
@@ -45,63 +44,53 @@ namespace hpx {
 
             \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<typename OutputIteratorT, typename RangeT>
-        inline OutputIteratorT erase_range_copy(
-            OutputIteratorT Output,
-            const RangeT& Input,
-            const boost::iterator_range<
-                typename
-                    boost::range_const_iterator<RangeT>::type>& SearchRange )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::range_finder(SearchRange),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename RangeT>
+    inline OutputIteratorT erase_range_copy(OutputIteratorT Output,
+        const RangeT& Input,
+        const boost::iterator_range<
+            typename boost::range_const_iterator<RangeT>::type>& SearchRange)
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::range_finder(SearchRange),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase range algorithm
-        /*!
+    //! Erase range algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT>
-        inline SequenceT erase_range_copy(
-            const SequenceT& Input,
-            const boost::iterator_range<
-                typename
-                    boost::range_const_iterator<SequenceT>::type>& SearchRange )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::range_finder(SearchRange),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT>
+    inline SequenceT erase_range_copy(const SequenceT& Input,
+        const boost::iterator_range<
+            typename boost::range_const_iterator<SequenceT>::type>& SearchRange)
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::range_finder(SearchRange),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase range algorithm
-        /*!
+    //! Erase range algorithm
+    /*!
             Remove the given range from the input.
             The input sequence is modified in-place.
 
             \param Input An input sequence
             \param SearchRange A range in the input to be removed
         */
-        template<typename SequenceT>
-        inline void erase_range(
-            SequenceT& Input,
-            const boost::iterator_range<
-                typename
-                    boost::range_iterator<SequenceT>::type>& SearchRange )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::range_finder(SearchRange),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT>
+    inline void erase_range(SequenceT& Input,
+        const boost::iterator_range<
+            typename boost::range_iterator<SequenceT>::type>& SearchRange)
+    {
+        ::hpx::string::find_format(Input,
+            ::hpx::string::range_finder(SearchRange),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_first  --------------------------------------------------------//
+    //  erase_first  --------------------------------------------------------//
 
-        //! Erase first algorithm
-        /*!
+    //! Erase first algorithm
+    /*!
             Remove the first occurrence of the substring from the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -114,60 +103,47 @@ namespace hpx {
 
             \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT erase_first_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::first_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT erase_first_copy(
+        OutputIteratorT Output, const Range1T& Input, const Range2T& Search)
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::first_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase first algorithm
-        /*!
+    //! Erase first algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT erase_first_copy(
-            const SequenceT& Input,
-            const RangeT& Search )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::first_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT erase_first_copy(
+        const SequenceT& Input, const RangeT& Search)
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::first_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase first algorithm
-        /*!
+    //! Erase first algorithm
+    /*!
             Remove the first occurrence of the substring from the input.
             The input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for.
         */
-        template<typename SequenceT, typename RangeT>
-        inline void erase_first(
-            SequenceT& Input,
-            const RangeT& Search )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::first_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void erase_first(SequenceT& Input, const RangeT& Search)
+    {
+        ::hpx::string::find_format(Input, ::hpx::string::first_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_first ( case insensitive ) ------------------------------------//
+    //  erase_first ( case insensitive ) ------------------------------------//
 
-        //! Erase first algorithm ( case insensitive )
-        /*!
+    //! Erase first algorithm ( case insensitive )
+    /*!
             Remove the first occurrence of the substring from the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -182,41 +158,31 @@ namespace hpx {
 
             \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT ierase_first_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT ierase_first_copy(OutputIteratorT Output,
+        const Range1T& Input, const Range2T& Search,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::first_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase first algorithm ( case insensitive )
-        /*!
+    //! Erase first algorithm ( case insensitive )
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT ierase_first_copy(
-            const SequenceT& Input,
-            const RangeT& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT ierase_first_copy(const SequenceT& Input,
+        const RangeT& Search, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::first_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase first algorithm ( case insensitive )
-        /*!
+    //! Erase first algorithm ( case insensitive )
+    /*!
             Remove the first occurrence of the substring from the input.
             The input sequence is modified in-place. Searching is case insensitive.
 
@@ -224,22 +190,19 @@ namespace hpx {
             \param Search A substring to be searched for
             \param Loc A locale used for case insensitive comparison
         */
-        template<typename SequenceT, typename RangeT>
-        inline void ierase_first(
-            SequenceT& Input,
-            const RangeT& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void ierase_first(SequenceT& Input, const RangeT& Search,
+        const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::find_format(Input,
+            ::hpx::string::first_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_last  --------------------------------------------------------//
+    //  erase_last  --------------------------------------------------------//
 
-        //! Erase last algorithm
-        /*!
+    //! Erase last algorithm
+    /*!
             Remove the last occurrence of the substring from the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -252,60 +215,47 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT erase_last_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::last_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT erase_last_copy(
+        OutputIteratorT Output, const Range1T& Input, const Range2T& Search)
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::last_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase last algorithm
-        /*!
+    //! Erase last algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT erase_last_copy(
-            const SequenceT& Input,
-            const RangeT& Search )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::last_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT erase_last_copy(
+        const SequenceT& Input, const RangeT& Search)
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::last_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase last algorithm
-        /*!
+    //! Erase last algorithm
+    /*!
             Remove the last occurrence of the substring from the input.
             The input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for
         */
-        template<typename SequenceT, typename RangeT>
-        inline void erase_last(
-            SequenceT& Input,
-            const RangeT& Search )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::last_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void erase_last(SequenceT& Input, const RangeT& Search)
+    {
+        ::hpx::string::find_format(Input, ::hpx::string::last_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_last ( case insensitive ) ------------------------------------//
+    //  erase_last ( case insensitive ) ------------------------------------//
 
-        //! Erase last algorithm ( case insensitive )
-        /*!
+    //! Erase last algorithm ( case insensitive )
+    /*!
             Remove the last occurrence of the substring from the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -320,41 +270,31 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT ierase_last_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::last_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT ierase_last_copy(OutputIteratorT Output,
+        const Range1T& Input, const Range2T& Search,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::last_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase last algorithm ( case insensitive )
-        /*!
+    //! Erase last algorithm ( case insensitive )
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT ierase_last_copy(
-            const SequenceT& Input,
-            const RangeT& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::last_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT ierase_last_copy(const SequenceT& Input,
+        const RangeT& Search, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::last_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase last algorithm ( case insensitive )
-        /*!
+    //! Erase last algorithm ( case insensitive )
+    /*!
             Remove the last occurrence of the substring from the input.
             The input sequence is modified in-place. Searching is case insensitive.
 
@@ -362,22 +302,19 @@ namespace hpx {
             \param Search A substring to be searched for
             \param Loc A locale used for case insensitive comparison
         */
-        template<typename SequenceT, typename RangeT>
-        inline void ierase_last(
-            SequenceT& Input,
-            const RangeT& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::last_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void ierase_last(SequenceT& Input, const RangeT& Search,
+        const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::find_format(Input,
+            ::hpx::string::last_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_nth --------------------------------------------------------------------//
+    //  erase_nth --------------------------------------------------------------------//
 
-        //! Erase nth algorithm
-        /*!
+    //! Erase nth algorithm
+    /*!
             Remove the Nth occurrence of the substring in the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -393,41 +330,30 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT erase_nth_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search,
-            int Nth )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::nth_finder(Search, Nth),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT erase_nth_copy(OutputIteratorT Output,
+        const Range1T& Input, const Range2T& Search, int Nth)
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::nth_finder(Search, Nth),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase nth algorithm
-        /*!
+    //! Erase nth algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT erase_nth_copy(
-            const SequenceT& Input,
-            const RangeT& Search,
-            int Nth )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::nth_finder(Search, Nth),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT erase_nth_copy(
+        const SequenceT& Input, const RangeT& Search, int Nth)
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::nth_finder(Search, Nth),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase nth algorithm
-        /*!
+    //! Erase nth algorithm
+    /*!
             Remove the Nth occurrence of the substring in the input.
             The input sequence is modified in-place.
 
@@ -436,22 +362,18 @@ namespace hpx {
             \param Nth An index of the match to be replaced. The index is 0-based.
                 For negative N, matches are counted from the end of string.
         */
-        template<typename SequenceT, typename RangeT>
-        inline void erase_nth(
-            SequenceT& Input,
-            const RangeT& Search,
-            int Nth )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::nth_finder(Search, Nth),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void erase_nth(SequenceT& Input, const RangeT& Search, int Nth)
+    {
+        ::hpx::string::find_format(Input,
+            ::hpx::string::nth_finder(Search, Nth),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_nth ( case insensitive ) ---------------------------------------------//
+    //  erase_nth ( case insensitive ) ---------------------------------------------//
 
-        //! Erase nth algorithm ( case insensitive )
-        /*!
+    //! Erase nth algorithm ( case insensitive )
+    /*!
             Remove the Nth occurrence of the substring in the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -468,43 +390,31 @@ namespace hpx {
 
             \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT ierase_nth_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search,
-            int Nth,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT ierase_nth_copy(OutputIteratorT Output,
+        const Range1T& Input, const Range2T& Search, int Nth,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase nth algorithm
-        /*!
+    //! Erase nth algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT ierase_nth_copy(
-            const SequenceT& Input,
-            const RangeT& Search,
-            int Nth,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)),
-                empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT ierase_nth_copy(const SequenceT& Input,
+        const RangeT& Search, int Nth, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)),
+            empty_formatter(Input));
+    }
 
-        //! Erase nth algorithm
-        /*!
+    //! Erase nth algorithm
+    /*!
             Remove the Nth occurrence of the substring in the input.
             The input sequence is modified in-place. Searching is case insensitive.
 
@@ -514,24 +424,19 @@ namespace hpx {
                 For negative N, matches are counted from the end of string.
             \param Loc A locale used for case insensitive comparison
         */
-        template<typename SequenceT, typename RangeT>
-        inline void ierase_nth(
-            SequenceT& Input,
-            const RangeT& Search,
-            int Nth,
-            const std::locale& Loc=std::locale() )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void ierase_nth(SequenceT& Input, const RangeT& Search, int Nth,
+        const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::find_format(Input,
+            ::hpx::string::nth_finder(Search, Nth, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
+    //  erase_all  --------------------------------------------------------//
 
-//  erase_all  --------------------------------------------------------//
-
-        //! Erase all algorithm
-        /*!
+    //! Erase all algorithm
+    /*!
             Remove all the occurrences of the string from the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -545,60 +450,48 @@ namespace hpx {
 
             \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT erase_all_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search )
-        {
-            return ::hpx::string::find_format_all_copy(
-                Output,
-                Input,
-                ::hpx::string::first_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT erase_all_copy(
+        OutputIteratorT Output, const Range1T& Input, const Range2T& Search)
+    {
+        return ::hpx::string::find_format_all_copy(Output, Input,
+            ::hpx::string::first_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase all algorithm
-        /*!
+    //! Erase all algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT erase_all_copy(
-            const SequenceT& Input,
-            const RangeT& Search )
-        {
-            return ::hpx::string::find_format_all_copy(
-                Input,
-                ::hpx::string::first_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT erase_all_copy(
+        const SequenceT& Input, const RangeT& Search)
+    {
+        return ::hpx::string::find_format_all_copy(Input,
+            ::hpx::string::first_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase all algorithm
-        /*!
+    //! Erase all algorithm
+    /*!
             Remove all the occurrences of the string from the input.
             The input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for.
         */
-        template<typename SequenceT, typename RangeT>
-        inline void erase_all(
-            SequenceT& Input,
-            const RangeT& Search )
-        {
-            ::hpx::string::find_format_all(
-                Input,
-                ::hpx::string::first_finder(Search),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void erase_all(SequenceT& Input, const RangeT& Search)
+    {
+        ::hpx::string::find_format_all(Input,
+            ::hpx::string::first_finder(Search),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_all ( case insensitive ) ------------------------------------//
+    //  erase_all ( case insensitive ) ------------------------------------//
 
-        //! Erase all algorithm ( case insensitive )
-        /*!
+    //! Erase all algorithm ( case insensitive )
+    /*!
             Remove all the occurrences of the string from the input.
             The result is a modified copy of the input. It is returned as a sequence
             or copied to the output iterator.
@@ -613,41 +506,31 @@ namespace hpx {
 
               \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename Range1T,
-            typename Range2T>
-        inline OutputIteratorT ierase_all_copy(
-            OutputIteratorT Output,
-            const Range1T& Input,
-            const Range2T& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_all_copy(
-                Output,
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename OutputIteratorT, typename Range1T, typename Range2T>
+    inline OutputIteratorT ierase_all_copy(OutputIteratorT Output,
+        const Range1T& Input, const Range2T& Search,
+        const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_all_copy(Output, Input,
+            ::hpx::string::first_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase all algorithm ( case insensitive )
-        /*!
+    //! Erase all algorithm ( case insensitive )
+    /*!
             \overload
         */
-        template<typename SequenceT, typename RangeT>
-        inline SequenceT ierase_all_copy(
-            const SequenceT& Input,
-            const RangeT& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            return ::hpx::string::find_format_all_copy(
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline SequenceT ierase_all_copy(const SequenceT& Input,
+        const RangeT& Search, const std::locale& Loc = std::locale())
+    {
+        return ::hpx::string::find_format_all_copy(Input,
+            ::hpx::string::first_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase all algorithm ( case insensitive )
-        /*!
+    //! Erase all algorithm ( case insensitive )
+    /*!
             Remove all the occurrences of the string from the input.
             The input sequence is modified in-place. Searching is case insensitive.
 
@@ -655,22 +538,19 @@ namespace hpx {
             \param Search A substring to be searched for.
             \param Loc A locale used for case insensitive comparison
         */
-        template<typename SequenceT, typename RangeT>
-        inline void ierase_all(
-            SequenceT& Input,
-            const RangeT& Search,
-            const std::locale& Loc=std::locale() )
-        {
-            ::hpx::string::find_format_all(
-                Input,
-                ::hpx::string::first_finder(Search, is_iequal(Loc)),
-                ::hpx::string::empty_formatter(Input) );
-        }
+    template <typename SequenceT, typename RangeT>
+    inline void ierase_all(SequenceT& Input, const RangeT& Search,
+        const std::locale& Loc = std::locale())
+    {
+        ::hpx::string::find_format_all(Input,
+            ::hpx::string::first_finder(Search, is_iequal(Loc)),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_head --------------------------------------------------------------------//
+    //  erase_head --------------------------------------------------------------------//
 
-        //! Erase head algorithm
-        /*!
+    //! Erase head algorithm
+    /*!
             Remove the head from the input. The head is a prefix of a sequence of given size.
             If the sequence is shorter then required, the whole string is
             considered to be the head. The result is a modified copy of the input.
@@ -687,38 +567,29 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename RangeT>
-        inline OutputIteratorT erase_head_copy(
-            OutputIteratorT Output,
-            const RangeT& Input,
-            int N )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::head_finder(N),
-                ::hpx::string::empty_formatter( Input ) );
-        }
+    template <typename OutputIteratorT, typename RangeT>
+    inline OutputIteratorT erase_head_copy(
+        OutputIteratorT Output, const RangeT& Input, int N)
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::head_finder(N),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase head algorithm
-        /*!
+    //! Erase head algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT>
-        inline SequenceT erase_head_copy(
-            const SequenceT& Input,
-            int N )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::head_finder(N),
-                ::hpx::string::empty_formatter( Input ) );
-        }
+    template <typename SequenceT>
+    inline SequenceT erase_head_copy(const SequenceT& Input, int N)
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::head_finder(N),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase head algorithm
-        /*!
+    //! Erase head algorithm
+    /*!
             Remove the head from the input. The head is a prefix of a sequence of given size.
             If the sequence is shorter then required, the whole string is
             considered to be the head. The input sequence is modified in-place.
@@ -728,21 +599,17 @@ namespace hpx {
                 For N>=0, at most N characters are extracted.
                 For N<0, size(Input)-|N| characters are extracted.
         */
-        template<typename SequenceT>
-        inline void erase_head(
-            SequenceT& Input,
-            int N )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::head_finder(N),
-                ::hpx::string::empty_formatter( Input ) );
-        }
+    template <typename SequenceT>
+    inline void erase_head(SequenceT& Input, int N)
+    {
+        ::hpx::string::find_format(Input, ::hpx::string::head_finder(N),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-//  erase_tail --------------------------------------------------------------------//
+    //  erase_tail --------------------------------------------------------------------//
 
-        //! Erase tail algorithm
-        /*!
+    //! Erase tail algorithm
+    /*!
             Remove the tail from the input. The tail is a suffix of a sequence of given size.
             If the sequence is shorter then required, the whole string is
             considered to be the tail.
@@ -759,38 +626,29 @@ namespace hpx {
 
              \note The second variant of this function provides the strong exception-safety guarantee
         */
-        template<
-            typename OutputIteratorT,
-            typename RangeT>
-        inline OutputIteratorT erase_tail_copy(
-            OutputIteratorT Output,
-            const RangeT& Input,
-            int N )
-        {
-            return ::hpx::string::find_format_copy(
-                Output,
-                Input,
-                ::hpx::string::tail_finder(N),
-                ::hpx::string::empty_formatter( Input ) );
-        }
+    template <typename OutputIteratorT, typename RangeT>
+    inline OutputIteratorT erase_tail_copy(
+        OutputIteratorT Output, const RangeT& Input, int N)
+    {
+        return ::hpx::string::find_format_copy(Output, Input,
+            ::hpx::string::tail_finder(N),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase tail algorithm
-        /*!
+    //! Erase tail algorithm
+    /*!
             \overload
         */
-        template<typename SequenceT>
-        inline SequenceT erase_tail_copy(
-            const SequenceT& Input,
-            int N )
-        {
-            return ::hpx::string::find_format_copy(
-                Input,
-                ::hpx::string::tail_finder(N),
-                ::hpx::string::empty_formatter( Input ) );
-        }
+    template <typename SequenceT>
+    inline SequenceT erase_tail_copy(const SequenceT& Input, int N)
+    {
+        return ::hpx::string::find_format_copy(Input,
+            ::hpx::string::tail_finder(N),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-        //! Erase tail algorithm
-        /*!
+    //! Erase tail algorithm
+    /*!
             Remove the tail from the input. The tail is a suffix of a sequence of given size.
             If the sequence is shorter then required, the whole string is
             considered to be the tail. The input sequence is modified in-place.
@@ -800,19 +658,13 @@ namespace hpx {
                 For N>=0, at most N characters are extracted.
                 For N<0, size(Input)-|N| characters are extracted.
         */
-        template<typename SequenceT>
-        inline void erase_tail(
-            SequenceT& Input,
-            int N )
-        {
-            ::hpx::string::find_format(
-                Input,
-                ::hpx::string::tail_finder(N),
-                ::hpx::string::empty_formatter( Input ) );
-        }
+    template <typename SequenceT>
+    inline void erase_tail(SequenceT& Input, int N)
+    {
+        ::hpx::string::find_format(Input, ::hpx::string::tail_finder(N),
+            ::hpx::string::empty_formatter(Input));
+    }
 
-    } // namespace string
-} // namespace hpx
+}}    // namespace hpx::string
 
-
-#endif  // HPX_ERASE_HPP
+#endif    // HPX_ERASE_HPP
