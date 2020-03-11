@@ -9,11 +9,10 @@
 #include <hpx/include/components.hpp>
 #include <hpx/runtime/agas/interface.hpp>
 #include <hpx/format.hpp>
+#include <hpx/string/classification.hpp>
+#include <hpx/string/split.hpp>
 
 #include "throttle/throttle.hpp"
-
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
 
 #include <iostream>
 #include <sstream>
@@ -22,8 +21,8 @@
 
 using hpx::program_options::variables_map;
 
-using boost::algorithm::is_space;
-using boost::algorithm::split;
+using hpx::string::is_space;
+using hpx::string::split;
 
 using hpx::naming::get_agas_client;
 

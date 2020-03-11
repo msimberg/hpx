@@ -9,9 +9,8 @@
 #include <hpx/hpx_init.hpp>
 #include <hpx/hpx.hpp>
 #include <hpx/format.hpp>
-
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/classification.hpp>
+#include <hpx/string/split.hpp>
+#include <hpx/string/classification.hpp>
 
 #include <chrono>
 #include <cstdint>
@@ -243,9 +242,9 @@ int hpx_main(
             for (std::uint64_t i = 0; i < raw_counters.size(); ++i)
             {
                 std::vector<std::string> entry;
-                boost::algorithm::split(entry, raw_counters[i],
-                    boost::algorithm::is_any_of(","),
-                    boost::algorithm::token_compress_on);
+                hpx::string::split(entry, raw_counters[i],
+                    hpx::string::is_any_of(","),
+                    hpx::string::token_compress_on);
 
                 HPX_TEST_EQ(entry.size(), 2);
 

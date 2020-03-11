@@ -4,8 +4,6 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-// make inspect happy: hpxinspect:nodeprecatedname:boost::is_any_of
-
 #include <hpx/config.hpp>
 #include <hpx/runtime/runtime_fwd.hpp>
 #include <hpx/runtime/components/derived_component_factory.hpp>
@@ -17,8 +15,7 @@
 #include <hpx/performance_counters/counter_creators.hpp>
 #include <hpx/performance_counters/stubs/performance_counter.hpp>
 #include <hpx/performance_counters/server/arithmetics_counter.hpp>
-
-#include <boost/algorithm/string.hpp>
+#include <hpx/string.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -213,7 +210,8 @@ namespace hpx { namespace performance_counters { namespace detail
                     // try to interpret the additional parameter as a list of
                     // two performance counter names
                     std::vector<std::string> names;
-                    boost::split(names, paths.parameters_, boost::is_any_of(","));
+                    hpx::string::split(
+                        names, paths.parameters_, hpx::string::is_any_of(","));
 
                     if (names.empty())
                     {

@@ -15,11 +15,10 @@
 #include <hpx/runtime/components/component_startup_shutdown.hpp>
 #include <hpx/runtime/naming/name.hpp>
 #include <hpx/util/from_string.hpp>
+#include <hpx/string/classification.hpp>
+#include <hpx/string/split.hpp>
 
 #include <hpx/plugins/parcel/coalescing_counter_registry.hpp>
-
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
 
 #include <cstdint>
 #include <exception>
@@ -449,9 +448,9 @@ namespace hpx { namespace plugins { namespace parcel
 
                 // split parameters, extract separate values
                 std::vector<std::string> params;
-                boost::algorithm::split(params, paths.parameters_,
-                    boost::algorithm::is_any_of(","),
-                    boost::algorithm::token_compress_off);
+                hpx::string::split(params, paths.parameters_,
+                    hpx::string::is_any_of(","),
+                    hpx::string::token_compress_off);
 
                 std::int64_t min_boundary = 0;
                 std::int64_t max_boundary = 1000000;  // 1ms

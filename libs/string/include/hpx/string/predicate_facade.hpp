@@ -14,7 +14,7 @@
 #include <hpx/config.hpp>
 
 /*
- \file boost/algorith/string/predicate_facade.hpp
+ \file hpx/string/predicate_facade.hpp
  This file contains predicate_facade definition. This template class is used
  to identify classification predicates, so they can be combined using
  composition operators.

@@ -13,6 +13,8 @@
 #include <hpx/filesystem.hpp>
 #include <hpx/plugin.hpp>
 #include <hpx/prefix/find_prefix.hpp>
+#include <hpx/string/classification.hpp>
+#include <hpx/string/split.hpp>
 #include <hpx/type_support/unused.hpp>
 
 #if defined(HPX_WINDOWS)
@@ -32,8 +34,6 @@
 #include <vector>
 #endif
 
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
 #include <boost/tokenizer.hpp>
 
 #include <cstdint>
@@ -183,9 +183,9 @@ namespace hpx { namespace util {
             {
                 std::vector<std::string> path_dirs;
 
-                boost::algorithm::split(path_dirs, epath,
-                    boost::algorithm::is_any_of(":"),
-                    boost::algorithm::token_compress_on);
+                hpx::string::split(path_dirs, epath,
+                    hpx::string::is_any_of(":"),
+                    hpx::string::token_compress_on);
 
                 for (std::uint64_t i = 0; i < path_dirs.size(); ++i)
                 {

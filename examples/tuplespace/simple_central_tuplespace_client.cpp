@@ -8,10 +8,9 @@
 #include <hpx/include/actions.hpp>
 #include <hpx/include/iostreams.hpp>
 #include <hpx/include/lcos.hpp>
-
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
+#include <hpx/string/classification.hpp>
+#include <hpx/string/split.hpp>
+#include <hpx/string/trim.hpp>
 
 #include <string>
 #include <vector>
