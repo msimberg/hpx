@@ -7,35 +7,33 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <hpx/string/case_conv.hpp>
+
 #include <string>
 #include <vector>
 #include <iostream>
 #include <iterator>
-#include <boost/algorithm/string/case_conv.hpp>
-
-using namespace std;
-using namespace boost;
 
 int main()
-{  
-    cout << "* Case Conversion Example *" << endl << endl;
+{
+    std::cout << "* Case Conversion Example *" << std::endl << std::endl;
 
-    string str1("AbCdEfG");
-    vector<char> vec1( str1.begin(), str1.end() );
-    
+    std::string str1("AbCdEfG");
+    std::vector<char> vec1( str1.begin(), str1.end() );
+
     // Convert vector of chars to lower case
-    cout << "lower-cased copy of vec1: ";
-    to_lower_copy( ostream_iterator<char>(cout), vec1 );
-    cout << endl;
+    std::cout << "lower-cased copy of vec1: ";
+    hpx::string::to_lower_copy( std::ostream_iterator<char>(std::cout), vec1 );
+    std::cout << std::endl;
 
     // Conver string str1 to upper case ( copy the input )
-    cout << "upper-cased copy of str1: " << to_upper_copy( str1 ) << endl;
+    std::cout << "upper-cased copy of str1: " << hpx::string::to_upper_copy( str1 ) << std::endl;
 
     // Inplace conversion
-    to_lower( str1 );
-    cout << "lower-cased str1: " << str1 << endl;
+    hpx::string::to_lower( str1 );
+    std::cout << "lower-cased str1: " << str1 << std::endl;
 
-    cout << endl;
+    std::cout << std::endl;
 
     return 0;
 }

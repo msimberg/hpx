@@ -7,104 +7,92 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/algorithm/string/config.hpp>
-
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/classification.hpp>
-// equals predicate is used for result comparison
-#include <boost/algorithm/string/predicate.hpp>
-
-// Include unit test framework
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+#include <hpx/testing.hpp>
+#include <hpx/string/split.hpp>
+#include <hpx/string/classification.hpp>
+#include <hpx/string/predicate.hpp>
 
 #include <string>
 #include <vector>
 #include <list>
 #include <iostream>
 
-#include <boost/test/test_tools.hpp>
-
-
-using namespace std;
-using namespace boost;
+using namespace hpx::string;
 
 template< typename T1, typename T2 >
 void deep_compare( const T1& X, const T2& Y )
 {
-    BOOST_REQUIRE( X.size() == Y.size() );
+    HPX_TEST( X.size() == Y.size() );
     for( unsigned int nIndex=0; nIndex<X.size(); ++nIndex )
     {
-        BOOST_CHECK( equals( X[nIndex], Y[nIndex] ) );
+        HPX_TEST( equals( X[nIndex], Y[nIndex] ) );
     }
 }
 
 void iterator_test()
 {
-    string str1("xx-abc--xx-abb");
-    string str2("Xx-abc--xX-abb-xx");
-    string str3("xx");
-    string strempty("");
+    std::string str1("xx-abc--xx-abb");
+    std::string str2("Xx-abc--xX-abb-xx");
+    std::string str3("xx");
+    std::string strempty("");
     const char* pch1="xx-abc--xx-abb";
-    vector<string> tokens;
-    vector< vector<int> > vtokens;
-    
+    std::vector<std::string> tokens;
+    std::vector< std::vector<int> > vtokens;
+
     // find_all tests
     find_all(
         tokens,
         pch1,
         "xx" );
 
-    BOOST_REQUIRE( tokens.size()==2 );
-    BOOST_CHECK( tokens[0]==string("xx") );
-    BOOST_CHECK( tokens[1]==string("xx") );
+    HPX_TEST( tokens.size()==2 );
+    HPX_TEST( tokens[0]==std::string("xx") );
+    HPX_TEST( tokens[1]==std::string("xx") );
 
     ifind_all(
         tokens,
         str2,
         "xx" );
 
-    BOOST_REQUIRE( tokens.size()==3 );
-    BOOST_CHECK( tokens[0]==string("Xx") );
-    BOOST_CHECK( tokens[1]==string("xX") );
-    BOOST_CHECK( tokens[2]==string("xx") );
+    HPX_TEST( tokens.size()==3 );
+    HPX_TEST( tokens[0]==std::string("Xx") );
+    HPX_TEST( tokens[1]==std::string("xX") );
+    HPX_TEST( tokens[2]==std::string("xx") );
 
     find_all(
         tokens,
         str1,
         "xx" );
 
-    BOOST_REQUIRE( tokens.size()==2 );
-    BOOST_CHECK( tokens[0]==string("xx") );
-    BOOST_CHECK( tokens[1]==string("xx") );
+    HPX_TEST( tokens.size()==2 );
+    HPX_TEST( tokens[0]==std::string("xx") );
+    HPX_TEST( tokens[1]==std::string("xx") );
 
     find_all(
         vtokens,
         str1,
-        string("xx") );
+        std::string("xx") );
     deep_compare( tokens, vtokens );
 
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     // If using a compiler that supports forwarding references, we should be able to use rvalues, too
     find_all(
         tokens,
-        string("xx-abc--xx-abb"),
+        std::string("xx-abc--xx-abb"),
         "xx" );
 
-    BOOST_REQUIRE( tokens.size()==2 );
-    BOOST_CHECK( tokens[0]==string("xx") );
-    BOOST_CHECK( tokens[1]==string("xx") );
+    HPX_TEST( tokens.size()==2 );
+    HPX_TEST( tokens[0]==std::string("xx") );
+    HPX_TEST( tokens[1]==std::string("xx") );
 
     ifind_all(
         tokens,
-        string("Xx-abc--xX-abb-xx"),
+        std::string("Xx-abc--xX-abb-xx"),
         "xx" );
 
-    BOOST_REQUIRE( tokens.size()==3 );
-    BOOST_CHECK( tokens[0]==string("Xx") );
-    BOOST_CHECK( tokens[1]==string("xX") );
-    BOOST_CHECK( tokens[2]==string("xx") );
-#endif
+    HPX_TEST( tokens.size()==3 );
+    HPX_TEST( tokens[0]==std::string("Xx") );
+    HPX_TEST( tokens[1]==std::string("xX") );
+    HPX_TEST( tokens[2]==std::string("xx") );
 
     // split tests
     split(
@@ -113,11 +101,11 @@ void iterator_test()
         is_any_of("xX"),
         token_compress_on );
 
-    BOOST_REQUIRE( tokens.size()==4 );
-    BOOST_CHECK( tokens[0]==string("") );
-    BOOST_CHECK( tokens[1]==string("-abc--") );
-    BOOST_CHECK( tokens[2]==string("-abb-") );
-    BOOST_CHECK( tokens[3]==string("") );
+    HPX_TEST( tokens.size()==4 );
+    HPX_TEST( tokens[0]==std::string("") );
+    HPX_TEST( tokens[1]==std::string("-abc--") );
+    HPX_TEST( tokens[2]==std::string("-abb-") );
+    HPX_TEST( tokens[3]==std::string("") );
 
     split(
         tokens,
@@ -125,10 +113,10 @@ void iterator_test()
         is_any_of("x"),
         token_compress_on );
 
-    BOOST_REQUIRE( tokens.size()==3 );
-    BOOST_CHECK( tokens[0]==string("") );
-    BOOST_CHECK( tokens[1]==string("-abc--") );
-    BOOST_CHECK( tokens[2]==string("-abb") );
+    HPX_TEST( tokens.size()==3 );
+    HPX_TEST( tokens[0]==std::string("") );
+    HPX_TEST( tokens[1]==std::string("-abc--") );
+    HPX_TEST( tokens[2]==std::string("-abb") );
 
     split(
         vtokens,
@@ -143,12 +131,12 @@ void iterator_test()
         is_punct(),
         token_compress_off );
 
-    BOOST_REQUIRE( tokens.size()==5 );
-    BOOST_CHECK( tokens[0]==string("xx") );
-    BOOST_CHECK( tokens[1]==string("abc") );
-    BOOST_CHECK( tokens[2]==string("") );
-    BOOST_CHECK( tokens[3]==string("xx") );
-    BOOST_CHECK( tokens[4]==string("abb") );
+    HPX_TEST( tokens.size()==5 );
+    HPX_TEST( tokens[0]==std::string("xx") );
+    HPX_TEST( tokens[1]==std::string("abc") );
+    HPX_TEST( tokens[2]==std::string("") );
+    HPX_TEST( tokens[3]==std::string("xx") );
+    HPX_TEST( tokens[4]==std::string("abb") );
 
     split(
         tokens,
@@ -156,8 +144,8 @@ void iterator_test()
         is_any_of(","),
         token_compress_off);
 
-    BOOST_REQUIRE( tokens.size()==1 );
-    BOOST_CHECK( tokens[0]==string("xx") );
+    HPX_TEST( tokens.size()==1 );
+    HPX_TEST( tokens[0]==std::string("xx") );
 
     split(
         tokens,
@@ -165,68 +153,66 @@ void iterator_test()
         is_punct(),
         token_compress_off);
 
-    BOOST_REQUIRE( tokens.size()==1 );
-    BOOST_CHECK( tokens[0]==string("") );
+    HPX_TEST( tokens.size()==1 );
+    HPX_TEST( tokens[0]==std::string("") );
 
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     // If using a compiler that supports forwarding references, we should be able to use rvalues, too
     split(
         tokens,
-        string("Xx-abc--xX-abb-xx"),
+        std::string("Xx-abc--xX-abb-xx"),
         is_any_of("xX"),
         token_compress_on );
 
-    BOOST_REQUIRE( tokens.size()==4 );
-    BOOST_CHECK( tokens[0]==string("") );
-    BOOST_CHECK( tokens[1]==string("-abc--") );
-    BOOST_CHECK( tokens[2]==string("-abb-") );
-    BOOST_CHECK( tokens[3]==string("") );
-#endif
+    HPX_TEST( tokens.size()==4 );
+    HPX_TEST( tokens[0]==std::string("") );
+    HPX_TEST( tokens[1]==std::string("-abc--") );
+    HPX_TEST( tokens[2]==std::string("-abb-") );
+    HPX_TEST( tokens[3]==std::string("") );
 
 
-    find_iterator<string::iterator> fiter=make_find_iterator(str1, first_finder("xx"));
-    find_iterator<string::iterator> fiter2;
-    
-    BOOST_CHECK(equals(*fiter, "xx"));
+    find_iterator<std::string::iterator> fiter=make_find_iterator(str1, first_finder("xx"));
+    find_iterator<std::string::iterator> fiter2;
+
+    HPX_TEST(equals(*fiter, "xx"));
     ++fiter;
-    
+
     fiter2 = fiter;
-    BOOST_CHECK(equals(*fiter,  "xx"));
-    BOOST_CHECK(equals(*fiter2, "xx"));
+    HPX_TEST(equals(*fiter,  "xx"));
+    HPX_TEST(equals(*fiter2, "xx"));
 
     ++fiter;
-    BOOST_CHECK(fiter==find_iterator<string::iterator>());
-    BOOST_CHECK(equals(*fiter2, "xx"));
+    HPX_TEST(fiter==find_iterator<std::string::iterator>());
+    HPX_TEST(equals(*fiter2, "xx"));
 
     ++fiter2;
-    BOOST_CHECK(fiter2==find_iterator<string::iterator>());
+    HPX_TEST(fiter2==find_iterator<std::string::iterator>());
 
-    split_iterator<string::iterator> siter=make_split_iterator(str1, token_finder(is_any_of("-"), token_compress_on));
-    split_iterator<string::iterator> siter2;
-    BOOST_CHECK(equals(*siter, "xx"));
+    split_iterator<std::string::iterator> siter=make_split_iterator(str1, token_finder(is_any_of("-"), token_compress_on));
+    split_iterator<std::string::iterator> siter2;
+    HPX_TEST(equals(*siter, "xx"));
     ++siter;
 
     siter2 = siter;
-    BOOST_CHECK(equals(*siter,  "abc"));
-    BOOST_CHECK(equals(*siter2, "abc"));
-    
+    HPX_TEST(equals(*siter,  "abc"));
+    HPX_TEST(equals(*siter2, "abc"));
+
     ++siter;
-    BOOST_CHECK(equals(*siter,  "xx"));
-    BOOST_CHECK(equals(*siter2, "abc"));
-    
+    HPX_TEST(equals(*siter,  "xx"));
+    HPX_TEST(equals(*siter2, "abc"));
+
     ++siter;
-    BOOST_CHECK(equals(*siter, "abb"));
+    HPX_TEST(equals(*siter, "abb"));
     ++siter;
-    BOOST_CHECK(siter==split_iterator<string::iterator>(siter));
-    BOOST_CHECK(siter==split_iterator<string::iterator>());
+    HPX_TEST(siter==split_iterator<std::string::iterator>(siter));
+    HPX_TEST(siter==split_iterator<std::string::iterator>());
 
 //  Make sure we work with forward iterators
 //  See bug #7989
-    list<char> l1;
-    find_iterator<list<char>::iterator> liter=make_find_iterator(l1, first_finder("xx"));
+    std::list<char> l1;
+    find_iterator<std::list<char>::iterator> liter=make_find_iterator(l1, first_finder("xx"));
 }
 
-BOOST_AUTO_TEST_CASE( test_main )
+int main()
 {
     iterator_test();
 }

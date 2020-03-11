@@ -8,21 +8,20 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_FORMATTER_DETAIL_HPP
-#define BOOST_STRING_FORMATTER_DETAIL_HPP
+#ifndef HPX_STRING_FORMATTER_DETAIL_HPP
+#define HPX_STRING_FORMATTER_DETAIL_HPP
 
+#include <hpx/string/detail/util.hpp>
 
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/const_iterator.hpp>
 
-#include <boost/algorithm/string/detail/util.hpp>
-
 //  generic replace functors -----------------------------------------------//
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  const format functor ----------------------------------------------------//
@@ -32,23 +31,21 @@ namespace boost {
             struct const_formatF
             {
             private:
-                typedef BOOST_STRING_TYPENAME
-                    range_const_iterator<RangeT>::type format_iterator;
-                typedef iterator_range<format_iterator> result_type;
-            
+                typedef typename
+                    boost::range_const_iterator<RangeT>::type format_iterator;
+                typedef boost::iterator_range<format_iterator> result_type;
+
             public:
                 // Construction
                 const_formatF(const RangeT& Format) :
                     m_Format(::boost::begin(Format), ::boost::end(Format)) {}
 
                 // Operation
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
                 template<typename Range2T>
                 result_type& operator()(const Range2T&)
                 {
                     return m_Format;
                 }
-#endif
 
                 template<typename Range2T>
                 const result_type& operator()(const Range2T&) const
@@ -75,7 +72,7 @@ namespace boost {
             };
 
 //  empty format functor ( used by erase ) ------------------------------------//
-        
+
             // empty format functor
             template< typename CharT >
             struct empty_formatF
@@ -100,8 +97,8 @@ namespace boost {
 
                   // Operation
                   template<typename RangeT>
-                  inline iterator_range< 
-                      BOOST_STRING_TYPENAME range_const_iterator<RangeT>::type>
+                  inline boost::iterator_range<
+                      typename boost::range_const_iterator<RangeT>::type>
                   operator()(const RangeT& Replace) const
                   {
                       return m_Finder(::boost::begin(Replace), ::boost::end(Replace));
@@ -113,7 +110,7 @@ namespace boost {
 
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
-#endif  // BOOST_STRING_FORMATTER_DETAIL_HPP
+#endif  // HPX_STRING_FORMATTER_DETAIL_HPP

@@ -8,16 +8,17 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_JOIN_HPP
-#define BOOST_STRING_JOIN_HPP
+#ifndef HPX_STRING_JOIN_HPP
+#define HPX_STRING_JOIN_HPP
 
-#include <boost/algorithm/string/config.hpp>
-#include <boost/algorithm/string/detail/sequence.hpp>
+#include <hpx/config.hpp>
+#include <hpx/string/detail/sequence.hpp>
+
 #include <boost/range/value_type.hpp>
 #include <boost/range/as_literal.hpp>
 
 /*! \file
-    Defines join algorithm. 
+    Defines join algorithm.
 
     Join algorithm is a counterpart to split algorithms.
     It joins strings from a 'list' by adding user defined separator.
@@ -25,8 +26,8 @@
     by providing a predicate.
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
 //  join --------------------------------------------------------------//
 
@@ -42,14 +43,14 @@ namespace boost {
             \note This function provides the strong exception-safety guarantee
         */
         template< typename SequenceSequenceT, typename Range1T>
-        inline typename range_value<SequenceSequenceT>::type 
+        inline typename boost::range_value<SequenceSequenceT>::type
         join(
             const SequenceSequenceT& Input,
             const Range1T& Separator)
         {
             // Define working types
-            typedef typename range_value<SequenceSequenceT>::type ResultT;
-            typedef typename range_const_iterator<SequenceSequenceT>::type InputIteratorT;
+            typedef typename boost::range_value<SequenceSequenceT>::type ResultT;
+            typedef typename boost::range_const_iterator<SequenceSequenceT>::type InputIteratorT;
 
             // Parse input
             InputIteratorT itBegin=::boost::begin(Input);
@@ -57,7 +58,7 @@ namespace boost {
 
             // Construct container to hold the result
             ResultT Result;
-            
+
             // Append first element
             if(itBegin!=itEnd)
             {
@@ -92,15 +93,15 @@ namespace boost {
             \note This function provides the strong exception-safety guarantee
         */
         template< typename SequenceSequenceT, typename Range1T, typename PredicateT>
-        inline typename range_value<SequenceSequenceT>::type 
+        inline typename boost::range_value<SequenceSequenceT>::type
         join_if(
             const SequenceSequenceT& Input,
             const Range1T& Separator,
             PredicateT Pred)
         {
             // Define working types
-            typedef typename range_value<SequenceSequenceT>::type ResultT;
-            typedef typename range_const_iterator<SequenceSequenceT>::type InputIteratorT;
+            typedef typename boost::range_value<SequenceSequenceT>::type ResultT;
+            typedef typename boost::range_const_iterator<SequenceSequenceT>::type InputIteratorT;
 
             // Parse input
             InputIteratorT itBegin=::boost::begin(Input);
@@ -132,14 +133,9 @@ namespace boost {
             return Result;
         }
 
-    } // namespace algorithm
-
-    // pull names to the boost namespace
-    using algorithm::join;
-    using algorithm::join_if;
-
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_JOIN_HPP
+#endif  // HPX_STRING_JOIN_HPP
 

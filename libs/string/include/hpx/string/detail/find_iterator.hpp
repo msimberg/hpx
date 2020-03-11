@@ -8,17 +8,18 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_FIND_ITERATOR_DETAIL_HPP
-#define BOOST_STRING_FIND_ITERATOR_DETAIL_HPP
+#ifndef HPX_STRING_FIND_ITERATOR_DETAIL_HPP
+#define HPX_STRING_FIND_ITERATOR_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/iterator/iterator_categories.hpp>
 #include <boost/function.hpp>
 
-namespace boost {
-    namespace algorithm { 
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  find_iterator base -----------------------------------------------//
@@ -30,12 +31,12 @@ namespace boost {
             protected:
                 // typedefs
                 typedef IteratorT input_iterator_type;
-                typedef iterator_range<IteratorT> match_type;
-                typedef function2<
-                    match_type, 
-                    input_iterator_type, 
+                typedef boost::iterator_range<IteratorT> match_type;
+                typedef boost::function2<
+                    match_type,
+                    input_iterator_type,
                     input_iterator_type> finder_type;
-                
+
             protected:
             // Protected construction/destruction
 
@@ -44,7 +45,7 @@ namespace boost {
                 // Copy construction
                 find_iterator_base( const find_iterator_base& Other ) :
                     m_Finder(Other.m_Finder) {}
-                
+
                 // Constructor
                 template<typename FinderT>
                 find_iterator_base( FinderT Finder, int ) :
@@ -54,7 +55,7 @@ namespace boost {
                 ~find_iterator_base() {}
 
                 // Find operation
-                match_type do_find( 
+                match_type do_find(
                     input_iterator_type Begin,
                     input_iterator_type End ) const
                 {
@@ -80,8 +81,8 @@ namespace boost {
             };
 
        } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_FIND_ITERATOR_DETAIL_HPP
+#endif  // HPX_STRING_FIND_ITERATOR_DETAIL_HPP

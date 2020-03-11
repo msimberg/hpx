@@ -7,15 +7,12 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/algorithm/string/find_format.hpp>
-#include <boost/algorithm/string/finder.hpp>
-#include <boost/algorithm/string/formatter.hpp>
+#include <hpx/testing.hpp>
+#include <hpx/string/find_format.hpp>
+#include <hpx/string/finder.hpp>
+#include <hpx/string/formatter.hpp>
 
-// Include unit test framework
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
-
-#include <boost/test/test_tools.hpp>
+using namespace hpx::string;
 
 // We're only using const_formatter.
 template<class Formatter>
@@ -29,7 +26,7 @@ public:
     checked_formatter(const Formatter& formatter) : formatter_(formatter) {}
     template< typename T >
     typename formatter_result<Formatter>::type operator()( const T & s ) const {
-        BOOST_CHECK( !s.empty() );
+        HPX_TEST( !s.empty() );
         return formatter_(s);
     }
 private:
@@ -49,54 +46,54 @@ void find_format_test()
     std::string output(80, '\0');
 
     std::string::iterator pos =
-        boost::find_format_copy(
+        hpx::string::find_format_copy(
             output.begin(),
             source,
-            boost::first_finder("$replace"),
-            make_checked_formatter(boost::const_formatter("ok")));
-    BOOST_CHECK(pos == output.begin() + expected.size());
+            hpx::string::first_finder("$replace"),
+            make_checked_formatter(hpx::string::const_formatter("ok")));
+    HPX_TEST(pos == output.begin() + expected.size());
     output.erase(std::remove(output.begin(), output.end(), '\0'), output.end());
-    BOOST_CHECK_EQUAL(output, expected);
+    HPX_TEST_EQ(output, expected);
 
     output =
-        boost::find_format_copy(
+        hpx::string::find_format_copy(
             source,
-            boost::first_finder("$replace"),
-            make_checked_formatter(boost::const_formatter("ok")));
-    BOOST_CHECK_EQUAL(output, expected);
+            hpx::string::first_finder("$replace"),
+            make_checked_formatter(hpx::string::const_formatter("ok")));
+    HPX_TEST_EQ(output, expected);
 
     // now try finding a string that doesn't exist
     output.resize(80);
     pos =
-        boost::find_format_copy(
+        hpx::string::find_format_copy(
             output.begin(),
             source,
-            boost::first_finder("$noreplace"),
-            make_checked_formatter(boost::const_formatter("bad")));
-    BOOST_CHECK(pos == output.begin() + source.size());
+            hpx::string::first_finder("$noreplace"),
+            make_checked_formatter(hpx::string::const_formatter("bad")));
+    HPX_TEST(pos == output.begin() + source.size());
     output.erase(std::remove(output.begin(), output.end(), '\0'), output.end());
-    BOOST_CHECK_EQUAL(output, source);
+    HPX_TEST_EQ(output, source);
 
     output =
-        boost::find_format_copy(
+        hpx::string::find_format_copy(
             source,
-            boost::first_finder("$noreplace"),
-            make_checked_formatter(boost::const_formatter("bad")));
-    BOOST_CHECK_EQUAL(output, source);
+            hpx::string::first_finder("$noreplace"),
+            make_checked_formatter(hpx::string::const_formatter("bad")));
+    HPX_TEST_EQ(output, source);
 
     // in place version
     output = source;
-    boost::find_format(
+    hpx::string::find_format(
         output,
-        boost::first_finder("$replace"),
-        make_checked_formatter(boost::const_formatter("ok")));
-    BOOST_CHECK_EQUAL(output, expected);
+        hpx::string::first_finder("$replace"),
+        make_checked_formatter(hpx::string::const_formatter("ok")));
+    HPX_TEST_EQ(output, expected);
     output = source;
-    boost::find_format(
+    hpx::string::find_format(
         output,
-        boost::first_finder("$noreplace"),
-        make_checked_formatter(boost::const_formatter("bad")));
-    BOOST_CHECK_EQUAL(output, source);
+        hpx::string::first_finder("$noreplace"),
+        make_checked_formatter(hpx::string::const_formatter("bad")));
+    HPX_TEST_EQ(output, source);
 }
 
 void find_format_all_test()
@@ -106,56 +103,56 @@ void find_format_all_test()
     std::string output(80, '\0');
 
     std::string::iterator pos =
-        boost::find_format_all_copy(output.begin(),
+        hpx::string::find_format_all_copy(output.begin(),
                                 source,
-                                boost::first_finder("$replace"),
-                                boost::const_formatter("ok"));
-    BOOST_CHECK(pos == output.begin() + expected.size());
+                                hpx::string::first_finder("$replace"),
+                                hpx::string::const_formatter("ok"));
+    HPX_TEST(pos == output.begin() + expected.size());
     output.erase(std::remove(output.begin(), output.end(), '\0'), output.end());
-    BOOST_CHECK_EQUAL(output, expected);
+    HPX_TEST_EQ(output, expected);
 
     output =
-        boost::find_format_all_copy(
+        hpx::string::find_format_all_copy(
             source,
-            boost::first_finder("$replace"),
-            make_checked_formatter(boost::const_formatter("ok")));
-    BOOST_CHECK_EQUAL(output, expected);
+            hpx::string::first_finder("$replace"),
+            make_checked_formatter(hpx::string::const_formatter("ok")));
+    HPX_TEST_EQ(output, expected);
 
     // now try finding a string that doesn't exist
     output.resize(80);
     pos =
-        boost::find_format_all_copy(
+        hpx::string::find_format_all_copy(
             output.begin(),
             source,
-            boost::first_finder("$noreplace"),
-            make_checked_formatter(boost::const_formatter("bad")));
-    BOOST_CHECK(pos == output.begin() + source.size());
+            hpx::string::first_finder("$noreplace"),
+            make_checked_formatter(hpx::string::const_formatter("bad")));
+    HPX_TEST(pos == output.begin() + source.size());
     output.erase(std::remove(output.begin(), output.end(), '\0'), output.end());
-    BOOST_CHECK_EQUAL(output, source);
+    HPX_TEST_EQ(output, source);
 
     output =
-        boost::find_format_all_copy(
+        hpx::string::find_format_all_copy(
             source,
-            boost::first_finder("$noreplace"),
-            make_checked_formatter(boost::const_formatter("bad")));
-    BOOST_CHECK_EQUAL(output, source);
+            hpx::string::first_finder("$noreplace"),
+            make_checked_formatter(hpx::string::const_formatter("bad")));
+    HPX_TEST_EQ(output, source);
 
     // in place version
     output = source;
-    boost::find_format_all(
+    hpx::string::find_format_all(
         output,
-        boost::first_finder("$replace"),
-        make_checked_formatter(boost::const_formatter("ok")));
-    BOOST_CHECK_EQUAL(output, expected);
+        hpx::string::first_finder("$replace"),
+        make_checked_formatter(hpx::string::const_formatter("ok")));
+    HPX_TEST_EQ(output, expected);
     output = source;
-    boost::find_format_all(
+    hpx::string::find_format_all(
         output,
-        boost::first_finder("$noreplace"),
-        make_checked_formatter(boost::const_formatter("bad")));
-    BOOST_CHECK_EQUAL(output, source);
+        hpx::string::first_finder("$noreplace"),
+        make_checked_formatter(hpx::string::const_formatter("bad")));
+    HPX_TEST_EQ(output, source);
 }
 
-BOOST_AUTO_TEST_CASE( test_main )
+int main()
 {
     find_format_test();
     find_format_all_test();

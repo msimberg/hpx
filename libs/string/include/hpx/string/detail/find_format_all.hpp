@@ -8,23 +8,26 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_FIND_FORMAT_ALL_DETAIL_HPP
-#define BOOST_STRING_FIND_FORMAT_ALL_DETAIL_HPP
+#ifndef HPX_STRING_FIND_FORMAT_ALL_DETAIL_HPP
+#define HPX_STRING_FIND_FORMAT_ALL_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+#include <hpx/string/detail/find_format_store.hpp>
+#include <hpx/string/detail/replace_storage.hpp>
+
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/range/const_iterator.hpp>
 #include <boost/range/value_type.hpp>
-#include <boost/algorithm/string/detail/find_format_store.hpp>
-#include <boost/algorithm/string/detail/replace_storage.hpp>
 
-namespace boost {
-    namespace algorithm {
+#include <deque>
+
+namespace hpx {
+    namespace string {
         namespace detail {
 
 // find_format_all_copy (iterator variant) implementation ---------------------------//
 
-           template< 
+           template<
                 typename OutputIteratorT,
                 typename InputT,
                 typename FinderT,
@@ -38,12 +41,12 @@ namespace boost {
                 FormatterT Formatter,
                 const FindResultT& FindResult,
                 const FormatResultT& FormatResult )
-            {       
-                typedef BOOST_STRING_TYPENAME 
-                    range_const_iterator<InputT>::type input_iterator_type; 
+            {
+                typedef typename
+                    boost::range_const_iterator<InputT>::type input_iterator_type;
 
                 typedef find_format_store<
-                        input_iterator_type, 
+                        input_iterator_type,
                         FormatterT,
                         FormatResultT > store_type;
 
@@ -72,7 +75,7 @@ namespace boost {
                 return Output;
             }
 
-            template< 
+            template<
                 typename OutputIteratorT,
                 typename InputT,
                 typename FinderT,
@@ -84,9 +87,9 @@ namespace boost {
                 FinderT Finder,
                 FormatterT Formatter,
                 const FindResultT& FindResult )
-            {   
-                if( ::boost::algorithm::detail::check_find_result(Input, FindResult) ) {
-                    return ::boost::algorithm::detail::find_format_all_copy_impl2( 
+            {
+                if( ::hpx::string::detail::check_find_result(Input, FindResult) ) {
+                    return ::hpx::string::detail::find_format_all_copy_impl2(
                         Output,
                         Input,
                         Finder,
@@ -100,8 +103,8 @@ namespace boost {
 
  // find_format_all_copy implementation ----------------------------------------------//
 
-           template< 
-                typename InputT, 
+           template<
+                typename InputT,
                 typename FinderT,
                 typename FormatterT,
                 typename FindResultT,
@@ -113,11 +116,11 @@ namespace boost {
                 const FindResultT& FindResult,
                 const FormatResultT& FormatResult)
             {
-                typedef BOOST_STRING_TYPENAME 
-                    range_const_iterator<InputT>::type input_iterator_type; 
+                typedef typename
+                    boost::range_const_iterator<InputT>::type input_iterator_type;
 
                 typedef find_format_store<
-                        input_iterator_type, 
+                        input_iterator_type,
                         FormatterT,
                         FormatResultT > store_type;
 
@@ -134,9 +137,9 @@ namespace boost {
                 while( M )
                 {
                     // Copy the beginning of the sequence
-                    boost::algorithm::detail::insert( Output, ::boost::end(Output), LastMatch, M.begin() );
+                    hpx::string::detail::insert( Output, ::boost::end(Output), LastMatch, M.begin() );
                     // Copy formatted result
-                    boost::algorithm::detail::insert( Output, ::boost::end(Output), M.format_result() );
+                    hpx::string::detail::insert( Output, ::boost::end(Output), M.format_result() );
 
                     // Proceed to the next match
                     LastMatch=M.end();
@@ -144,13 +147,13 @@ namespace boost {
                 }
 
                 // Copy the rest of the sequence
-                ::boost::algorithm::detail::insert( Output, ::boost::end(Output), LastMatch, ::boost::end(Input) );
+                ::hpx::string::detail::insert( Output, ::boost::end(Output), LastMatch, ::boost::end(Input) );
 
                 return Output;
             }
 
-            template< 
-                typename InputT, 
+            template<
+                typename InputT,
                 typename FinderT,
                 typename FormatterT,
                 typename FindResultT >
@@ -160,8 +163,8 @@ namespace boost {
                 FormatterT Formatter,
                 const FindResultT& FindResult)
             {
-                if( ::boost::algorithm::detail::check_find_result(Input, FindResult) ) {
-                    return ::boost::algorithm::detail::find_format_all_copy_impl2(
+                if( ::hpx::string::detail::check_find_result(Input, FindResult) ) {
+                    return ::hpx::string::detail::find_format_all_copy_impl2(
                         Input,
                         Finder,
                         Formatter,
@@ -173,75 +176,75 @@ namespace boost {
             }
 
  // find_format_all implementation ------------------------------------------------//
-        
+
             template<
                 typename InputT,
                 typename FinderT,
                 typename FormatterT,
                 typename FindResultT,
                 typename FormatResultT >
-            inline void find_format_all_impl2( 
+            inline void find_format_all_impl2(
                 InputT& Input,
                 FinderT Finder,
                 FormatterT Formatter,
                 FindResultT FindResult,
                 FormatResultT FormatResult)
             {
-                typedef BOOST_STRING_TYPENAME 
-                    range_iterator<InputT>::type input_iterator_type; 
+                typedef typename
+                    boost::range_iterator<InputT>::type input_iterator_type;
                 typedef find_format_store<
-                        input_iterator_type, 
+                        input_iterator_type,
                         FormatterT,
                         FormatResultT > store_type;
 
                 // Create store for the find result
                 store_type M( FindResult, FormatResult, Formatter );
-          
+
                 // Instantiate replacement storage
                 std::deque<
-                    BOOST_STRING_TYPENAME range_value<InputT>::type> Storage;
+                    typename boost::range_value<InputT>::type> Storage;
 
                 // Initialize replacement iterators
                 input_iterator_type InsertIt=::boost::begin(Input);
                 input_iterator_type SearchIt=::boost::begin(Input);
-                
+
                 while( M )
                 {
                     // process the segment
-                    InsertIt=process_segment( 
+                    InsertIt=process_segment(
                         Storage,
                         Input,
                         InsertIt,
                         SearchIt,
                         M.begin() );
-                    
+
                     // Adjust search iterator
                     SearchIt=M.end();
 
                     // Copy formatted replace to the storage
-                    ::boost::algorithm::detail::copy_to_storage( Storage, M.format_result() );
+                    ::hpx::string::detail::copy_to_storage( Storage, M.format_result() );
 
                     // Find range for a next match
                     M=Finder( SearchIt, ::boost::end(Input) );
                 }
 
                 // process the last segment
-                InsertIt=::boost::algorithm::detail::process_segment( 
+                InsertIt=::hpx::string::detail::process_segment(
                     Storage,
                     Input,
                     InsertIt,
                     SearchIt,
                     ::boost::end(Input) );
-                
+
                 if ( Storage.empty() )
                 {
                     // Truncate input
-                    ::boost::algorithm::detail::erase( Input, InsertIt, ::boost::end(Input) );
+                    ::hpx::string::detail::erase( Input, InsertIt, ::boost::end(Input) );
                 }
                 else
                 {
                     // Copy remaining data to the end of input
-                    ::boost::algorithm::detail::insert( Input, ::boost::end(Input), Storage.begin(), Storage.end() );
+                    ::hpx::string::detail::insert( Input, ::boost::end(Input), Storage.begin(), Storage.end() );
                 }
             }
 
@@ -250,14 +253,14 @@ namespace boost {
                 typename FinderT,
                 typename FormatterT,
                 typename FindResultT >
-            inline void find_format_all_impl( 
+            inline void find_format_all_impl(
                 InputT& Input,
                 FinderT Finder,
                 FormatterT Formatter,
                 FindResultT FindResult)
             {
-                if( ::boost::algorithm::detail::check_find_result(Input, FindResult) ) {
-                    ::boost::algorithm::detail::find_format_all_impl2(
+                if( ::hpx::string::detail::check_find_result(Input, FindResult) ) {
+                    ::hpx::string::detail::find_format_all_impl2(
                         Input,
                         Finder,
                         Formatter,
@@ -267,7 +270,7 @@ namespace boost {
             }
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
-#endif  // BOOST_STRING_FIND_FORMAT_ALL_DETAIL_HPP
+#endif  // HPX_STRING_FIND_FORMAT_ALL_DETAIL_HPP

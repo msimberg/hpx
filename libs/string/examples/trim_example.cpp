@@ -7,41 +7,39 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <hpx/string/trim.hpp>
+#include <hpx/string/classification.hpp>
+
 #include <string>
 #include <iostream>
-#include <boost/algorithm/string/trim.hpp>
-#include <boost/algorithm/string/classification.hpp>
-
-using namespace std;
-using namespace boost;
 
 int main()
 {
-    cout << "* Trim Example *" << endl << endl;
+    std::cout << "* Trim Example *" << std::endl << std::endl;
 
-    string str1("     1x x x x1     ");
-    string str2("<>trim<>");
-    string str3("123abs343");
+    std::string str1("     1x x x x1     ");
+    std::string str2("<>trim<>");
+    std::string str3("123abs343");
 
     // Simple left trim
-    cout << "trim_left copy of str1: " << "\"" << trim_left_copy( str1 ) << "\"" << endl;
+    std::cout << "trim_left copy of str1: " << "\"" << hpx::string::trim_left_copy( str1 ) << "\"" << std::endl;
 
     // Inplace right trim
-    trim_right( str1 );
-    cout << "trim_right on str1: " << "\"" << str1 << "\"" << endl;
+    hpx::string::trim_right( str1 );
+    std::cout << "trim_right on str1: " << "\"" << str1 << "\"" << std::endl;
 
     // Parametric trim. 'Space' is defined using is_any_of predicate
-    cout 
-        << "trimmed copy of str4 ( space='<>' ): " 
-        << "\""<< trim_copy_if( str2, is_any_of("<>") ) << "\"" << endl;
-    
+    std::cout
+        << "trimmed copy of str4 ( space='<>' ): "
+        << "\""<< hpx::string::trim_copy_if( str2, hpx::string::is_any_of("<>") ) << "\"" << std::endl;
+
 
     // Parametric trim. 'Space' is defined using is_digit predicate
-    cout 
-        << "trimmed copy of str5 ( space=digit ): " 
-        << "\"" << trim_copy_if( str3, is_digit() ) << "\"" << endl;
+    std::cout
+        << "trimmed copy of str5 ( space=digit ): "
+        << "\"" << hpx::string::trim_copy_if( str3, hpx::string::is_digit() ) << "\"" << std::endl;
 
-    cout << endl;
+    std::cout << std::endl;
 
     return 0;
 }

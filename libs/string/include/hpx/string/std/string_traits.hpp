@@ -8,15 +8,16 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_STD_STRING_TRAITS_HPP
-#define BOOST_STRING_STD_STRING_TRAITS_HPP
+#ifndef HPX_STRING_STD_STRING_TRAITS_HPP
+#define HPX_STRING_STD_STRING_TRAITS_HPP
 
-#include <boost/algorithm/string/yes_no_type.hpp>
+#include <hpx/string/yes_no_type.hpp>
+#include <hpx/string/sequence_traits.hpp>
+
 #include <string>
-#include <boost/algorithm/string/sequence_traits.hpp>
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
 //  std::basic_string<> traits  -----------------------------------------------//
 
@@ -26,19 +27,14 @@ namespace boost {
         class has_native_replace< std::basic_string<T, TraitsT, AllocT> >
         {
         public:
-#if BOOST_WORKAROUND( __IBMCPP__, <= 600 )
-            enum { value = true } ;
-#else
-            BOOST_STATIC_CONSTANT(bool, value=true);
-#endif // BOOST_WORKAROUND( __IBMCPP__, <= 600 )
-
-        typedef mpl::bool_<has_native_replace<T>::value> type;
+            static const bool value = true;
+            typedef boost::mpl::bool_<has_native_replace<T>::value> type;
         };
 
 
 
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_LIST_TRAITS_HPP
+#endif  // HPX_STRING_LIST_TRAITS_HPP

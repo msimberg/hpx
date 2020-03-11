@@ -8,21 +8,21 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_REPLACE_STORAGE_DETAIL_HPP
-#define BOOST_STRING_REPLACE_STORAGE_DETAIL_HPP
+#ifndef HPX_STRING_REPLACE_STORAGE_DETAIL_HPP
+#define HPX_STRING_REPLACE_STORAGE_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+#include <hpx/string/sequence_traits.hpp>
+#include <hpx/string/detail/sequence.hpp>
+
 #include <algorithm>
-#include <boost/mpl/bool.hpp>
-#include <boost/algorithm/string/sequence_traits.hpp>
-#include <boost/algorithm/string/detail/sequence.hpp>
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  storage handling routines -----------------------------------------------//
-            
+
             template< typename StorageT, typename OutputIteratorT >
             inline OutputIteratorT move_from_storage(
                 StorageT& Storage,
@@ -30,7 +30,7 @@ namespace boost {
                 OutputIteratorT DestEnd )
             {
                 OutputIteratorT OutputIt=DestBegin;
-                
+
                 while( !Storage.empty() && OutputIt!=DestEnd )
                 {
                     *OutputIt=Storage.front();
@@ -56,7 +56,7 @@ namespace boost {
             struct process_segment_helper
             {
                 // Optimized version of process_segment for generic sequence
-                template< 
+                template<
                     typename StorageT,
                     typename InputT,
                     typename ForwardIteratorT >
@@ -68,7 +68,7 @@ namespace boost {
                     ForwardIteratorT SegmentEnd )
                 {
                     // Copy data from the storage until the beginning of the segment
-                    ForwardIteratorT It=::boost::algorithm::detail::move_from_storage( Storage, InsertIt, SegmentBegin );
+                    ForwardIteratorT It=::hpx::string::detail::move_from_storage( Storage, InsertIt, SegmentBegin );
 
                     // 3 cases are possible :
                     //   a) Storage is empty, It==SegmentBegin
@@ -112,7 +112,7 @@ namespace boost {
             struct process_segment_helper< true >
             {
                 // Optimized version of process_segment for list-like sequence
-                template< 
+                template<
                     typename StorageT,
                     typename InputT,
                     typename ForwardIteratorT >
@@ -125,7 +125,7 @@ namespace boost {
 
                 {
                     // Call replace to do the job
-                    ::boost::algorithm::detail::replace( Input, InsertIt, SegmentBegin, Storage );
+                    ::hpx::string::detail::replace( Input, InsertIt, SegmentBegin, Storage );
                     // Empty the storage
                     Storage.clear();
                     // Iterators were not changed, simply return the end of segment
@@ -134,7 +134,7 @@ namespace boost {
             };
 
             // Process one segment in the replace_all algorithm
-            template< 
+            template<
                 typename StorageT,
                 typename InputT,
                 typename ForwardIteratorT >
@@ -145,15 +145,15 @@ namespace boost {
                 ForwardIteratorT SegmentBegin,
                 ForwardIteratorT SegmentEnd )
             {
-                return 
-                    process_segment_helper< 
+                return
+                    process_segment_helper<
                         has_stable_iterators<InputT>::value>()(
                                 Storage, Input, InsertIt, SegmentBegin, SegmentEnd );
             }
-            
+
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
-#endif  // BOOST_STRING_REPLACE_STORAGE_DETAIL_HPP
+#endif  // HPX_STRING_REPLACE_STORAGE_DETAIL_HPP

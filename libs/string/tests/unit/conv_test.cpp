@@ -7,26 +7,21 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/algorithm/string/case_conv.hpp>
-
-// Include unit test framework
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+#include <hpx/testing.hpp>
+#include <hpx/string/case_conv.hpp>
 
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include <boost/test/test_tools.hpp>
 
-using namespace std;
-using namespace boost;
+using namespace hpx::string;
 
-void conv_test()
+int main()
 {
-    string str1("AbCdEfG 123 xxxYYYzZzZ");
-    string str2("AbCdEfG 123 xxxYYYzZzZ");
-    string str3("");
-    const char pch[]="AbCdEfG 123 xxxYYYzZzZ";    
+    std::string str1("AbCdEfG 123 xxxYYYzZzZ");
+    std::string str2("AbCdEfG 123 xxxYYYzZzZ");
+    std::string str3("");
+    const char pch[]="AbCdEfG 123 xxxYYYzZzZ";
     unsigned int pchlen=sizeof(pch);
 
     char* pch1=new char[pchlen];
@@ -36,59 +31,53 @@ void conv_test()
 
     // *** iterator tests *** //
 
-    string strout;
+    std::string strout;
     to_lower_copy( back_inserter(strout), str1 );
-    BOOST_CHECK( strout=="abcdefg 123 xxxyyyzzzz" );
+    HPX_TEST( strout=="abcdefg 123 xxxyyyzzzz" );
     strout.clear();
     to_upper_copy( back_inserter(strout), str1 );
-    BOOST_CHECK( strout=="ABCDEFG 123 XXXYYYZZZZ" );
+    HPX_TEST( strout=="ABCDEFG 123 XXXYYYZZZZ" );
 
     strout.clear();
     to_lower_copy( back_inserter(strout), "AbCdEfG 123 xxxYYYzZzZ" );
-    BOOST_CHECK( strout=="abcdefg 123 xxxyyyzzzz" );
+    HPX_TEST( strout=="abcdefg 123 xxxyyyzzzz" );
     strout.clear();
     to_upper_copy( back_inserter(strout), "AbCdEfG 123 xxxYYYzZzZ" );
-    BOOST_CHECK( strout=="ABCDEFG 123 XXXYYYZZZZ" );
+    HPX_TEST( strout=="ABCDEFG 123 XXXYYYZZZZ" );
 
     strout.clear();
     to_lower_copy( back_inserter(strout), pch1 );
-    BOOST_CHECK( strout=="abcdefg 123 xxxyyyzzzz" );
+    HPX_TEST( strout=="abcdefg 123 xxxyyyzzzz" );
     strout.clear();
     to_upper_copy( back_inserter(strout), pch1 );
-    BOOST_CHECK( strout=="ABCDEFG 123 XXXYYYZZZZ" );
+    HPX_TEST( strout=="ABCDEFG 123 XXXYYYZZZZ" );
 
     // *** value passing tests *** //
 
-    BOOST_CHECK( to_lower_copy( str1 )=="abcdefg 123 xxxyyyzzzz" );
-    BOOST_CHECK( to_upper_copy( str1 )=="ABCDEFG 123 XXXYYYZZZZ" );
+    HPX_TEST( to_lower_copy( str1 )=="abcdefg 123 xxxyyyzzzz" );
+    HPX_TEST( to_upper_copy( str1 )=="ABCDEFG 123 XXXYYYZZZZ" );
 
-    BOOST_CHECK( to_lower_copy( str3 )=="" );
-    BOOST_CHECK( to_upper_copy( str3 )=="" );
+    HPX_TEST( to_lower_copy( str3 )=="" );
+    HPX_TEST( to_upper_copy( str3 )=="" );
 
     // *** inplace tests *** //
 
     to_lower( str1 );
-    BOOST_CHECK( str1=="abcdefg 123 xxxyyyzzzz" );
+    HPX_TEST( str1=="abcdefg 123 xxxyyyzzzz" );
     to_upper( str2 );
-    BOOST_CHECK( str2=="ABCDEFG 123 XXXYYYZZZZ" );
+    HPX_TEST( str2=="ABCDEFG 123 XXXYYYZZZZ" );
 
     // c-string modification
     to_lower( pch1 );
-    BOOST_CHECK( string(pch1)=="abcdefg 123 xxxyyyzzzz" );
+    HPX_TEST( std::string(pch1)=="abcdefg 123 xxxyyyzzzz" );
     to_upper( pch2 );
-    BOOST_CHECK( string(pch2)=="ABCDEFG 123 XXXYYYZZZZ" );
+    HPX_TEST( std::string(pch2)=="ABCDEFG 123 XXXYYYZZZZ" );
 
     to_lower( str3 );
-    BOOST_CHECK( str3=="" );
+    HPX_TEST( str3=="" );
     to_upper( str3 );
-    BOOST_CHECK( str3=="" );
+    HPX_TEST( str3=="" );
 
     delete[] pch1;
     delete[] pch2;
-}
-
-// test main 
-BOOST_AUTO_TEST_CASE( test_main )
-{
-    conv_test();
 }

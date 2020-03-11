@@ -1,29 +1,31 @@
 //  Boost string_algo library classification.hpp header file  ---------------------------//
 
 //  Copyright Pavol Droba 2002-2003.
-// 
+//
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_CLASSIFICATION_DETAIL_HPP
-#define BOOST_STRING_CLASSIFICATION_DETAIL_HPP
+#ifndef HPX_STRING_CLASSIFICATION_DETAIL_HPP
+#define HPX_STRING_CLASSIFICATION_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+#include <hpx/string/predicate_facade.hpp>
+
+#include <boost/range/begin.hpp>
+#include <boost/range/distance.hpp>
+#include <boost/range/end.hpp>
+#include <boost/type_traits/remove_const.hpp>
+
 #include <algorithm>
+#include <cstring>
 #include <functional>
 #include <locale>
 
-#include <boost/range/begin.hpp>
-#include <boost/range/end.hpp>
-
-#include <boost/algorithm/string/predicate_facade.hpp>
-#include <boost/type_traits/remove_const.hpp>
-
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  classification functors -----------------------------------------------//
@@ -71,7 +73,7 @@ namespace boost {
                 // set cannot operate on const value-type
                 typedef typename ::boost::remove_const<CharT>::type set_value_type;
 
-            public:     
+            public:
                 // Boost.ResultOf support
                 typedef bool result_type;
 
@@ -107,7 +109,7 @@ namespace boost {
                 is_any_ofF(const is_any_ofF& Other) : m_Size(Other.m_Size)
                 {
                     // Prepare storage
-                    m_Storage.m_dynSet=0;               
+                    m_Storage.m_dynSet=0;
                     const set_value_type* SrcStorage=0;
                     set_value_type* DestStorage=0;
 
@@ -144,7 +146,7 @@ namespace boost {
                     // Handle self assignment
                     if(this==&Other) return *this;
 
-                    // Prepare storage             
+                    // Prepare storage
                     const set_value_type* SrcStorage;
                     set_value_type* DestStorage;
 
@@ -191,7 +193,7 @@ namespace boost {
                                 // Allocate the new one
                                 set_value_type* pTemp=new set_value_type[Other.m_Size];
                                 DestStorage=pTemp;
-                        
+
                                 // Delete old storage if necessary
                                 if(m_Storage.m_dynSet!=0)
                                 {
@@ -237,9 +239,9 @@ namespace boost {
                 {
                     set_value_type* m_dynSet;
                     set_value_type m_fixSet[sizeof(set_value_type*)*2];
-                } 
+                }
                 m_Storage;
-        
+
                 // storage size
                 ::std::size_t m_Size;
             };
@@ -346,8 +348,8 @@ namespace boost {
             };
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_CLASSIFICATION_DETAIL_HPP
+#endif  // HPX_STRING_CLASSIFICATION_DETAIL_HPP

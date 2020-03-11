@@ -7,93 +7,88 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/algorithm/string/classification.hpp>
-
-// Include unit test framework
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+#include <hpx/testing.hpp>
+#include <hpx/string/predicate.hpp>
+#include <hpx/string/classification.hpp>
 
 #include <string>
 #include <vector>
 #include <iostream>
 #include <functional>
-#include <boost/test/test_tools.hpp>
 
-using namespace std;
-using namespace boost;
+using namespace hpx::string;
 
 void predicate_test()
 {
-    string str1("123xxx321");
-    string str1_prefix("123");
-    string str2("abc");
-    string str3("");
-    string str4("abc");
-    vector<int> vec1( str1.begin(), str1.end() );
+    std::string str1("123xxx321");
+    std::string str1_prefix("123");
+    std::string str2("abc");
+    std::string str3("");
+    std::string str4("abc");
+    std::vector<int> vec1( str1.begin(), str1.end() );
 
     // Basic tests
-    BOOST_CHECK( starts_with( str1, string("123") ) );
-    BOOST_CHECK( !starts_with( str1, string("1234") ) );
+    HPX_TEST( starts_with( str1, std::string("123") ) );
+    HPX_TEST( !starts_with( str1, std::string("1234") ) );
 
-    BOOST_CHECK( istarts_with( "aBCxxx", "abc" ) );
-    BOOST_CHECK( !istarts_with( "aBCxxx", "abcd" ) );
+    HPX_TEST( istarts_with( "aBCxxx", "abc" ) );
+    HPX_TEST( !istarts_with( "aBCxxx", "abcd" ) );
 
-    BOOST_CHECK( ends_with( str1, string("321") ) );
-    BOOST_CHECK( !ends_with( str1, string("123") ) );
+    HPX_TEST( ends_with( str1, std::string("321") ) );
+    HPX_TEST( !ends_with( str1, std::string("123") ) );
 
-    BOOST_CHECK( iends_with( "aBCxXx", "XXX" ) );
-    BOOST_CHECK( !iends_with( "aBCxxX", "xXXX" ) );
+    HPX_TEST( iends_with( "aBCxXx", "XXX" ) );
+    HPX_TEST( !iends_with( "aBCxxX", "xXXX" ) );
 
-    BOOST_CHECK( contains( str1, string("xxx") ) );
-    BOOST_CHECK( !contains( str1, string("yyy") ) );
+    HPX_TEST( contains( str1, std::string("xxx") ) );
+    HPX_TEST( !contains( str1, std::string("yyy") ) );
 
-    BOOST_CHECK( icontains( "123XxX321", "xxx" ) );
-    BOOST_CHECK( !icontains( "123xXx321", "yyy" ) );
+    HPX_TEST( icontains( "123XxX321", "xxx" ) );
+    HPX_TEST( !icontains( "123xXx321", "yyy" ) );
 
-    BOOST_CHECK( equals( str2, string("abc") ) );
-    BOOST_CHECK( !equals( str1, string("yyy") ) );
+    HPX_TEST( equals( str2, std::string("abc") ) );
+    HPX_TEST( !equals( str1, std::string("yyy") ) );
 
-    BOOST_CHECK( iequals( "AbC", "abc" ) );
-    BOOST_CHECK( !iequals( "aBc", "yyy" ) );
+    HPX_TEST( iequals( "AbC", "abc" ) );
+    HPX_TEST( !iequals( "aBc", "yyy" ) );
 
-    BOOST_CHECK( lexicographical_compare("abc", "abd") );
-    BOOST_CHECK( !lexicographical_compare("abc", "abc") );
-    BOOST_CHECK( lexicographical_compare("abc", "abd", is_less()) );
+    HPX_TEST( lexicographical_compare("abc", "abd") );
+    HPX_TEST( !lexicographical_compare("abc", "abc") );
+    HPX_TEST( lexicographical_compare("abc", "abd", is_less()) );
 
-    BOOST_CHECK( !ilexicographical_compare("aBD", "AbC") );
-    BOOST_CHECK( ilexicographical_compare("aBc", "AbD") );
-    BOOST_CHECK( lexicographical_compare("abC", "aBd", is_iless()) );
+    HPX_TEST( !ilexicographical_compare("aBD", "AbC") );
+    HPX_TEST( ilexicographical_compare("aBc", "AbD") );
+    HPX_TEST( lexicographical_compare("abC", "aBd", is_iless()) );
 
     // multi-type comparison test
-    BOOST_CHECK( starts_with( vec1, string("123") ) );
-    BOOST_CHECK( ends_with( vec1, string("321") ) );
-    BOOST_CHECK( contains( vec1, string("xxx") ) );
-    BOOST_CHECK( equals( vec1, str1 ) );
+    HPX_TEST( starts_with( vec1, std::string("123") ) );
+    HPX_TEST( ends_with( vec1, std::string("321") ) );
+    HPX_TEST( contains( vec1, std::string("xxx") ) );
+    HPX_TEST( equals( vec1, str1 ) );
 
     // overflow test
-    BOOST_CHECK( !starts_with( str2, string("abcd") ) );
-    BOOST_CHECK( !ends_with( str2, string("abcd") ) );
-    BOOST_CHECK( !contains( str2, string("abcd") ) );
-    BOOST_CHECK( !equals( str2, string("abcd") ) );
+    HPX_TEST( !starts_with( str2, std::string("abcd") ) );
+    HPX_TEST( !ends_with( str2, std::string("abcd") ) );
+    HPX_TEST( !contains( str2, std::string("abcd") ) );
+    HPX_TEST( !equals( str2, std::string("abcd") ) );
 
     // equal test
-    BOOST_CHECK( starts_with( str2, string("abc") ) );
-    BOOST_CHECK( ends_with( str2, string("abc") ) );
-    BOOST_CHECK( contains( str2, string("abc") ) );
-    BOOST_CHECK( equals( str2, string("abc") ) );
+    HPX_TEST( starts_with( str2, std::string("abc") ) );
+    HPX_TEST( ends_with( str2, std::string("abc") ) );
+    HPX_TEST( contains( str2, std::string("abc") ) );
+    HPX_TEST( equals( str2, std::string("abc") ) );
 
     //! Empty string test
-    BOOST_CHECK( starts_with( str2, string("") ) );
-    BOOST_CHECK( ends_with( str2, string("") ) );
-    BOOST_CHECK( contains( str2, string("") ) );
-    BOOST_CHECK( equals( str3, string("") ) );
+    HPX_TEST( starts_with( str2, std::string("") ) );
+    HPX_TEST( ends_with( str2, std::string("") ) );
+    HPX_TEST( contains( str2, std::string("") ) );
+    HPX_TEST( equals( str3, std::string("") ) );
 
     //! Container compatibility test
-    BOOST_CHECK( starts_with( "123xxx321", "123" ) );
-    BOOST_CHECK( ends_with( "123xxx321", "321" ) );
-    BOOST_CHECK( contains( "123xxx321", "xxx" ) );
-    BOOST_CHECK( equals( "123xxx321", "123xxx321" ) );
+    HPX_TEST( starts_with( "123xxx321", "123" ) );
+    HPX_TEST( ends_with( "123xxx321", "321" ) );
+    HPX_TEST( contains( "123xxx321", "xxx" ) );
+    HPX_TEST( equals( "123xxx321", "123xxx321" ) );
 
 }
 
@@ -106,13 +101,13 @@ void test_pred(const Pred& pred, const Input& input, bool bYes)
     pred1=pred1;
     if(bYes)
     {
-        BOOST_CHECK( all( input, pred ) );
-        BOOST_CHECK( all( input, pred1 ) );
+        HPX_TEST( all( input, pred ) );
+        HPX_TEST( all( input, pred1 ) );
     }
     else
     {
-        BOOST_CHECK( !all( input, pred ) );
-        BOOST_CHECK( !all( input, pred1 ) );
+        HPX_TEST( !all( input, pred ) );
+        HPX_TEST( !all( input, pred1 ) );
     }
 }
 
@@ -135,7 +130,7 @@ void classification_test()
     TEST_CLASS( is_punct(), ".,;\"", "abc" );
     TEST_CLASS( is_upper(), "ABC", "aBc" );
     TEST_CLASS( is_xdigit(), "ABC123", "XFD" );
-    TEST_CLASS( is_any_of( string("abc") ), "aaabbcc", "aaxb" );
+    TEST_CLASS( is_any_of( std::string("abc") ), "aaabbcc", "aaxb" );
     TEST_CLASS( is_any_of( "abc" ), "aaabbcc", "aaxb" );
     TEST_CLASS( is_from_range( 'a', 'c' ), "aaabbcc", "aaxb" );
 
@@ -153,7 +148,7 @@ void classification_test()
 
 #undef TEST_CLASS
 
-BOOST_AUTO_TEST_CASE( test_main )
+int main()
 {
     predicate_test();
     classification_test();

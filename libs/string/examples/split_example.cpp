@@ -7,56 +7,54 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <hpx/string/classification.hpp>
+#include <hpx/string/split.hpp>
+#include <hpx/string/find_iterator.hpp>
+
 #include <string>
 #include <vector>
 #include <iostream>
 #include <iterator>
 #include <functional>
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/find_iterator.hpp>
-
-using namespace std;
-using namespace boost;
 
 int main()
-{  
-    cout << "* Split Example *" << endl << endl;
+{
+    std::cout << "* Split Example *" << std::endl << std::endl;
 
-    string str1("abc-*-ABC-*-aBc");
+    std::string str1("abc-*-ABC-*-aBc");
 
-    cout << "Before: " << str1 << endl;
+    std::cout << "Before: " << str1 << std::endl;
 
     // Find all 'abc' substrings (ignoring the case)
     // Create a find_iterator
-    typedef find_iterator<string::iterator> string_find_iterator;
+    typedef hpx::string::find_iterator<std::string::iterator> string_find_iterator;
     for(string_find_iterator It=
-            make_find_iterator(str1, first_finder("abc", is_iequal()));
+            make_find_iterator(str1, first_finder("abc", hpx::string::is_iequal()));
         It!=string_find_iterator();
         ++It)
     {
-        cout << copy_range<std::string>(*It) << endl;
+        std::cout << boost::copy_range<std::string>(*It) << std::endl;
         // shift all chars in the match by one
-        transform( 
-            It->begin(), It->end(), 
-            It->begin(), 
-            bind2nd( plus<char>(), 1 ) );
+        std::transform(
+            It->begin(), It->end(),
+            It->begin(),
+            std::bind2nd( std::plus<char>(), 1 ) );
     }
 
     // Print the string now
-    cout << "After: " << str1 << endl;
-    
+    std::cout << "After: " << str1 << std::endl;
+
     // Split the string into tokens ( use '-' and '*' as delimiters )
     // We need copies of the input only, and adjacent tokens are compressed
-    vector<std::string> ResultCopy;
-    split(ResultCopy, str1, is_any_of("-*"), token_compress_on);
+    std::vector<std::string> ResultCopy;
+    split(ResultCopy, str1, hpx::string::is_any_of("-*"), hpx::string::token_compress_on);
 
     for(unsigned int nIndex=0; nIndex<ResultCopy.size(); nIndex++)
     {
-        cout << nIndex << ":" << ResultCopy[nIndex] << endl;
+        std::cout << nIndex << ":" << ResultCopy[nIndex] << std::endl;
     };
 
-    cout << endl;
+    std::cout << std::endl;
 
     return 0;
 }

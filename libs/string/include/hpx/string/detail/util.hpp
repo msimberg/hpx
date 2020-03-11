@@ -8,20 +8,22 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_UTIL_DETAIL_HPP
-#define BOOST_STRING_UTIL_DETAIL_HPP
+#ifndef HPX_STRING_UTIL_DETAIL_HPP
+#define HPX_STRING_UTIL_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
-#include <functional>
+#include <hpx/config.hpp>
+
 #include <boost/range/iterator_range_core.hpp>
 
-namespace boost {
-    namespace algorithm {
+#include <functional>
+
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  empty container  -----------------------------------------------//
 
-            //  empty_container 
+            //  empty_container
             /*
                 This class represents always empty container,
                 containing elements of type CharT.
@@ -29,9 +31,9 @@ namespace boost {
                 It is supposed to be used in a const version only
             */
             template< typename CharT >
-            struct empty_container 
+            struct empty_container
             {
-                typedef empty_container<CharT> type;        
+                typedef empty_container<CharT> type;
                 typedef CharT value_type;
                 typedef std::size_t size_type;
                 typedef std::ptrdiff_t difference_type;
@@ -40,7 +42,7 @@ namespace boost {
                 typedef const value_type* iterator;
                 typedef const value_type* const_iterator;
 
-                
+
                 // Operations
                 const_iterator begin() const
                 {
@@ -62,14 +64,14 @@ namespace boost {
                     return 0;
                 }
             };
-    
+
 //  bounded copy algorithm  -----------------------------------------------//
 
             // Bounded version of the std::copy algorithm
             template<typename InputIteratorT, typename OutputIteratorT>
             inline OutputIteratorT bounded_copy(
-                InputIteratorT First, 
-                InputIteratorT Last, 
+                InputIteratorT First,
+                InputIteratorT Last,
                 OutputIteratorT DestFirst,
                 OutputIteratorT DestLast )
             {
@@ -86,22 +88,22 @@ namespace boost {
 //  iterator range utilities -----------------------------------------//
 
             // copy range functor
-            template< 
-                typename SeqT, 
-                typename IteratorT=BOOST_STRING_TYPENAME SeqT::const_iterator >
+            template<
+                typename SeqT,
+                typename IteratorT=typename SeqT::const_iterator >
             struct copy_iterator_rangeF
             {
-                typedef iterator_range<IteratorT> argument_type;
+                typedef boost::iterator_range<IteratorT> argument_type;
                 typedef SeqT result_type;
-                SeqT operator()( const iterator_range<IteratorT>& Range ) const
+                SeqT operator()( const boost::iterator_range<IteratorT>& Range ) const
                 {
-                    return copy_range<SeqT>(Range);
+                    return boost::copy_range<SeqT>(Range);
                 }
             };
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_UTIL_DETAIL_HPP
+#endif  // HPX_STRING_UTIL_DETAIL_HPP

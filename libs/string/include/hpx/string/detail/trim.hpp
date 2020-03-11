@@ -8,22 +8,23 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_TRIM_DETAIL_HPP
-#define BOOST_STRING_TRIM_DETAIL_HPP
+#ifndef HPX_STRING_TRIM_DETAIL_HPP
+#define HPX_STRING_TRIM_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+
 #include <boost/detail/iterator.hpp>
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  trim iterator helper -----------------------------------------------//
 
             template< typename ForwardIteratorT, typename PredicateT >
-            inline ForwardIteratorT trim_end_iter_select( 
-                ForwardIteratorT InBegin, 
-                ForwardIteratorT InEnd, 
+            inline ForwardIteratorT trim_end_iter_select(
+                ForwardIteratorT InBegin,
+                ForwardIteratorT InEnd,
                 PredicateT IsSpace,
                 std::forward_iterator_tag )
             {
@@ -31,7 +32,7 @@ namespace boost {
 
                 for( ForwardIteratorT It=InBegin; It!=InEnd; ++It )
                 {
-                    if ( !IsSpace(*It) ) 
+                    if ( !IsSpace(*It) )
                     {
                         TrimIt=It;
                         ++TrimIt;
@@ -42,9 +43,9 @@ namespace boost {
             }
 
             template< typename ForwardIteratorT, typename PredicateT >
-            inline ForwardIteratorT trim_end_iter_select( 
-                ForwardIteratorT InBegin, 
-                ForwardIteratorT InEnd, 
+            inline ForwardIteratorT trim_end_iter_select(
+                ForwardIteratorT InBegin,
+                ForwardIteratorT InEnd,
                 PredicateT IsSpace,
                 std::bidirectional_iterator_tag )
             {
@@ -58,9 +59,9 @@ namespace boost {
             }
    // Search for first non matching character from the beginning of the sequence
             template< typename ForwardIteratorT, typename PredicateT >
-            inline ForwardIteratorT trim_begin( 
-                ForwardIteratorT InBegin, 
-                ForwardIteratorT InEnd, 
+            inline ForwardIteratorT trim_begin(
+                ForwardIteratorT InBegin,
+                ForwardIteratorT InEnd,
                 PredicateT IsSpace )
             {
                 ForwardIteratorT It=InBegin;
@@ -75,21 +76,21 @@ namespace boost {
 
             // Search for first non matching character from the end of the sequence
             template< typename ForwardIteratorT, typename PredicateT >
-            inline ForwardIteratorT trim_end( 
-                ForwardIteratorT InBegin, 
-                ForwardIteratorT InEnd, 
+            inline ForwardIteratorT trim_end(
+                ForwardIteratorT InBegin,
+                ForwardIteratorT InEnd,
                 PredicateT IsSpace )
             {
-                typedef BOOST_STRING_TYPENAME boost::detail::
+                typedef typename boost::detail::
                     iterator_traits<ForwardIteratorT>::iterator_category category;
 
-                return ::boost::algorithm::detail::trim_end_iter_select( InBegin, InEnd, IsSpace, category() );
+                return ::hpx::string::detail::trim_end_iter_select( InBegin, InEnd, IsSpace, category() );
             }
 
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_TRIM_DETAIL_HPP
+#endif  // HPX_STRING_TRIM_DETAIL_HPP

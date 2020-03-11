@@ -8,15 +8,15 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_FORMATTER_HPP
-#define BOOST_STRING_FORMATTER_HPP
+#ifndef HPX_STRING_FORMATTER_HPP
+#define HPX_STRING_FORMATTER_HPP
+
+#include <hpx/string/detail/formatter.hpp>
 
 #include <boost/detail/iterator.hpp>
 #include <boost/range/value_type.hpp>
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/range/as_literal.hpp>
-
-#include <boost/algorithm/string/detail/formatter.hpp>
 
 /*! \file
     Defines Formatter generators. Formatter is a functor which formats
@@ -25,12 +25,12 @@
     for a specific Formatter. An example of such a cooperation is regex_finder
     and regex_formatter.
 
-    Formatters are used as pluggable components for replace facilities. 
+    Formatters are used as pluggable components for replace facilities.
     This header contains generator functions for the Formatters provided in this library.
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
 // generic formatters  ---------------------------------------------------------------//
 
@@ -44,13 +44,13 @@ namespace boost {
         */
         template<typename RangeT>
         inline detail::const_formatF<
-            iterator_range<
-                BOOST_STRING_TYPENAME range_const_iterator<RangeT>::type> >
+            boost::iterator_range<
+                typename boost::range_const_iterator<RangeT>::type> >
         const_formatter(const RangeT& Format)
         {
             return detail::const_formatF<
-                iterator_range<
-                    BOOST_STRING_TYPENAME range_const_iterator<RangeT>::type> >(::boost::as_literal(Format));
+                boost::iterator_range<
+                    typename boost::range_const_iterator<RangeT>::type> >(::boost::as_literal(Format));
         }
 
         //! Identity formatter
@@ -62,37 +62,37 @@ namespace boost {
         */
         template<typename RangeT>
         inline detail::identity_formatF<
-            iterator_range<
-                BOOST_STRING_TYPENAME range_const_iterator<RangeT>::type> >
+            boost::iterator_range<
+                typename boost::range_const_iterator<RangeT>::type> >
         identity_formatter()
         {
             return detail::identity_formatF<
-                iterator_range<
-                    BOOST_STRING_TYPENAME range_const_iterator<RangeT>::type> >();
+                boost::iterator_range<
+                    typename boost::range_const_iterator<RangeT>::type> >();
         }
 
         //! Empty formatter
         /*!
             Constructs an \c empty_formatter. Empty formatter always returns an empty
-            sequence. 
+            sequence.
 
             \param Input container used to select a correct value_type for the
                          resulting empty_container<>.
             \return An instance of the \c empty_formatter object.
         */
         template<typename RangeT>
-        inline detail::empty_formatF< 
-            BOOST_STRING_TYPENAME range_value<RangeT>::type>
+        inline detail::empty_formatF<
+            typename boost::range_value<RangeT>::type>
         empty_formatter(const RangeT&)
         {
             return detail::empty_formatF<
-                BOOST_STRING_TYPENAME range_value<RangeT>::type>();
+                typename boost::range_value<RangeT>::type>();
         }
 
         //! Empty formatter
         /*!
             Constructs a \c dissect_formatter. Dissect formatter uses a specified finder
-            to extract a portion of the formatted sequence. The first finder's match is returned 
+            to extract a portion of the formatted sequence. The first finder's match is returned
             as a result
 
             \param Finder a finder used to select a portion of the formatted sequence
@@ -106,15 +106,8 @@ namespace boost {
         }
 
 
-    } // namespace algorithm
-
-    // pull the names to the boost namespace
-    using algorithm::const_formatter;
-    using algorithm::identity_formatter;
-    using algorithm::empty_formatter;
-    using algorithm::dissect_formatter;
-
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_FORMATTER_HPP
+#endif  // HPX_FORMATTER_HPP

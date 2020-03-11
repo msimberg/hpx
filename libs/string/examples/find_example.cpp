@@ -7,52 +7,50 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <hpx/string/case_conv.hpp>
+#include <hpx/string/find.hpp>
+
 #include <string>
 #include <iostream>
 #include <algorithm>
 #include <functional>
-#include <boost/algorithm/string/case_conv.hpp>
-#include <boost/algorithm/string/find.hpp>
-
-using namespace std;
-using namespace boost;
 
 int main()
-{  
-    cout << "* Find Example *" << endl << endl;
+{
+    std::cout << "* Find Example *" << std::endl << std::endl;
 
-    string str1("abc___cde___efg");
-    string str2("abc");
+    std::string str1("abc___cde___efg");
+    std::string str2("abc");
 
     // find "cde" substring
-    iterator_range<string::iterator> range=find_first( str1, string("cde") );
+    boost::iterator_range<std::string::iterator> range=hpx::string::find_first( str1, std::string("cde") );
 
-    // convert a substring to upper case 
+    // convert a substring to upper case
     // note that iterator range can be directly passed to the algorithm
-    to_upper( range );
+    hpx::string::to_upper( range );
 
-    cout << "str1 with upper-cased part matching cde: " << str1 << endl;
+    std::cout << "str1 with upper-cased part matching cde: " << str1 << std::endl;
 
     // get a head of the string
-    iterator_range<string::iterator> head=find_head( str1, 3 );
-    cout << "head(3) of the str1: " << string( head.begin(), head.end() ) << endl;
+    boost::iterator_range<std::string::iterator> head=hpx::string::find_head( str1, 3 );
+    std::cout << "head(3) of the str1: " << std::string( head.begin(), head.end() ) << std::endl;
 
     // get the tail
-    head=find_tail( str2, 5 );
-    cout << "tail(5) of the str2: " << string( head.begin(), head.end() ) << endl;
+    head=hpx::string::find_tail( str2, 5 );
+    std::cout << "tail(5) of the str2: " << std::string( head.begin(), head.end() ) << std::endl;
 
     // char processing
     char text[]="hello dolly!";
-    iterator_range<char*> crange=find_last(text,"ll");
+    boost::iterator_range<char*> crange=hpx::string::find_last(text,"ll");
 
     // transform the range ( add 1 )
-    transform( crange.begin(), crange.end(), crange.begin(), bind2nd( plus<char>(), 1 ) );
+    std::transform( crange.begin(), crange.end(), crange.begin(), std::bind2nd( std::plus<char>(), 1 ) );
     // uppercase the range
-    to_upper( crange );
+    hpx::string::to_upper( crange );
 
-    cout << text << endl;
+    std::cout << text << std::endl;
 
-    cout << endl;
+    std::cout << std::endl;
 
     return 0;
 }

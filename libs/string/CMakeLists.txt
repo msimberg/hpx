@@ -12,18 +12,16 @@ set(string_headers
   hpx/string/detail/case_conv.hpp
   hpx/string/detail/classification.hpp
   hpx/string/detail/find_format.hpp
-  hpx/string/detail/find_format_all
-  hpx/string/detail/find_format_store
-  hpx/string/detail/find_iterator
-  hpx/string/detail/finder
-  hpx/string/detail/finder_regex
-  hpx/string/detail/formatter
-  hpx/string/detail/formatter_regex
-  hpx/string/detail/predicate
-  hpx/string/detail/replace_storage
-  hpx/string/detail/sequence
-  hpx/string/detail/trim
-  hpx/string/detail/util
+  hpx/string/detail/find_format_all.hpp
+  hpx/string/detail/find_format_store.hpp
+  hpx/string/detail/find_iterator.hpp
+  hpx/string/detail/finder.hpp
+  hpx/string/detail/formatter.hpp
+  hpx/string/detail/predicate.hpp
+  hpx/string/detail/replace_storage.hpp
+  hpx/string/detail/sequence.hpp
+  hpx/string/detail/trim.hpp
+  hpx/string/detail/util.hpp
   hpx/string/case_conv.hpp
   hpx/string/classification.hpp
   hpx/string/compare.hpp
@@ -43,8 +41,6 @@ set(string_headers
   hpx/string/sequence_traits.hpp
   hpx/string/split.hpp
   hpx/string/std/list_traits.hpp
-  hpx/string/std/rope_traits.hpp
-  hpx/string/std/slist_traits.hpp
   hpx/string/std/string_traits.hpp
   hpx/string/std_containers_traits.hpp
   hpx/string/trim.hpp
@@ -57,6 +53,6 @@ add_hpx_module(string
   FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${string_headers}
-  DEPENDENCIES
+  DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

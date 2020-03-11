@@ -8,22 +8,26 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_CASE_CONV_DETAIL_HPP
-#define BOOST_STRING_CASE_CONV_DETAIL_HPP
+#ifndef HPX_STRING_CASE_CONV_DETAIL_HPP
+#define HPX_STRING_CASE_CONV_DETAIL_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+
+#include <boost/iterator/transform_iterator.hpp>
+#include <boost/range/begin.hpp>
+#include <boost/range/end.hpp>
+#include <boost/type_traits/make_unsigned.hpp>
+
 #include <locale>
 #include <functional>
 
-#include <boost/type_traits/make_unsigned.hpp>
-
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  case conversion functors -----------------------------------------------//
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#if defined(HPX_MSVC_WARNING_PRAGMA)
 #pragma warning(push)
 #pragma warning(disable:4512) //assignment operator could not be generated
 #endif
@@ -72,7 +76,7 @@ namespace boost {
                 const std::locale* m_Loc;
             };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#if HPX_MSVC_WARNING_PRAGMA
 #pragma warning(pop)
 #endif
 
@@ -85,9 +89,9 @@ namespace boost {
                 const RangeT& Input,
                 FunctorT Functor)
             {
-                return std::transform( 
-                    ::boost::begin(Input), 
-                    ::boost::end(Input), 
+                return std::transform(
+                    ::boost::begin(Input),
+                    ::boost::end(Input),
                     Output,
                     Functor);
             }
@@ -98,16 +102,16 @@ namespace boost {
                 const RangeT& Input,
                 FunctorT Functor)
             {
-                std::transform( 
-                    ::boost::begin(Input), 
-                    ::boost::end(Input), 
+                std::transform(
+                    ::boost::begin(Input),
+                    ::boost::end(Input),
                     ::boost::begin(Input),
                     Functor);
             }
 
             template<typename SequenceT, typename RangeT, typename FunctorT>
-            inline SequenceT transform_range_copy( 
-                const RangeT& Input, 
+            inline SequenceT transform_range_copy(
+                const RangeT& Input,
                 FunctorT Functor)
             {
                 return SequenceT(
@@ -115,13 +119,13 @@ namespace boost {
                         ::boost::begin(Input),
                         Functor),
                     ::boost::make_transform_iterator(
-                        ::boost::end(Input), 
+                        ::boost::end(Input),
                         Functor));
             }
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_CASE_CONV_DETAIL_HPP
+#endif  // HPX_STRING_CASE_CONV_DETAIL_HPP

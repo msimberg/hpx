@@ -8,27 +8,28 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_DETAIL_SEQUENCE_HPP
-#define BOOST_STRING_DETAIL_SEQUENCE_HPP
+#ifndef HPX_STRING_DETAIL_SEQUENCE_HPP
+#define HPX_STRING_DETAIL_SEQUENCE_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/logical.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
-#include <boost/algorithm/string/sequence_traits.hpp>
+#include <hpx/string/sequence_traits.hpp>
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  insert helpers  -------------------------------------------------//
-        
+
             template< typename InputT, typename ForwardIteratorT >
             inline void insert(
                 InputT& Input,
-                BOOST_STRING_TYPENAME InputT::iterator At,
+                typename InputT::iterator At,
                 ForwardIteratorT Begin,
                 ForwardIteratorT End )
             {
@@ -38,12 +39,12 @@ namespace boost {
             template< typename InputT, typename InsertT >
             inline void insert(
                 InputT& Input,
-                BOOST_STRING_TYPENAME InputT::iterator At,
+                typename InputT::iterator At,
                 const InsertT& Insert )
             {
-                ::boost::algorithm::detail::insert( Input, At, ::boost::begin(Insert), ::boost::end(Insert) );
+                ::hpx::string::detail::insert( Input, At, ::boost::begin(Insert), ::boost::end(Insert) );
             }
-           
+
 //  erase helper  ---------------------------------------------------//
 
             // Erase a range in the sequence
@@ -53,8 +54,8 @@ namespace boost {
             template< typename InputT >
             inline typename InputT::iterator erase(
                 InputT& Input,
-                BOOST_STRING_TYPENAME InputT::iterator From,
-                BOOST_STRING_TYPENAME InputT::iterator To )
+                typename InputT::iterator From,
+                typename InputT::iterator To )
             {
                 return Input.erase( From, To );
             }
@@ -69,14 +70,14 @@ namespace boost {
                 template< typename InputT, typename ForwardIteratorT >
                 void operator()(
                     InputT& Input,
-                    BOOST_STRING_TYPENAME InputT::iterator From,
-                    BOOST_STRING_TYPENAME InputT::iterator To,
+                    typename InputT::iterator From,
+                    typename InputT::iterator To,
                     ForwardIteratorT Begin,
                     ForwardIteratorT End )
                 {
                     // Copy data to the container ( as much as possible )
                     ForwardIteratorT InsertIt=Begin;
-                    BOOST_STRING_TYPENAME InputT::iterator InputIt=From;
+                    typename InputT::iterator InputIt=From;
                     for(; InsertIt!=End && InputIt!=To; InsertIt++, InputIt++ )
                     {
                         *InputIt=*InsertIt;
@@ -105,12 +106,12 @@ namespace boost {
                 template< typename InputT, typename ForwardIteratorT >
                 void operator()(
                     InputT& Input,
-                    BOOST_STRING_TYPENAME InputT::iterator From,
-                    BOOST_STRING_TYPENAME InputT::iterator To,
+                    typename InputT::iterator From,
+                    typename InputT::iterator To,
                     ForwardIteratorT Begin,
-                    ForwardIteratorT End ) 
+                    ForwardIteratorT End )
                 {
-                    BOOST_STRING_TYPENAME InputT::iterator At=Input.erase( From, To );
+                    typename InputT::iterator At=Input.erase( From, To );
                     if ( Begin!=End )
                     {
                         if(!Input.empty())
@@ -132,12 +133,12 @@ namespace boost {
                 template< typename InputT, typename ForwardIteratorT >
                 void operator()(
                     InputT& Input,
-                    BOOST_STRING_TYPENAME InputT::iterator From,
-                    BOOST_STRING_TYPENAME InputT::iterator To,
+                    typename InputT::iterator From,
+                    typename InputT::iterator To,
                     ForwardIteratorT Begin,
-                    ForwardIteratorT End ) 
+                    ForwardIteratorT End )
                 {
-                    replace_const_time_helper< 
+                    replace_const_time_helper<
                         boost::mpl::and_<
                             has_const_time_insert<InputT>,
                             has_const_time_erase<InputT> >::value >()(
@@ -152,8 +153,8 @@ namespace boost {
                 template< typename InputT, typename ForwardIteratorT >
                 void operator()(
                     InputT& Input,
-                    BOOST_STRING_TYPENAME InputT::iterator From,
-                    BOOST_STRING_TYPENAME InputT::iterator To,
+                    typename InputT::iterator From,
+                    typename InputT::iterator To,
                     ForwardIteratorT Begin,
                     ForwardIteratorT End )
                 {
@@ -162,12 +163,12 @@ namespace boost {
             };
 
 //  replace helper  -------------------------------------------------//
-        
+
             template< typename InputT, typename ForwardIteratorT >
             inline void replace(
                 InputT& Input,
-                BOOST_STRING_TYPENAME InputT::iterator From,
-                BOOST_STRING_TYPENAME InputT::iterator To,
+                typename InputT::iterator From,
+                typename InputT::iterator To,
                 ForwardIteratorT Begin,
                 ForwardIteratorT End )
             {
@@ -178,23 +179,23 @@ namespace boost {
             template< typename InputT, typename InsertT >
             inline void replace(
                 InputT& Input,
-                BOOST_STRING_TYPENAME InputT::iterator From,
-                BOOST_STRING_TYPENAME InputT::iterator To,
+                typename InputT::iterator From,
+                typename InputT::iterator To,
                 const InsertT& Insert )
             {
                 if(From!=To)
                 {
-                    ::boost::algorithm::detail::replace( Input, From, To, ::boost::begin(Insert), ::boost::end(Insert) );
+                    ::hpx::string::detail::replace( Input, From, To, ::boost::begin(Insert), ::boost::end(Insert) );
                 }
                 else
                 {
-                    ::boost::algorithm::detail::insert( Input, From, ::boost::begin(Insert), ::boost::end(Insert) );
+                    ::hpx::string::detail::insert( Input, From, ::boost::begin(Insert), ::boost::end(Insert) );
                 }
             }
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_DETAIL_SEQUENCE_HPP
+#endif  // HPX_STRING_DETAIL_SEQUENCE_HPP

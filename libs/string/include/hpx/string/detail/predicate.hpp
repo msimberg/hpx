@@ -8,25 +8,26 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_PREDICATE_DETAIL_HPP
-#define BOOST_STRING_PREDICATE_DETAIL_HPP
+#ifndef HPX_STRING_PREDICATE_DETAIL_HPP
+#define HPX_STRING_PREDICATE_DETAIL_HPP
+
+#include <hpx/string/find.hpp>
 
 #include <iterator>
-#include <boost/algorithm/string/find.hpp>
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
         namespace detail {
 
 //  ends_with predicate implementation ----------------------------------//
 
-            template< 
-                typename ForwardIterator1T, 
+            template<
+                typename ForwardIterator1T,
                 typename ForwardIterator2T,
                 typename PredicateT>
-            inline bool ends_with_iter_select( 
-                ForwardIterator1T Begin, 
-                ForwardIterator1T End, 
+            inline bool ends_with_iter_select(
+                ForwardIterator1T Begin,
+                ForwardIterator1T End,
                 ForwardIterator2T SubBegin,
                 ForwardIterator2T SubEnd,
                 PredicateT Comp,
@@ -43,13 +44,13 @@ namespace boost {
                 return pit==SubBegin;
             }
 
-            template< 
-                typename ForwardIterator1T, 
+            template<
+                typename ForwardIterator1T,
                 typename ForwardIterator2T,
                 typename PredicateT>
-            inline bool ends_with_iter_select( 
-                ForwardIterator1T Begin, 
-                ForwardIterator1T End, 
+            inline bool ends_with_iter_select(
+                ForwardIterator1T Begin,
+                ForwardIterator1T End,
                 ForwardIterator2T SubBegin,
                 ForwardIterator2T SubEnd,
                 PredicateT Comp,
@@ -61,8 +62,8 @@ namespace boost {
                     return true;
                 }
 
-                iterator_range<ForwardIterator1T> Result
-                    =last_finder( 
+                boost::iterator_range<ForwardIterator1T> Result
+                    =last_finder(
                         ::boost::make_iterator_range(SubBegin, SubEnd),
                         Comp)(Begin, End);
 
@@ -70,8 +71,8 @@ namespace boost {
             }
 
         } // namespace detail
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_PREDICATE_DETAIL_HPP
+#endif  // HPX_STRING_PREDICATE_DETAIL_HPP

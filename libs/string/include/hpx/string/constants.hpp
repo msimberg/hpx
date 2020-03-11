@@ -8,13 +8,13 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_CONSTANTS_HPP
-#define BOOST_STRING_CONSTANTS_HPP
+#ifndef HPX_STRING_CONSTANTS_HPP
+#define HPX_STRING_CONSTANTS_HPP
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
-    //! Token compression mode 
+    //! Token compression mode
     /*!
         Specifies token compression mode for the token_finder.
     */
@@ -23,14 +23,9 @@ namespace boost {
         token_compress_on,    //!< Compress adjacent tokens
         token_compress_off  //!< Do not compress adjacent tokens
     };
-    
-    } // namespace algorithm
 
-    // pull the names to the boost namespace
-    using algorithm::token_compress_on;
-    using algorithm::token_compress_off;
+    } // namespace string
+} // namespace hpx
 
-} // namespace boost
-
-#endif  // BOOST_STRING_CONSTANTS_HPP
+#endif  // HPX_STRING_CONSTANTS_HPP
 

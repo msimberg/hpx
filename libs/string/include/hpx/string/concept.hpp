@@ -8,8 +8,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_CONCEPT_HPP
-#define BOOST_STRING_CONCEPT_HPP
+#ifndef HPX_STRING_CONCEPT_HPP
+#define HPX_STRING_CONCEPT_HPP
 
 #include <boost/concept_check.hpp>
 #include <boost/range/iterator_range_core.hpp>
@@ -20,8 +20,8 @@
     Defines concepts used in string_algo library
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
         //! Finder concept
         /*!
@@ -29,13 +29,13 @@ namespace boost {
             an arbitrary part of a string. Search is performed on
             the range specified by starting and ending iterators.
 
-            Result of the find operation must be convertible to iterator_range.
+            Result of the find operation must be convertible to boost::iterator_range.
         */
         template<typename FinderT, typename IteratorT>
         struct FinderConcept
         {
         private:
-            typedef iterator_range<IteratorT> range;
+            typedef boost::iterator_range<IteratorT> range;
         public:
             void constraints()
             {
@@ -74,10 +74,10 @@ namespace boost {
             FormatterT *pFo;
         }; // FormatterConcept;
 
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
 
 
-#endif  // BOOST_STRING_CONCEPT_HPP
+#endif  // HPX_STRING_CONCEPT_HPP

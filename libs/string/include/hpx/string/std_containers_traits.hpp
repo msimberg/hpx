@@ -8,19 +8,14 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_STD_CONTAINERS_TRAITS_HPP
-#define BOOST_STRING_STD_CONTAINERS_TRAITS_HPP
+#ifndef HPX_STRING_STD_CONTAINERS_TRAITS_HPP
+#define HPX_STRING_STD_CONTAINERS_TRAITS_HPP
 
-/*!\file 
+/*!\file
     This file includes sequence traits for stl containers.
 */
 
-#include <boost/config.hpp>
-#include <boost/algorithm/string/std/string_traits.hpp>
-#include <boost/algorithm/string/std/list_traits.hpp>
+#include <hpx/string/std/string_traits.hpp>
+#include <hpx/string/std/list_traits.hpp>
 
-#ifdef BOOST_HAS_SLIST
-#   include <boost/algorithm/string/std/slist_traits.hpp>
-#endif
-
-#endif  // BOOST_STRING_STD_CONTAINERS_TRAITS_HPP
+#endif  // HPX_STRING_STD_CONTAINERS_TRAITS_HPP

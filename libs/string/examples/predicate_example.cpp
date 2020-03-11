@@ -7,55 +7,51 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <hpx/string/predicate.hpp>
+#include <hpx/string/classification.hpp>
+
 #include <string>
 #include <iostream>
 #include <functional>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/bind.hpp>
-
-
-using namespace std;
-using namespace boost;
 
 int main()
 {
-    cout << "* Predicate Example *" << endl << endl;
+    std::cout << "* Predicate Example *" << std::endl << std::endl;
 
-    string str1("123xxx321");
-    string str2("abc");
+    std::string str1("123xxx321");
+    std::string str2("abc");
 
     // Check if str1 starts with '123'
-    cout << "str1 starts with \"123\": " << 
-        (starts_with( str1, string("123") )?"true":"false") << endl; 
-    
+    std::cout << "str1 starts with \"123\": " <<
+        (hpx::string::starts_with( str1, std::string("123") )?"true":"false") << std::endl;
+
     // Check if str1 ends with '123'
-    cout << "str1 ends with \"123\": " << 
-        (ends_with( str1, string("123") )?"true":"false") << endl; 
+    std::cout << "str1 ends with \"123\": " <<
+        (hpx::string::ends_with( str1, std::string("123") )?"true":"false") << std::endl;
 
     // Check if str1 contains 'xxx'
-    cout << "str1 contains \"xxx\": " << 
-        (contains( str1, string("xxx") )?"true":"false") << endl; 
+    std::cout << "str1 contains \"xxx\": " <<
+        (hpx::string::contains( str1, std::string("xxx") )?"true":"false") << std::endl;
 
 
     // Check if str2 equals to 'abc'
-    cout << "str2 equals \"abc\": " << 
-        (equals( str2, string("abc") )?"true":"false") << endl; 
+    std::cout << "str2 equals \"abc\": " <<
+        (hpx::string::equals( str2, std::string("abc") )?"true":"false") << std::endl;
 
 
     // Classification functors and all predicate
-    if ( all(";.,", is_punct() ) )
+    if ( hpx::string::all(";.,", hpx::string::is_punct() ) )
     {
-        cout << "\";.,\" are all punctuation characters" << endl;  
+        std::cout << "\";.,\" are all punctuation characters" << std::endl;
     }
 
-    // Classification predicates can be combined 
-    if ( all("abcxxx", is_any_of("xabc") && !is_space() ) )
+    // Classification predicates can be combined
+    if ( hpx::string::all("abcxxx", hpx::string::is_any_of("xabc") && !hpx::string::is_space() ) )
     {
-        cout << "true" << endl;
+        std::cout << "true" << std::endl;
     }
 
-    cout << endl;
+    std::cout << std::endl;
 
     return 0;
-}   
+}

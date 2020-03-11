@@ -8,11 +8,11 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_YES_NO_TYPE_DETAIL_HPP
-#define BOOST_STRING_YES_NO_TYPE_DETAIL_HPP
+#ifndef HPX_STRING_YES_NO_TYPE_DETAIL_HPP
+#define HPX_STRING_YES_NO_TYPE_DETAIL_HPP
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
         // taken from boost mailing-list
         // when yes_no_type will become officially
@@ -26,8 +26,8 @@ namespace boost {
         typedef size_descriptor<1>::type yes_type;
         typedef size_descriptor<2>::type no_type;
 
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_YES_NO_TYPE_DETAIL_HPP
+#endif  // HPX_STRING_YES_NO_TYPE_DETAIL_HPP

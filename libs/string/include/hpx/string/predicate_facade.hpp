@@ -8,10 +8,10 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_PREDICATE_FACADE_HPP
-#define BOOST_STRING_PREDICATE_FACADE_HPP
+#ifndef HPX_STRING_PREDICATE_FACADE_HPP
+#define HPX_STRING_PREDICATE_FACADE_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
 
 /*
  \file boost/algorith/string/predicate_facade.hpp
@@ -20,8 +20,8 @@
  composition operators.
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
 //  predicate facade ------------------------------------------------------//
 
@@ -35,8 +35,8 @@ namespace boost {
         template<typename Derived>
         struct predicate_facade {};
 
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_CLASSIFICATION_DETAIL_HPP
+#endif  // HPX_STRING_CLASSIFICATION_DETAIL_HPP

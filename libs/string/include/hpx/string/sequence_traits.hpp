@@ -8,12 +8,13 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_SEQUENCE_TRAITS_HPP
-#define BOOST_STRING_SEQUENCE_TRAITS_HPP
+#ifndef HPX_STRING_SEQUENCE_TRAITS_HPP
+#define HPX_STRING_SEQUENCE_TRAITS_HPP
+
+#include <hpx/string/yes_no_type.hpp>
 
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
-#include <boost/algorithm/string/yes_no_type.hpp>
 
 /*! \file
     Traits defined in this header are used by various algorithms to achieve
@@ -26,13 +27,13 @@
     Due to a language restriction, it is not currently possible to define specializations for
     stl containers without including the corresponding header. To decrease the overhead
     needed by this inclusion, user can selectively include a specialization
-    header for a specific container. They are located in boost/algorithm/string/stl
-    directory. Alternatively she can include boost/algorithm/string/std_collection_traits.hpp
+    header for a specific container. They are located in hpx/string/stl
+    directory. Alternatively she can include hpx/string/std_collection_traits.hpp
     header which contains specializations for all stl containers.
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
 //  sequence traits  -----------------------------------------------//
 
@@ -46,16 +47,10 @@ namespace boost {
         {
 
         public:
-#    if BOOST_WORKAROUND( __IBMCPP__, <= 600 )
-            enum { value = false };
-#    else
-            BOOST_STATIC_CONSTANT(bool, value=false);
-#    endif // BOOST_WORKAROUND( __IBMCPP__, <= 600 )
+            static constexpr bool value = false;
 
-
-            typedef mpl::bool_<has_native_replace<T>::value> type;
+            typedef boost::mpl::bool_<has_native_replace<T>::value> type;
         };
-
 
         //! Stable iterators trait
         /*!
@@ -66,13 +61,9 @@ namespace boost {
         class has_stable_iterators
         {
         public:
-#    if BOOST_WORKAROUND( __IBMCPP__, <= 600 )
-            enum { value = false };
-#    else
-            BOOST_STATIC_CONSTANT(bool, value=false);
-#    endif // BOOST_WORKAROUND( __IBMCPP__, <= 600 )
+            static const bool value = false;
 
-            typedef mpl::bool_<has_stable_iterators<T>::value> type;
+            typedef boost::mpl::bool_<has_stable_iterators<T>::value> type;
         };
 
 
@@ -85,13 +76,9 @@ namespace boost {
         class has_const_time_insert
         {
         public:
-#    if BOOST_WORKAROUND( __IBMCPP__, <= 600 )
-            enum { value = false };
-#    else
-            BOOST_STATIC_CONSTANT(bool, value=false);
-#    endif // BOOST_WORKAROUND( __IBMCPP__, <= 600 )
+            static const bool value = false;
 
-            typedef mpl::bool_<has_const_time_insert<T>::value> type;
+            typedef boost::mpl::bool_<has_const_time_insert<T>::value> type;
         };
 
 
@@ -104,17 +91,13 @@ namespace boost {
         class has_const_time_erase
         {
         public:
-#    if BOOST_WORKAROUND( __IBMCPP__, <= 600 )
-            enum { value = false };
-#    else
-            BOOST_STATIC_CONSTANT(bool, value=false);
-#    endif // BOOST_WORKAROUND( __IBMCPP__, <= 600 )
+            static const bool value = false;
 
-            typedef mpl::bool_<has_const_time_erase<T>::value> type;
+            typedef boost::mpl::bool_<has_const_time_erase<T>::value> type;
         };
 
-    } // namespace algorithm
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_SEQUENCE_TRAITS_HPP
+#endif  // HPX_STRING_SEQUENCE_TRAITS_HPP

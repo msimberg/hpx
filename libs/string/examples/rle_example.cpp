@@ -13,15 +13,14 @@
     For simplification, it works only on numeric-value sequences.
 */
 
+#include <hpx/string/find_format.hpp>
+#include <hpx/string/finder.hpp>
+
+#include <boost/detail/iterator.hpp>
+
 #include <string>
 #include <iostream>
 #include <limits>
-#include <boost/detail/iterator.hpp>
-#include <boost/algorithm/string/find_format.hpp>
-#include <boost/algorithm/string/finder.hpp>
-
-using namespace std;
-using namespace boost;
 
 // replace mark specification, specialize for a specific element type
 template< typename T > T repeat_mark() { return (std::numeric_limits<T>::max)(); };
@@ -32,22 +31,22 @@ template< typename T > T repeat_mark() { return (std::numeric_limits<T>::max)();
 // compress finder -rle
 /*
     Find a sequence which can be compressed. It has to be at least 3-character long
-    sequence of repetitive characters 
+    sequence of repetitive characters
 */
-struct find_compressF 
+struct find_compressF
 {
     // Construction
     find_compressF() {}
 
     // Operation
     template<typename ForwardIteratorT>
-    iterator_range<ForwardIteratorT> operator()( 
-        ForwardIteratorT Begin, 
+    boost::iterator_range<ForwardIteratorT> operator()(
+        ForwardIteratorT Begin,
         ForwardIteratorT End ) const
     {
         typedef ForwardIteratorT input_iterator_type;
         typedef typename boost::detail::iterator_traits<input_iterator_type>::value_type value_type;
-        typedef iterator_range<input_iterator_type> result_type;
+        typedef boost::iterator_range<input_iterator_type> result_type;
 
         // begin of the matching segment
         input_iterator_type MStart=End;
@@ -96,7 +95,7 @@ struct find_compressF
 
 // rle compress format
 /*
-    Transform a sequence into repeat mark, character and count 
+    Transform a sequence into repeat mark, character and count
 */
 template<typename SeqT>
 struct format_compressF
@@ -139,26 +138,26 @@ struct find_decompressF
 
     // Operation
     template<typename ForwardIteratorT>
-    iterator_range<ForwardIteratorT> operator()( 
-        ForwardIteratorT Begin, 
+    boost::iterator_range<ForwardIteratorT> operator()(
+        ForwardIteratorT Begin,
         ForwardIteratorT End ) const
     {
         typedef ForwardIteratorT input_iterator_type;
         typedef typename boost::detail::iterator_traits<input_iterator_type>::value_type value_type;
-        typedef iterator_range<input_iterator_type> result_type;
+        typedef boost::iterator_range<input_iterator_type> result_type;
 
         for(input_iterator_type It=Begin; It!=End; It++)
         {
             if( *It==repeat_mark<value_type>() )
             {
                 // Repeat mark found, extract body
-                input_iterator_type It2=It++; 
-                
-                if ( It==End ) break;
-                    It++; 
+                input_iterator_type It2=It++;
+
                 if ( It==End ) break;
                     It++;
-                
+                if ( It==End ) break;
+                    It++;
+
                 return result_type( It2, It );
             }
         }
@@ -206,43 +205,43 @@ public:
 
 int main()
 {
-    cout << "* RLE Compression Example *" << endl << endl;
+    std::cout << "* RLE Compression Example *" << std::endl << std::endl;
 
-    string original("123_AA_*ZZZZZZZZZZZZZZ*34");
+    std::string original("123_AA_*ZZZZZZZZZZZZZZ*34");
 
     // copy compression
-    string compress=find_format_all_copy( 
-        original, 
-        find_compressF(), 
-        format_compressF<string>() );
+    std::string compress=hpx::string::find_format_all_copy(
+        original,
+        find_compressF(),
+        format_compressF<std::string>() );
 
-    cout << "Compressed string: " << compress << endl;
+    std::cout << "Compressed string: " << compress << std::endl;
 
     // Copy decompression
-    string decompress=find_format_all_copy( 
-        compress, 
-        find_decompressF(), 
-        format_decompressF<string>() );
+    std::string decompress=hpx::string::find_format_all_copy(
+        compress,
+        find_decompressF(),
+        format_decompressF<std::string>() );
 
-    cout << "Decompressed string: " << decompress << endl;
+    std::cout << "Decompressed string: " << decompress << std::endl;
 
     // in-place compression
-    find_format_all( 
-        original, 
-        find_compressF(), 
-        format_compressF<string>() );
-    
-    cout << "Compressed string: " << original << endl;
+    hpx::string::find_format_all(
+        original,
+        find_compressF(),
+        format_compressF<std::string>() );
+
+    std::cout << "Compressed string: " << original << std::endl;
 
     // in-place decompression
-    find_format_all( 
-        original, 
-        find_decompressF(), 
-        format_decompressF<string>() );
+    hpx::string::find_format_all(
+        original,
+        find_decompressF(),
+        format_decompressF<std::string>() );
 
-    cout << "Decompressed string: " << original << endl;
+    std::cout << "Decompressed string: " << original << std::endl;
 
-    cout << endl;
+    std::cout << std::endl;
 
     return 0;
 }

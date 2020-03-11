@@ -8,10 +8,11 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_COMPARE_HPP
-#define BOOST_STRING_COMPARE_HPP
+#ifndef HPX_STRING_COMPARE_HPP
+#define HPX_STRING_COMPARE_HPP
 
-#include <boost/algorithm/string/config.hpp>
+#include <hpx/config.hpp>
+
 #include <locale>
 
 /*! \file
@@ -21,8 +22,8 @@
     of the algorithms.
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
         //  is_equal functor  -----------------------------------------------//
 
@@ -80,7 +81,7 @@ namespace boost {
 
         //! is_less functor
         /*!
-            Convenient version of standard std::less. Operation is templated, therefore it is 
+            Convenient version of standard std::less. Operation is templated, therefore it is
             not required to specify the exact types upon the construction
          */
         struct is_less
@@ -133,7 +134,7 @@ namespace boost {
 
         //! is_not_greater functor
         /*!
-            Convenient version of standard std::not_greater_to. Operation is templated, therefore it is 
+            Convenient version of standard std::not_greater_to. Operation is templated, therefore it is
             not required to specify the exact types upon the construction
          */
         struct is_not_greater
@@ -183,17 +184,8 @@ namespace boost {
         };
 
 
-    } // namespace algorithm
-
-    // pull names to the boost namespace
-    using algorithm::is_equal;
-    using algorithm::is_iequal;
-    using algorithm::is_less;
-    using algorithm::is_iless;
-    using algorithm::is_not_greater;
-    using algorithm::is_not_igreater;
-
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_COMPARE_HPP
+#endif  // HPX_STRING_COMPARE_HPP

@@ -8,14 +8,15 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
-#ifndef BOOST_STRING_ITER_FIND_HPP
-#define BOOST_STRING_ITER_FIND_HPP
+#ifndef HPX_STRING_ITER_FIND_HPP
+#define HPX_STRING_ITER_FIND_HPP
 
-#include <boost/algorithm/string/config.hpp>
-#include <algorithm>
-#include <iterator>
+#include <hpx/config.hpp>
+#include <hpx/string/concept.hpp>
+#include <hpx/string/find_iterator.hpp>
+#include <hpx/string/detail/util.hpp>
+
 #include <boost/iterator/transform_iterator.hpp>
-
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
@@ -23,23 +24,22 @@
 #include <boost/range/value_type.hpp>
 #include <boost/range/as_literal.hpp>
 
-#include <boost/algorithm/string/concept.hpp>
-#include <boost/algorithm/string/find_iterator.hpp>
-#include <boost/algorithm/string/detail/util.hpp>
+#include <algorithm>
+#include <iterator>
 
 /*! \file
-    Defines generic split algorithms. Split algorithms can be 
-    used to divide a sequence into several part according 
-    to a given criteria. Result is given as a 'container 
-    of containers' where elements are copies or references 
+    Defines generic split algorithms. Split algorithms can be
+    used to divide a sequence into several part according
+    to a given criteria. Result is given as a 'container
+    of containers' where elements are copies or references
     to extracted parts.
 
     There are two algorithms provided. One iterates over matching
     substrings, the other one over the gaps between these matches.
 */
 
-namespace boost {
-    namespace algorithm {
+namespace hpx {
+    namespace string {
 
 //  iterate find ---------------------------------------------------//
 
@@ -47,16 +47,16 @@ namespace boost {
         /*!
             This algorithm executes a given finder in iteration on the input,
             until the end of input is reached, or no match is found.
-            Iteration is done using built-in find_iterator, so the real 
+            Iteration is done using built-in find_iterator, so the real
             searching is performed only when needed.
             In each iteration new match is found and added to the result.
 
             \param Result A 'container container' to contain the result of search.
                 Both outer and inner container must have constructor taking a pair
                 of iterators as an argument.
-                Typical type of the result is 
+                Typical type of the result is
                     \c std::vector<boost::iterator_range<iterator>>
-                (each element of such a vector will container a range delimiting 
+                (each element of such a vector will container a range delimiting
                 a match).
             \param Input A container which will be searched.
             \param Finder A Finder object used for searching
@@ -64,14 +64,14 @@ namespace boost {
 
             \note Prior content of the result will be overwritten.
         */
-        template< 
+        template<
             typename SequenceSequenceT,
             typename RangeT,
             typename FinderT >
         inline SequenceSequenceT&
         iter_find(
             SequenceSequenceT& Result,
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
             RangeT&& Input,
 #else
             RangeT& Input,
@@ -81,36 +81,36 @@ namespace boost {
             BOOST_CONCEPT_ASSERT((
                 FinderConcept<
                     FinderT,
-                    BOOST_STRING_TYPENAME range_iterator<RangeT>::type>
+                    typename boost::range_iterator<RangeT>::type>
                 ));
 
-            iterator_range<BOOST_STRING_TYPENAME range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
+            boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
 
-            typedef BOOST_STRING_TYPENAME 
-                range_iterator<RangeT>::type input_iterator_type;
+            typedef typename
+                boost::range_iterator<RangeT>::type input_iterator_type;
             typedef find_iterator<input_iterator_type> find_iterator_type;
             typedef detail::copy_iterator_rangeF<
-                BOOST_STRING_TYPENAME 
-                    range_value<SequenceSequenceT>::type,
+                typename
+                    boost::range_value<SequenceSequenceT>::type,
                 input_iterator_type> copy_range_type;
-            
+
             input_iterator_type InputEnd=::boost::end(lit_input);
 
-            typedef transform_iterator<copy_range_type, find_iterator_type>
+            typedef boost::transform_iterator<copy_range_type, find_iterator_type>
                 transform_iter_type;
-    
+
             transform_iter_type itBegin=
-                ::boost::make_transform_iterator( 
+                ::boost::make_transform_iterator(
                     find_iterator_type( ::boost::begin(lit_input), InputEnd, Finder ),
                     copy_range_type());
-            
+
             transform_iter_type itEnd=
-                ::boost::make_transform_iterator( 
+                ::boost::make_transform_iterator(
                     find_iterator_type(),
                     copy_range_type());
 
             SequenceSequenceT Tmp(itBegin, itEnd);
-                        
+
             Result.swap(Tmp);
             return Result;
         }
@@ -121,7 +121,7 @@ namespace boost {
         /*!
             This algorithm executes a given finder in iteration on the input,
             until the end of input is reached, or no match is found.
-            Iteration is done using built-in find_iterator, so the real 
+            Iteration is done using built-in find_iterator, so the real
             searching is performed only when needed.
             Each match is used as a separator of segments. These segments are then
             returned in the result.
@@ -129,9 +129,9 @@ namespace boost {
             \param Result A 'container container' to contain the result of search.
                 Both outer and inner container must have constructor taking a pair
                 of iterators as an argument.
-                Typical type of the result is 
+                Typical type of the result is
                     \c std::vector<boost::iterator_range<iterator>>
-                (each element of such a vector will container a range delimiting 
+                (each element of such a vector will container a range delimiting
                 a match).
             \param Input A container which will be searched.
             \param Finder A finder object used for searching
@@ -139,14 +139,14 @@ namespace boost {
 
             \note Prior content of the result will be overwritten.
         */
-        template< 
+        template<
             typename SequenceSequenceT,
             typename RangeT,
             typename FinderT >
         inline SequenceSequenceT&
         iter_split(
             SequenceSequenceT& Result,
-#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if !defined(HPX_NO_CXX11_RVALUE_REFERENCES)
             RangeT&& Input,
 #else
             RangeT& Input,
@@ -155,47 +155,42 @@ namespace boost {
         {
             BOOST_CONCEPT_ASSERT((
                 FinderConcept<FinderT,
-                BOOST_STRING_TYPENAME range_iterator<RangeT>::type>
+                typename boost::range_iterator<RangeT>::type>
                 ));
 
-            iterator_range<BOOST_STRING_TYPENAME range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
+            boost::iterator_range<typename boost::range_iterator<RangeT>::type> lit_input(::boost::as_literal(Input));
 
-            typedef BOOST_STRING_TYPENAME 
-                range_iterator<RangeT>::type input_iterator_type;
+            typedef typename
+                boost::range_iterator<RangeT>::type input_iterator_type;
             typedef split_iterator<input_iterator_type> find_iterator_type;
             typedef detail::copy_iterator_rangeF<
-                BOOST_STRING_TYPENAME 
-                    range_value<SequenceSequenceT>::type,
+                typename
+                    boost::range_value<SequenceSequenceT>::type,
                 input_iterator_type> copy_range_type;
-            
+
             input_iterator_type InputEnd=::boost::end(lit_input);
 
-            typedef transform_iterator<copy_range_type, find_iterator_type>
+            typedef boost::transform_iterator<copy_range_type, find_iterator_type>
                 transform_iter_type;
-    
+
             transform_iter_type itBegin=
-                ::boost::make_transform_iterator( 
+                ::boost::make_transform_iterator(
                     find_iterator_type( ::boost::begin(lit_input), InputEnd, Finder ),
                     copy_range_type() );
 
             transform_iter_type itEnd=
-                ::boost::make_transform_iterator( 
+                ::boost::make_transform_iterator(
                     find_iterator_type(),
                     copy_range_type() );
-            
+
             SequenceSequenceT Tmp(itBegin, itEnd);
 
             Result.swap(Tmp);
             return Result;
         }
 
-    } // namespace algorithm
-
-    // pull names to the boost namespace
-    using algorithm::iter_find;
-    using algorithm::iter_split;
-
-} // namespace boost
+    } // namespace string
+} // namespace hpx
 
 
-#endif  // BOOST_STRING_ITER_FIND_HPP
+#endif  // HPX_STRING_ITER_FIND_HPP
