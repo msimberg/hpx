@@ -1,5 +1,6 @@
 //  Boost string_algo library find_format_test.cpp file  ------------------//
 
+//  SPDX-License-Identifier: BSL-1.0
 //  Copyright (c) 2009 Steven Watanabe
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
