@@ -8,6 +8,8 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #include <hpx/string/classification.hpp>
 #include <hpx/string/find.hpp>
 #include <hpx/string/split.hpp>

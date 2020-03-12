@@ -1,4 +1,4 @@
-//  Boost string_algo library std_containers_traits.hpp header file  ---------------------------//
+//  Boost string_algo library std_containers_traits.hpp header file
 
 //  Copyright Pavol Droba 2002-2003.
 //

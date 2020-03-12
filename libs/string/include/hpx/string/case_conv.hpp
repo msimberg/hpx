@@ -37,18 +37,18 @@ namespace hpx { namespace string {
 
     //! Convert to lower case
     /*!
-            Each element of the input sequence is converted to lower
-            case. The result is a copy of the input converted to lower case.
-            It is returned as a sequence or copied to the output iterator.
+            Each element of the input sequence is converted to lower case. The
+            result is a copy of the input converted to lower case. It is
+            returned as a sequence or copied to the output iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input range
             \param Loc A locale used for conversion
-            \return
-                An output iterator pointing just after the last inserted character or
-                a copy of the input
+            \return An output iterator pointing just after the last inserted
+                character or a copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+                exception-safety guarantee
 
         */
     template <typename OutputIteratorT, typename RangeT>
@@ -95,18 +95,18 @@ namespace hpx { namespace string {
 
     //! Convert to upper case
     /*!
-            Each element of the input sequence is converted to upper
-            case. The result is a copy of the input converted to upper case.
-            It is returned as a sequence or copied to the output iterator
+            Each element of the input sequence is converted to upper case. The
+            result is a copy of the input converted to upper case. It is
+            returned as a sequence or copied to the output iterator
 
             \param Output An output iterator to which the result will be copied
             \param Input An input range
             \param Loc A locale used for conversion
-            \return
-                An output iterator pointing just after the last inserted character or
-                a copy of the input
+            \return An output iterator pointing just after the last inserted
+                character or a copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+                exception-safety guarantee
         */
     template <typename OutputIteratorT, typename RangeT>
     inline OutputIteratorT to_upper_copy(OutputIteratorT Output,

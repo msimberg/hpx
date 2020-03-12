@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #ifndef HPX_STRING_CONCEPT_HPP
 #define HPX_STRING_CONCEPT_HPP
 
@@ -17,7 +19,7 @@
 #include <boost/range/end.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
-/*! \file 
+/*! \file
     Defines concepts used in string_algo library
 */
 
@@ -25,11 +27,12 @@ namespace hpx { namespace string {
 
     //! Finder concept
     /*!
-            Defines the Finder concept. Finder is a functor which selects
-            an arbitrary part of a string. Search is performed on
-            the range specified by starting and ending iterators.
+            Defines the Finder concept. Finder is a functor which selects an
+            arbitrary part of a string. Search is performed on the range
+            specified by starting and ending iterators.
 
-            Result of the find operation must be convertible to boost::iterator_range.
+            Result of the find operation must be convertible to
+            boost::iterator_range.
         */
     template <typename FinderT, typename IteratorT>
     struct FinderConcept
@@ -56,7 +59,7 @@ namespace hpx { namespace string {
             takes a result from a finder operation and transforms it
             in a specific way.
 
-            Result must be a container supported by container_traits, 
+            Result must be a container supported by container_traits,
             or a reference to it.
         */
     template <typename FormatterT, typename FinderT, typename IteratorT>

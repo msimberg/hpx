@@ -14,6 +14,8 @@
     For simplification, it works only on numeric-value sequences.
 */
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #include <hpx/string/find_format.hpp>
 #include <hpx/string/finder.hpp>
 

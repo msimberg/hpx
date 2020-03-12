@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedinclude:boost/type_traits/make_unsigned.hpp
+
 #ifndef HPX_STRING_CASE_CONV_DETAIL_HPP
 #define HPX_STRING_CASE_CONV_DETAIL_HPP
 
@@ -91,7 +93,7 @@ namespace hpx { namespace string { namespace detail {
 #pragma warning(pop)
 #endif
 
-    // algorithm implementation -------------------------------------------------------------------------
+    // algorithm implementation
 
     // Transform a range
     template <typename OutputIteratorT, typename RangeT, typename FunctorT>

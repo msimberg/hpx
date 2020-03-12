@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #ifndef HPX_STRING_FIND_FORMAT_HPP
 #define HPX_STRING_FIND_FORMAT_HPP
 
@@ -50,7 +52,8 @@ namespace hpx { namespace string {
             \return An output iterator pointing just after the last inserted character or
                 a modified copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+               exception-safety guarantee
         */
     template <typename OutputIteratorT, typename RangeT, typename FinderT,
         typename FormatterT>
@@ -129,7 +132,8 @@ namespace hpx { namespace string {
             \return An output iterator pointing just after the last inserted character or
                 a modified copy of the input
 
-             \note The second variant of this function provides the strong exception-safety guarantee
+             \note The second variant of this function provides the strong
+                exception-safety guarantee
         */
     template <typename OutputIteratorT, typename RangeT, typename FinderT,
         typename FormatterT>

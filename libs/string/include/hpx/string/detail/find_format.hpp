@@ -1,4 +1,4 @@
-//  Boost string_algo library find_format.hpp header file  ---------------------------//
+//  Boost string_algo library find_format.hpp header file
 
 //  Copyright Pavol Droba 2002-2003.
 //
@@ -22,7 +22,7 @@
 
 namespace hpx { namespace string { namespace detail {
 
-    // find_format_copy (iterator variant) implementation -------------------------------//
+    // find_format_copy (iterator variant) implementation
 
     template <typename OutputIteratorT, typename InputT, typename FormatterT,
         typename FindResultT, typename FormatResultT>
@@ -76,7 +76,7 @@ namespace hpx { namespace string { namespace detail {
         }
     }
 
-    // find_format_copy implementation --------------------------------------------------//
+    // find_format_copy implementation
 
     template <typename InputT, typename FormatterT, typename FindResultT,
         typename FormatResultT>

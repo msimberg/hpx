@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #ifndef HPX_STRING_REPLACE_HPP
 #define HPX_STRING_REPLACE_HPP
 
@@ -31,22 +33,23 @@
 
 namespace hpx { namespace string {
 
-    //  replace_range --------------------------------------------------------------------//
+    //  replace_range
 
     //! Replace range algorithm
     /*!
-            Replace the given range in the input string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
+            Replace the given range in the input string. The result is a
+            modified copy of the input. It is returned as a sequence or copied
+            to the output iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param SearchRange A range in the input to be substituted
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                character or a modified copy of the input
 
-              \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+              exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T>
     inline OutputIteratorT replace_range_copy(OutputIteratorT Output,
@@ -95,23 +98,23 @@ namespace hpx { namespace string {
             ::hpx::string::const_formatter(Format));
     }
 
-    //  replace_first --------------------------------------------------------------------//
+    //  replace_first
 
     //! Replace first algorithm
     /*!
-            Replace the first match of the search substring in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
+            Replace the first match of the search substring in the input with
+            the format string. The result is a modified copy of the input. It is
+            returned as a sequence or copied to the output iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-              \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -138,8 +141,8 @@ namespace hpx { namespace string {
 
     //! Replace first algorithm
     /*!
-            replace the first match of the search substring in the input
-            with the format string. The input sequence is modified in-place.
+            replace the first match of the search substring in the input with
+            the format string. The input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for
@@ -153,25 +156,25 @@ namespace hpx { namespace string {
             ::hpx::string::const_formatter(Format));
     }
 
-    //  replace_first ( case insensitive ) ---------------------------------------------//
+    //  replace_first ( case insensitive )
 
     //! Replace first algorithm ( case insensitive )
     /*!
-            Replace the first match of the search substring in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
-            Searching is case insensitive.
+            Replace the first match of the search substring in the input with
+            the format string. The result is a modified copy of the input. It is
+            returned as a sequence or copied to the output iterator. Searching
+            is case insensitive.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
             \param Format A substitute string
             \param Loc A locale used for case insensitive comparison
-            \return An output iterator pointing just after the last inserted character or
-                a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                character or a modified copy of the input
 
-             \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -200,9 +203,9 @@ namespace hpx { namespace string {
 
     //! Replace first algorithm ( case insensitive )
     /*!
-            Replace the first match of the search substring in the input
-            with the format string. Input sequence is modified in-place.
-            Searching is case insensitive.
+            Replace the first match of the search substring in the input with
+            the format string. Input sequence is modified in-place. Searching is
+            case insensitive.
 
             \param Input An input string
             \param Search A substring to be searched for
@@ -218,23 +221,23 @@ namespace hpx { namespace string {
             ::hpx::string::const_formatter(Format));
     }
 
-    //  replace_last --------------------------------------------------------------------//
+    //  replace_last
 
     //! Replace last algorithm
     /*!
-            Replace the last match of the search string in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
+            Replace the last match of the search string in the input with the
+            format string. The result is a modified copy of the input. It is
+            returned as a sequence or copied to the output iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-              \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -261,8 +264,8 @@ namespace hpx { namespace string {
 
     //! Replace last algorithm
     /*!
-            Replace the last match of the search string in the input
-            with the format string. Input sequence is modified in-place.
+            Replace the last match of the search string in the input with the
+            format string. Input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for
@@ -276,25 +279,25 @@ namespace hpx { namespace string {
             ::hpx::string::const_formatter(Format));
     }
 
-    //  replace_last ( case insensitive ) -----------------------------------------------//
+    //  replace_last ( case insensitive )
 
     //! Replace last algorithm ( case insensitive )
     /*!
-            Replace the last match of the search string in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
-            Searching is case insensitive.
+            Replace the last match of the search string in the input with the
+            format string. The result is a modified copy of the input. It is
+            returned as a sequence or copied to the output iterator. Searching
+            is case insensitive.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
             \param Format A substitute string
             \param Loc A locale used for case insensitive comparison
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -323,9 +326,9 @@ namespace hpx { namespace string {
 
     //! Replace last algorithm ( case insensitive )
     /*!
-            Replace the last match of the search string in the input
-            with the format string.The input sequence is modified in-place.
-            Searching is case insensitive.
+            Replace the last match of the search string in the input with the
+            format string.The input sequence is modified in-place. Searching is
+            case insensitive.
 
             \param Input An input string
             \param Search A substring to be searched for
@@ -341,25 +344,27 @@ namespace hpx { namespace string {
             ::hpx::string::const_formatter(Format));
     }
 
-    //  replace_nth --------------------------------------------------------------------//
+    //  replace_nth
 
     //! Replace nth algorithm
     /*!
-            Replace an Nth (zero-indexed) match of the search string in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
+            Replace an Nth (zero-indexed) match of the search string in the
+            input with the format string. The result is a modified copy of the
+            input. It is returned as a sequence or copied to the output
+            iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
-            \param Nth An index of the match to be replaced. The index is 0-based.
-                For negative N, matches are counted from the end of string.
+            \param Nth An index of the match to be replaced. The index is
+                0-based. For negative N, matches are counted from the end of
+                string.
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                character or a modified copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -387,13 +392,14 @@ namespace hpx { namespace string {
 
     //! Replace nth algorithm
     /*!
-            Replace an Nth (zero-indexed) match of the search string in the input
-            with the format string. Input sequence is modified in-place.
+            Replace an Nth (zero-indexed) match of the search string in the
+            input with the format string. Input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for
-            \param Nth An index of the match to be replaced. The index is 0-based.
-                For negative N, matches are counted from the end of string.
+            \param Nth An index of the match to be replaced. The index is
+                0-based. For negative N, matches are counted from the end of
+                string.
             \param Format A substitute string
         */
     template <typename SequenceT, typename Range1T, typename Range2T>
@@ -409,23 +415,24 @@ namespace hpx { namespace string {
 
     //! Replace nth algorithm ( case insensitive )
     /*!
-            Replace an Nth (zero-indexed) match of the search string in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
-            Searching is case insensitive.
+            Replace an Nth (zero-indexed) match of the search string in the
+            input with the format string. The result is a modified copy of the
+            input. It is returned as a sequence or copied to the output
+            iterator. Searching is case insensitive.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
-            \param Nth An index of the match to be replaced. The index is 0-based.
-                For negative N, matches are counted from the end of string.
+            \param Nth An index of the match to be replaced. The index is
+                0-based. For negative N, matches are counted from the end of
+                string.
             \param Format A substitute string
             \param Loc A locale used for case insensitive comparison
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
        */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -454,14 +461,15 @@ namespace hpx { namespace string {
 
     //! Replace nth algorithm ( case insensitive )
     /*!
-            Replace an Nth (zero-indexed) match of the search string in the input
-            with the format string. Input sequence is modified in-place.
+            Replace an Nth (zero-indexed) match of the search string in the
+            input with the format string. Input sequence is modified in-place.
             Searching is case insensitive.
 
             \param Input An input string
             \param Search A substring to be searched for
-            \param Nth An index of the match to be replaced. The index is 0-based.
-                For negative N, matches are counted from the end of string.
+            \param Nth An index of the match to be replaced. The index is
+                0-based. For negative N, matches are counted from the end of
+                string.
             \param Format A substitute string
             \param Loc A locale used for case insensitive comparison
         */
@@ -478,19 +486,19 @@ namespace hpx { namespace string {
 
     //! Replace all algorithm
     /*!
-            Replace all occurrences of the search string in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
+            Replace all occurrences of the search string in the input with the
+            format string. The result is a modified copy of the input. It is
+            returned as a sequence or copied to the output iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-             \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+             exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -517,8 +525,8 @@ namespace hpx { namespace string {
 
     //! Replace all algorithm
     /*!
-            Replace all occurrences of the search string in the input
-            with the format string. The input sequence is modified in-place.
+            Replace all occurrences of the search string in the input with the
+            format string. The input sequence is modified in-place.
 
             \param Input An input string
             \param Search A substring to be searched for
@@ -537,21 +545,21 @@ namespace hpx { namespace string {
 
     //! Replace all algorithm ( case insensitive )
     /*!
-            Replace all occurrences of the search string in the input
-            with the format string.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
-            Searching is case insensitive.
+            Replace all occurrences of the search string in the input with the
+            format string. The result is a modified copy of the input. It is
+            returned as a sequence or copied to the output iterator. Searching
+            is case insensitive.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
             \param Search A substring to be searched for
             \param Format A substitute string
             \param Loc A locale used for case insensitive comparison
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T,
         typename Range3T>
@@ -580,9 +588,9 @@ namespace hpx { namespace string {
 
     //! Replace all algorithm ( case insensitive )
     /*!
-            Replace all occurrences of the search string in the input
-            with the format string.The input sequence is modified in-place.
-            Searching is case insensitive.
+            Replace all occurrences of the search string in the input with the
+            format string. The input sequence is modified in-place. Searching is
+            case insensitive.
 
             \param Input An input string
             \param Search A substring to be searched for
@@ -602,12 +610,11 @@ namespace hpx { namespace string {
 
     //! Replace head algorithm
     /*!
-            Replace the head of the input with the given format string.
-            The head is a prefix of a string of given size.
-            If the sequence is shorter then required, whole string if
-            considered to be the head.
-            The result is a modified copy of the input. It is returned as a sequence
-            or copied to the output iterator.
+            Replace the head of the input with the given format string. The head
+            is a prefix of a string of given size. If the sequence is shorter
+            then required, whole string if considered to be the head. The result
+            is a modified copy of the input. It is returned as a sequence or
+            copied to the output iterator.
 
             \param Output An output iterator to which the result will be copied
             \param Input An input string
@@ -615,10 +622,11 @@ namespace hpx { namespace string {
                 For N>=0, at most N characters are extracted.
                 For N<0, size(Input)-|N| characters are extracted.
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                character or a modified copy of the input
 
-            \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T>
     inline OutputIteratorT replace_head_copy(OutputIteratorT Output,
@@ -644,10 +652,10 @@ namespace hpx { namespace string {
 
     //! Replace head algorithm
     /*!
-            Replace the head of the input with the given format string.
-            The head is a prefix of a string of given size.
-            If the sequence is shorter then required, the whole string is
-            considered to be the head. The input sequence is modified in-place.
+            Replace the head of the input with the given format string. The head
+            is a prefix of a string of given size. If the sequence is shorter
+            then required, the whole string is considered to be the head. The
+            input sequence is modified in-place.
 
             \param Input An input string
             \param N Length of the head.
@@ -679,10 +687,11 @@ namespace hpx { namespace string {
                 For N>=0, at most N characters are extracted.
                 For N<0, size(Input)-|N| characters are extracted.
             \param Format A substitute string
-            \return An output iterator pointing just after the last inserted character or
-                    a modified copy of the input
+            \return An output iterator pointing just after the last inserted
+                    character or a modified copy of the input
 
-              \note The second variant of this function provides the strong exception-safety guarantee
+            \note The second variant of this function provides the strong
+            exception-safety guarantee
         */
     template <typename OutputIteratorT, typename Range1T, typename Range2T>
     inline OutputIteratorT replace_tail_copy(OutputIteratorT Output,
@@ -708,10 +717,10 @@ namespace hpx { namespace string {
 
     //! Replace tail algorithm
     /*!
-            Replace the tail of the input with the given format sequence.
-            The tail is a suffix of a string of given size.
-            If the sequence is shorter then required, the whole string is
-            considered to be the tail. The input sequence is modified in-place.
+            Replace the tail of the input with the given format sequence. The
+            tail is a suffix of a string of given size. If the sequence is
+            shorter then required, the whole string is considered to be the
+            tail. The input sequence is modified in-place.
 
             \param Input An input string
             \param N Length of the tail.

@@ -8,6 +8,8 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::make_iterator_range
+
 #include <hpx/string/classification.hpp>
 #include <hpx/string/erase.hpp>
 #include <hpx/string/finder.hpp>

@@ -24,17 +24,17 @@
 /*! \file
     Defines trim_all algorithms.
 
-    Just like \c trim, \c trim_all removes all trailing and leading spaces from a
-    sequence (string). In addition, spaces in the middle of the sequence are truncated
-    to just one character. Space is recognized using given locales.
+    Just like \c trim, \c trim_all removes all trailing and leading spaces from
+    a sequence (string). In addition, spaces in the middle of the sequence are
+    truncated to just one character. Space is recognized using given locales.
 
-    \c trim_fill acts as trim_all, but the spaces in the middle are replaces with
-    a user-define sequence of character.
+    \c trim_fill acts as trim_all, but the spaces in the middle are replaces
+    with a user-define sequence of character.
 
-    Parametric (\c _if) variants use a predicate (functor) to select which characters
-    are to be trimmed..
-    Functions take a selection predicate as a parameter, which is used to determine
-    whether a character is a space. Common predicates are provided in classification.hpp header.
+    Parametric (\c _if) variants use a predicate (functor) to select which
+    characters are to be trimmed.. Functions take a selection predicate as a
+    parameter, which is used to determine whether a character is a space. Common
+    predicates are provided in classification.hpp header.
 
 */
 

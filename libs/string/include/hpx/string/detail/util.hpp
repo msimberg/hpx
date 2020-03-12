@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #ifndef HPX_STRING_UTIL_DETAIL_HPP
 #define HPX_STRING_UTIL_DETAIL_HPP
 
@@ -16,6 +18,7 @@
 
 #include <boost/range/iterator_range_core.hpp>
 
+#include <cstddef>
 #include <functional>
 
 namespace hpx { namespace string { namespace detail {

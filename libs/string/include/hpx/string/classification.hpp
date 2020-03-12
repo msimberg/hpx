@@ -1,4 +1,4 @@
-//  Boost string_algo library classification.hpp header file  ---------------------------//
+//  Boost string_algo library classification.hpp header file
 
 //  Copyright Pavol Droba 2002-2003.
 //
@@ -8,6 +8,8 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
+
+//  hpxinspect:nodeprecatedname:boost::iterator_range
 
 #ifndef HPX_STRING_CLASSIFICATION_HPP
 #define HPX_STRING_CLASSIFICATION_HPP

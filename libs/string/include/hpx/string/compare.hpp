@@ -85,8 +85,9 @@ namespace hpx { namespace string {
 
     //! is_less functor
     /*!
-            Convenient version of standard std::less. Operation is templated, therefore it is
-            not required to specify the exact types upon the construction
+            Convenient version of standard std::less. Operation is templated,
+            therefore it is not required to specify the exact types upon the
+            construction
          */
     struct is_less
     {
@@ -137,12 +138,13 @@ namespace hpx { namespace string {
         std::locale m_Loc;
     };
 
-    //  is_not_greater functor  -----------------------------------------------//
+    //  is_not_greater functor
 
     //! is_not_greater functor
     /*!
-            Convenient version of standard std::not_greater_to. Operation is templated, therefore it is
-            not required to specify the exact types upon the construction
+            Convenient version of standard std::not_greater_to. Operation is
+            templated, therefore it is not required to specify the exact types
+            upon the construction
          */
     struct is_not_greater
     {

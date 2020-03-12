@@ -1,4 +1,4 @@
-//  Boost string_algo library sequence_traits.hpp header file  ---------------------------//
+//  Boost string_algo library sequence_traits.hpp header file
 
 //  Copyright Pavol Droba 2002-2003.
 //
@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::mpl
+
 #ifndef HPX_STRING_SEQUENCE_TRAITS_HPP
 #define HPX_STRING_SEQUENCE_TRAITS_HPP
 
@@ -17,20 +19,19 @@
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
 
-/*! \file
-    Traits defined in this header are used by various algorithms to achieve
-    better performance for specific containers.
-    Traits provide fail-safe defaults. If a container supports some of these
-    features, it is possible to specialize the specific trait for this container.
-    For lacking compilers, it is possible of define an override for a specific tester
-    function.
+/*! \file Traits defined in this header are used by various algorithms to
+    achieve better performance for specific containers. Traits provide fail-safe
+    defaults. If a container supports some of these features, it is possible to
+    specialize the specific trait for this container. For lacking compilers, it
+    is possible of define an override for a specific tester function.
 
-    Due to a language restriction, it is not currently possible to define specializations for
-    stl containers without including the corresponding header. To decrease the overhead
-    needed by this inclusion, user can selectively include a specialization
-    header for a specific container. They are located in hpx/string/stl
-    directory. Alternatively she can include hpx/string/std_collection_traits.hpp
-    header which contains specializations for all stl containers.
+    Due to a language restriction, it is not currently possible to define
+    specializations for stl containers without including the corresponding
+    header. To decrease the overhead needed by this inclusion, user can
+    selectively include a specialization header for a specific container. They
+    are located in hpx/string/stl directory. Alternatively she can include
+    hpx/string/std_collection_traits.hpp header which contains specializations
+    for all stl containers.
 */
 
 namespace hpx { namespace string {
@@ -39,7 +40,8 @@ namespace hpx { namespace string {
 
     //! Native replace trait
     /*!
-            This trait specifies that the sequence has \c std::string like replace method
+            This trait specifies that the sequence has \c std::string like
+            replace method
         */
     template <typename T>
     class has_native_replace
@@ -52,8 +54,9 @@ namespace hpx { namespace string {
 
     //! Stable iterators trait
     /*!
-            This trait specifies that the sequence has stable iterators. It means
-            that operations like insert/erase/replace do not invalidate iterators.
+            This trait specifies that the sequence has stable iterators. It
+            means that operations like insert/erase/replace do not invalidate
+            iterators.
         */
     template <typename T>
     class has_stable_iterators

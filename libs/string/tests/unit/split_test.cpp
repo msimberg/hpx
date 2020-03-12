@@ -63,7 +63,8 @@ void iterator_test()
     find_all(vtokens, str1, std::string("xx"));
     deep_compare(tokens, vtokens);
 
-    // If using a compiler that supports forwarding references, we should be able to use rvalues, too
+    // If using a compiler that supports forwarding references, we should be
+    // able to use rvalues, too
     find_all(tokens, std::string("xx-abc--xx-abb"), "xx");
 
     HPX_TEST(tokens.size() == 2);
@@ -115,7 +116,8 @@ void iterator_test()
     HPX_TEST(tokens.size() == 1);
     HPX_TEST(tokens[0] == std::string(""));
 
-    // If using a compiler that supports forwarding references, we should be able to use rvalues, too
+    // If using a compiler that supports forwarding references, we should be
+    // able to use rvalues, too
     split(tokens, std::string("Xx-abc--xX-abb-xx"), is_any_of("xX"),
         token_compress_on);
 

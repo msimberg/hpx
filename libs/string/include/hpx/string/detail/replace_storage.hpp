@@ -1,4 +1,4 @@
-//  Boost string_algo library replace_storage.hpp header file  ---------------------------//
+//  Boost string_algo library replace_storage.hpp header file
 
 //  Copyright Pavol Droba 2002-2003.
 //
@@ -79,7 +79,8 @@ namespace hpx { namespace string { namespace detail {
             }
             else
             {
-                // Case c) -> shift the segment to the left and keep the overlap in the storage
+                // Case c) -> shift the segment to the left and keep the overlap
+                // in the storage
                 while (It != SegmentEnd)
                 {
                     // Store value into storage

@@ -9,6 +9,9 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedinclude:boost/function.hpp
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #ifndef HPX_STRING_FIND_ITERATOR_DETAIL_HPP
 #define HPX_STRING_FIND_ITERATOR_DETAIL_HPP
 

@@ -8,6 +8,8 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+// hpxinspect:nodeprecatedname:boost::iterator_range
+
 #include <hpx/string/case_conv.hpp>
 #include <hpx/string/find.hpp>
 

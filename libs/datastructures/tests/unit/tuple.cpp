@@ -519,7 +519,7 @@ void tuple_length_test()
 void tuple_swap_test()
 {
     hpx::util::tuple<int, float, double> t1(1, 2.0f, 3.0), t2(4, 5.0f, 6.0);
-    boost::swap(t1, t2);
+    std::swap(t1, t2);
     HPX_TEST_EQ(hpx::util::get<0>(t1), 4);
     HPX_TEST_EQ(hpx::util::get<1>(t1), 5.0f);
     HPX_TEST_EQ(hpx::util::get<2>(t1), 6.0);
@@ -530,7 +530,7 @@ void tuple_swap_test()
     int i = 1, j = 2;
 
     hpx::util::tuple<int&> t3(i), t4(j);
-    boost::swap(t3, t4);
+    std::swap(t3, t4);
     HPX_TEST_EQ(hpx::util::get<0>(t3), 2);
     HPX_TEST_EQ(hpx::util::get<0>(t4), 1);
     HPX_TEST_EQ(i, 2);

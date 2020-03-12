@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::mpl
+
 #ifndef HPX_STRING_STD_STRING_TRAITS_HPP
 #define HPX_STRING_STD_STRING_TRAITS_HPP
 

@@ -36,7 +36,8 @@ namespace hpx { namespace string {
             This algorithm joins all strings in a 'list' into one long string.
             Segments are concatenated by given separator.
 
-            \param Input A container that holds the input strings. It must be a container-of-containers.
+            \param Input A container that holds the input strings. It must be a
+            container-of-containers.
             \param Separator A string that will separate the joined segments.
             \return Concatenated string.
 
@@ -85,7 +86,8 @@ namespace hpx { namespace string {
             Segments are concatenated by given separator. Only segments that
             satisfy the predicate will be added to the result.
 
-            \param Input A container that holds the input strings. It must be a container-of-containers.
+            \param Input A container that holds the input strings. It must be a
+            container-of-containers.
             \param Separator A string that will separate the joined segments.
             \param Pred A segment selection predicate
             \return Concatenated string.

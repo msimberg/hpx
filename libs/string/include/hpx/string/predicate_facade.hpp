@@ -1,4 +1,4 @@
-//  Boost string_algo library predicate_facade.hpp header file  ---------------------------//
+//  Boost string_algo library predicate_facade.hpp header file
 
 //  Copyright Pavol Droba 2002-2003.
 //

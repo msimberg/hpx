@@ -9,6 +9,8 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #ifndef HPX_STRING_FORMATTER_HPP
 #define HPX_STRING_FORMATTER_HPP
 
@@ -19,15 +21,15 @@
 #include <boost/range/iterator_range_core.hpp>
 #include <boost/range/value_type.hpp>
 
-/*! \file
-    Defines Formatter generators. Formatter is a functor which formats
-    a string according to given parameters. A Formatter works
-    in conjunction with a Finder. A Finder can provide additional information
-    for a specific Formatter. An example of such a cooperation is regex_finder
-    and regex_formatter.
+/*! \file Defines Formatter generators. Formatter is a functor which formats a
+    string according to given parameters. A Formatter works in conjunction with
+    a Finder. A Finder can provide additional information for a specific
+    Formatter. An example of such a cooperation is regex_finder and
+    regex_formatter.
 
-    Formatters are used as pluggable components for replace facilities.
-    This header contains generator functions for the Formatters provided in this library.
+    Formatters are used as pluggable components for replace facilities. This
+    header contains generator functions for the Formatters provided in this
+    library.
 */
 
 namespace hpx { namespace string {
@@ -87,9 +89,9 @@ namespace hpx { namespace string {
 
     //! Empty formatter
     /*!
-            Constructs a \c dissect_formatter. Dissect formatter uses a specified finder
-            to extract a portion of the formatted sequence. The first finder's match is returned
-            as a result
+            Constructs a \c dissect_formatter. Dissect formatter uses a
+            specified finder to extract a portion of the formatted sequence. The
+            first finder's match is returned as a result
 
             \param Finder a finder used to select a portion of the formatted sequence
             \return An instance of the \c dissect_formatter object.

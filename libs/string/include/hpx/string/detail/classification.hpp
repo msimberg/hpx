@@ -9,6 +9,9 @@
 
 //  See http://www.boost.org/ for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedinclude:boost/type_traits/remove_const.hpp
+//  hpxinspect:nodeprecatedname:boost::remove_const
+
 #ifndef HPX_STRING_CLASSIFICATION_DETAIL_HPP
 #define HPX_STRING_CLASSIFICATION_DETAIL_HPP
 
@@ -21,6 +24,7 @@
 #include <boost/type_traits/remove_const.hpp>
 
 #include <algorithm>
+#include <cstddef>
 #include <cstring>
 #include <functional>
 #include <locale>

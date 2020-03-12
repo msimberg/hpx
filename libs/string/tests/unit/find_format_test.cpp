@@ -8,10 +8,14 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+//  hpxinspect:nodeprecatedname:boost::iterator_range
+
 #include <hpx/string/find_format.hpp>
 #include <hpx/string/finder.hpp>
 #include <hpx/string/formatter.hpp>
 #include <hpx/testing.hpp>
+
+#include <string>
 
 using namespace hpx::string;
 
