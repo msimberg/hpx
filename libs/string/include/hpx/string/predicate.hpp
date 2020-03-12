@@ -23,13 +23,12 @@
 #include <boost/range/iterator.hpp>
 #include <boost/range/iterator_range_core.hpp>
 
-/*! \file hpx/string/predicate.hpp
-    Defines string-related predicates.
-    The predicates determine whether a substring is contained in the input string
+/*! \file hpx/string/predicate.hpp Defines string-related predicates. The
+    predicates determine whether a substring is contained in the input string
     under various conditions: a string starts with the substring, ends with the
     substring, simply contains the substring or if both strings are equal.
-    Additionaly the algorithm \c all() checks all elements of a container to satisfy a
-    condition.
+    Additionally the algorithm \c all() checks all elements of a container to
+    satisfy a condition.
 
     All predicates provide the strong exception guarantee.
 */

@@ -26,7 +26,7 @@ int main()
     hpx::string::to_lower_copy(std::ostream_iterator<char>(std::cout), vec1);
     std::cout << std::endl;
 
-    // Conver string str1 to upper case ( copy the input )
+    // Convert string str1 to upper case ( copy the input )
     std::cout << "upper-cased copy of str1: "
               << hpx::string::to_upper_copy(str1) << std::endl;
 
