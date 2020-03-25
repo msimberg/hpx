@@ -228,8 +228,17 @@ set(_is_library "$<IN_LIST:$<TARGET_PROPERTY:TYPE>,${_library_types}>")
 # targets. We create this as a separate target to easily filter out the
 # generator expressions that can't be handled by the pkgconfig file generation.
 add_library(hpx_interface INTERFACE)
-target_link_libraries(hpx_interface INTERFACE $<${_is_executable}:$<TARGET_NAME_IF_EXISTS:hpx_init>>)
-target_link_libraries(hpx_interface INTERFACE $<${_is_executable}:$<TARGET_NAME_IF_EXISTS:HPX::hpx_init>>)
+# TODO: These can be passed on from the hpx_init module once we use object
+# libraries.
+if(HPX_WITH_DYNAMIC_HPX_MAIN AND (("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR (APPLE)))
+  if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    target_link_libraries(hpx_interface INTERFACE "$<${_is_executable}:-Wl,-wrap=main>")
+  elseif(APPLE)
+    target_link_libraries(hpx_interface INTERFACE "$<${_is_executable}:-Wl,-e,_initialize_main>")
+  else()
+    hpx_error("Dynamic hpx_main is not supported on ${CMAKE_SYSTEM_NAME}.")
+  endif()
+endif()
 target_compile_definitions(hpx_interface INTERFACE "$<${_is_executable}:HPX_APPLICATION_NAME_DEFAULT=$<TARGET_PROPERTY:NAME>>")
 target_compile_definitions(hpx_interface INTERFACE "$<${_is_executable}:HPX_PREFIX_DEFAULT=\"${HPX_PREFIX}\">")
 target_compile_definitions(hpx_interface INTERFACE "$<${_is_executable}:HPX_APPLICATION_EXPORTS>")
@@ -281,8 +290,17 @@ endforeach()
 
 # Add particular targets for the pkgconfig setup
 add_library(hpx_pkgconfig_application INTERFACE)
-target_link_libraries(hpx_pkgconfig_application INTERFACE hpx_init)
+target_link_libraries(hpx_pkgconfig_application INTERFACE hpx)
 target_compile_definitions(hpx_pkgconfig_application INTERFACE HPX_APPLICATION_EXPORTS)
+if(HPX_WITH_DYNAMIC_HPX_MAIN AND (("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR (APPLE)))
+  if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+    target_link_libraries(hpx_pkgconfig_application INTERFACE "-Wl,-wrap=main")
+  elseif(APPLE)
+    target_link_libraries(hpx_pkgconfig_application INTERFACE "$-Wl,-e,_initialize_main")
+  else()
+    hpx_error("Dynamic hpx_main is not supported on ${CMAKE_SYSTEM_NAME}.")
+  endif()
+endif()
 
 add_library(hpx_pkgconfig_component INTERFACE)
 target_compile_definitions(hpx_pkgconfig_component INTERFACE HPX_COMPONENT_EXPORTS)
