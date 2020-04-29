@@ -273,12 +273,12 @@ namespace hpx { namespace parallel { namespace execution {
 ///////////////////////////////////////////////////////////////////////////////
 int hpx_main(int argc, char* argv[])
 {
-    test_timed_executor<test_async_executor1>({{0, 0, 6, 0, 0, 0}});
-    test_timed_executor<test_timed_async_executor1>({{0, 0, 4, 0, 0, 2}});
-    test_timed_executor<test_timed_async_executor2>({{2, 0, 4, 0, 0, 0}});
-    test_timed_executor<test_timed_async_executor3>({{0, 0, 4, 2, 0, 0}});
-    test_timed_executor<test_timed_async_executor4>({{0, 2, 4, 0, 0, 0}});
-    test_timed_executor<test_timed_async_executor5>({{0, 0, 4, 0, 2, 0}});
+    test_timed_executor<test_async_executor1>({{0, 0, 12, 0, 0, 0}});
+    test_timed_executor<test_timed_async_executor1>({{0, 0, 8, 0, 0, 2}});
+    test_timed_executor<test_timed_async_executor2>({{2, 0, 10, 0, 0, 0}});
+    test_timed_executor<test_timed_async_executor3>({{0, 0, 8, 2, 0, 0}});
+    test_timed_executor<test_timed_async_executor4>({{0, 8, 4, 0, 0, 0}});
+    test_timed_executor<test_timed_async_executor5>({{0, 4, 4, 0, 2, 0}});
 
     return hpx::finalize();
 }

@@ -18,10 +18,6 @@
 #include <hpx/type_support/decay.hpp>
 #include <hpx/type_support/detail/wrap_int.hpp>
 
-#include <hpx/executors/execution_policy.hpp>
-#include <hpx/executors/parallel_executor.hpp>
-#include <hpx/executors/sequenced_executor.hpp>
-
 #include <chrono>
 #include <functional>
 #include <type_traits>
@@ -88,7 +84,7 @@ namespace hpx { namespace parallel { namespace execution {
                         .get())
             {
                 auto predecessor = make_ready_future_at(abs_time);
-                return execution::then_execute(sequenced_executor(),
+                return execution::then_execute(exec,
                     make_then_execute_helper<sync_execute_at_helper>(
                         std::forward<Executor>(exec),
                         hpx::util::deferred_call(
@@ -177,7 +173,7 @@ namespace hpx { namespace parallel { namespace execution {
                         std::forward<F>(f), std::forward<Ts>(ts)...))
             {
                 auto predecessor = make_ready_future_at(abs_time);
-                return execution::then_execute(sequenced_executor(),
+                return execution::then_execute(exec,
                     make_then_execute_helper<async_execute_at_helper>(
                         std::forward<Executor>(exec),
                         hpx::util::deferred_call(
@@ -259,7 +255,7 @@ namespace hpx { namespace parallel { namespace execution {
                 Ts&&... ts)
             {
                 auto predecessor = make_ready_future_at(abs_time);
-                execution::then_execute(sequenced_executor(),
+                execution::then_execute(exec,
                     make_then_execute_helper<post_at_helper>(
                         std::forward<Executor>(exec),
                         hpx::util::deferred_call(
