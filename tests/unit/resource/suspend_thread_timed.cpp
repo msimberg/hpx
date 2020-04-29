@@ -11,9 +11,9 @@
 #include <hpx/include/parallel_executors.hpp>
 #include <hpx/include/resource_partitioner.hpp>
 #include <hpx/include/threads.hpp>
-#include <hpx/threading_base/scheduler_mode.hpp>
 #include <hpx/schedulers.hpp>
 #include <hpx/testing.hpp>
+#include <hpx/threading_base/scheduler_mode.hpp>
 #include <hpx/timing.hpp>
 
 #include <chrono>
@@ -25,103 +25,119 @@
 #include <utility>
 #include <vector>
 
+static bool should_fail = false;
+
 int hpx_main(int argc, char* argv[])
 {
-    hpx::threads::thread_pool_base& worker_pool =
-        hpx::resource::get_thread_pool("default");
-    std::cout
-        << "Starting test with scheduler "
-        << worker_pool.get_scheduler()->get_description()
-        << std::endl;
-    std::size_t const num_threads = hpx::resource::get_num_threads("default");
+    bool exception_thrown = false;
 
-    HPX_TEST_EQ(std::size_t(4), num_threads);
-
-    hpx::threads::thread_pool_base& tp =
-        hpx::resource::get_thread_pool("default");
-
+    // We eagerly catch the exception here (for schedulers that don't support
+    // suspension) to avoid having the runtime shut down immediately. Timed
+    // threads are eagerly created and would wake up to a thread pool that is
+    // gone, leading to a segfault.
+    try
     {
-        // Check random scheduling with reducing resources.
-        std::size_t thread_num = 0;
-        bool up = true;
-        std::vector<hpx::future<void>> fs;
+        hpx::threads::thread_pool_base& worker_pool =
+            hpx::resource::get_thread_pool("default");
+        std::cout << "Starting test with scheduler "
+                  << worker_pool.get_scheduler()->get_description()
+                  << std::endl;
+        std::size_t const num_threads =
+            hpx::resource::get_num_threads("default");
 
-        hpx::parallel::execution::pool_executor exec("default");
+        HPX_TEST_EQ(std::size_t(4), num_threads);
 
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dist(1,100);
+        hpx::threads::thread_pool_base& tp =
+            hpx::resource::get_thread_pool("default");
 
-        hpx::util::high_resolution_timer t;
-
-        while (t.elapsed() < 1)
         {
-            for (std::size_t i = 0;
-                i < hpx::resource::get_num_threads("default"); ++i)
-            {
-                fs.push_back(hpx::parallel::execution::async_execute_after(
-                    exec, std::chrono::milliseconds(dist(gen)), [](){}));
-            }
+            // Check random scheduling with reducing resources.
+            std::size_t thread_num = 0;
+            bool up = true;
+            std::vector<hpx::future<void>> fs;
 
-            if (up)
+            hpx::parallel::execution::pool_executor exec("default");
+
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<int> dist(1, 100);
+
+            hpx::util::high_resolution_timer t;
+
+            while (t.elapsed() < 1)
             {
-                if (thread_num != hpx::resource::get_num_threads("default") - 1)
+                for (std::size_t i = 0;
+                     i < hpx::resource::get_num_threads("default"); ++i)
                 {
-                    hpx::threads::suspend_processing_unit(tp, thread_num).get();
+                    fs.push_back(hpx::parallel::execution::async_execute_after(
+                        exec, std::chrono::milliseconds(dist(gen)), []() {}));
                 }
 
-                ++thread_num;
-
-                if (thread_num == hpx::resource::get_num_threads("default"))
+                if (up)
                 {
-                    up = false;
+                    if (thread_num !=
+                        hpx::resource::get_num_threads("default") - 1)
+                    {
+                        hpx::threads::suspend_processing_unit(tp, thread_num)
+                            .get();
+                    }
+
+                    ++thread_num;
+
+                    if (thread_num == hpx::resource::get_num_threads("default"))
+                    {
+                        up = false;
+                        --thread_num;
+                    }
+                }
+                else
+                {
+                    hpx::threads::resume_processing_unit(tp, thread_num - 1)
+                        .get();
+
                     --thread_num;
+
+                    if (thread_num == 0)
+                    {
+                        up = true;
+                    }
                 }
             }
-            else
+
+            hpx::when_all(std::move(fs)).get();
+
+            // Don't exit with suspended pus
+            for (std::size_t thread_num_resume = 0;
+                 thread_num_resume < thread_num; ++thread_num_resume)
             {
-                hpx::threads::resume_processing_unit(tp, thread_num - 1).get();
-
-                --thread_num;
-
-                if (thread_num == 0)
-                {
-                    up = true;
-                }
+                hpx::threads::resume_processing_unit(tp, thread_num_resume)
+                    .get();
             }
-        }
-
-        hpx::when_all(std::move(fs)).get();
-
-        // Don't exit with suspended pus
-        for (std::size_t thread_num_resume = 0; thread_num_resume < thread_num;
-            ++thread_num_resume)
-        {
-            hpx::threads::resume_processing_unit(tp, thread_num_resume).get();
         }
     }
+    catch (hpx::exception const&)
+    {
+        exception_thrown = true;
+    }
+
+    HPX_TEST_EQ(should_fail, exception_thrown);
 
     return hpx::finalize();
 }
 
-void test_scheduler(int argc, char* argv[],
-    hpx::resource::scheduling_policy scheduler)
+void test_scheduler(
+    int argc, char* argv[], hpx::resource::scheduling_policy scheduler)
 {
-    std::vector<std::string> cfg =
-    {
-        "hpx.os_threads=4"
-    };
+    std::vector<std::string> cfg = {"hpx.os_threads=2"};
 
     hpx::resource::partitioner rp(argc, argv, std::move(cfg));
 
-    std::cout
-        << "\nCreating pool with scheduler " << scheduler
-        << std::endl;
+    std::cout << "\nCreating pool with scheduler " << scheduler << std::endl;
 
     rp.create_thread_pool("default", scheduler,
-         hpx::threads::policies::scheduler_mode(
-             hpx::threads::policies::default_mode |
-             hpx::threads::policies::enable_elasticity));
+        hpx::threads::policies::scheduler_mode(
+            hpx::threads::policies::default_mode |
+            hpx::threads::policies::enable_elasticity));
 
     HPX_TEST_EQ(hpx::init(argc, argv), 0);
 }
@@ -156,9 +172,10 @@ int main(int argc, char* argv[])
     }
 
     {
+        should_fail = true;
+
         // These schedulers should fail
-        std::vector<hpx::resource::scheduling_policy> schedulers =
-        {
+        std::vector<hpx::resource::scheduling_policy> schedulers = {
 #if defined(HPX_HAVE_STATIC_SCHEDULER)
             hpx::resource::scheduling_policy::static_,
 #endif
@@ -173,17 +190,7 @@ int main(int argc, char* argv[])
 
         for (auto const scheduler : schedulers)
         {
-            bool exception_thrown = false;
-            try
-            {
-                test_scheduler(argc, argv, scheduler);
-            }
-            catch (hpx::exception const&)
-            {
-                exception_thrown = true;
-            }
-
-            HPX_TEST(exception_thrown);
+            test_scheduler(argc, argv, scheduler);
         }
     }
 
