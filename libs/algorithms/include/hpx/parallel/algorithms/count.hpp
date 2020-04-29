@@ -16,8 +16,8 @@
 #include <hpx/pack_traversal/unwrap.hpp>
 #include <hpx/traits/segmented_iterator_traits.hpp>
 
-#include <hpx/executors/execution_policy.hpp>
 #include <hpx/execution/parallel/traits/vector_pack_count_bits.hpp>
+#include <hpx/executors/execution_policy.hpp>
 #include <hpx/parallel/algorithms/detail/dispatch.hpp>
 #include <hpx/parallel/algorithms/detail/distance.hpp>
 #include <hpx/parallel/traits/projected.hpp>

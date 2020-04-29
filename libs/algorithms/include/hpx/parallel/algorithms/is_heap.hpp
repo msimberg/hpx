@@ -15,8 +15,8 @@
 #include <hpx/lcos/future.hpp>
 #include <hpx/local_async.hpp>
 
-#include <hpx/executors/execution_policy.hpp>
 #include <hpx/execution/executors/execution.hpp>
+#include <hpx/executors/execution_policy.hpp>
 #include <hpx/parallel/algorithms/detail/dispatch.hpp>
 #include <hpx/parallel/traits/projected.hpp>
 #include <hpx/parallel/util/detail/algorithm_result.hpp>

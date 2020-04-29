@@ -403,7 +403,6 @@ namespace hpx { namespace parallel { namespace execution {
 
 }}}    // namespace hpx::parallel::execution
 
-
 //#include <hpx/execution/executors/timed_execution.hpp>
 
 #endif
