@@ -34,26 +34,12 @@ set(async_combinators_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  async_combinators
+  full async_combinators
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${async_combinators_headers}
   COMPAT_HEADERS ${async_combinators_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
-    hpx_async_base
-    hpx_basic_execution
-    hpx_config
-    hpx_datastructures
-    hpx_errors
-    hpx_functional
-    hpx_iterator_support
-    hpx_memory
-    hpx_preprocessor
-    hpx_threading
-    hpx_type_support
-    hpx_util
+  MODULE_DEPENDENCIES hpx_core
   CMAKE_SUBDIRS examples tests
 )

@@ -65,12 +65,12 @@ namespace hpx
 {
     // Helper data structures allowing to automatically detect version problems
     // between applications and the core libraries.
-    HPX_EXPORT extern char const HPX_CHECK_VERSION[];
-    HPX_EXPORT extern char const HPX_CHECK_BOOST_VERSION[];
+    HPX_CORE_EXPORT extern char const HPX_CHECK_VERSION[];
+    HPX_CORE_EXPORT extern char const HPX_CHECK_BOOST_VERSION[];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-#if !defined(HPX_EXPORTS) && !defined(HPX_NO_VERSION_CHECK)
+#if !defined(HPX_CORE_EXPORTS) && !defined(HPX_NO_VERSION_CHECK)
 
 // This is instantiated for each translation unit outside of the HPX core
 // library, forcing to resolve the variable HPX_CHECK_VERSION.

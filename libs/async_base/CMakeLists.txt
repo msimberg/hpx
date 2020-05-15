@@ -22,14 +22,13 @@ set(async_base_compat_headers hpx/runtime/launch_policy.hpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  async_base
+  full async_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${async_base_headers}
   COMPAT_HEADERS ${async_base_compat_headers}
   SOURCES ${async_base_sources}
-  DEPENDENCIES hpx_allocator_support hpx_config hpx_coroutines hpx_type_support
-               hpx_serialization
+  MODULE_DEPENDENCIES hpx_core
   CMAKE_SUBDIRS examples tests
 )

@@ -88,74 +88,76 @@ struct ___itt_counter;
 extern bool use_ittnotify_api;
 
 ///////////////////////////////////////////////////////////////////////////////
-HPX_EXPORT void itt_sync_create(
+HPX_CORE_EXPORT void itt_sync_create(
     void* addr, const char* objtype, const char* objname);
-HPX_EXPORT void itt_sync_rename(void* addr, const char* name);
-HPX_EXPORT void itt_sync_prepare(void* addr);
-HPX_EXPORT void itt_sync_acquired(void* addr);
-HPX_EXPORT void itt_sync_cancel(void* addr);
-HPX_EXPORT void itt_sync_releasing(void* addr);
-HPX_EXPORT void itt_sync_released(void* addr);
-HPX_EXPORT void itt_sync_destroy(void* addr);
+HPX_CORE_EXPORT void itt_sync_rename(void* addr, const char* name);
+HPX_CORE_EXPORT void itt_sync_prepare(void* addr);
+HPX_CORE_EXPORT void itt_sync_acquired(void* addr);
+HPX_CORE_EXPORT void itt_sync_cancel(void* addr);
+HPX_CORE_EXPORT void itt_sync_releasing(void* addr);
+HPX_CORE_EXPORT void itt_sync_released(void* addr);
+HPX_CORE_EXPORT void itt_sync_destroy(void* addr);
 
-HPX_EXPORT ___itt_caller* itt_stack_create();
-HPX_EXPORT void itt_stack_enter(___itt_caller* ctx);
-HPX_EXPORT void itt_stack_leave(___itt_caller* ctx);
-HPX_EXPORT void itt_stack_destroy(___itt_caller* ctx);
+HPX_CORE_EXPORT ___itt_caller* itt_stack_create();
+HPX_CORE_EXPORT void itt_stack_enter(___itt_caller* ctx);
+HPX_CORE_EXPORT void itt_stack_leave(___itt_caller* ctx);
+HPX_CORE_EXPORT void itt_stack_destroy(___itt_caller* ctx);
 
-HPX_EXPORT void itt_frame_begin(___itt_domain const* frame, ___itt_id* id);
-HPX_EXPORT void itt_frame_end(___itt_domain const* frame, ___itt_id* id);
+HPX_CORE_EXPORT void itt_frame_begin(___itt_domain const* frame, ___itt_id* id);
+HPX_CORE_EXPORT void itt_frame_end(___itt_domain const* frame, ___itt_id* id);
 
-HPX_EXPORT int itt_mark_create(char const*);
-HPX_EXPORT void itt_mark_off(int mark);
-HPX_EXPORT void itt_mark(int mark, char const*);
+HPX_CORE_EXPORT int itt_mark_create(char const*);
+HPX_CORE_EXPORT void itt_mark_off(int mark);
+HPX_CORE_EXPORT void itt_mark(int mark, char const*);
 
-HPX_EXPORT void itt_thread_set_name(char const*);
-HPX_EXPORT void itt_thread_ignore();
+HPX_CORE_EXPORT void itt_thread_set_name(char const*);
+HPX_CORE_EXPORT void itt_thread_ignore();
 
-HPX_EXPORT void itt_task_begin(___itt_domain const*, ___itt_string_handle*);
-HPX_EXPORT void itt_task_begin(
+HPX_CORE_EXPORT void itt_task_begin(
+    ___itt_domain const*, ___itt_string_handle*);
+HPX_CORE_EXPORT void itt_task_begin(
     ___itt_domain const*, ___itt_id*, ___itt_string_handle*);
-HPX_EXPORT void itt_task_end(___itt_domain const*);
+HPX_CORE_EXPORT void itt_task_end(___itt_domain const*);
 
-HPX_EXPORT ___itt_domain* itt_domain_create(char const*);
-HPX_EXPORT ___itt_string_handle* itt_string_handle_create(char const*);
+HPX_CORE_EXPORT ___itt_domain* itt_domain_create(char const*);
+HPX_CORE_EXPORT ___itt_string_handle* itt_string_handle_create(char const*);
 
-HPX_EXPORT ___itt_id* itt_make_id(void*, std::size_t);
-HPX_EXPORT void itt_id_create(___itt_domain const*, ___itt_id* id);
-HPX_EXPORT void itt_id_destroy(___itt_id* id);
+HPX_CORE_EXPORT ___itt_id* itt_make_id(void*, std::size_t);
+HPX_CORE_EXPORT void itt_id_create(___itt_domain const*, ___itt_id* id);
+HPX_CORE_EXPORT void itt_id_destroy(___itt_id* id);
 
-HPX_EXPORT __itt_heap_function itt_heap_function_create(
+HPX_CORE_EXPORT __itt_heap_function itt_heap_function_create(
     const char*, const char*);
-HPX_EXPORT void itt_heap_allocate_begin(__itt_heap_function, std::size_t, int);
-HPX_EXPORT void itt_heap_allocate_end(
+HPX_CORE_EXPORT void itt_heap_allocate_begin(
+    __itt_heap_function, std::size_t, int);
+HPX_CORE_EXPORT void itt_heap_allocate_end(
     __itt_heap_function, void**, std::size_t, int);
-HPX_EXPORT void itt_heap_free_begin(__itt_heap_function, void*);
-HPX_EXPORT void itt_heap_free_end(__itt_heap_function, void*);
-HPX_EXPORT void itt_heap_reallocate_begin(
+HPX_CORE_EXPORT void itt_heap_free_begin(__itt_heap_function, void*);
+HPX_CORE_EXPORT void itt_heap_free_end(__itt_heap_function, void*);
+HPX_CORE_EXPORT void itt_heap_reallocate_begin(
     __itt_heap_function, void*, std::size_t, int);
-HPX_EXPORT void itt_heap_reallocate_end(
+HPX_CORE_EXPORT void itt_heap_reallocate_end(
     __itt_heap_function, void*, void**, std::size_t, int);
-HPX_EXPORT void itt_heap_internal_access_begin();
-HPX_EXPORT void itt_heap_internal_access_end();
+HPX_CORE_EXPORT void itt_heap_internal_access_begin();
+HPX_CORE_EXPORT void itt_heap_internal_access_end();
 
-HPX_EXPORT ___itt_counter* itt_counter_create(char const*, char const*);
-HPX_EXPORT ___itt_counter* itt_counter_create_typed(
+HPX_CORE_EXPORT ___itt_counter* itt_counter_create(char const*, char const*);
+HPX_CORE_EXPORT ___itt_counter* itt_counter_create_typed(
     char const*, char const*, int);
-HPX_EXPORT void itt_counter_destroy(___itt_counter*);
-HPX_EXPORT void itt_counter_set_value(___itt_counter*, void*);
+HPX_CORE_EXPORT void itt_counter_destroy(___itt_counter*);
+HPX_CORE_EXPORT void itt_counter_set_value(___itt_counter*, void*);
 
-HPX_EXPORT int itt_event_create(char const* name, int namelen);
-HPX_EXPORT int itt_event_start(int evnt);
-HPX_EXPORT int itt_event_end(int evnt);
+HPX_CORE_EXPORT int itt_event_create(char const* name, int namelen);
+HPX_CORE_EXPORT int itt_event_start(int evnt);
+HPX_CORE_EXPORT int itt_event_end(int evnt);
 
-HPX_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
+HPX_CORE_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
     ___itt_string_handle* key, std::uint64_t const& data);
-HPX_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
+HPX_CORE_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
     ___itt_string_handle* key, double const& data);
-HPX_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
+HPX_CORE_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
     ___itt_string_handle* key, char const* data);
-HPX_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
+HPX_CORE_EXPORT void itt_metadata_add(___itt_domain* domain, ___itt_id* id,
     ___itt_string_handle* key, void const* data);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -218,8 +220,8 @@ namespace hpx { namespace util { namespace itt {
     {
         HPX_NON_COPYABLE(domain);
 
-        HPX_EXPORT domain(char const*);
-        HPX_EXPORT domain();
+        HPX_CORE_EXPORT domain(char const*);
+        HPX_CORE_EXPORT domain();
 
         ___itt_domain* domain_;
     };
@@ -228,7 +230,7 @@ namespace hpx { namespace util { namespace itt {
     {
         HPX_NON_COPYABLE(thread_domain);
 
-        HPX_EXPORT thread_domain();
+        HPX_CORE_EXPORT thread_domain();
     };
 
     struct id
@@ -363,10 +365,10 @@ namespace hpx { namespace util { namespace itt {
     ///////////////////////////////////////////////////////////////////////////
     struct task
     {
-        HPX_EXPORT task(
+        HPX_CORE_EXPORT task(
             domain const&, string_handle const&, std::uint64_t metadata);
-        HPX_EXPORT task(domain const&, string_handle const&);
-        HPX_EXPORT ~task();
+        HPX_CORE_EXPORT task(domain const&, string_handle const&);
+        HPX_CORE_EXPORT ~task();
 
         void add_metadata(string_handle const& name, std::uint64_t val)
         {

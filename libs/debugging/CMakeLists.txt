@@ -21,7 +21,7 @@ set(debugging_sources attach_debugger.cpp backtrace.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  debugging
+  core debugging
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
@@ -29,6 +29,6 @@ add_hpx_module(
   HEADERS ${debugging_headers}
   COMPAT_HEADERS ${debugging_compat_headers}
   EXCLUDE_FROM_GLOBAL_HEADER "hpx/debugging/backtrace/backtrace.hpp"
-  DEPENDENCIES hpx_config
+  MODULE_DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

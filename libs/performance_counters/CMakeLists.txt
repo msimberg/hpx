@@ -58,30 +58,18 @@ set(performance_counters_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  performance_counters FORCE_LINKING_GEN
+  full performance_counters FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${performance_counters_sources}
   HEADERS ${performance_counters_headers}
-  DEPENDENCIES
-    hpx_assertion
+  MODULE_DEPENDENCIES
     hpx_async
-    hpx_config
-    hpx_errors
     hpx_execution
     hpx_executors
-    hpx_format
-    hpx_functional
-    hpx_logging
     hpx_pack_traversal
-    hpx_serialization
-    hpx_synchronization
-    hpx_static_reinit
-    hpx_statistics
-    hpx_string_util
     hpx_threading
-    hpx_thread_support
-    hpx_threading_base
-    hpx_timing
-    hpx_version
+
+    hpx_runtime_configuration
+    hpx_core
   CMAKE_SUBDIRS examples tests
 )

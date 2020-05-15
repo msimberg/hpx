@@ -29,13 +29,13 @@ set(basic_execution_sources agent_ref.cpp register_locks.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  basic_execution
+  core basic_execution
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${basic_execution_sources}
   HEADERS ${basic_execution_headers}
   COMPAT_HEADERS ${basic_execution_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format hpx_timing
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format hpx_timing
   CMAKE_SUBDIRS examples tests
 )

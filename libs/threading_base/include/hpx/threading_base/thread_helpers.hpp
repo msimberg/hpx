@@ -63,7 +63,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT thread_state set_thread_state(thread_id_type const& id,
+    HPX_CORE_EXPORT thread_state set_thread_state(thread_id_type const& id,
         thread_state_enum state = pending,
         thread_state_ex_enum stateex = wait_signaled,
         thread_priority priority = thread_priority_normal,
@@ -98,7 +98,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT thread_id_type set_thread_state(thread_id_type const& id,
+    HPX_CORE_EXPORT thread_id_type set_thread_state(thread_id_type const& id,
         util::steady_time_point const& abs_time, std::atomic<bool>* started,
         thread_state_enum state = pending,
         thread_state_ex_enum stateex = wait_timeout,
@@ -175,15 +175,15 @@ namespace hpx { namespace threads {
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
 #ifdef HPX_HAVE_THREAD_FULLBACKTRACE_ON_SUSPENSION
-    HPX_EXPORT char const* get_thread_backtrace(
+    HPX_CORE_EXPORT char const* get_thread_backtrace(
         thread_id_type const& id, error_code& ec = throws);
-    HPX_EXPORT char const* set_thread_backtrace(thread_id_type const& id,
+    HPX_CORE_EXPORT char const* set_thread_backtrace(thread_id_type const& id,
         char const* bt = nullptr, error_code& ec = throws);
 #else
 #if !defined(DOXYGEN)
-    HPX_EXPORT util::backtrace const* get_thread_backtrace(
+    HPX_CORE_EXPORT util::backtrace const* get_thread_backtrace(
         thread_id_type const& id, error_code& ec = throws);
-    HPX_EXPORT util::backtrace const* set_thread_backtrace(
+    HPX_CORE_EXPORT util::backtrace const* set_thread_backtrace(
         thread_id_type const& id, util::backtrace const* bt = nullptr,
         error_code& ec = throws);
 #endif
@@ -209,7 +209,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT thread_state get_thread_state(
+    HPX_CORE_EXPORT thread_state get_thread_state(
         thread_id_type const& id, error_code& ec = throws);
 
     ///////////////////////////////////////////////////////////////////////////
@@ -232,7 +232,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT std::size_t get_thread_phase(
+    HPX_CORE_EXPORT std::size_t get_thread_phase(
         thread_id_type const& id, error_code& ec = throws);
 
     ///////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT bool get_thread_interruption_enabled(
+    HPX_CORE_EXPORT bool get_thread_interruption_enabled(
         thread_id_type const& id, error_code& ec = throws);
 
     /// Set whether the given thread can be interrupted at this point.
@@ -274,7 +274,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT bool set_thread_interruption_enabled(
+    HPX_CORE_EXPORT bool set_thread_interruption_enabled(
         thread_id_type const& id, bool enable, error_code& ec = throws);
 
     /// Returns whether the given thread has been flagged for interruption.
@@ -294,7 +294,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT bool get_thread_interruption_requested(
+    HPX_CORE_EXPORT bool get_thread_interruption_requested(
         thread_id_type const& id, error_code& ec = throws);
 
     /// Flag the given thread for interruption.
@@ -313,7 +313,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT void interrupt_thread(
+    HPX_CORE_EXPORT void interrupt_thread(
         thread_id_type const& id, bool flag, error_code& ec = throws);
 
     inline void interrupt_thread(
@@ -337,7 +337,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT void interruption_point(
+    HPX_CORE_EXPORT void interruption_point(
         thread_id_type const& id, error_code& ec = throws);
 
     ///////////////////////////////////////////////////////////////////////////
@@ -354,7 +354,7 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT threads::thread_priority get_thread_priority(
+    HPX_CORE_EXPORT threads::thread_priority get_thread_priority(
         thread_id_type const& id, error_code& ec = throws);
 
     ///////////////////////////////////////////////////////////////////////////
@@ -371,29 +371,29 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT std::ptrdiff_t get_stack_size(
+    HPX_CORE_EXPORT std::ptrdiff_t get_stack_size(
         thread_id_type const& id, error_code& ec = throws);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \cond NOINTERNAL
-    HPX_EXPORT void run_thread_exit_callbacks(
+    HPX_CORE_EXPORT void run_thread_exit_callbacks(
         thread_id_type const& id, error_code& ec = throws);
 
-    HPX_EXPORT bool add_thread_exit_callback(thread_id_type const& id,
+    HPX_CORE_EXPORT bool add_thread_exit_callback(thread_id_type const& id,
         util::function_nonser<void()> const& f, error_code& ec = throws);
 
-    HPX_EXPORT void free_thread_exit_callbacks(
+    HPX_CORE_EXPORT void free_thread_exit_callbacks(
         thread_id_type const& id, error_code& ec = throws);
 
     ///////////////////////////////////////////////////////////////////////////
-    HPX_EXPORT std::size_t get_thread_data(
+    HPX_CORE_EXPORT std::size_t get_thread_data(
         thread_id_type const& id, error_code& ec = throws);
 
-    HPX_EXPORT std::size_t set_thread_data(
+    HPX_CORE_EXPORT std::size_t set_thread_data(
         thread_id_type const& id, std::size_t data, error_code& ec = throws);
 
-    HPX_EXPORT std::size_t& get_continuation_recursion_count();
-    HPX_EXPORT void reset_continuation_recursion_count();
+    HPX_CORE_EXPORT std::size_t& get_continuation_recursion_count();
+    HPX_CORE_EXPORT void reset_continuation_recursion_count();
     /// \endcond
 
     /// Returns a pointer to the pool that was used to run the current thread
@@ -407,7 +407,7 @@ namespace hpx { namespace threads {
     ///         If this function is called while the thread-manager is not
     ///         running, it will throw an \a hpx#exception with an error code of
     ///         \a hpx#invalid_status.
-    HPX_EXPORT threads::thread_pool_base* get_pool(
+    HPX_CORE_EXPORT threads::thread_pool_base* get_pool(
         thread_id_type const& id, error_code& ec = throws);
 }}    // namespace hpx::threads
 
@@ -429,7 +429,7 @@ namespace hpx { namespace this_thread {
     ///         running, it will throw an \a hpx#exception with an error code of
     ///         \a hpx#invalid_status.
     ///
-    HPX_EXPORT threads::thread_state_ex_enum suspend(
+    HPX_CORE_EXPORT threads::thread_state_ex_enum suspend(
         threads::thread_state_enum state, threads::thread_id_type const& id,
         util::thread_description const& description = util::thread_description(
             "this_thread::suspend"),
@@ -477,7 +477,7 @@ namespace hpx { namespace this_thread {
     ///         running, it will throw an \a hpx#exception with an error code of
     ///         \a hpx#invalid_status.
     ///
-    HPX_EXPORT threads::thread_state_ex_enum suspend(
+    HPX_CORE_EXPORT threads::thread_state_ex_enum suspend(
         util::steady_time_point const& abs_time,
         threads::thread_id_type const& id,
         util::thread_description const& description = util::thread_description(
@@ -601,15 +601,16 @@ namespace hpx { namespace this_thread {
     ///         If this function is called while the thread-manager is not
     ///         running, it will throw an \a hpx#exception with an error code of
     ///         \a hpx#invalid_status.
-    HPX_EXPORT threads::thread_pool_base* get_pool(error_code& ec = throws);
+    HPX_CORE_EXPORT threads::thread_pool_base* get_pool(
+        error_code& ec = throws);
 
     /// \cond NOINTERNAL
     // returns the remaining available stack space
-    HPX_EXPORT std::ptrdiff_t get_available_stack_space();
+    HPX_CORE_EXPORT std::ptrdiff_t get_available_stack_space();
 
     // returns whether the remaining stack-space is at least as large as
     // requested
-    HPX_EXPORT bool has_sufficient_stack_space(
+    HPX_CORE_EXPORT bool has_sufficient_stack_space(
         std::size_t space_needed = 8 * HPX_THREADS_STACK_OVERHEAD);
     /// \endcond
 }}    // namespace hpx::this_thread

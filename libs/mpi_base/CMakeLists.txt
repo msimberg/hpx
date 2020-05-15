@@ -27,14 +27,14 @@ set(mpi_base_sources mpi_environment.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  mpi_base
+  full mpi_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${mpi_base_sources}
   HEADERS ${mpi_base_headers}
   COMPAT_HEADERS ${mpi_base_compat_headers}
-  DEPENDENCIES hpx_config hpx_runtime_configuration hpx_synchronization hpx_util
-               ${additional_dependencies}
+  MODULE_DEPENDENCIES hpx_runtime_configuration hpx_core
+  DEPENDENCIES ${additional_dependencies}
   CMAKE_SUBDIRS examples tests
 )

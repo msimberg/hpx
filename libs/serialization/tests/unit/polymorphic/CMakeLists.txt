@@ -25,7 +25,7 @@ foreach(test ${tests})
     ${test}_test INTERNAL_FLAGS
     SOURCES ${sources} ${${test}_FLAGS}
     EXCLUDE_FROM_ALL NOLIBS
-    DEPENDENCIES hpx_serialization hpx_testing
+    DEPENDENCIES hpx_serialization_static hpx_testing_static
     FOLDER "Tests/Unit/Modules/Serialization/Polymorphic"
   )
 

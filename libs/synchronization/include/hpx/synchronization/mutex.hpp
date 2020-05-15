@@ -22,10 +22,10 @@ namespace hpx { namespace threads {
     using thread_self = coroutines::detail::coroutine_self;
     /// The function \a get_self_id returns the HPX thread id of the current
     /// thread (or zero if the current thread is not a HPX thread).
-    HPX_EXPORT thread_id_type get_self_id();
+    HPX_CORE_EXPORT thread_id_type get_self_id();
     /// The function \a get_self_ptr returns a pointer to the (OS thread
     /// specific) self reference to the current HPX thread.
-    HPX_EXPORT thread_self* get_self_ptr();
+    HPX_CORE_EXPORT thread_self* get_self_ptr();
 
 }}    // namespace hpx::threads
 
@@ -40,18 +40,19 @@ namespace hpx { namespace lcos { namespace local {
         typedef lcos::local::spinlock mutex_type;
 
     public:
-        HPX_EXPORT mutex(char const* const description = "");
+        HPX_CORE_EXPORT mutex(char const* const description = "");
 
-        HPX_EXPORT ~mutex();
+        HPX_CORE_EXPORT ~mutex();
 
-        HPX_EXPORT void lock(char const* description, error_code& ec = throws);
+        HPX_CORE_EXPORT void lock(
+            char const* description, error_code& ec = throws);
 
         void lock(error_code& ec = throws)
         {
             return lock("mutex::lock", ec);
         }
 
-        HPX_EXPORT bool try_lock(
+        HPX_CORE_EXPORT bool try_lock(
             char const* description, error_code& ec = throws);
 
         bool try_lock(error_code& ec = throws)
@@ -59,7 +60,7 @@ namespace hpx { namespace lcos { namespace local {
             return try_lock("mutex::try_lock", ec);
         }
 
-        HPX_EXPORT void unlock(error_code& ec = throws);
+        HPX_CORE_EXPORT void unlock(error_code& ec = throws);
 
     protected:
         mutable mutex_type mtx_;
@@ -74,16 +75,17 @@ namespace hpx { namespace lcos { namespace local {
         HPX_NON_COPYABLE(timed_mutex);
 
     public:
-        HPX_EXPORT timed_mutex(char const* const description = "");
+        HPX_CORE_EXPORT timed_mutex(char const* const description = "");
 
-        HPX_EXPORT ~timed_mutex();
+        HPX_CORE_EXPORT ~timed_mutex();
 
         using mutex::lock;
         using mutex::try_lock;
         using mutex::unlock;
 
-        HPX_EXPORT bool try_lock_until(util::steady_time_point const& abs_time,
-            char const* description, error_code& ec = throws);
+        HPX_CORE_EXPORT bool try_lock_until(
+            util::steady_time_point const& abs_time, char const* description,
+            error_code& ec = throws);
 
         bool try_lock_until(
             util::steady_time_point const& abs_time, error_code& ec = throws)

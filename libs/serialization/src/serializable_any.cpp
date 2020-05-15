@@ -84,11 +84,11 @@ namespace hpx { namespace util {
         return hasher.hash;
     }
 
-    template HPX_EXPORT std::size_t hash_any::operator()(
+    template HPX_CORE_EXPORT std::size_t hash_any::operator()(
         const basic_any<serialization::input_archive,
             serialization::output_archive, char, std::true_type>& elem) const;
 
-    template HPX_EXPORT std::size_t
+    template HPX_CORE_EXPORT std::size_t
     hash_any::operator()(const basic_any<serialization::input_archive,
         serialization::output_archive, wchar_t, std::true_type>& elem) const;
 

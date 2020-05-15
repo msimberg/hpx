@@ -17,7 +17,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace hpx { namespace threads { namespace policies {
-    class HPX_EXPORT callback_notifier
+    class HPX_CORE_EXPORT callback_notifier
     {
     public:
         typedef util::function_nonser<void(

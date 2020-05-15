@@ -95,44 +95,34 @@ set(include_headers
     hpx/include/util.hpp
 )
 
-include(HPX_AddModule)
-add_hpx_module(
-  include FORCE_LINKING_GEN
-  GLOBAL_HEADER_GEN OFF
-  HEADERS ${include_headers}
-  DEPENDENCIES
+set(include_module_dependencies
     hpx_algorithms
-    hpx_assertion
     hpx_async_combinators
-    hpx_config
-    hpx_errors
     hpx_executors
     hpx_execution
-    hpx_format
     hpx_futures
     hpx_local_async
     hpx_local_lcos
-    hpx_naming_base
     hpx_pack_traversal
     hpx_resource_partitioner
-    hpx_serialization
-    hpx_synchronization
     hpx_thread_executors
-    hpx_thread_pools
     hpx_threadmanager
     hpx_threading
     hpx_timed_execution
-    hpx_util
-  CMAKE_SUBDIRS tests
+    hpx_core
 )
 
 if(HPX_WITH_DISTRIBUTED_RUNTIME)
-  # cmake-format: off
-  target_link_libraries(hpx_include PUBLIC
-    hpx_async
-    hpx_lcos_distributed
-    hpx_performance_counters
-    hpx_segmented_algorithms
+  list(APPEND include_module_dependencies hpx_async hpx_lcos_distributed
+       hpx_performance_counters hpx_segmented_algorithms
   )
-  # cmake-format: on
 endif()
+
+include(HPX_AddModule)
+add_hpx_module(
+  full include FORCE_LINKING_GEN
+  GLOBAL_HEADER_GEN OFF
+  HEADERS ${include_headers}
+  MODULE_DEPENDENCIES ${include_module_dependencies}
+  CMAKE_SUBDIRS tests
+)

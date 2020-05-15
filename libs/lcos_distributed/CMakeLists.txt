@@ -25,7 +25,7 @@ set(lcos_distributed_sources)
 include(HPX_AddModule)
 # cmake-format: off
 add_hpx_module(
-  lcos_distributed
+  full lcos_distributed
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   FORCE_LINKING_GEN
@@ -33,12 +33,10 @@ add_hpx_module(
   SOURCES ${lcos_distributed_sources}
   HEADERS ${lcos_distributed_headers}
   COMPAT_HEADERS ${lcos_distributed_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
+  MODULE_DEPENDENCIES
     hpx_async
-    hpx_config
     hpx_local_lcos
-    hpx_preprocessor
+    hpx_core
   CMAKE_SUBDIRS examples tests
 )
 # cmake-format: on

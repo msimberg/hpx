@@ -423,12 +423,12 @@ namespace hpx { namespace util {
     struct hash_any
     {
         template <typename Char>
-        HPX_EXPORT std::size_t
+        HPX_CORE_EXPORT std::size_t
         operator()(const basic_any<serialization::input_archive,
             serialization::output_archive, Char, std::true_type>& elem) const;
 
         // this is just to force linking with serializable_any.cpp
-        HPX_EXPORT static void dummy();
+        HPX_CORE_EXPORT static void dummy();
     };
 }}    // namespace hpx::util
 

@@ -25,10 +25,10 @@ namespace hpx { namespace basic_execution { namespace this_thread {
     namespace detail {
 
         struct agent_storage;
-        HPX_EXPORT agent_storage* get_agent_storage();
+        HPX_CORE_EXPORT agent_storage* get_agent_storage();
     }    // namespace detail
 
-    struct HPX_EXPORT reset_agent
+    struct HPX_CORE_EXPORT reset_agent
     {
         reset_agent(detail::agent_storage*, agent_base& impl);
         reset_agent(agent_base& impl);
@@ -38,13 +38,13 @@ namespace hpx { namespace basic_execution { namespace this_thread {
         agent_base* old_;
     };
 
-    HPX_EXPORT hpx::basic_execution::agent_ref agent();
+    HPX_CORE_EXPORT hpx::basic_execution::agent_ref agent();
 
-    HPX_EXPORT void yield(
+    HPX_CORE_EXPORT void yield(
         char const* desc = "hpx::basic_execution::this_thread::yield");
-    HPX_EXPORT void yield_k(std::size_t k,
+    HPX_CORE_EXPORT void yield_k(std::size_t k,
         char const* desc = "hpx::basic_execution::this_thread::yield_k");
-    HPX_EXPORT void suspend(
+    HPX_CORE_EXPORT void suspend(
         char const* desc = "hpx::basic_execution::this_thread::suspend");
 
     template <typename Rep, typename Period>

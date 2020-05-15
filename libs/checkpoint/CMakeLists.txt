@@ -22,13 +22,13 @@ set(checkpoint_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  checkpoint
+  full checkpoint
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${checkpoint_sources}
   HEADERS ${checkpoint_headers}
   COMPAT_HEADERS ${checkpoint_compat_headers}
-  DEPENDENCIES hpx_config hpx_format hpx_serialization
+  MODULE_DEPENDENCIES hpx_core
   CMAKE_SUBDIRS examples tests
 )

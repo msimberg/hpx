@@ -63,33 +63,19 @@ set(thread_executors_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  thread_executors
+  full thread_executors
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${thread_executors_sources}
   HEADERS ${thread_executors_headers}
   COMPAT_HEADERS ${thread_executors_compat_headers}
-  DEPENDENCIES
-    hpx_config
-    hpx_assertion
-    hpx_affinity
-    hpx_coroutines
-    hpx_datastructures
-    hpx_errors
+  MODULE_DEPENDENCIES
     hpx_executors
     hpx_execution
-    hpx_functional
-    hpx_io_service
-    hpx_threading_base
-    hpx_timing
     hpx_resource_partitioner
-    hpx_static_reinit
-    hpx_synchronization
     hpx_threadmanager
-    hpx_thread_pools
-    hpx_thread_support
     hpx_timed_execution
-    hpx_topology
+    hpx_core
   CMAKE_SUBDIRS examples tests
 )

@@ -22,14 +22,14 @@ set(static_reinit_sources static_reinit.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  static_reinit
+  core static_reinit
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   SOURCES ${static_reinit_sources}
   HEADERS ${static_reinit_headers}
   COMPAT_HEADERS ${static_reinit_compat_headers}
-  DEPENDENCIES hpx_config hpx_assertion hpx_concurrency hpx_functional
+  MODULE_DEPENDENCIES hpx_config hpx_assertion hpx_concurrency hpx_functional
                hpx_type_support
   CMAKE_SUBDIRS examples tests
 )

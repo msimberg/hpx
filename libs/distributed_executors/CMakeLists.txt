@@ -22,12 +22,12 @@ set(distributed_executors_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  distributed_executors
+  full distributed_executors
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${distributed_executors_headers}
   COMPAT_HEADERS ${distributed_executors_compat_headers}
-  DEPENDENCIES hpx_async hpx_config hpx_functional hpx_type_support
+  MODULE_DEPENDENCIES hpx_async hpx_core
   CMAKE_SUBDIRS examples tests
 )

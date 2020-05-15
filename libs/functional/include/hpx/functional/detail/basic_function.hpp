@@ -29,7 +29,7 @@ namespace hpx { namespace util { namespace detail {
     static const std::size_t function_storage_size = 3 * sizeof(void*);
 
     ///////////////////////////////////////////////////////////////////////////
-    class HPX_EXPORT function_base
+    class HPX_CORE_EXPORT function_base
     {
         using vtable = function_base_vtable;
 

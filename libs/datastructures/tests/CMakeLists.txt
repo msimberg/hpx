@@ -47,7 +47,7 @@ if(HPX_DATASTRUCTURES_WITH_TESTS)
       HEADERS ${datastructures_headers}
       HEADER_ROOT ${PROJECT_SOURCE_DIR}/include NOHPX_INIT
       NOLIBS
-      DEPENDENCIES hpx_datastructures
+      DEPENDENCIES hpx_datastructures_static
     )
   endif()
 endif()

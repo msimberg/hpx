@@ -16,7 +16,7 @@
 
 // clang-format off
 #if !defined(HPX_WINDOWS)
-#  define HPX_EXPORT_THREAD_SPECIFIC_PTR HPX_EXPORT
+#  define HPX_EXPORT_THREAD_SPECIFIC_PTR HPX_CORE_EXPORT
 #else
 #  define HPX_EXPORT_THREAD_SPECIFIC_PTR
 #endif

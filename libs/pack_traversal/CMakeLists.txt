@@ -32,21 +32,12 @@ set(pack_traversal_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  pack_traversal
+  full pack_traversal
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${pack_traversal_headers}
   COMPAT_HEADERS ${pack_traversal_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
-    hpx_config
-    hpx_datastructures
-    hpx_functional
-    hpx_iterator_support
-    hpx_memory
-    hpx_type_support
-    hpx_util
+  MODULE_DEPENDENCIES hpx_core
   CMAKE_SUBDIRS examples tests
 )

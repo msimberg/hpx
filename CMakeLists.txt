@@ -125,7 +125,8 @@ hpx_info("HPX version: ${HPX_VERSION}")
 unset(HPX_COMPONENTS CACHE)
 unset(HPX_EXPORT_TARGETS CACHE)
 unset(HPX_EXPORT_INTERNAL_TARGETS CACHE)
-unset(HPX_LIBS CACHE)
+unset(HPX_ENABLED_LIBS CACHE)
+unset(HPX_ENABLED_MAIN_LIBS CACHE)
 unset(HPX_STATIC_PARCELPORT_PLUGINS CACHE)
 
 # ##############################################################################
@@ -2243,12 +2244,7 @@ if(HPX_WITH_DISTRIBUTED_RUNTIME)
 endif()
 
 # ##############################################################################
-# Add libraries
-# ##############################################################################
-add_subdirectory(libs)
-
-# ##############################################################################
-# Add core dependency
+# Add core pseudo-target
 # ##############################################################################
 add_hpx_pseudo_target(core)
 
@@ -2261,6 +2257,16 @@ set(HPX_STATIC_PARCELPORT_PLUGINS
 )
 add_hpx_pseudo_target(plugins)
 add_subdirectory(plugins)
+
+# ##############################################################################
+# Add core configuration
+# ##############################################################################
+add_subdirectory(src)
+
+# ##############################################################################
+# Add libraries
+# ##############################################################################
+add_subdirectory(libs)
 
 # ##############################################################################
 # Documentation toolchain (Sphinx, Doxygen, Breathe)
@@ -2277,11 +2283,6 @@ if(HPX_WITH_TOOLS)
   add_hpx_pseudo_target(tools)
   add_subdirectory(tools)
 endif()
-
-# ##############################################################################
-# Add core configuration
-# ##############################################################################
-add_subdirectory(src)
 
 # ##############################################################################
 # Add static init and wrap library

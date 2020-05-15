@@ -42,7 +42,7 @@ set(hardware_sources)
 include(HPX_AddModule)
 
 add_hpx_module(
-  hardware
+  core hardware
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   EXCLUDE_FROM_GLOBAL_HEADER
@@ -56,6 +56,6 @@ add_hpx_module(
   SOURCES ${hardware_sources}
   HEADERS ${hardware_headers}
   COMPAT_HEADERS ${hardware_compat_headers}
-  DEPENDENCIES hpx_config
+  MODULE_DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

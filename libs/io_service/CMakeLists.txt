@@ -21,14 +21,14 @@ set(io_service_sources io_service_pool.cpp io_service_thread_pool.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  io_service
+  core io_service
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${io_service_sources}
   HEADERS ${io_service_headers}
   COMPAT_HEADERS ${io_service_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_concurrency
     hpx_config

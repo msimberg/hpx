@@ -16,14 +16,14 @@ set(prefix_sources find_prefix.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  prefix
+  core prefix
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${prefix_sources}
   HEADERS ${prefix_headers}
   COMPAT_HEADERS ${prefix_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_errors

@@ -28,20 +28,13 @@ set(batch_environments_sources alps_environment.cpp batch_environment.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  batch_environments
+  full batch_environments
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${batch_environments_sources}
   HEADERS ${batch_environments_headers}
   COMPAT_HEADERS ${batch_environments_compat_headers}
-  DEPENDENCIES
-    hpx_asio
-    hpx_assertion
-    hpx_config
-    hpx_errors
-    hpx_format
-    hpx_string_util
-    hpx_util
+  MODULE_DEPENDENCIES hpx_core
   CMAKE_SUBDIRS examples tests
 )

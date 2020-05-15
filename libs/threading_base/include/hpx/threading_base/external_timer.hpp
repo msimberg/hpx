@@ -20,7 +20,7 @@ namespace hpx { namespace util {
 
     using enable_parent_task_handler_type = std::function<bool()>;
 
-    HPX_EXPORT void set_enable_parent_task_handler(
+    HPX_CORE_EXPORT void set_enable_parent_task_handler(
         enable_parent_task_handler_type f);
 
     namespace external_timer {
@@ -103,14 +103,16 @@ namespace hpx { namespace util {
         extern sample_value_t* sample_value_function;
         extern send_t* send_function;
         extern recv_t* recv_function;
-        HPX_EXPORT extern update_task_string_t* update_task_string_function;
-        HPX_EXPORT extern update_task_address_t* update_task_address_function;
-        HPX_EXPORT extern start_t* start_function;
-        HPX_EXPORT extern stop_t* stop_function;
-        HPX_EXPORT extern yield_t* yield_function;
+        HPX_CORE_EXPORT extern update_task_string_t*
+            update_task_string_function;
+        HPX_CORE_EXPORT extern update_task_address_t*
+            update_task_address_function;
+        HPX_CORE_EXPORT extern start_t* start_function;
+        HPX_CORE_EXPORT extern stop_t* stop_function;
+        HPX_CORE_EXPORT extern yield_t* yield_function;
 
         // The function registration interface
-        HPX_EXPORT void register_external_timer(
+        HPX_CORE_EXPORT void register_external_timer(
             registration_t& registration_record);
 
         // The actual API. For all cases, check if the function pointer is null,
@@ -203,12 +205,12 @@ namespace hpx { namespace util {
             }
         }
 
-        HPX_EXPORT std::shared_ptr<task_wrapper> new_task(
+        HPX_CORE_EXPORT std::shared_ptr<task_wrapper> new_task(
             thread_description const& description,
             std::uint32_t parent_locality_id,
             threads::thread_id_type const& parent_task);
 
-        HPX_EXPORT inline std::shared_ptr<task_wrapper> update_task(
+        HPX_CORE_EXPORT inline std::shared_ptr<task_wrapper> update_task(
             std::shared_ptr<task_wrapper> wrapper,
             thread_description const& description)
         {

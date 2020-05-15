@@ -47,7 +47,7 @@ set(datastructures_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  datastructures
+  core datastructures
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
@@ -55,6 +55,6 @@ add_hpx_module(
   HEADERS ${datastructures_headers}
   COMPAT_HEADERS ${datastructures_compat_headers}
   EXCLUDE_FROM_GLOBAL_HEADER "hpx/datastructures/variant_helper.hpp"
-  DEPENDENCIES hpx_assertion hpx_config hpx_concepts hpx_type_support
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_concepts hpx_type_support
   CMAKE_SUBDIRS examples tests
 )

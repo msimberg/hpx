@@ -19,13 +19,14 @@ endif()
 
 include(HPX_AddModule)
 add_hpx_module(
-  version
+  core version
   COMPATIBILITY_HEADERS OFF
   FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   SOURCES ${version_sources}
   HEADERS ${version_headers}
-  DEPENDENCIES hpx_config hpx_format hpx_prefix Hwloc::hwloc ${mpi_dependencies}
+  MODULE_DEPENDENCIES hpx_config hpx_format hpx_prefix
+  DEPENDENCIES Hwloc::hwloc ${mpi_dependencies}
   CMAKE_SUBDIRS
 )
 

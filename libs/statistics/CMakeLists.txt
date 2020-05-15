@@ -25,13 +25,13 @@ set(statistics_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  statistics
+  core statistics
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${statistics_sources}
   HEADERS ${statistics_headers}
   COMPAT_HEADERS ${statistics_compat_headers}
-  DEPENDENCIES hpx_config hpx_iterator_support
+  MODULE_DEPENDENCIES hpx_config hpx_iterator_support
   CMAKE_SUBDIRS examples tests
 )

@@ -29,13 +29,13 @@ set(timing_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  timing
+  core timing
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${timing_sources}
   HEADERS ${timing_headers}
   COMPAT_HEADERS ${timing_compat_headers}
-  DEPENDENCIES hpx_config hpx_hardware
+  MODULE_DEPENDENCIES hpx_config hpx_hardware
   CMAKE_SUBDIRS examples tests
 )

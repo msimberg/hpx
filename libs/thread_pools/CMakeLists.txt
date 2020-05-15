@@ -27,13 +27,14 @@ set(thread_pools_sources scheduled_thread_pool.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  thread_pools
+  core thread_pools
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${thread_pools_sources}
   HEADERS ${thread_pools_headers}
   COMPAT_HEADERS ${thread_pools_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_logging hpx_schedulers
+  MODULE_DEPENDENCIES hpx_affinity hpx_assertion hpx_config hpx_errors
+                      hpx_logging hpx_schedulers
   CMAKE_SUBDIRS examples tests
 )

@@ -47,7 +47,7 @@ namespace hpx { namespace threads { namespace policies {
         typename StagedQueuing = lockfree_fifo,
         typename TerminatedQueuing =
             default_static_priority_queue_scheduler_terminated_queue>
-    class HPX_EXPORT static_priority_queue_scheduler
+    class HPX_CORE_EXPORT static_priority_queue_scheduler
       : public local_priority_queue_scheduler<Mutex, PendingQueuing,
             StagedQueuing, TerminatedQueuing>
     {

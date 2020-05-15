@@ -24,13 +24,13 @@ set(thread_support_sources set_thread_name.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  thread_support
+  core thread_support
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${thread_support_sources}
   HEADERS ${thread_support_headers}
   COMPAT_HEADERS ${thread_support_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_concepts hpx_type_support
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_concepts hpx_type_support
   CMAKE_SUBDIRS examples tests
 )

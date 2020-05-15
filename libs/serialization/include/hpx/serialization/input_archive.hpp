@@ -28,7 +28,7 @@
 
 namespace hpx { namespace serialization {
 
-    struct HPX_EXPORT input_archive : basic_archive<input_archive>
+    struct input_archive : basic_archive<input_archive>
     {
         using base_type = basic_archive<input_archive>;
 

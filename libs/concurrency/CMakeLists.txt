@@ -39,14 +39,14 @@ set(concurrency_sources barrier.cpp itt_notify.cpp thread_name.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  concurrency
+  core concurrency
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${concurrency_sources}
   HEADERS ${concurrency_headers}
   COMPAT_HEADERS ${concurrency_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_concepts
     hpx_config

@@ -75,12 +75,11 @@ set(functional_sources basic_function.cpp empty_function.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  functional
+  core functional
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
-  GLOBAL_HEADER_GEN
-    ON
-    EXCLUDE
+  GLOBAL_HEADER_GEN ON
+  EXCLUDE_FROM_GLOBAL_HEADER
     "hpx/functional/traits/get_function_address.hpp"
     "hpx/functional/traits/get_function_annotation.hpp"
     "hpx/functional/traits/is_action.hpp"
@@ -90,7 +89,7 @@ add_hpx_module(
   SOURCES ${functional_sources}
   HEADERS ${functional_headers}
   COMPAT_HEADERS ${functional_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_concurrency
     hpx_config

@@ -14,20 +14,9 @@ set(local_async_headers hpx/local_async/apply.hpp hpx/local_async/async.hpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  local_async FORCE_LINKING_GEN
+  full local_async FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${local_async_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_async_base
-    hpx_config
-    hpx_coroutines
-    hpx_datastructures
-    hpx_execution
-    hpx_functional
-    hpx_memory
-    hpx_threading_base
-    hpx_type_support
-    hpx_util
+  MODULE_DEPENDENCIES hpx_async_base hpx_execution hpx_core
   CMAKE_SUBDIRS examples tests
 )

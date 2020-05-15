@@ -36,7 +36,7 @@ namespace hpx { namespace threads {
     namespace policies {
         struct scheduler_base;
     }
-    class HPX_EXPORT thread_pool_base;
+    class HPX_CORE_EXPORT thread_pool_base;
 
     /// \cond NOINTERNAL
     using thread_id_type = thread_id;
@@ -62,9 +62,9 @@ namespace hpx { namespace threads {
         util::unique_function_nonser<thread_function_sig>;
 
 #if defined(HPX_HAVE_APEX)
-    HPX_EXPORT std::shared_ptr<hpx::util::external_timer::task_wrapper>
+    HPX_CORE_EXPORT std::shared_ptr<hpx::util::external_timer::task_wrapper>
     get_self_timer_data(void);
-    HPX_EXPORT void set_self_timer_data(
+    HPX_CORE_EXPORT void set_self_timer_data(
         std::shared_ptr<hpx::util::external_timer::task_wrapper> data);
 #endif
     /// \endcond

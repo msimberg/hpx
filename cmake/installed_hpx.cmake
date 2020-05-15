@@ -115,7 +115,7 @@ if(HPX_WITH_TESTS)
   endif()
 
   # add actual tests, first iterate through all modules
-  foreach(lib ${HPX_LIBS})
+  foreach(lib ${HPX_ENABLED_LIBS})
     if(EXISTS ${PROJECT_SOURCE_DIR}/libs/${lib}/tests)
       string(TOUPPER ${lib} lib_upper)
       hpx_option(
@@ -138,7 +138,7 @@ if(HPX_WITH_EXAMPLES)
   add_hpx_pseudo_dependencies(examples examples.modules)
 
   # add actual examples, iterate through all modules
-  foreach(lib ${HPX_LIBS})
+  foreach(lib ${HPX_ENABLED_LIBS})
     if(EXISTS ${PROJECT_SOURCE_DIR}/libs/${lib}/examples)
       add_subdirectory(libs/${lib}/examples)
     endif()

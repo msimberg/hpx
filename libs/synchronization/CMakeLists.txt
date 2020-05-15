@@ -66,14 +66,14 @@ set(synchronization_sources detail/condition_variable.cpp force_linking.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  synchronization
+  core synchronization
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${synchronization_sources}
   HEADERS ${synchronization_headers}
   COMPAT_HEADERS ${synchronization_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_config
     hpx_assertion
     hpx_basic_execution

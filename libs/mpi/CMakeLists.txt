@@ -30,21 +30,11 @@ set(mpi_sources force_linking.cpp mpi_future.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  mpi
+  full mpi
   GLOBAL_HEADER_GEN ON
   SOURCES ${mpi_sources}
   HEADERS ${mpi_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_basic_execution
-    hpx_concurrency
-    hpx_config
-    hpx_errors
-    hpx_execution
-    hpx_local_lcos
-    hpx_memory
-    hpx_mpi_base
-    hpx_threading_base
-    Mpi::mpi
+  MODULE_DEPENDENCIES hpx_execution hpx_local_lcos hpx_mpi_base
+  DEPENDENCIES Mpi::mpi
   CMAKE_SUBDIRS examples tests
 )

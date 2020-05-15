@@ -11,7 +11,7 @@ include(HPX_AddPseudoDependencies)
 include(HPX_AddPseudoTarget)
 
 # cmake-format: off
-set(HPX_CANDIDATE_LIBS
+set(HPX_MAIN_CANDIDATE_LIBS
     affinity
     algorithms
     allocator_support
@@ -20,8 +20,8 @@ set(HPX_CANDIDATE_LIBS
     async
     async_base
     async_combinators
-    basic_execution
     batch_environments
+    basic_execution
     cache
     checkpoint
     collectives
@@ -129,15 +129,37 @@ hpx_info("Configuring modules:")
 # optional based on the presence of a library or not
 set(MODULE_ENABLED_LIB_DEFINES)
 
-# variables needed for modules.cpp
-set(MODULE_FORCE_LINKING_INCLUDES)
-set(MODULE_FORCE_LINKING_CALLS)
-
 # variables needed for config_strings_modules.hpp
 set(CONFIG_STRINGS_MODULES_INCLUDES)
 set(CONFIG_STRINGS_MODULES_ENTRIES)
 
-foreach(lib ${HPX_CANDIDATE_LIBS})
+# Add the core library. NOTE: The main library is still created in
+# src/CMakeLists.txt but will move here when all modules are in place.
+add_library(hpx_core SHARED dummy.cpp)
+add_library(hpx_core_static STATIC dummy.cpp)
+target_link_libraries(hpx_full PUBLIC hpx_core)
+# hpx_full_static?
+
+install(
+  TARGETS hpx_core
+  EXPORT HPXInternalTargets
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+          COMPONENT core
+)
+install(
+  TARGETS hpx_core_static
+  EXPORT HPXInternalTargets
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+          COMPONENT core
+)
+
+hpx_export_internal_targets(hpx_core hpx_core_static)
+
+foreach(lib ${HPX_MAIN_CANDIDATE_LIBS})
   # if the module is successfully added, xxx_LIBRARY_ENABLED will be ON
   add_subdirectory(${lib})
 
@@ -145,40 +167,33 @@ foreach(lib ${HPX_CANDIDATE_LIBS})
     HPX_${lib}_LIBRARY_ENABLED GLOBAL PROPERTY HPX_${lib}_LIBRARY_ENABLED
   )
   if(HPX_${lib}_LIBRARY_ENABLED)
-    set(HPX_LIBS
-        ${HPX_LIBS} ${lib}
-        CACHE INTERNAL "list of Enabled HPX modules" FORCE
+    set(HPX_ENABLED_LIBS
+        ${HPX_ENABLED_LIBS} ${lib}
+        CACHE INTERNAL "list of all enabled HPX modules" FORCE
     )
 
-    string(TOUPPER ${lib} uppercase_lib)
-
-    set(MODULE_ENABLED_LIB_DEFINES
-        "${MODULE_ENABLED_LIB_DEFINES}#define HPX_HAVE_LIB_${uppercase_lib}\n"
-    )
-
-    set(MODULE_FORCE_LINKING_INCLUDES
-        "${MODULE_FORCE_LINKING_INCLUDES}#include <hpx/${lib}/force_linking.hpp>\n"
-    )
-
-    set(MODULE_FORCE_LINKING_CALLS
-        "${MODULE_FORCE_LINKING_CALLS}\n        ${lib}::force_linking();"
-    )
-
-    set(CONFIG_STRINGS_MODULES_INCLUDES
-        "${CONFIG_STRINGS_MODULES_INCLUDES}#include <hpx/${lib}/config/config_strings.hpp>\n"
-    )
-    set(CONFIG_STRINGS_MODULES_ENTRIES
-        "${CONFIG_STRINGS_MODULES_ENTRIES}\n        { \"${lib}\", ${lib}::config_strings },"
+    set(HPX_ENABLED_MAIN_LIBS
+        ${HPX_ENABLED_MAIN_LIBS} ${lib}
+        CACHE INTERNAL "list of enabled HPX modules for the main library" FORCE
     )
   endif()
 endforeach()
 
 configure_file(
-  "${PROJECT_SOURCE_DIR}/cmake/templates/libs_enabled.hpp.in"
-  "${PROJECT_BINARY_DIR}/libs/config/include/hpx/config/libs_enabled.hpp" @ONLY
-)
-
-configure_file(
   "${PROJECT_SOURCE_DIR}/cmake/templates/modules.cpp.in"
   "${PROJECT_BINARY_DIR}/libs/modules.cpp" @ONLY
+)
+
+foreach(lib ${HPX_ENABLED_LIBS})
+  string(TOUPPER ${lib} uppercase_lib)
+
+  set(MODULE_ENABLED_LIB_DEFINES
+      "${MODULE_ENABLED_LIB_DEFINES}#define HPX_HAVE_LIB_${uppercase_lib}\n"
+  )
+endforeach()
+
+configure_file(
+  "${PROJECT_SOURCE_DIR}/cmake/templates/libs_enabled.hpp.in"
+  "${PROJECT_BINARY_DIR}/libs/config/include/hpx/config/libs_enabled.hpp"
+  @ONLY
 )

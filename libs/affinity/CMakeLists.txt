@@ -23,14 +23,14 @@ set(affinity_sources affinity_data.cpp parse_affinity_options.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  affinity
+  core affinity
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${affinity_sources}
   HEADERS ${affinity_headers}
   COMPAT_HEADERS ${affinity_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_datastructures
@@ -38,6 +38,7 @@ add_hpx_module(
     hpx_format
     hpx_topology
     hpx_util
+  DEPENDENCIES
     Hwloc::hwloc
   CMAKE_SUBDIRS tests
 )

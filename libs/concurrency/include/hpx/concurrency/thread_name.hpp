@@ -13,5 +13,5 @@
 namespace hpx { namespace detail {
     /// Helper utility to set and store a name for the current operating system
     /// thread. Returns a reference to the name for the current thread.
-    HPX_EXPORT std::string& thread_name();
+    HPX_CORE_EXPORT std::string& thread_name();
 }}    // namespace hpx::detail

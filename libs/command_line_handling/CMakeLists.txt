@@ -23,37 +23,20 @@ set(command_line_handling_sources command_line_handling.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  command_line_handling
+  full command_line_handling
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${command_line_handling_sources}
   HEADERS ${command_line_handling_headers}
   COMPAT_HEADERS ${command_line_handling_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_asio
-    hpx_assertion
-    hpx_affinity
-    hpx_basic_execution
+  MODULE_DEPENDENCIES
     hpx_batch_environments
-    hpx_concurrency
-    hpx_config
-    hpx_datastructures
-    hpx_debugging
-    hpx_errors
     hpx_execution
-    hpx_filesystem
-    hpx_functional
-    hpx_format
-    hpx_memory
     hpx_mpi_base
-    hpx_prefix
     hpx_program_options
     hpx_runtime_configuration
     hpx_threading
-    hpx_topology
-    hpx_util
-    hpx_version
+    hpx_core
   CMAKE_SUBDIRS
 )

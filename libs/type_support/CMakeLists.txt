@@ -39,13 +39,13 @@ set(type_support_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  type_support
+  core type_support
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${type_support_sources}
   HEADERS ${type_support_headers}
   COMPAT_HEADERS ${type_support_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config
+  MODULE_DEPENDENCIES hpx_assertion hpx_config
   CMAKE_SUBDIRS examples tests
 )

@@ -20,11 +20,11 @@ set(memory_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  memory FORCE_LINKING_GEN
+  core memory FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   EXCLUDE_FROM_GLOBAL_HEADER "hpx/memory/serialization/intrusive_ptr.hpp"
   SOURCES ${memory_sources}
   HEADERS ${memory_headers}
-  DEPENDENCIES hpx_config hpx_assertion hpx_serialization
+  MODULE_DEPENDENCIES hpx_config hpx_assertion hpx_serialization
   CMAKE_SUBDIRS examples tests
 )

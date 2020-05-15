@@ -39,27 +39,17 @@ set(local_lcos_sources composable_guard.cpp force_linking.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  local_lcos
+  full local_lcos
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   SOURCES ${local_lcos_sources}
   HEADERS ${local_lcos_headers}
   COMPAT_HEADERS ${local_lcos_compat_headers}
-  DEPENDENCIES
-    hpx_config
-    hpx_basic_execution
-    hpx_allocator_support
-    hpx_assertion
-    hpx_errors
+  MODULE_DEPENDENCIES
     hpx_execution
     hpx_executors
-    hpx_functional
-    hpx_iterator_support
-    hpx_memory
     hpx_pack_traversal
-    hpx_synchronization
-    hpx_thread_support
-    hpx_type_support
+    hpx_core
   CMAKE_SUBDIRS examples tests
 )
 

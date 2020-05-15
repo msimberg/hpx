@@ -16,7 +16,7 @@
 #include <hpx/config/warnings_prefix.hpp>
 
 namespace hpx { namespace util {
-    struct HPX_EXPORT manage_config
+    struct HPX_CORE_EXPORT manage_config
     {
         typedef std::map<std::string, std::string> map_type;
 

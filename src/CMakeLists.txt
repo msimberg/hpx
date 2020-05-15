@@ -475,20 +475,22 @@ endif()
 # ##############################################################################
 # libhpx
 add_library(
-  hpx_core ${hpx_library_link_mode_core} ${hpx_SOURCES} ${hpx_external_SOURCES}
+  hpx_full ${hpx_library_link_mode_core} ${hpx_SOURCES} ${hpx_external_SOURCES}
            ${hpx_generated_SOURCES} ${hpx_external_OBJECTS} ${hpx_HEADERS}
 )
 
+target_link_libraries(hpx_full PUBLIC hpx_core)
+
 target_link_libraries(
-  hpx_core
+  hpx_full
   PUBLIC hpx_public_flags
   PRIVATE hpx_private_flags
 )
-target_link_libraries(hpx_core PUBLIC hpx_dependencies_boost)
+target_link_libraries(hpx_full PUBLIC hpx_dependencies_boost)
 
 # Set the basic search paths for the HPX headers
 target_include_directories(
-  hpx_core
+  hpx_full
   PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
          $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}> $<INSTALL_INTERFACE:include>
 )
@@ -498,24 +500,24 @@ target_include_directories(
 # should be removed when we make the modules object libraries that we publicly
 # link to hpx
 if(HPX_PROGRAM_OPTIONS_WITH_BOOST_PROGRAM_OPTIONS_COMPATIBILITY)
-  target_link_libraries(hpx_core PUBLIC Boost::program_options)
+  target_link_libraries(hpx_full PUBLIC Boost::program_options)
 endif()
 if(HPX_FILESYSTEM_WITH_BOOST_FILESYSTEM_COMPATIBILITY)
-  target_link_libraries(hpx_core PUBLIC Boost::filesystem)
+  target_link_libraries(hpx_full PUBLIC Boost::filesystem)
 endif()
 
-target_link_libraries(hpx_core PUBLIC hpx_dependencies_allocator)
+target_link_libraries(hpx_full PUBLIC hpx_dependencies_allocator)
 
 # Hwloc PUBLIC because used by exported target hpx_topology
-target_link_libraries(hpx_core PUBLIC Hwloc::hwloc)
+target_link_libraries(hpx_full PUBLIC Hwloc::hwloc)
 
 # Enable SIMD via VC if it is available
 if(TARGET Vc::vc)
-  target_link_libraries(hpx_core PUBLIC Vc::vc)
+  target_link_libraries(hpx_full PUBLIC Vc::vc)
 endif()
 
 if(TARGET Amplifier::amplifier)
-  target_link_libraries(hpx_core PRIVATE Amplifier::amplifier)
+  target_link_libraries(hpx_full PRIVATE Amplifier::amplifier)
 endif()
 
 if(TARGET APEX::apex)
@@ -523,77 +525,48 @@ if(TARGET APEX::apex)
   # want to add the APEX link commands to all executables, so we use the
   # "INTERFACE" option for target_link_libraries. Because libhpx_apex is a
   # shared object library, we don't need to specify the whole archive.
-  target_link_libraries(hpx_core INTERFACE APEX::apex)
+  target_link_libraries(hpx_full INTERFACE APEX::apex)
 endif()
 
 if(TARGET Gperftools::gperftools)
-  target_link_libraries(hpx_core PRIVATE Gperftools::gperftools)
+  target_link_libraries(hpx_full PRIVATE Gperftools::gperftools)
 endif()
 
 if(TARGET Valgrind::valgrind)
-  target_link_libraries(hpx_core PRIVATE Valgrind::valgrind)
+  target_link_libraries(hpx_full PRIVATE Valgrind::valgrind)
 endif()
 
 if("${HPX_PLATFORM_UC}" STREQUAL "ANDROID")
   set_target_properties(
-    hpx_core PROPERTIES CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME hpx FOLDER "Core"
+    hpx_full PROPERTIES CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME hpx FOLDER "Core"
   )
 else()
   set_target_properties(
-    hpx_core PROPERTIES VERSION ${HPX_VERSION} SOVERSION ${HPX_SOVERSION}
+    hpx_full PROPERTIES VERSION ${HPX_VERSION} SOVERSION ${HPX_SOVERSION}
                         CLEAN_DIRECT_OUTPUT 1 OUTPUT_NAME hpx FOLDER "Core"
   )
 endif()
 
-target_link_libraries(hpx_core PUBLIC hpx_base_libraries)
+target_link_libraries(hpx_full PUBLIC hpx_base_libraries)
 
 # Link to each parcelport plugin
 foreach(_parcelport_plugin ${HPX_STATIC_PARCELPORT_PLUGINS})
-  target_link_libraries(hpx_core PRIVATE ${_parcelport_plugin})
-endforeach()
-
-# integrate the hpx modules with the main library
-foreach(_module ${HPX_LIBS})
-
-  set(_module_target hpx_${_module})
-  if(UNIX)
-    # add the full archive (some are not used directly in libhpx and need to be
-    # forced into libhpx with this option)
-    if(APPLE)
-      set(_module_target "-Wl,-all_load" "${_module_target}")
-    else(APPLE) # not apple, regular linux
-      set(_module_target "-Wl,--whole-archive" "${_module_target}"
-                         "-Wl,--no-whole-archive"
-      )
-    endif(APPLE)
-  endif(UNIX)
-
-  # add module binaries as PRIVATE dependencies to the core hpx library to avoid
-  # dependent applications have to link against those
-  target_link_libraries(hpx_core PRIVATE ${_module_target})
-
-  # add module include directories as PUBLIC to core hpx library to enable
-  # compilation against indirectly included headers
-  get_target_property(
-    _module_includes hpx_${_module} INTERFACE_INCLUDE_DIRECTORIES
-  )
-  target_include_directories(hpx_core PUBLIC ${_module_includes})
-
+  target_link_libraries(hpx_full PRIVATE ${_parcelport_plugin})
 endforeach()
 
 if((NOT HPX_WITH_STATIC_LINKING) AND (("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
                                       OR (APPLE))
 )
-  set_target_properties(hpx_core PROPERTIES POSITION_INDEPENDENT_CODE ON)
+  set_target_properties(hpx_full PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 
-target_compile_definitions(hpx_core PRIVATE HPX_COMPONENT_NAME=hpx HPX_EXPORTS)
+target_compile_definitions(hpx_full PRIVATE HPX_COMPONENT_NAME=hpx HPX_EXPORTS)
 
 # ##############################################################################
 # Emulation of SwapContext on Windows
 # ##############################################################################
 if(MSVC AND HPX_WITH_SWAP_CONTEXT_EMULATION)
-  target_link_options(hpx_core PRIVATE "/EXPORT:switch_to_fiber")
+  target_link_options(hpx_full PRIVATE "/EXPORT:switch_to_fiber")
 endif()
 
 # ##############################################################################
@@ -608,8 +581,8 @@ set(_is_library "$<IN_LIST:$<TARGET_PROPERTY:TYPE>,${_library_types}>")
 add_library(hpx_no_wrap_main INTERFACE)
 add_library(hpx INTERFACE)
 
-target_link_libraries(hpx_no_wrap_main INTERFACE hpx_core)
-target_link_libraries(hpx INTERFACE hpx_core)
+target_link_libraries(hpx_no_wrap_main INTERFACE hpx_full)
+target_link_libraries(hpx INTERFACE hpx_full)
 
 # hpx_interface and hpx_interface_no_wrap_main contain additional interface
 # options to be passed to dependent targets. We create these as separate targets
@@ -680,7 +653,7 @@ target_compile_definitions(
 )
 
 set(hpx_targets hpx hpx_no_wrap_main plugin component)
-set(hpx_internal_targets hpx_core hpx_interface hpx_interface_no_wrap_main)
+set(hpx_internal_targets hpx_full hpx_interface hpx_interface_no_wrap_main)
 
 install(
   TARGETS ${hpx_targets}
@@ -705,7 +678,7 @@ install(
 # install PDB if needed
 if(MSVC)
   install(
-    FILES $<TARGET_PDB_FILE:hpx_core>
+    FILES $<TARGET_PDB_FILE:hpx_full>
     DESTINATION ${CMAKE_INSTALL_BINDIR}
     CONFIGURATIONS Debug RelWithDebInfo
     OPTIONAL

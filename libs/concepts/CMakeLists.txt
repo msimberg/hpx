@@ -19,13 +19,13 @@ set(concepts_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  concepts
+  core concepts
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${concepts_sources}
   HEADERS ${concepts_headers}
   COMPAT_HEADERS ${concepts_compat_headers}
-  DEPENDENCIES hpx_config hpx_preprocessor hpx_type_support
+  MODULE_DEPENDENCIES hpx_config hpx_preprocessor hpx_type_support
   CMAKE_SUBDIRS examples tests
 )

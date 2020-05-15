@@ -139,29 +139,12 @@ set(algorithms_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  algorithms
+  full algorithms
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   HEADERS ${algorithms_headers}
   COMPAT_HEADERS ${algorithms_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_concepts
-    hpx_concurrency
-    hpx_config
-    hpx_datastructures
-    hpx_errors
-    hpx_execution
-    hpx_executors
-    hpx_format
-    hpx_functional
-    hpx_iterator_support
-    hpx_local_async
-    hpx_pack_traversal
-    hpx_program_options
-    hpx_statistics
-    hpx_synchronization
-    hpx_timing
-    hpx_type_support
+  MODULE_DEPENDENCIES hpx_execution hpx_executors hpx_local_async
+                      hpx_program_options hpx_core
   CMAKE_SUBDIRS examples tests
 )

@@ -15,9 +15,10 @@ set(filesystem_headers "hpx/filesystem.hpp")
 
 include(HPX_AddModule)
 add_hpx_module(
-  filesystem FORCE_LINKING_GEN
+  core filesystem FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   HEADERS ${filesystem_headers}
-  DEPENDENCIES hpx_config ${__boost_filesystem}
+  MODULE_DEPENDENCIES hpx_config
+  DEPENDENCIES ${__boost_filesystem}
   CMAKE_SUBDIRS examples tests
 )

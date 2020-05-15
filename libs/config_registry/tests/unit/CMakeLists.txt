@@ -15,7 +15,7 @@ foreach(test ${tests})
     ${test}_test INTERNAL_FLAGS
     SOURCES ${sources} ${${test}_FLAGS} ${${test}_LIBRARIES}
     NOLIBS
-    DEPENDENCIES hpx_config_registry
+    DEPENDENCIES hpx_config_registry_static
     EXCLUDE_FROM_ALL
     HPX_PREFIX ${HPX_BUILD_PREFIX}
     FOLDER "Tests/Unit/Modules/ConfigRegistry"

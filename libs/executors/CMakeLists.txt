@@ -68,28 +68,13 @@ set(executors_sources current_executor.cpp force_linking.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  executors
+  full executors
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
   SOURCES ${executors_sources}
   HEADERS ${executors_headers}
   COMPAT_HEADERS ${executors_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
-    hpx_basic_execution
-    hpx_config
-    hpx_errors
-    hpx_execution
-    hpx_functional
-    hpx_iterator_support
-    hpx_serialization
-    hpx_synchronization
-    hpx_threading_base
-    hpx_threadmanager
-    hpx_timing
-    hpx_type_support
-    hpx_util
+  MODULE_DEPENDENCIES hpx_execution hpx_core
   CMAKE_SUBDIRS examples tests
 )

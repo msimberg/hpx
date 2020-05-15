@@ -37,7 +37,7 @@ namespace hpx { namespace util { namespace logging {
     namespace formatter {
 
         /// @brief What to use as base class, for your formatter classes
-        struct manipulator
+        struct HPX_CORE_EXPORT manipulator
         {
             virtual void operator()(std::ostream& to) const = 0;
 
@@ -53,7 +53,7 @@ namespace hpx { namespace util { namespace logging {
             /// That is, this allows configuration of your manipulator at run-time.
             virtual void configure(std::string const&) {}
 
-            HPX_EXPORT virtual ~manipulator();
+            virtual ~manipulator();
 
         protected:
             // signify that we're only a base class - not to be used directly
@@ -70,7 +70,7 @@ namespace hpx { namespace util { namespace logging {
     namespace destination {
 
         /// @brief What to use as base class, for your destination classes
-        struct manipulator
+        struct HPX_CORE_EXPORT manipulator
         {
             virtual void operator()(message const& val) = 0;
 
@@ -80,7 +80,7 @@ namespace hpx { namespace util { namespace logging {
             /// That is, this allows configuration of your manipulator at run-time.
             virtual void configure(std::string const&) {}
 
-            HPX_EXPORT virtual ~manipulator();
+            virtual ~manipulator();
 
         protected:
             // signify that we're only a base class - not to be used directly

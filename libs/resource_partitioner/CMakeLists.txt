@@ -26,37 +26,20 @@ set(resource_partitioner_sources detail_partitioner.cpp partitioner.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  resource_partitioner
+  full resource_partitioner
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${resource_partitioner_sources}
   HEADERS ${resource_partitioner_headers}
   COMPAT_HEADERS ${resource_partitioner_compat_headers}
-  DEPENDENCIES
-    hpx_affinity
-    hpx_allocator_support
-    hpx_assertion
-    hpx_cache
+  MODULE_DEPENDENCIES
     hpx_command_line_handling
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_errors
     hpx_execution
-    hpx_format
-    hpx_functional
-    hpx_hardware
-    hpx_memory
     hpx_mpi_base
     hpx_pack_traversal
-    hpx_plugin
     hpx_program_options
     hpx_runtime_configuration
-    hpx_serialization
-    hpx_synchronization
-    hpx_thread_pools
-    hpx_threading_base
-    hpx_topology
+    hpx_core
   CMAKE_SUBDIRS examples tests
 )

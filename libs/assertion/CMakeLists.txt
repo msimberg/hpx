@@ -23,13 +23,13 @@ set(assertion_sources assertion.cpp force_linking.cpp source_location.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  assertion
+  core assertion
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
   SOURCES ${assertion_sources}
   HEADERS ${assertion_headers}
   COMPAT_HEADERS ${assertion_compat_headers}
-  DEPENDENCIES hpx_config hpx_preprocessor
+  MODULE_DEPENDENCIES hpx_config hpx_preprocessor
   CMAKE_SUBDIRS examples tests
 )

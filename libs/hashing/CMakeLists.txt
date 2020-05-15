@@ -14,13 +14,13 @@ set(hashing_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  hashing
+  core hashing
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${hashing_sources}
   HEADERS ${hashing_headers}
   COMPAT_HEADERS ${hashing_compat_headers}
-  DEPENDENCIES hpx_config
+  MODULE_DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

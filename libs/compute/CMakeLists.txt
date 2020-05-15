@@ -37,44 +37,33 @@ set(compute_compat_headers
 
 set(compute_sources get_host_targets.cpp host_target.cpp numa_domains.cpp)
 
+set(compute_module_dependencies
+    hpx_algorithms
+    hpx_execution
+    hpx_executors
+    hpx_futures
+    hpx_pack_traversal
+    hpx_program_options
+    hpx_resource_partitioner
+    hpx_runtime_configuration
+    hpx_threading
+    hpx_threadmanager
+    hpx_core
+)
+
+if(HPX_WITH_DISTRIBUTED_RUNTIME)
+  list(APPEND compute_module_dependencies hpx_performance_counters hpx_async)
+endif()
+
 include(HPX_AddModule)
 add_hpx_module(
-  compute
+  full compute
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${compute_sources}
   HEADERS ${compute_headers}
   COMPAT_HEADERS ${compute_compat_headers}
-  DEPENDENCIES
-    hpx_affinity
-    hpx_algorithms
-    hpx_assertion
-    hpx_config
-    hpx_coroutines
-    hpx_execution
-    hpx_executors
-    hpx_futures
-    hpx_hardware
-    hpx_memory
-    hpx_pack_traversal
-    hpx_plugin
-    hpx_program_options
-    hpx_resource_partitioner
-    hpx_runtime_configuration
-    hpx_serialization
-    hpx_synchronization
-    hpx_threading
-    hpx_threading_base
-    hpx_threadmanager
-    hpx_topology
-    hpx_type_support
+  MODULE_DEPENDENCIES ${compute_module_dependencies}
   CMAKE_SUBDIRS examples tests
 )
-
-if(HPX_WITH_DISTRIBUTED_RUNTIME)
-  target_link_libraries(hpx_compute PUBLIC hpx_performance_counters hpx_async)
-endif()
-
-# Temporary since the module still depends on some runtime files
-target_link_libraries(hpx_compute PUBLIC hpx_static_reinit hpx_local_lcos)

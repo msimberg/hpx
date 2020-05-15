@@ -18,13 +18,13 @@ set(allocator_support_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  allocator_support
+  core allocator_support
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${allocator_support_sources}
   HEADERS ${allocator_support_headers}
   COMPAT_HEADERS ${allocator_support_compat_headers}
-  DEPENDENCIES hpx_config hpx_preprocessor hpx_dependencies_allocator
+  MODULE_DEPENDENCIES hpx_config hpx_preprocessor hpx_dependencies_allocator
   CMAKE_SUBDIRS examples tests
 )

@@ -21,9 +21,6 @@
 #include <utility>
 
 namespace hpx { namespace threads {
-    HPX_EXPORT std::ptrdiff_t get_default_stack_size();
-    HPX_EXPORT std::ptrdiff_t get_stack_size(thread_stacksize);
-
     ///////////////////////////////////////////////////////////////////////////
     class thread_init_data
     {

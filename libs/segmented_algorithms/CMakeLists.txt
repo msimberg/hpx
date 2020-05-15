@@ -39,22 +39,16 @@ set(segmented_algorithms_compat_headers hpx/util/zip_iterator.hpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  segmented_algorithms
+  full segmented_algorithms
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   HEADERS ${segmented_algorithms_headers}
   COMPAT_HEADERS ${segmented_algorithms_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_algorithms
-    hpx_assertion
-    hpx_config
-    hpx_datastructures
     hpx_execution
     hpx_executors
-    hpx_functional
-    hpx_iterator_support
     hpx_pack_traversal
-    hpx_serialization
-    hpx_type_support
+    hpx_core
   CMAKE_SUBDIRS examples tests
 )

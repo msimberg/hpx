@@ -24,7 +24,8 @@
 
 namespace hpx { namespace threads {
 
-    struct HPX_EXPORT execution_context : hpx::basic_execution::context_base
+    struct HPX_CORE_EXPORT execution_context
+      : hpx::basic_execution::context_base
     {
         hpx::basic_execution::resource_base const& resource() const override
         {
@@ -33,7 +34,7 @@ namespace hpx { namespace threads {
         hpx::basic_execution::resource_base resource_;
     };
 
-    struct HPX_EXPORT execution_agent : hpx::basic_execution::agent_base
+    struct HPX_CORE_EXPORT execution_agent : hpx::basic_execution::agent_base
     {
         explicit execution_agent(
             coroutines::detail::coroutine_impl* coroutine) noexcept;

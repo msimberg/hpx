@@ -10,14 +10,14 @@ set(lockfree_fifo_FLAGS NOLIBS)
 set(lockfree_fifo_LIBRARIES
     DEPENDENCIES
     hpx_dependencies_boost
-    hpx_assertion
-    hpx_config
-    hpx_concurrency
-    hpx_datastructures
-    hpx_functional
-    hpx_program_options
-    hpx_testing
-    hpx_type_support
+    hpx_assertion_static
+    hpx_config_static
+    hpx_concurrency_static
+    hpx_datastructures_static
+    hpx_functional_static
+    hpx_program_options_static
+    hpx_testing_static
+    hpx_type_support_static
 )
 
 foreach(test ${tests})

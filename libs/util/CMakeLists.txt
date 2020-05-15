@@ -25,14 +25,14 @@ set(util_sources manage_config.cpp regex_from_pattern.cpp sed_transform.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  util
+  core util
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${util_sources}
   HEADERS ${util_headers}
   COMPAT_HEADERS ${util_compat_headers}
-  DEPENDENCIES hpx_config hpx_concepts hpx_errors hpx_format
-               hpx_iterator_support
+  MODULE_DEPENDENCIES hpx_config hpx_concepts hpx_errors hpx_format
+                      hpx_iterator_support
   CMAKE_SUBDIRS examples tests
 )

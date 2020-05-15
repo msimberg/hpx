@@ -236,7 +236,6 @@ namespace hpx {
 #include <hpx/futures/traits/future_access.hpp>
 #include <hpx/futures/traits/is_future.hpp>
 #include <hpx/futures/traits/is_future_range.hpp>
-#include <hpx/threading.hpp>
 #include <hpx/type_support/pack.hpp>
 #include <hpx/util/detail/reserve.hpp>
 

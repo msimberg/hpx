@@ -23,19 +23,12 @@ set(timed_execution_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  timed_execution
+  full timed_execution
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   HEADERS ${timed_execution_headers}
   COMPAT_HEADERS ${timed_execution_compat_headers}
-  DEPENDENCIES
-    hpx_config
-    hpx_execution
-    hpx_executors
-    hpx_functional
-    hpx_threading
-    hpx_timing
-    hpx_type_support
+  MODULE_DEPENDENCIES hpx_execution hpx_executors hpx_threading hpx_core
   CMAKE_SUBDIRS examples tests
 )

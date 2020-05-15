@@ -21,13 +21,13 @@ set(format_sources format.cpp util/bad_lexical_cast.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  format DEPRECATION_WARNINGS
+  core format DEPRECATION_WARNINGS
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   SOURCES ${format_sources}
   HEADERS ${format_headers}
   COMPAT_HEADERS ${format_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config
+  MODULE_DEPENDENCIES hpx_assertion hpx_config
   CMAKE_SUBDIRS examples tests
 )

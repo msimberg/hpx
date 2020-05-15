@@ -86,33 +86,13 @@ set(execution_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  execution
+  full execution
   SOURCES ${execution_sources}
   HEADERS ${execution_headers}
   DEPRECATION_WARNINGS
   COMPATIBILITY_HEADERS ON # Added in 1.5.0
   COMPAT_HEADERS ${execution_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_async_base
-    hpx_async_combinators
-    hpx_allocator_support
-    hpx_concepts
-    hpx_config
-    hpx_errors
-    hpx_datastructures
-    hpx_errors
-    hpx_functional
-    hpx_iterator_support
-    hpx_preprocessor
-    hpx_resource_partitioner
-    hpx_synchronization
-    hpx_threading
-    hpx_threadmanager
-    hpx_thread_support
-    hpx_timing
-    hpx_topology
-    hpx_type_support
-    hpx_pack_traversal
+  MODULE_DEPENDENCIES hpx_async_base hpx_async_combinators hpx_pack_traversal
+                      hpx_core
   CMAKE_SUBDIRS examples tests
 )

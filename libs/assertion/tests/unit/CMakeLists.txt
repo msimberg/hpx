@@ -15,7 +15,7 @@ foreach(test ${tests})
     ${test}_test INTERNAL_FLAGS
     SOURCES ${sources}
     NOLIBS
-    DEPENDENCIES hpx_assertion
+    DEPENDENCIES hpx_assertion_static
     EXCLUDE_FROM_ALL
     FOLDER "Tests/Unit/Modules/Assertion/"
   )

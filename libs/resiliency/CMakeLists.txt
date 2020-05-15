@@ -25,10 +25,10 @@ set(resiliency_sources force_linking.cpp resiliency.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  resiliency
+  full resiliency
   GLOBAL_HEADER_GEN OFF
   SOURCES ${resiliency_sources}
   HEADERS ${resiliency_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_datastructures hpx_local_async
+  MODULE_DEPENDENCIES hpx_local_async hpx_core
   CMAKE_SUBDIRS examples tests
 )

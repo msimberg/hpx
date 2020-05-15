@@ -44,7 +44,7 @@ set(schedulers_sources deadlock_detection.cpp maintain_queue_wait_times.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  schedulers
+  core schedulers
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
@@ -52,7 +52,7 @@ add_hpx_module(
   HEADERS ${schedulers_headers}
   COMPAT_HEADERS ${schedulers_compat_headers}
   SOURCES ${schedulers_sources}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_config
     hpx_assertion
     hpx_errors

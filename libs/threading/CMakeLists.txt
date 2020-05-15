@@ -18,26 +18,13 @@ set(threading_sources thread.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  threading
+  full threading
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${threading_sources}
   HEADERS ${threading_headers}
   COMPAT_HEADERS ${threading_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_basic_execution
-    hpx_config
-    hpx_coroutines
-    hpx_errors
-    hpx_execution
-    hpx_functional
-    hpx_futures
-    hpx_memory
-    hpx_synchronization
-    hpx_threading_base
-    hpx_thread_support
-    hpx_timing
+  MODULE_DEPENDENCIES hpx_execution hpx_core
   CMAKE_SUBDIRS examples tests
 )

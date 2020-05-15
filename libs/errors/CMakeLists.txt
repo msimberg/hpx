@@ -37,14 +37,14 @@ set(errors_sources error_code.cpp exception.cpp exception_list.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  errors
+  core errors
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${errors_sources}
   HEADERS ${errors_headers}
   COMPAT_HEADERS ${errors_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_filesystem

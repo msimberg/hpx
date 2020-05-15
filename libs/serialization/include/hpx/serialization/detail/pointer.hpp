@@ -44,13 +44,14 @@ namespace hpx { namespace serialization {
     }    // namespace detail
 
     ////////////////////////////////////////////////////////////////////////////
-    HPX_EXPORT void register_pointer(
+    HPX_CORE_EXPORT void register_pointer(
         input_archive& ar, std::uint64_t pos, detail::ptr_helper_ptr helper);
 
-    HPX_EXPORT detail::ptr_helper& tracked_pointer(
+    HPX_CORE_EXPORT detail::ptr_helper& tracked_pointer(
         input_archive& ar, std::uint64_t pos);
 
-    HPX_EXPORT std::uint64_t track_pointer(output_archive& ar, void const* pos);
+    HPX_CORE_EXPORT std::uint64_t track_pointer(
+        output_archive& ar, void const* pos);
 
     ////////////////////////////////////////////////////////////////////////////
     namespace detail {

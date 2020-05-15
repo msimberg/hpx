@@ -19,13 +19,13 @@ set(testing_sources testing.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  testing
+  core testing
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   SOURCES ${testing_sources}
   HEADERS ${testing_headers}
   COMPAT_HEADERS ${testing_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_preprocessor hpx_util
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_preprocessor hpx_util
   CMAKE_SUBDIRS examples tests
 )

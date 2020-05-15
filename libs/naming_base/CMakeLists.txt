@@ -16,11 +16,11 @@ set(naming_base_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  naming_base
+  core naming_base
   COMPATIBILITY_HEADERS OFF
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   HEADERS ${naming_base_headers}
-  DEPENDENCIES hpx_config
+  MODULE_DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

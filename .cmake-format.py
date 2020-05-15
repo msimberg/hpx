@@ -352,6 +352,7 @@ with section("parse"):
                                     'COMPATIBILITY_HEADERS': 1,
                                     'COMPAT_HEADERS': '+',
                                     'DEPENDENCIES': '+',
+                                    'MODULE_DEPENDENCIES': '+',
                                     'EXCLUDE_FROM_GLOBAL_HEADER': '+',
                                     'GLOBAL_HEADER_GEN': 1,
                                     'HEADERS': '+',

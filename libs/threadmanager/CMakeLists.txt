@@ -16,34 +16,15 @@ set(threadmanager_sources threadmanager.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  threadmanager
+  full threadmanager
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN OFF
   SOURCES ${threadmanager_sources}
   HEADERS ${threadmanager_headers}
   COMPAT_HEADERS ${threadmanager_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
-    hpx_command_line_handling
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_errors
-    hpx_execution
-    hpx_format
-    hpx_functional
-    hpx_hardware
-    hpx_io_service
-    hpx_logging
-    hpx_plugin
-    hpx_program_options
-    hpx_resource_partitioner
-    hpx_runtime_configuration
-    hpx_schedulers
-    hpx_serialization
-    hpx_thread_executors
-    hpx_topology
+  MODULE_DEPENDENCIES
+    hpx_command_line_handling hpx_execution hpx_program_options
+    hpx_resource_partitioner hpx_runtime_configuration hpx_core
   CMAKE_SUBDIRS examples tests
 )

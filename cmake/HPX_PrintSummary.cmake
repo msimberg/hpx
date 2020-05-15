@@ -91,12 +91,11 @@ function(create_configuration_summary message module_name)
       @ONLY
     )
   else()
-    set(_base_dir_local "libs/${module_name}/src/")
     set(_template "config_defines_entries_for_modules.cpp.in")
 
     configure_file(
       "${HPX_SOURCE_DIR}/cmake/templates/${_template}"
-      "${HPX_BINARY_DIR}/${_base_dir_local}/config_entries.cpp" @ONLY
+      "${CMAKE_CURRENT_BINARY_DIR}/src/config_entries.cpp" @ONLY
     )
   endif()
 endfunction()

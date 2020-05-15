@@ -150,14 +150,14 @@ set(serialization_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  serialization
+  core serialization
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${serialization_sources}
   HEADERS ${serialization_headers}
   COMPAT_HEADERS ${serialization_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_datastructures

@@ -49,7 +49,7 @@ namespace hpx { namespace serialization {
     }
 
     template <typename Archive>
-    struct HPX_EXPORT basic_archive
+    struct basic_archive
     {
         static const std::uint64_t npos = std::uint64_t(-1);
 

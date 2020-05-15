@@ -37,12 +37,12 @@ set(config_sources force_linking.cpp version.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  config CONFIG_FILES
+  core config CONFIG_FILES
   COMPATIBILITY_HEADERS OFF
   GLOBAL_HEADER_GEN OFF
   SOURCES ${config_sources}
   HEADERS ${config_headers}
-  DEPENDENCIES
-  DEPENDENCIES hpx_preprocessor hpx_dependencies_boost
+  MODULE_DEPENDENCIES hpx_preprocessor
+  DEPENDENCIES hpx_dependencies_boost
   CMAKE_SUBDIRS examples tests
 )

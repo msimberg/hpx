@@ -12,7 +12,8 @@
 #include <windows.h>
 
 namespace hpx { namespace util {
-    void set_thread_name(char const* threadName, DWORD dwThreadID = DWORD(-1));
+    HPX_CORE_EXPORT void set_thread_name(
+        char const* threadName, DWORD dwThreadID = DWORD(-1));
 }}    // namespace hpx::util
 
 #else

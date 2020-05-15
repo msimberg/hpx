@@ -22,7 +22,7 @@ namespace hpx { namespace threads { namespace policies { namespace detail {
     ///////////////////////////////////////////////////////////////////////////
     // Structure holding the information related to thread affinity selection
     // for the shepherd threads of this instance
-    struct HPX_EXPORT affinity_data
+    struct HPX_CORE_EXPORT affinity_data
     {
         affinity_data();
         ~affinity_data();

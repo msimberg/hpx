@@ -81,7 +81,7 @@ endif()
 
 include(HPX_AddModule)
 add_hpx_module(
-  threading_base
+  core threading_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
@@ -90,7 +90,7 @@ add_hpx_module(
   SOURCES ${threading_base_sources}
   HEADERS ${threading_base_headers}
   COMPAT_HEADERS ${threading_base_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_affinity
     hpx_allocator_support
     hpx_assertion
@@ -104,6 +104,6 @@ add_hpx_module(
     hpx_logging
     hpx_memory
     hpx_naming_base
-    ${additional_dependencies}
+  DEPENDENCIES ${additional_dependencies}
   CMAKE_SUBDIRS examples tests
 )

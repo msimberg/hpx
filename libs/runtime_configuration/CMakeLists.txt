@@ -7,7 +7,6 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
 set(runtime_configuration_headers
     hpx/runtime_configuration/agas_service_mode.hpp
     hpx/runtime_configuration/component_registry_base.hpp
@@ -36,27 +35,13 @@ set(runtime_configuration_sources ini.cpp init_ini_data.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  runtime_configuration
+  full runtime_configuration
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS FORCE_LINKING_GEN
   GLOBAL_HEADER_GEN ON
   SOURCES ${runtime_configuration_sources}
   HEADERS ${runtime_configuration_headers}
   COMPAT_HEADERS ${runtime_configuration_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_errors
-    hpx_filesystem
-    hpx_functional
-    hpx_logging
-    hpx_plugin
-    hpx_prefix
-    hpx_serialization
-    hpx_string_util
-    hpx_thread_support
-    hpx_version
+  MODULE_DEPENDENCIES hpx_core
   CMAKE_SUBDIRS examples tests
 )

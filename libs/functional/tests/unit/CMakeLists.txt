@@ -48,7 +48,7 @@ foreach(test ${function_tests})
     ${test}_test INTERNAL_FLAGS
     SOURCES ${sources}
     NOLIBS
-    DEPENDENCIES hpx_functional hpx_testing
+    DEPENDENCIES hpx_functional_static hpx_testing_static
     EXCLUDE_FROM_ALL
     FOLDER "Tests/Unit/Modules/Functional"
   )

@@ -18,17 +18,17 @@
 
 namespace hpx { namespace threads { namespace detail {
     /// Set the global thread id to thread local storage.
-    HPX_EXPORT std::size_t set_global_thread_num_tss(std::size_t num);
+    HPX_CORE_EXPORT std::size_t set_global_thread_num_tss(std::size_t num);
     /// Get the global thread id from thread local storage.
-    HPX_EXPORT std::size_t get_global_thread_num_tss();
+    HPX_CORE_EXPORT std::size_t get_global_thread_num_tss();
     /// Set the local thread id to thread local storage.
-    HPX_EXPORT std::size_t set_local_thread_num_tss(std::size_t num);
+    HPX_CORE_EXPORT std::size_t set_local_thread_num_tss(std::size_t num);
     /// Get the local thread id from thread local storage.
-    HPX_EXPORT std::size_t get_local_thread_num_tss();
+    HPX_CORE_EXPORT std::size_t get_local_thread_num_tss();
     /// Set the thread pool id to thread local storage.
-    HPX_EXPORT std::size_t set_thread_pool_num_tss(std::size_t num);
+    HPX_CORE_EXPORT std::size_t set_thread_pool_num_tss(std::size_t num);
     /// Get the thread pool id from thread local storage.
-    HPX_EXPORT std::size_t get_thread_pool_num_tss();
+    HPX_CORE_EXPORT std::size_t get_thread_pool_num_tss();
 
     /// Holds the global and local thread numbers, and the pool number
     /// associated with the thread.
@@ -39,8 +39,8 @@ namespace hpx { namespace threads { namespace detail {
         std::size_t thread_pool_num;
     };
 
-    HPX_EXPORT void set_thread_nums_tss(const thread_nums&);
-    HPX_EXPORT thread_nums get_thread_nums_tss();
+    HPX_CORE_EXPORT void set_thread_nums_tss(const thread_nums&);
+    HPX_CORE_EXPORT thread_nums get_thread_nums_tss();
 
     ///////////////////////////////////////////////////////////////////////////
     struct reset_tss_helper
@@ -79,7 +79,7 @@ namespace hpx {
     ///
     /// \note   This function needs to be executed on a HPX-thread. It will
     ///         fail otherwise (it will return -1).
-    HPX_EXPORT std::size_t get_worker_thread_num();
+    HPX_CORE_EXPORT std::size_t get_worker_thread_num();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Return the number of the current OS-thread running in the
@@ -98,7 +98,7 @@ namespace hpx {
     ///
     /// \note   This function needs to be executed on a HPX-thread. It will
     ///         fail otherwise (it will return -1).
-    HPX_EXPORT std::size_t get_worker_thread_num(error_code& ec);
+    HPX_CORE_EXPORT std::size_t get_worker_thread_num(error_code& ec);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Return the number of the current OS-thread running in the current
@@ -114,7 +114,7 @@ namespace hpx {
     ///
     /// \note This function needs to be executed on a HPX-thread. It will fail
     ///         otherwise (it will return -1).
-    HPX_EXPORT std::size_t get_local_worker_thread_num();
+    HPX_CORE_EXPORT std::size_t get_local_worker_thread_num();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Return the number of the current OS-thread running in the current
@@ -132,7 +132,7 @@ namespace hpx {
     ///
     /// \note This function needs to be executed on a HPX-thread. It will fail
     ///         otherwise (it will return -1).
-    HPX_EXPORT std::size_t get_local_worker_thread_num(error_code& ec);
+    HPX_CORE_EXPORT std::size_t get_local_worker_thread_num(error_code& ec);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Return the number of the current thread pool the current
@@ -148,7 +148,7 @@ namespace hpx {
     ///
     /// \note This function needs to be executed on a HPX-thread. It will fail
     ///         otherwise (it will return -1).
-    HPX_EXPORT std::size_t get_thread_pool_num();
+    HPX_CORE_EXPORT std::size_t get_thread_pool_num();
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief Return the number of the current thread pool the current
@@ -166,7 +166,7 @@ namespace hpx {
     ///
     /// \note This function needs to be executed on a HPX-thread. It will fail
     ///         otherwise (it will return -1).
-    HPX_EXPORT std::size_t get_thread_pool_num(error_code& ec);
+    HPX_CORE_EXPORT std::size_t get_thread_pool_num(error_code& ec);
 }    // namespace hpx
 
 #include <hpx/config/warnings_suffix.hpp>
