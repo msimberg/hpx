@@ -10,4 +10,5 @@
    :maxdepth: 2
 
    /modules/overview.rst
-   /modules/all_modules.rst
+   /modules/core/modules.rst
+   /modules/full/modules.rst
