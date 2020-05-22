@@ -375,6 +375,11 @@ function(add_hpx_module libname modulename)
   # Link modules to their higher-level libraries
   target_link_libraries(hpx_${libname} PUBLIC hpx_${modulename})
 
+  # We only do this for libraries other than hpx_full
+  if(NOT ${libname} STREQUAL "full")
+    target_link_libraries(hpx_${libname}_static PUBLIC hpx_${modulename}_static)
+  endif()
+
   foreach(dir ${${modulename}_CMAKE_SUBDIRS})
     add_subdirectory(${dir})
   endforeach(dir)
