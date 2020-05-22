@@ -105,14 +105,12 @@ endif()
 
 list(TRANSFORM hpx_SOURCES PREPEND ${PROJECT_SOURCE_DIR}/src/)
 
-set(hpx_generated_SOURCES ${PROJECT_BINARY_DIR}/libs/modules.cpp)
-
 set(hpx_external_objects_SOURCES)
 if(MSVC)
   if(HPX_WITH_SWAP_CONTEXT_EMULATION)
     enable_language(ASM)
     set(switch_to_fiber_source
-        "${PROJECT_SOURCE_DIR}/libs/coroutines/src/switch_to_fiber.asm"
+        "${PROJECT_SOURCE_DIR}/modules/coroutines/src/switch_to_fiber.asm"
     )
     list(APPEND hpx_external_objects_SOURCES "${switch_to_fiber_source}")
     add_hpx_library_sources(
@@ -444,7 +442,7 @@ add_hpx_source_group(
 add_hpx_source_group(
   NAME hpx_generated
   CLASS "Source Files"
-  ROOT "${PROJECT_BINARY_DIR}/libs"
+  ROOT "${PROJECT_BINARY_DIR}/modules"
   TARGETS ${hpx_generated_SOURCES}
 )
 

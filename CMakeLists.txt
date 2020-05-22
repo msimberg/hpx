@@ -2264,9 +2264,9 @@ add_subdirectory(plugins)
 add_subdirectory(src)
 
 # ##############################################################################
-# Add libraries
+# Add modules
 # ##############################################################################
-add_subdirectory(libs)
+add_subdirectory(modules)
 
 # ##############################################################################
 # Documentation toolchain (Sphinx, Doxygen, Breathe)

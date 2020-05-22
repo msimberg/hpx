@@ -181,7 +181,7 @@ endforeach()
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/cmake/templates/modules.cpp.in"
-  "${PROJECT_BINARY_DIR}/libs/modules.cpp" @ONLY
+  "${PROJECT_BINARY_DIR}/modules/modules.cpp" @ONLY
 )
 
 foreach(lib ${HPX_ENABLED_LIBS})
@@ -193,7 +193,7 @@ foreach(lib ${HPX_ENABLED_LIBS})
 endforeach()
 
 configure_file(
-  "${PROJECT_SOURCE_DIR}/cmake/templates/libs_enabled.hpp.in"
-  "${PROJECT_BINARY_DIR}/libs/config/include/hpx/config/libs_enabled.hpp"
+  "${PROJECT_SOURCE_DIR}/cmake/templates/modules_enabled.hpp.in"
+  "${PROJECT_BINARY_DIR}/modules/config/include/hpx/config/modules_enabled.hpp"
   @ONLY
 )
