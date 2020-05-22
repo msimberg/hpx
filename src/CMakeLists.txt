@@ -477,8 +477,6 @@ add_library(
            ${hpx_generated_SOURCES} ${hpx_external_OBJECTS} ${hpx_HEADERS}
 )
 
-target_link_libraries(hpx_full PUBLIC hpx_core)
-
 target_link_libraries(
   hpx_full
   PUBLIC hpx_public_flags

@@ -1,0 +1,49 @@
+# Copyright (c) 2020 The STE||AR-Group
+#
+# SPDX-License-Identifier: BSL-1.0
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+include(HPX_Message)
+
+# cmake-format: off
+set(_hpx_full_modules
+    algorithms
+    async
+    async_base
+    async_combinators
+    batch_environments
+    checkpoint
+    collectives
+    command_line_handling
+    compute
+    compute_cuda
+    distributed_executors
+    execution
+    executors
+    include
+    lcos_distributed
+    local_async
+    local_lcos
+    mpi
+    mpi_base
+    pack_traversal
+    performance_counters
+    program_options
+    resiliency
+    resource_partitioner
+    runtime_configuration
+    segmented_algorithms
+    thread_executors
+    threading
+    threadmanager
+    timed_execution
+)
+# cmake-format: on
+
+hpx_info("")
+hpx_info("Configuring libhpx modules:")
+
+foreach(module ${_hpx_full_modules})
+  add_subdirectory(${module})
+endforeach()
