@@ -107,7 +107,7 @@ jobs:
       - run:
           name: Check circular dependencies with cpp-dependencies
           command: |
-              cpp-dependencies --dir /hpx/source/libs --graph-cycles /tmp/circular_deps.dot
+              cpp-dependencies --dir /hpx/source/modules --graph-cycles /tmp/circular_deps.dot
               dot /tmp/circular_deps.dot -Tsvg -o /tmp/circular_deps.svg
               if [[ $(wc -l /tmp/circular_deps.dot | awk '{print $1}') -gt 2 ]]; then exit 1; fi
       - store_artifacts:
@@ -147,7 +147,7 @@ jobs:
       - run:
           name: Check that the modules are well clang-formatted
           command: |
-              cd /hpx/source/libs && shopt -s globstar # to activate the ** globbing
+              cd /hpx/source/modules && shopt -s globstar # to activate the ** globbing
               clang-format -i **/*.{cpp,hpp}
               git diff --exit-code > /tmp/modified_clang_format_files.txt
       - store_artifacts:
