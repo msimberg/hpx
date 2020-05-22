@@ -20,7 +20,7 @@ include(HPX_AddModule)
 add_hpx_module(
   full threading
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${threading_sources}
   HEADERS ${threading_headers}

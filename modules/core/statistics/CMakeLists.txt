@@ -27,7 +27,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core statistics
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${statistics_sources}
   HEADERS ${statistics_headers}

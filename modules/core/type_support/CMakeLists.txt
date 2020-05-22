@@ -41,7 +41,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core type_support
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${type_support_sources}
   HEADERS ${type_support_headers}

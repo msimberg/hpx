@@ -141,7 +141,7 @@ include(HPX_AddModule)
 add_hpx_module(
   full algorithms
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   HEADERS ${algorithms_headers}
   COMPAT_HEADERS ${algorithms_compat_headers}
   MODULE_DEPENDENCIES hpx_execution hpx_executors hpx_local_async

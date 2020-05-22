@@ -59,12 +59,12 @@ include(HPX_AddModule)
 add_hpx_module(
   core logging
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
   SOURCES ${logging_sources}
   HEADERS ${logging_headers}
   COMPAT_HEADERS ${logging_compat_headers}
-  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_format hpx_filesystem hpx_format
-               hpx_timing
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_format hpx_filesystem
+                      hpx_format hpx_timing
   CMAKE_SUBDIRS examples tests
 )

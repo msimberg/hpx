@@ -11,8 +11,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Default location is $HPX_ROOT/modules/assertion/include
 set(assertion_headers
     hpx/assertion.hpp hpx/assertion/current_function.hpp
-    hpx/assertion/evaluate_assert.hpp
-    hpx/assertion/source_location.hpp
+    hpx/assertion/evaluate_assert.hpp hpx/assertion/source_location.hpp
 )
 
 # Default location is $HPX_ROOT/modules/assertion/include_compatibility

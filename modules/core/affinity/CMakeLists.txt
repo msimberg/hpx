@@ -38,7 +38,6 @@ add_hpx_module(
     hpx_format
     hpx_topology
     hpx_util
-  DEPENDENCIES
-    Hwloc::hwloc
+  DEPENDENCIES Hwloc::hwloc
   CMAKE_SUBDIRS tests
 )

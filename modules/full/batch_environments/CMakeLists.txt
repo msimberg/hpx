@@ -30,7 +30,7 @@ include(HPX_AddModule)
 add_hpx_module(
   full batch_environments
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${batch_environments_sources}
   HEADERS ${batch_environments_headers}

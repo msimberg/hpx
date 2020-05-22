@@ -18,7 +18,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core naming_base
   COMPATIBILITY_HEADERS OFF
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
   HEADERS ${naming_base_headers}
   MODULE_DEPENDENCIES hpx_config

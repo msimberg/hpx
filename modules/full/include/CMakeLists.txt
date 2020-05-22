@@ -125,7 +125,7 @@ endif()
 
 include(HPX_AddModule)
 add_hpx_module(
-  full include 
+  full include
   GLOBAL_HEADER_GEN OFF
   HEADERS ${include_headers}
   MODULE_DEPENDENCIES ${include_module_dependencies}

@@ -77,7 +77,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core functional
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   EXCLUDE_FROM_GLOBAL_HEADER
     "hpx/functional/traits/get_function_address.hpp"

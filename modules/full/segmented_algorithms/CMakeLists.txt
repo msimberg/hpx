@@ -41,14 +41,10 @@ include(HPX_AddModule)
 add_hpx_module(
   full segmented_algorithms
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   HEADERS ${segmented_algorithms_headers}
   COMPAT_HEADERS ${segmented_algorithms_compat_headers}
-  MODULE_DEPENDENCIES
-    hpx_algorithms
-    hpx_execution
-    hpx_executors
-    hpx_pack_traversal
-    hpx_core
+  MODULE_DEPENDENCIES hpx_algorithms hpx_execution hpx_executors
+                      hpx_pack_traversal hpx_core
   CMAKE_SUBDIRS examples tests
 )

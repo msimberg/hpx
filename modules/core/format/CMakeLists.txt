@@ -23,7 +23,6 @@ include(HPX_AddModule)
 add_hpx_module(
   core format DEPRECATION_WARNINGS
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
-  
   GLOBAL_HEADER_GEN OFF
   SOURCES ${format_sources}
   HEADERS ${format_headers}

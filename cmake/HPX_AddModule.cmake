@@ -44,8 +44,8 @@ function(add_hpx_module libname modulename)
 
   # Mark the module as enabled (see hpx/modules/CMakeLists.txt)
   set(HPX_ENABLED_MODULES
-        ${HPX_ENABLED_MODULES} ${modulename}
-        CACHE INTERNAL "List of enabled HPX modules" FORCE
+      ${HPX_ENABLED_MODULES} ${modulename}
+      CACHE INTERNAL "List of enabled HPX modules" FORCE
   )
 
   # HPX options

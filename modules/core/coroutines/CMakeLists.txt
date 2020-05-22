@@ -67,12 +67,12 @@ include(HPX_AddModule)
 add_hpx_module(
   core coroutines
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${coroutines_sources}
   HEADERS ${coroutines_headers}
   COMPAT_HEADERS ${coroutines_compat_headers}
-  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format hpx_functional
-               hpx_util
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format
+                      hpx_functional hpx_util
   CMAKE_SUBDIRS examples tests
 )

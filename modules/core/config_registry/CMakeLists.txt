@@ -14,11 +14,13 @@ set(config_registry_sources config_registry.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core config_registry 
+  core config_registry
   GLOBAL_HEADER_GEN OFF
   SOURCES ${config_registry_sources}
   HEADERS ${config_registry_headers}
   CMAKE_SUBDIRS examples tests
 )
 
-target_compile_definitions(hpx_config_registry PRIVATE HPX_CONFIG_REGISTRY_EXPORTS)
+target_compile_definitions(
+  hpx_config_registry PRIVATE HPX_CONFIG_REGISTRY_EXPORTS
+)

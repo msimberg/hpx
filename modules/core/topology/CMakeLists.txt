@@ -23,7 +23,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core topology
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${topology_sources}
   HEADERS ${topology_headers}

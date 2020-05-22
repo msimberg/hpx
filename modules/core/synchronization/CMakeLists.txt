@@ -59,8 +59,8 @@ set(synchronization_compat_headers
     hpx/lcos/local/spinlock_pool.hpp
 )
 
-set(synchronization_sources detail/condition_variable.cpp
-                            local_barrier.cpp mutex.cpp stop_token.cpp
+set(synchronization_sources detail/condition_variable.cpp local_barrier.cpp
+                            mutex.cpp stop_token.cpp
 )
 
 include(HPX_AddModule)

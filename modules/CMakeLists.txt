@@ -68,16 +68,14 @@ foreach(lib ${_hpx_libs})
       EXPORT HPXInternalTargets
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-              COMPONENT ${lib}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${lib}
     )
     install(
       TARGETS hpx_${lib}_static
       EXPORT HPXInternalTargets
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-              COMPONENT ${lib}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT ${lib}
     )
 
     hpx_export_internal_targets(hpx_${lib} hpx_${lib}_static)

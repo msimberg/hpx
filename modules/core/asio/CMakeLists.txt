@@ -18,7 +18,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core asio
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS 
+  DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
   SOURCES ${asio_sources}
   HEADERS ${asio_headers}

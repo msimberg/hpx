@@ -58,7 +58,7 @@ set(performance_counters_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  full performance_counters 
+  full performance_counters
   GLOBAL_HEADER_GEN ON
   SOURCES ${performance_counters_sources}
   HEADERS ${performance_counters_headers}
@@ -68,7 +68,6 @@ add_hpx_module(
     hpx_executors
     hpx_pack_traversal
     hpx_threading
-
     hpx_runtime_configuration
     hpx_core
   CMAKE_SUBDIRS examples tests

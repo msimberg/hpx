@@ -14,7 +14,7 @@ set(local_async_headers hpx/local_async/apply.hpp hpx/local_async/async.hpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  full local_async 
+  full local_async
   GLOBAL_HEADER_GEN ON
   HEADERS ${local_async_headers}
   MODULE_DEPENDENCIES hpx_async_base hpx_execution hpx_core

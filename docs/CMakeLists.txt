@@ -239,8 +239,9 @@ file(
   "${PROJECT_SOURCE_DIR}/modules/*/*/docs/*"
 )
 
-set(sphinx_modules_source_files "index.rst" "overview.rst" "core/modules.rst"
-                             "full/modules.rst" ${sphinx_modules_source_files}
+set(sphinx_modules_source_files
+    "index.rst" "overview.rst" "core/modules.rst" "full/modules.rst"
+    ${sphinx_modules_source_files}
 )
 
 foreach(sphinx_source_file ${sphinx_modules_source_files})

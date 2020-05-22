@@ -139,11 +139,9 @@ set(serialization_compat_headers
 
 # Default location is $HPX_ROOT/modules/serialization/src
 set(serialization_sources
-    detail/pointer.cpp
-    detail/polymorphic_id_factory.cpp
+    detail/pointer.cpp detail/polymorphic_id_factory.cpp
     detail/polymorphic_intrusive_factory.cpp
-    detail/polymorphic_nonintrusive_factory.cpp
-    serializable_any.cpp
+    detail/polymorphic_nonintrusive_factory.cpp serializable_any.cpp
 )
 
 include(HPX_AddModule)

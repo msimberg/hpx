@@ -44,11 +44,7 @@ add_hpx_module(
   SOURCES ${local_lcos_sources}
   HEADERS ${local_lcos_headers}
   COMPAT_HEADERS ${local_lcos_compat_headers}
-  MODULE_DEPENDENCIES
-    hpx_execution
-    hpx_executors
-    hpx_pack_traversal
-    hpx_core
+  MODULE_DEPENDENCIES hpx_execution hpx_executors hpx_pack_traversal hpx_core
   CMAKE_SUBDIRS examples tests
 )
 
