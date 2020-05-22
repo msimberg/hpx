@@ -98,6 +98,7 @@ set(include_headers
 set(include_module_dependencies
     hpx_algorithms
     hpx_async_combinators
+    hpx_compute
     hpx_executors
     hpx_execution
     hpx_futures
@@ -111,6 +112,10 @@ set(include_module_dependencies
     hpx_timed_execution
     hpx_core
 )
+
+if(HPX_WITH_CUDA)
+  list(APPEND include_module_dependencies hpx_compute_cuda)
+endif()
 
 if(HPX_WITH_DISTRIBUTED_RUNTIME)
   list(APPEND include_module_dependencies hpx_async hpx_lcos_distributed

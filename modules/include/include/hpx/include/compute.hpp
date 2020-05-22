@@ -6,7 +6,11 @@
 
 #pragma once
 
-#include <hpx/compute/cuda.hpp>
+#include <hpx/config.hpp>
 #include <hpx/compute/host.hpp>
 #include <hpx/compute/serialization/vector.hpp>
 #include <hpx/compute/vector.hpp>
+
+#if defined(HPX_HAVE_CUDA)
+#include <hpx/compute/cuda.hpp>
+#endif
