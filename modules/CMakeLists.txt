@@ -11,7 +11,7 @@ include(HPX_AddPseudoDependencies)
 include(HPX_AddPseudoTarget)
 
 # cmake-format: off
-set(HPX_CANDIDATE_MODULES
+set(HPX_MODULES
     affinity
     algorithms
     allocator_support
@@ -159,19 +159,8 @@ install(
 
 hpx_export_internal_targets(hpx_core hpx_core_static)
 
-foreach(module ${HPX_CANDIDATE_MODULES})
-  # if the module is successfully added, xxx_MODULE_ENABLED will be ON
+foreach(module ${HPX_MODULES})
   add_subdirectory(${module})
-
-  get_property(
-    HPX_${module}_MODULE_ENABLED GLOBAL PROPERTY HPX_${module}_MODULE_ENABLED
-  )
-  if(HPX_${module}_MODULE_ENABLED)
-    set(HPX_ENABLED_MODULES
-        ${HPX_ENABLED_MODULES} ${module}
-        CACHE INTERNAL "list of all enabled HPX modules" FORCE
-    )
-  endif()
 endforeach()
 
 configure_file(
@@ -179,6 +168,7 @@ configure_file(
   "${PROJECT_BINARY_DIR}/modules/modules.cpp" @ONLY
 )
 
+# add_hpx_module populates HPX_ENABLED_MODULES
 foreach(module ${HPX_ENABLED_MODULES})
   string(TOUPPER ${module} uppercase_module)
 

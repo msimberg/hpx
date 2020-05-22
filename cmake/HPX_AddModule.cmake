@@ -42,8 +42,11 @@ function(add_hpx_module libname modulename)
   string(TOUPPER ${libname} libname_upper)
   string(TOUPPER ${modulename} modulename_upper)
 
-  # enable the module (see hpx/modules/CMakeLists.txt)
-  set_property(GLOBAL PROPERTY HPX_${modulename}_MODULE_ENABLED ON)
+  # Mark the module as enabled (see hpx/modules/CMakeLists.txt)
+  set(HPX_ENABLED_MODULES
+        ${HPX_ENABLED_MODULES} ${modulename}
+        CACHE INTERNAL "List of enabled HPX modules" FORCE
+  )
 
   # HPX options
   hpx_option(
