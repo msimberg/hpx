@@ -31,7 +31,6 @@ set(execution_headers
     hpx/execution/executors/rebind_executor.hpp
     hpx/execution/executors/static_chunk_size.hpp
     hpx/execution/executors/thread_pool_executor.hpp
-    hpx/execution/force_linking.hpp
     hpx/execution/traits/detail/vc/vector_pack_alignment_size.hpp
     hpx/execution/traits/detail/vc/vector_pack_count_bits.hpp
     hpx/execution/traits/detail/vc/vector_pack_load_store.hpp
@@ -47,7 +46,7 @@ set(execution_headers
     hpx/execution/traits/vector_pack_type.hpp
 )
 
-set(execution_sources force_linking.cpp polymorphic_executor.cpp)
+set(execution_sources polymorphic_executor.cpp)
 
 set(execution_compat_headers
     hpx/async_launch_policy_dispatch.hpp

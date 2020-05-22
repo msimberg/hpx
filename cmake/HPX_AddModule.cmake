@@ -8,7 +8,7 @@ include(HPX_ExportTargets)
 
 function(add_hpx_module libname modulename)
   # Retrieve arguments
-  set(options DEPRECATION_WARNINGS FORCE_LINKING_GEN CUDA CONFIG_FILES)
+  set(options DEPRECATION_WARNINGS CUDA CONFIG_FILES)
   # Compatibility needs to be on/off to allow 3 states : ON/OFF and disabled
   set(one_value_args COMPATIBILITY_HEADERS GLOBAL_HEADER_GEN)
   set(multi_value_args

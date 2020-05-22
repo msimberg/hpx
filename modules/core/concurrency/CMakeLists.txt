@@ -41,7 +41,7 @@ include(HPX_AddModule)
 add_hpx_module(
   core concurrency
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS FORCE_LINKING_GEN
+  DEPRECATION_WARNINGS 
   GLOBAL_HEADER_GEN ON
   SOURCES ${concurrency_sources}
   HEADERS ${concurrency_headers}

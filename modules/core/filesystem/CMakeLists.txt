@@ -15,7 +15,7 @@ set(filesystem_headers "hpx/filesystem.hpp")
 
 include(HPX_AddModule)
 add_hpx_module(
-  core filesystem FORCE_LINKING_GEN
+  core filesystem 
   GLOBAL_HEADER_GEN OFF
   HEADERS ${filesystem_headers}
   MODULE_DEPENDENCIES hpx_config

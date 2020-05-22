@@ -12,7 +12,7 @@ function check_failure {
     cmakelist=$3
     grep -Fq "$string_to_grep" $cmakelist
     if [[ $? -eq 1 ]]; then
-        echo "Missing ${string_to_grep} in libs/${tmp_module}/CMakeLists.txt"
+        echo "Missing ${string_to_grep} in modules/${tmp_module}/CMakeLists.txt"
     fi
 }
 
@@ -67,10 +67,10 @@ function check_cmakelists_files() {
 shopt -s globstar
 
 source_dir=$(pwd)/..
-pushd $source_dir/libs > /dev/null
+pushd $source_dir/modules > /dev/null
 
 # Extract the list of the modules
-modules_list=($(find . -maxdepth 1 -type d | sort | tail --lines=+2))
+modules_list=($(find . -mindepth 2 -maxdepth 2 -type d | sort | tail --lines=+2))
 
 # Find non module headers under the main hpx/ dir to exclude them later
 non_module_files_list=($(ls ../hpx | grep .hpp))
@@ -78,7 +78,7 @@ non_module_files_list=($(ls ../hpx | grep .hpp))
 echo "" > /tmp/missing_files.txt
 echo "" > /tmp/missing_deps.txt
 
-# Iterate on all modules of the libs/ dir
+# Iterate on all modules of the modules/ dir
 for module in "${modules_list[@]}"
 do
     module=$(basename $module)

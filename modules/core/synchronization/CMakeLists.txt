@@ -25,7 +25,6 @@ set(synchronization_headers
     hpx/synchronization/channel_mpmc.hpp
     hpx/synchronization/channel_mpsc.hpp
     hpx/synchronization/channel_spsc.hpp
-    hpx/synchronization/force_linking.hpp
     hpx/synchronization/latch.hpp
     hpx/synchronization/mutex.hpp
     hpx/synchronization/no_mutex.hpp
@@ -60,7 +59,7 @@ set(synchronization_compat_headers
     hpx/lcos/local/spinlock_pool.hpp
 )
 
-set(synchronization_sources detail/condition_variable.cpp force_linking.cpp
+set(synchronization_sources detail/condition_variable.cpp
                             local_barrier.cpp mutex.cpp stop_token.cpp
 )
 

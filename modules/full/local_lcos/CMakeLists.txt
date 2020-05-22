@@ -14,7 +14,6 @@ set(local_lcos_headers
     hpx/local_lcos/channel.hpp
     hpx/local_lcos/composable_guard.hpp
     hpx/local_lcos/conditional_trigger.hpp
-    hpx/local_lcos/force_linking.hpp
     hpx/local_lcos/packaged_task.hpp
     hpx/local_lcos/promise.hpp
     hpx/local_lcos/receive_buffer.hpp
@@ -35,7 +34,7 @@ set(local_lcos_compat_headers
     hpx/lcos/local/trigger.hpp
 )
 
-set(local_lcos_sources composable_guard.cpp force_linking.cpp)
+set(local_lcos_sources composable_guard.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(

@@ -86,11 +86,6 @@ foreach(lib ${_hpx_libs})
   add_subdirectory(${lib})
 endforeach()
 
-configure_file(
-  "${PROJECT_SOURCE_DIR}/cmake/templates/modules.cpp.in"
-  "${PROJECT_BINARY_DIR}/modules/modules.cpp" @ONLY
-)
-
 # add_hpx_module populates HPX_ENABLED_MODULES
 foreach(module ${HPX_ENABLED_MODULES})
   string(TOUPPER ${module} uppercase_module)

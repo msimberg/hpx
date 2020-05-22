@@ -129,7 +129,7 @@ if [[ $all_files -eq 1 ]]; then
     pushd ${project_path} > /dev/null
 
     # Get all the old headers names
-    pushd libs/${module}/include_compatibility > /dev/null
+    pushd modules/${module}/include_compatibility > /dev/null
     old_filenames=($(ls **/*.hpp))
 
     # Get all the new headers names

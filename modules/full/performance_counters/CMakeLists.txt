@@ -58,7 +58,7 @@ set(performance_counters_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  full performance_counters FORCE_LINKING_GEN
+  full performance_counters 
   GLOBAL_HEADER_GEN ON
   SOURCES ${performance_counters_sources}
   HEADERS ${performance_counters_headers}

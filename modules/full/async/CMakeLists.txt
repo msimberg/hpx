@@ -103,7 +103,7 @@ include(HPX_AddModule)
 add_hpx_module(
   full async
   COMPATIBILITY_HEADERS ON
-  DEPRECATION_WARNINGS FORCE_LINKING_GEN
+  DEPRECATION_WARNINGS 
   GLOBAL_HEADER_GEN OFF
   HEADERS ${async_headers}
   COMPAT_HEADERS ${async_compat_headers}

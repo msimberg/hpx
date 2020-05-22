@@ -100,8 +100,8 @@ parse_arguments "$@"
 
 echo "project_path: ${project_path}"
 # Usual vars (depend on the parsing step)
-libs_path=$project_path/libs
-module_path=$libs_path/${module}
+modules_path=$project_path/modules
+module_path=$modules_path/${module}
 module_caps=${module^^}
 
 # Error handling
