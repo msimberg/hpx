@@ -56,6 +56,8 @@ set(doxygen_definition_list
     "DOXYGEN:=1"
     "BOOST_SYSTEM_NOEXCEPT="
     "HPX_EXCEPTION_EXPORT="
+    "HPX_CORE_EXPORT="
+    "HPX_FULL_EXPORT="
     "HPX_EXPORT="
     "HPX_ALWAYS_EXPORT="
     "extern="
@@ -234,7 +236,7 @@ file(
   GLOB_RECURSE sphinx_modules_source_files
   LIST_DIRECTORIES false
   RELATIVE "${PROJECT_SOURCE_DIR}/modules"
-  "${PROJECT_SOURCE_DIR}/modules/*/docs/*"
+  "${PROJECT_SOURCE_DIR}/modules/*/*/docs/*"
 )
 
 set(sphinx_modules_source_files "index.rst" "overview.rst" "core/modules.rst"
