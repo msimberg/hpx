@@ -13,4 +13,4 @@ serialization
 This library is part of HPX.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx-docs/latest/html/libs/serialization/docs/index.html>`__.
+<https://stellar-group.github.io/hpx-docs/latest/html/modules/serialization/docs/index.html>`__.

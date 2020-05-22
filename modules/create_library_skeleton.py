@@ -64,7 +64,7 @@ index_rst = f'''..
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_{lib_name}:
+.. _modules_{lib_name}:
 
 {header_str}
 {lib_name}
@@ -72,7 +72,7 @@ index_rst = f'''..
 
 TODO: High-level description of the library.
 
-See the :ref:`API reference <libs_{lib_name}_api>` of this module for more
+See the :ref:`API reference <modules_{lib_name}_api>` of this module for more
 details.
 
 '''

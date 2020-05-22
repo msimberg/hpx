@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_async_combinators:
+.. _modules_async_combinators:
 
 =================
 async_combinators
@@ -19,9 +19,9 @@ equivalent to the ``when_*`` functions except that they do not return a future.
 The ``split_future`` combinator takes a single future of a container (e.g.
 ``tuple``) and turns it into a container of futures.
 
-See :ref:`libs_local_lcos`, :ref:`libs_synchronization`, and :ref:`libs_async`
+See :ref:`modules_local_lcos`, :ref:`modules_synchronization`, and :ref:`modules_async`
 for other synchronization facilities.
 
-See the :ref:`API reference <libs_async_combinators_api>` of this module for more
+See the :ref:`API reference <modules_async_combinators_api>` of this module for more
 details.
 

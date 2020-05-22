@@ -13,4 +13,4 @@ include
 This library is part of HPX.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx/docs/sphinx/latest/html/libs/include/docs/index.html>`__.
+<https://stellar-group.github.io/hpx/docs/sphinx/latest/html/modules/include/docs/index.html>`__.

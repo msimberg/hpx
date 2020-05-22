@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_mpi:
+.. _modules_mpi:
 
 ===
 mpi
@@ -16,6 +16,6 @@ codes with the HPX runtime. The library is intended to be used with the
 asynchronous API of MPI using requests.
 
 
-See the :ref:`API reference <libs_mpi_api>` of this module for more
+See the :ref:`API reference <modules_mpi_api>` of this module for more
 details.
 

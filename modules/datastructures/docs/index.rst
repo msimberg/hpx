@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_datastructures:
+.. _modules_datastructures:
 
 ==============
 datastructures
@@ -18,5 +18,5 @@ compatibility with older C++ standards):
 * :cpp:class:`hpx::util::optional`
 * :cpp:class:`hpx::util::tuple`
 
-See the :ref:`API reference <libs_datastructures_api>` of the module for more
+See the :ref:`API reference <modules_datastructures_api>` of the module for more
 details.

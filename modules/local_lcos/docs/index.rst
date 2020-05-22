@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_local_lcos:
+.. _modules_local_lcos:
 
 ==========
 local_lcos
@@ -27,11 +27,11 @@ This module provides the following local :term:`LCO`\ s:
 * :cpp:class:`hpx::lcos::local::receive_buffer`
 * :cpp:class:`hpx::lcos::local::trigger`
 
-See :ref:`libs_lcos_distributed` for distributed LCOs. Basic synchronization
-primitives for use in |hpx| threads can be found in :ref:`libs_synchronization`.
+See :ref:`modules_lcos_distributed` for distributed LCOs. Basic synchronization
+primitives for use in |hpx| threads can be found in :ref:`modules_synchronization`.
 :ref:`async_combinators` contains useful utility functions for combining
 futures.
 
-See the :ref:`API reference <libs_local_lcos_api>` of this module for more
+See the :ref:`API reference <modules_local_lcos_api>` of this module for more
 details.
 

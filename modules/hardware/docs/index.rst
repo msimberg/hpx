@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_hardware:
+.. _modules_hardware:
 
 ========
 hardware
@@ -14,4 +14,4 @@ hardware
 The hardware module abstracts away hardware specific details of timestamps and
 CPU features.
 
-See the :ref:`API reference <libs_hardware_api>` of the module for more details.
+See the :ref:`API reference <modules_hardware_api>` of the module for more details.

@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_batch_environments:
+.. _modules_batch_environments:
 
 ==================
 batch_environments
@@ -21,4 +21,4 @@ tasks.
 (PBS) and SLURM.
 
 For more information on batch environments, see :ref:`running_on_batch_systems`
-and the :ref:`API reference <libs_batch_environments_api>` for the module.
+and the :ref:`API reference <modules_batch_environments_api>` for the module.

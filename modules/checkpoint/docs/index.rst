@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_checkpoint:
+.. _modules_checkpoint:
 
 ==========
 checkpoint
@@ -51,7 +51,7 @@ function as long as they are the first container passing into the function (In
 the case where a launch policy is used, the ``checkpoint`` will immediately
 follow the launch policy). An example of these features can be found below:
 
-.. literalinclude:: ../../../../libs/checkpoint/tests/unit/checkpoint.cpp
+.. literalinclude:: ../../../../modules/checkpoint/tests/unit/checkpoint.cpp
    :language: c++
    :start-after: //[check_test_1
    :end-before: //]
@@ -63,7 +63,7 @@ into the containers it is provided. It is important to remember that the
 containers must be ordered in the same way they were placed into the
 ``checkpoint``. For clarity see the example below:
 
-.. literalinclude:: ../../../../libs/checkpoint/tests/unit/checkpoint.cpp
+.. literalinclude:: ../../../../modules/checkpoint/tests/unit/checkpoint.cpp
    :language: c++
    :start-after: //[check_test_2
    :end-before: //]
@@ -77,7 +77,7 @@ operator overloads and access iterators.
 data out of and into ``checkpoint``. Here is an example of the overloads in
 use below:
 
-.. literalinclude:: ../../../../libs/checkpoint/tests/unit/checkpoint.cpp
+.. literalinclude:: ../../../../modules/checkpoint/tests/unit/checkpoint.cpp
    :language: c++
    :start-after: //[check_test_3
    :end-before: //]
@@ -105,7 +105,7 @@ Users may also move the data into and out of a ``checkpoint`` using the exposed
 ``.begin()`` and ``.end()`` iterators. An example of this use case is
 illustrated below.
 
-.. literalinclude:: ../../../../libs/checkpoint/tests/unit/checkpoint.cpp
+.. literalinclude:: ../../../../modules/checkpoint/tests/unit/checkpoint.cpp
    :language: c++
    :start-after: //[check_test_4
    :end-before: //]
@@ -121,7 +121,7 @@ resurrect the component she can pass a client instance to
 
 This technique is demonstrated below:
 
-.. literalinclude:: ../../../../libs/checkpoint/tests/unit/checkpoint_component.cpp
+.. literalinclude:: ../../../../modules/checkpoint/tests/unit/checkpoint_component.cpp
    :language: c++
    :start-after: //[client_example
    :end-before: //]
@@ -133,7 +133,7 @@ instance to ``restore_checkpoint``.
 
 This technique is demonstrated below:
 
-.. literalinclude:: ../../../../libs/checkpoint/tests/unit/checkpoint_component.cpp
+.. literalinclude:: ../../../../modules/checkpoint/tests/unit/checkpoint_component.cpp
    :language: c++
    :start-after: //[shared_ptr_example
    :end-before: //]

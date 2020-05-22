@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_pack_traversal:
+.. _modules_pack_traversal:
 
 ==============
 pack_traversal
@@ -17,6 +17,6 @@ synchronously and asynchronously: :cpp:func:`hpx::util::traverse_pack` and
 functionality of unwrapping nested futures: :cpp:func:`hpx::util::unwrap` and
 its function object form :cpp:class:`hpx::util::functional::unwrap`.
 
-See the :ref:`API reference <libs_pack_traversal_api>` of this module for more
+See the :ref:`API reference <modules_pack_traversal_api>` of this module for more
 details.
 

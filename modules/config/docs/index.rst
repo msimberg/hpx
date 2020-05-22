@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_config:
+.. _modules_config:
 
 ======
 config
@@ -15,4 +15,4 @@ The config module contains various configuration options, typically hidden
 behind macros that choose the correct implementation based on the compiler and
 other available options.
 
-See the :ref:`API reference <libs_config_api>` of the module for more details.
+See the :ref:`API reference <modules_config_api>` of the module for more details.

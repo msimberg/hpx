@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_errors:
+.. _modules_errors:
 
 ======
 errors
@@ -17,4 +17,4 @@ This module provides support for exceptions and error codes:
 * :cpp:class:`hpx::error_code`
 * :c:enum:`hpx::error`
 
-See the :ref:`API reference <libs_errors_api>` of the module for more details.
+See the :ref:`API reference <modules_errors_api>` of the module for more details.

@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_assertion:
+.. _modules_assertion:
 
 =========
 assertion
@@ -24,5 +24,5 @@ needs to customize this, it needs to do so before calling
 wrappers.
 
 
-See the :ref:`API reference <libs_assertion_api>` of the module for more
+See the :ref:`API reference <modules_assertion_api>` of the module for more
 details.

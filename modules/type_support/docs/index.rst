@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_type_support:
+.. _modules_type_support:
 
 ============
 type_support
@@ -13,5 +13,5 @@ type_support
 
 This module provides helper facilities related to types.
 
-See the :ref:`API reference <libs_type_support_api>` of the module for more
+See the :ref:`API reference <modules_type_support_api>` of the module for more
 details.

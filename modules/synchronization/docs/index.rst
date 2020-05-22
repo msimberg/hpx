@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_synchronization:
+.. _modules_synchronization:
 
 ===============
 synchronization
@@ -29,9 +29,9 @@ the C++ standard ones in |hpx| threads:
 * :cpp:class:`hpx::lcos::local::spinlock_no_backoff` (`boost::mutex` compatible spinlock)
 * :cpp:class:`hpx::lcos::local::spinlock_pool`
 
-See :ref:`libs_local_lcos`, :ref:`libs_async_combinators`, and :ref:`libs_async`
+See :ref:`modules_local_lcos`, :ref:`modules_async_combinators`, and :ref:`modules_async`
 for higher level synchronization facilities.
 
-See the :ref:`API reference <libs_synchronization_api>` of this module for more
+See the :ref:`API reference <modules_synchronization_api>` of this module for more
 details.
 

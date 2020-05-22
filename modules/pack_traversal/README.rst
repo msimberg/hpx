@@ -13,4 +13,4 @@ pack_traversal
 This library is part of HPX.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx/docs/sphinx/latest/html/libs/pack_traversal/docs/index.html>`__.
+<https://stellar-group.github.io/hpx/docs/sphinx/latest/html/modules/pack_traversal/docs/index.html>`__.

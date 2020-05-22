@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_performance_counters:
+.. _modules_performance_counters:
 
 ====================
 performance_counters
@@ -13,6 +13,6 @@ performance_counters
 
 TODO: High-level description of the library.
 
-See the :ref:`API reference <libs_performance_counters_api>` of this module for more
+See the :ref:`API reference <modules_performance_counters_api>` of this module for more
 details.
 

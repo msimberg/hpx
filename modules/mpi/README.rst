@@ -13,4 +13,4 @@ mpi
 This library is part of HPX.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx/docs/sphinx/latest/html/libs/mpi/docs/index.html>`__.
+<https://stellar-group.github.io/hpx/docs/sphinx/latest/html/modules/mpi/docs/index.html>`__.

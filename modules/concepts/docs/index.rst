@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_concepts:
+.. _modules_concepts:
 
 ========
 concepts
@@ -18,4 +18,4 @@ macros:
 * :c:macro:`HPX_HAS_MEMBER_XXX_TRAIT_DEF`
 * :c:macro:`HPX_HAS_XXX_TRAIT_DEF`
 
-See the :ref:`API reference <libs_concepts_api>` of the module for more details.
+See the :ref:`API reference <modules_concepts_api>` of the module for more details.

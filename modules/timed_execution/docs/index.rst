@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_timed_execution:
+.. _modules_timed_execution:
 
 ===============
 timed_execution
@@ -13,6 +13,6 @@ timed_execution
 
 TODO: High-level description of the library.
 
-See the :ref:`API reference <libs_timed_execution_api>` of this module for more
+See the :ref:`API reference <modules_timed_execution_api>` of this module for more
 details.
 

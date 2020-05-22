@@ -12,8 +12,8 @@ local_async
 
 This module contains functionality for asynchronously launching local work:
 :cpp:func:`hpx::async`, :cpp:func:`hpx::apply`, and :cpp:func:`hpx::dataflow`.
-The :ref:`libs_async` module extends the functionality in this module to work
+The :ref:`modules_async` module extends the functionality in this module to work
 with :term:`action`\ s.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx-docs/latest/html/libs/local_async/docs/index.html>`__.
+<https://stellar-group.github.io/hpx-docs/latest/html/modules/local_async/docs/index.html>`__.

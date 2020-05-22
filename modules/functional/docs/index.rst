@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_functional:
+.. _modules_functional:
 
 ==========
 functional
@@ -28,5 +28,5 @@ their arguments.
 * :cpp:func:`hpx::util::protect`
 * :cpp:class:`hpx::util::result_of`
 
-See the :ref:`API reference <libs_functional_api>` of the module for more
+See the :ref:`API reference <modules_functional_api>` of the module for more
 details.

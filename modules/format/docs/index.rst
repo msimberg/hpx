@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_format:
+.. _modules_format:
 
 ======
 format
@@ -14,4 +14,4 @@ format
 The format module exposes the :cpp:func:`format` and :cpp:func:`format_to`
 functions for formatting strings.
 
-See the :ref:`API reference <libs_format_api>` of the module for more details.
+See the :ref:`API reference <modules_format_api>` of the module for more details.

@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_resiliency:
+.. _modules_resiliency:
 
 ==========
 resiliency
@@ -113,5 +113,5 @@ The following API functions are exposed:
   arguments for the executed task that are futures will cause the task
   invocation to be delayed until all of those futures have become ready.
 
-See the :ref:`API reference <libs_resiliency_api>` of the module for more
+See the :ref:`API reference <modules_resiliency_api>` of the module for more
 details.

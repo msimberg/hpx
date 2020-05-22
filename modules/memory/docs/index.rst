@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_memory:
+.. _modules_memory:
 
 ======
 memory
@@ -14,4 +14,4 @@ memory
 Part of this module is a forked version of boost::intrusive_ptr from
 Boost.SmartPtr.
 
-See the :ref:`API reference <libs_memory_api>` of the module for more details.
+See the :ref:`API reference <modules_memory_api>` of the module for more details.

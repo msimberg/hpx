@@ -13,4 +13,4 @@ static_reinit
 This library is part of HPX.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx-docs/latest/html/libs/static_reinit/docs/index.html>`__.
+<https://stellar-group.github.io/hpx-docs/latest/html/modules/static_reinit/docs/index.html>`__.

@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_timing:
+.. _modules_timing:
 
 ======
 timing
@@ -13,4 +13,4 @@ timing
 
 This module provides the timing utilities (clocks and timers).
 
-See the :ref:`API reference <libs_timing_api>` of the module for more details.
+See the :ref:`API reference <modules_timing_api>` of the module for more details.

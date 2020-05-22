@@ -13,4 +13,4 @@ async_combinators
 This library is part of HPX.
 
 Documentation can be found `here
-<https://stellar-group.github.io/hpx-docs/latest/html/libs/async_combinators/docs/index.html>`__.
+<https://stellar-group.github.io/hpx-docs/latest/html/modules/async_combinators/docs/index.html>`__.

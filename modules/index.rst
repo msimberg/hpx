@@ -9,5 +9,5 @@
    :caption: Modules
    :maxdepth: 2
 
-   /libs/overview.rst
-   /libs/all_modules.rst
+   /modules/overview.rst
+   /modules/all_modules.rst

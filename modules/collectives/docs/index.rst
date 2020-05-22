@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_collectives:
+.. _modules_collectives:
 
 ===========
 collectives
@@ -32,5 +32,5 @@ At this point the module exposes the following collective primitives:
 * :cpp:class:`hpx::lcos::spmd_block`: performs the same operation on a local
   image while providing handles to the other images.
 
-See the :ref:`API reference <libs_collectives_api>` of the module for more
+See the :ref:`API reference <modules_collectives_api>` of the module for more
 details.

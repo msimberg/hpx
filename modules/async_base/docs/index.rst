@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_async_base:
+.. _modules_async_base:
 
 ==========
 async_base
@@ -13,6 +13,6 @@ async_base
 
 TODO: High-level description of the library.
 
-See the :ref:`API reference <libs_async_base_api>` of this module for more
+See the :ref:`API reference <modules_async_base_api>` of this module for more
 details.
 

@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_testing:
+.. _modules_testing:
 
 =======
 testing
@@ -33,4 +33,4 @@ provided:
 * :c:macro:`HPX_SANITY_RANGE`
 * :c:macro:`HPX_SANITY_EQ_MSG`
 
-See the :ref:`API reference <libs_testing_api>` of the module for more details.
+See the :ref:`API reference <modules_testing_api>` of the module for more details.

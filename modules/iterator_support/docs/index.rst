@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_iterator_support:
+.. _modules_iterator_support:
 
 ================
 iterator_support
@@ -17,5 +17,5 @@ This module provides helpers for iterators. It provides
 trait :cpp:class:`hpx::util::is_iterator` along with more specific iterator
 traits.
 
-See the :ref:`API reference <libs_iterator_support_api>` of the module for more
+See the :ref:`API reference <modules_iterator_support_api>` of the module for more
 details.

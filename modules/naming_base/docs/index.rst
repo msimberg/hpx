@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_naming_base:
+.. _modules_naming_base:
 
 ===========
 naming_base
@@ -14,6 +14,6 @@ naming_base
 This module provides a forward declaration of `address_type`, `component_type`
 and `invalid_locality_id`.
 
-See the :ref:`API reference <libs_naming_base_api>` of this module for more
+See the :ref:`API reference <modules_naming_base_api>` of this module for more
 details.
 

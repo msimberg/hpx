@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_plugin:
+.. _modules_plugin:
 
 ======
 plugin
@@ -13,4 +13,4 @@ plugin
 
 This module provides base utilities for creating plugins.
 
-See the :ref:`API reference <libs_plugin_api>` of the module for more details.
+See the :ref:`API reference <modules_plugin_api>` of the module for more details.

@@ -5,7 +5,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-.. _libs_preprocessor:
+.. _modules_preprocessor:
 
 ============
 preprocessor
@@ -19,5 +19,5 @@ This library contains useful preprocessor macros:
 * :c:macro:`HPX_PP_STRINGIZE`
 * :c:macro:`HPX_PP_STRIP_PARENS`
 
-See the :ref:`API reference <libs_preprocessor_api>` of the module for more
+See the :ref:`API reference <modules_preprocessor_api>` of the module for more
 details.
