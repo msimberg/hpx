@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/program_options/include
+# Default location is $HPX_ROOT/modules/program_options/include
 set(program_options_headers
     hpx/program_options.hpp
     hpx/program_options/cmdline.hpp
@@ -32,7 +32,7 @@ set(program_options_headers
     hpx/program_options/detail/value_semantic.hpp
 )
 
-# Default location is $HPX_ROOT/libs/program_options/src
+# Default location is $HPX_ROOT/modules/program_options/src
 set(program_options_sources
     cmdline.cpp
     config_file.cpp

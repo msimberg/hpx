@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/hardware/include
+# Default location is $HPX_ROOT/modules/hardware/include
 set(hardware_headers
     hpx/hardware/cpuid/linux_x86.hpp
     hpx/hardware/cpuid/msvc.hpp
@@ -22,7 +22,7 @@ set(hardware_headers
     hpx/hardware/timestamp.hpp
 )
 
-# Default location is $HPX_ROOT/libs/hardware/include_compatibility
+# Default location is $HPX_ROOT/modules/hardware/include_compatibility
 set(hardware_compat_headers
     hpx/util/hardware/cpuid/linux_x86.hpp
     hpx/util/hardware/cpuid/msvc.hpp
@@ -36,7 +36,7 @@ set(hardware_compat_headers
     hpx/util/hardware/timestamp.hpp
 )
 
-# Default location is $HPX_ROOT/libs/hardware/src
+# Default location is $HPX_ROOT/modules/hardware/src
 set(hardware_sources)
 
 include(HPX_AddModule)

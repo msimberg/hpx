@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/config/include
+# Default location is $HPX_ROOT/modules/config/include
 set(config_headers
     hpx/config.hpp
     hpx/config/asio.hpp
@@ -32,7 +32,7 @@ set(config_headers
     hpx/config/weak_symbol.hpp
 )
 
-# Default location is $HPX_ROOT/libs/config/src
+# Default location is $HPX_ROOT/modules/config/src
 set(config_sources force_linking.cpp version.cpp)
 
 include(HPX_AddModule)

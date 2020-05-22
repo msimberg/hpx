@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/resiliency/include
+# Default location is $HPX_ROOT/modules/resiliency/include
 set(resiliency_headers
     hpx/resiliency/async_replay.hpp
     hpx/resiliency/async_replicate.hpp
@@ -20,7 +20,7 @@ set(resiliency_headers
     hpx/resiliency/resiliency.hpp
 )
 
-# Default location is $HPX_ROOT/libs/resiliency/src
+# Default location is $HPX_ROOT/modules/resiliency/src
 set(resiliency_sources force_linking.cpp resiliency.cpp)
 
 include(HPX_AddModule)

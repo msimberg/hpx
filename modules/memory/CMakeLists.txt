@@ -6,16 +6,16 @@
 
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-# Default location is $HPX_ROOT/libs/memory/include
+# Default location is $HPX_ROOT/modules/memory/include
 set(memory_headers
     hpx/memory/intrusive_ptr.hpp hpx/memory/detail/sp_convertible.hpp
     hpx/memory/serialization/intrusive_ptr.hpp
 )
 
-# Default location is $HPX_ROOT/libs/memory/include_compatibility
+# Default location is $HPX_ROOT/modules/memory/include_compatibility
 set(memory_compat_headers)
 
-# Default location is $HPX_ROOT/libs/memory/src
+# Default location is $HPX_ROOT/modules/memory/src
 set(memory_sources)
 
 include(HPX_AddModule)

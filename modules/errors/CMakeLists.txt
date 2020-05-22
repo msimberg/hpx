@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/errors/include
+# Default location is $HPX_ROOT/modules/errors/include
 set(errors_headers
     hpx/errors/error.hpp
     hpx/errors/error_code.hpp
@@ -19,7 +19,7 @@ set(errors_headers
     hpx/errors/throw_exception.hpp
 )
 
-# Default location is $HPX_ROOT/libs/errors/include_compatibility
+# Default location is $HPX_ROOT/modules/errors/include_compatibility
 set(errors_compat_headers
     hpx/error.hpp
     hpx/error_code.hpp
@@ -30,7 +30,7 @@ set(errors_compat_headers
     hpx/throw_exception.hpp
 )
 
-# Default location is $HPX_ROOT/libs/errors/src
+# Default location is $HPX_ROOT/modules/errors/src
 set(errors_sources error_code.cpp exception.cpp exception_list.cpp
                    throw_exception.cpp
 )

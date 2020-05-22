@@ -20,12 +20,12 @@ if(NOT TARGET Mpi::mpi)
   setup_mpi()
 endif()
 
-# Default location is $HPX_ROOT/libs/mpi/include
+# Default location is $HPX_ROOT/modules/mpi/include
 set(mpi_headers hpx/mpi/force_linking.hpp hpx/mpi/mpi_executor.hpp
                 hpx/mpi/mpi_future.hpp
 )
 
-# Default location is $HPX_ROOT/libs/mpi/src
+# Default location is $HPX_ROOT/modules/mpi/src
 set(mpi_sources force_linking.cpp mpi_future.cpp)
 
 include(HPX_AddModule)

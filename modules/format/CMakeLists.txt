@@ -8,15 +8,15 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/format/include
+# Default location is $HPX_ROOT/modules/format/include
 set(format_headers hpx/format.hpp hpx/util/bad_lexical_cast.hpp
                    hpx/util/from_string.hpp hpx/util/to_string.hpp
 )
 
-# Default location is $HPX_ROOT/libs/format/include_compatibility
+# Default location is $HPX_ROOT/modules/format/include_compatibility
 set(format_compat_headers hpx/util/format.hpp)
 
-# Default location is $HPX_ROOT/libs/format/src
+# Default location is $HPX_ROOT/modules/format/src
 set(format_sources format.cpp util/bad_lexical_cast.cpp)
 
 include(HPX_AddModule)

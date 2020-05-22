@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/logging/include
+# Default location is $HPX_ROOT/modules/logging/include
 set(logging_headers
     hpx/logging.hpp
     hpx/logging/detail/macros.hpp
@@ -22,7 +22,7 @@ set(logging_headers
     hpx/logging/message.hpp
 )
 
-# Default location is $HPX_ROOT/libs/logging/include_compatibility
+# Default location is $HPX_ROOT/modules/logging/include_compatibility
 set(logging_compat_headers
     hpx/util/logging.hpp
     hpx/util/logging/writer/format_write.hpp
@@ -41,7 +41,7 @@ set(logging_compat_headers
     hpx/util/logging/format/optimize.hpp
 )
 
-# Default location is $HPX_ROOT/libs/logging/src
+# Default location is $HPX_ROOT/modules/logging/src
 set(logging_sources
     level.cpp
     logging.cpp

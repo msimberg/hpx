@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/concurrency/include
+# Default location is $HPX_ROOT/modules/concurrency/include
 set(concurrency_headers
     hpx/concurrency/barrier.hpp
     hpx/concurrency/cache_line_data.hpp
@@ -22,7 +22,7 @@ set(concurrency_headers
     hpx/concurrency/thread_name.hpp
 )
 
-# Default location is $HPX_ROOT/libs/concurrency/include_compatibility
+# Default location is $HPX_ROOT/modules/concurrency/include_compatibility
 set(concurrency_compat_headers
     hpx/compat/barrier.hpp
     hpx/util/lockfree/concurrentqueue.hpp
@@ -34,7 +34,7 @@ set(concurrency_compat_headers
     hpx/util/spinlock_pool.hpp
 )
 
-# Default location is $HPX_ROOT/libs/concurrency/src
+# Default location is $HPX_ROOT/modules/concurrency/src
 set(concurrency_sources barrier.cpp itt_notify.cpp thread_name.cpp)
 
 include(HPX_AddModule)

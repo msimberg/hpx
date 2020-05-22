@@ -8,19 +8,19 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/statistics/include
+# Default location is $HPX_ROOT/modules/statistics/include
 set(statistics_headers
     hpx/statistics/histogram.hpp hpx/statistics/max.hpp hpx/statistics/min.hpp
     hpx/statistics/rolling_max.hpp hpx/statistics/rolling_min.hpp
 )
 
-# Default location is $HPX_ROOT/libs/statistics/include_compatibility
+# Default location is $HPX_ROOT/modules/statistics/include_compatibility
 set(statistics_compat_headers
     hpx/util/histogram.hpp hpx/util/max.hpp hpx/util/min.hpp
     hpx/util/rolling_max.hpp hpx/util/rolling_min.hpp
 )
 
-# Default location is $HPX_ROOT/libs/statistics/src
+# Default location is $HPX_ROOT/modules/statistics/src
 set(statistics_sources)
 
 include(HPX_AddModule)

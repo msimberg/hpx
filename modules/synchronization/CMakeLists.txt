@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/synchronization/include
+# Default location is $HPX_ROOT/modules/synchronization/include
 set(synchronization_headers
     hpx/barrier.hpp
     hpx/condition_variable.hpp
@@ -39,7 +39,7 @@ set(synchronization_headers
     hpx/synchronization/stop_token.hpp
 )
 
-# Default location is $HPX_ROOT/libs/synchronization/include_compatibility
+# Default location is $HPX_ROOT/modules/synchronization/include_compatibility
 set(synchronization_compat_headers
     hpx/lcos/local/barrier.hpp
     hpx/lcos/local/condition_variable.hpp

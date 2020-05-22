@@ -12,10 +12,10 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/checkpoint/include
+# Default location is $HPX_ROOT/modules/checkpoint/include
 set(checkpoint_headers hpx/checkpoint/checkpoint.hpp)
 
-# Default location is $HPX_ROOT/libs/checkpoint/include_compatibility
+# Default location is $HPX_ROOT/modules/checkpoint/include_compatibility
 set(checkpoint_compat_headers hpx/util/checkpoint.hpp)
 
 set(checkpoint_sources)

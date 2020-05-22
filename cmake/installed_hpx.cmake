@@ -115,15 +115,15 @@ if(HPX_WITH_TESTS)
   endif()
 
   # add actual tests, first iterate through all modules
-  foreach(lib ${HPX_ENABLED_LIBS})
-    if(EXISTS ${PROJECT_SOURCE_DIR}/libs/${lib}/tests)
-      string(TOUPPER ${lib} lib_upper)
+  foreach(module ${HPX_ENABLED_MODULES})
+    if(EXISTS ${PROJECT_SOURCE_DIR}/modules/${module}/tests)
+      string(TOUPPER ${module} module_upper)
       hpx_option(
-        HPX_${lib_upper}_WITH_TESTS BOOL
+        HPX_${module_upper}_WITH_TESTS BOOL
         "Build HPX ${name} module tests. (default: ${HPX_WITH_TESTS})"
         ${HPX_WITH_TESTS} ADVANCED CATEGORY "Modules"
       )
-      add_subdirectory(libs/${lib}/tests)
+      add_subdirectory(modules/${module}/tests)
     endif()
   endforeach()
 
@@ -138,9 +138,9 @@ if(HPX_WITH_EXAMPLES)
   add_hpx_pseudo_dependencies(examples examples.modules)
 
   # add actual examples, iterate through all modules
-  foreach(lib ${HPX_ENABLED_LIBS})
-    if(EXISTS ${PROJECT_SOURCE_DIR}/libs/${lib}/examples)
-      add_subdirectory(libs/${lib}/examples)
+  foreach(module ${HPX_ENABLED_MODULES})
+    if(EXISTS ${PROJECT_SOURCE_DIR}/modules/${module}/examples)
+      add_subdirectory(modules/${module}/examples)
     endif()
   endforeach()
 

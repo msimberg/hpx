@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/functional/include
+# Default location is $HPX_ROOT/modules/functional/include
 set(functional_headers
     hpx/functional/deferred_call.hpp
     hpx/functional/detail/basic_function.hpp
@@ -47,7 +47,7 @@ set(functional_headers
     hpx/functional/traits/is_placeholder.hpp
 )
 
-# Default location is $HPX_ROOT/libs/functional/include_compatibility
+# Default location is $HPX_ROOT/modules/functional/include_compatibility
 set(functional_compat_headers
     hpx/util/bind.hpp
     hpx/util/bind_back.hpp
@@ -70,7 +70,7 @@ set(functional_compat_headers
     hpx/util/unique_function.hpp
 )
 
-# Default location is $HPX_ROOT/libs/functional/src
+# Default location is $HPX_ROOT/modules/functional/src
 set(functional_sources basic_function.cpp empty_function.cpp)
 
 include(HPX_AddModule)

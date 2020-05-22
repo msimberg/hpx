@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/cache/include
+# Default location is $HPX_ROOT/modules/cache/include
 set(cache_headers
     hpx/cache/local_cache.hpp
     hpx/cache/lru_cache.hpp
@@ -23,7 +23,7 @@ set(cache_headers
     hpx/cache/statistics/no_statistics.hpp
 )
 
-# Default location is $HPX_ROOT/libs/cache/include_compatibility
+# Default location is $HPX_ROOT/modules/cache/include_compatibility
 set(cache_compat_headers
     hpx/util/cache/local_cache.hpp
     hpx/util/cache/lru_cache.hpp
@@ -38,7 +38,7 @@ set(cache_compat_headers
     hpx/util/cache/statistics/no_statistics.hpp
 )
 
-# Default location is $HPX_ROOT/libs/cache/src
+# Default location is $HPX_ROOT/modules/cache/src
 set(cache_sources)
 
 include(HPX_AddModule)

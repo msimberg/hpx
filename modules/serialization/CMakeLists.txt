@@ -21,7 +21,7 @@ if(HPX_SERIALIZATION_WITH_BOOST_TYPES)
   )
 endif()
 
-# Default location is $HPX_ROOT/libs/serialization/include
+# Default location is $HPX_ROOT/modules/serialization/include
 set(serialization_headers
     hpx/serialization/detail/extra_archive_data.hpp
     hpx/serialization/detail/non_default_constructible.hpp
@@ -84,7 +84,7 @@ if(HPX_SERIALIZATION_WITH_BOOST_TYPES)
   )
 endif()
 
-# Default location is $HPX_ROOT/libs/serialization/include_compatibility
+# Default location is $HPX_ROOT/modules/serialization/include_compatibility
 set(serialization_compat_headers
     hpx/runtime/serialization/detail/non_default_constructible.hpp
     hpx/runtime/serialization/detail/pointer.hpp
@@ -138,7 +138,7 @@ set(serialization_compat_headers
     hpx/util/serializable_any.hpp
 )
 
-# Default location is $HPX_ROOT/libs/serialization/src
+# Default location is $HPX_ROOT/modules/serialization/src
 set(serialization_sources
     detail/pointer.cpp
     detail/polymorphic_id_factory.cpp

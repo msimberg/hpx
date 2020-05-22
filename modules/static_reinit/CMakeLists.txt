@@ -8,12 +8,12 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/static_reinit/include
+# Default location is $HPX_ROOT/modules/static_reinit/include
 set(static_reinit_headers hpx/static_reinit/reinitializable_static.hpp
                           hpx/static_reinit/static_reinit.hpp
 )
 
-# Default location is $HPX_ROOT/libs/static_reinit/include_compatibility
+# Default location is $HPX_ROOT/modules/static_reinit/include_compatibility
 set(static_reinit_compat_headers hpx/util/reinitializable_static.hpp
                                  hpx/util/static_reinit.hpp
 )

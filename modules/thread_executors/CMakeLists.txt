@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-# Default location is $HPX_ROOT/libs/thread_executors/include
+# Default location is $HPX_ROOT/modules/thread_executors/include
 set(thread_executors_headers
     hpx/execution/executors/default_executor.hpp
     hpx/execution/executors/thread_pool_executors.hpp
@@ -33,7 +33,7 @@ set(thread_executors_headers
     hpx/thread_executors/thread_timed_execution.hpp
 )
 
-# Default location is $HPX_ROOT/libs/thread_executors/include_compatibility
+# Default location is $HPX_ROOT/modules/thread_executors/include_compatibility
 set(thread_executors_compat_headers
     hpx/parallel/executors/default_executor.hpp
     hpx/parallel/executors/this_thread_executors.hpp

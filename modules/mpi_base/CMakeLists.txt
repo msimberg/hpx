@@ -15,10 +15,10 @@ if((HPX_WITH_NETWORKING AND HPX_WITH_PARCELPORT_MPI) OR HPX_MPI_WITH_FUTURES)
   set(additional_dependencies Mpi::mpi)
 endif()
 
-# Default location is $HPX_ROOT/libs/mpi_base/include
+# Default location is $HPX_ROOT/modules/mpi_base/include
 set(mpi_base_headers hpx/mpi_base/mpi.hpp hpx/mpi_base/mpi_environment.hpp)
 
-# Default location is $HPX_ROOT/libs/mpi_base/include_compatibility
+# Default location is $HPX_ROOT/modules/mpi_base/include_compatibility
 set(mpi_base_compat_headers hpx/plugins/parcelport/mpi/mpi.hpp
                             hpx/plugins/parcelport/mpi/mpi_environment.hpp
 )

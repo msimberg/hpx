@@ -11,7 +11,7 @@ include(HPX_AddPseudoDependencies)
 include(HPX_AddPseudoTarget)
 
 # cmake-format: off
-set(HPX_MAIN_CANDIDATE_LIBS
+set(HPX_CANDIDATE_MODULES
     affinity
     algorithms
     allocator_support
@@ -126,8 +126,8 @@ hpx_info("")
 hpx_info("Configuring modules:")
 
 # Generate a file that lists all enabled modules for checks that might be
-# optional based on the presence of a library or not
-set(MODULE_ENABLED_LIB_DEFINES)
+# optional based on the presence of a module or not
+set(MODULE_ENABLED_MODULE_DEFINES)
 
 # variables needed for config_strings_modules.hpp
 set(CONFIG_STRINGS_MODULES_INCLUDES)
@@ -159,22 +159,17 @@ install(
 
 hpx_export_internal_targets(hpx_core hpx_core_static)
 
-foreach(lib ${HPX_MAIN_CANDIDATE_LIBS})
-  # if the module is successfully added, xxx_LIBRARY_ENABLED will be ON
-  add_subdirectory(${lib})
+foreach(module ${HPX_CANDIDATE_MODULES})
+  # if the module is successfully added, xxx_MODULE_ENABLED will be ON
+  add_subdirectory(${module})
 
   get_property(
-    HPX_${lib}_LIBRARY_ENABLED GLOBAL PROPERTY HPX_${lib}_LIBRARY_ENABLED
+    HPX_${module}_MODULE_ENABLED GLOBAL PROPERTY HPX_${module}_MODULE_ENABLED
   )
-  if(HPX_${lib}_LIBRARY_ENABLED)
-    set(HPX_ENABLED_LIBS
-        ${HPX_ENABLED_LIBS} ${lib}
+  if(HPX_${module}_MODULE_ENABLED)
+    set(HPX_ENABLED_MODULES
+        ${HPX_ENABLED_MODULES} ${module}
         CACHE INTERNAL "list of all enabled HPX modules" FORCE
-    )
-
-    set(HPX_ENABLED_MAIN_LIBS
-        ${HPX_ENABLED_MAIN_LIBS} ${lib}
-        CACHE INTERNAL "list of enabled HPX modules for the main library" FORCE
     )
   endif()
 endforeach()
@@ -184,11 +179,11 @@ configure_file(
   "${PROJECT_BINARY_DIR}/modules/modules.cpp" @ONLY
 )
 
-foreach(lib ${HPX_ENABLED_LIBS})
-  string(TOUPPER ${lib} uppercase_lib)
+foreach(module ${HPX_ENABLED_MODULES})
+  string(TOUPPER ${module} uppercase_module)
 
-  set(MODULE_ENABLED_LIB_DEFINES
-      "${MODULE_ENABLED_LIB_DEFINES}#define HPX_HAVE_LIB_${uppercase_lib}\n"
+  set(MODULE_ENABLED_MODULE_DEFINES
+      "${MODULE_ENABLED_MODULE_DEFINES}#define HPX_HAVE_MODULE_${uppercase_module}\n"
   )
 endforeach()
 

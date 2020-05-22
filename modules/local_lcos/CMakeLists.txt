@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/local_lcos/include
+# Default location is $HPX_ROOT/modules/local_lcos/include
 set(local_lcos_headers
     hpx/local_lcos/and_gate.hpp
     hpx/local_lcos/channel.hpp
@@ -22,7 +22,7 @@ set(local_lcos_headers
     hpx/local_lcos/trigger.hpp
 )
 
-# Default location is $HPX_ROOT/libs/local_lcos/include_compatibility
+# Default location is $HPX_ROOT/modules/local_lcos/include_compatibility
 set(local_lcos_compat_headers
     hpx/lcos/local/and_gate.hpp
     hpx/lcos/local/channel.hpp

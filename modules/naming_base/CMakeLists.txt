@@ -6,10 +6,10 @@
 
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-# Default location is $HPX_ROOT/libs/naming_base/include
+# Default location is $HPX_ROOT/modules/naming_base/include
 set(naming_base_headers hpx/naming_base.hpp)
 
-# Default location is $HPX_ROOT/libs/naming_base/include_compatibility
+# Default location is $HPX_ROOT/modules/naming_base/include_compatibility
 set(naming_base_compat_headers)
 
 set(naming_base_sources)

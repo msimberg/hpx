@@ -43,7 +43,7 @@ function(add_hpx_module libname modulename)
   string(TOUPPER ${modulename} modulename_upper)
 
   # enable the module (see hpx/modules/CMakeLists.txt)
-  set_property(GLOBAL PROPERTY HPX_${modulename}_LIBRARY_ENABLED ON)
+  set_property(GLOBAL PROPERTY HPX_${modulename}_MODULE_ENABLED ON)
 
   # HPX options
   hpx_option(

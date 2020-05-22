@@ -8,14 +8,14 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/timing/include
+# Default location is $HPX_ROOT/modules/timing/include
 set(timing_headers
     hpx/timing/high_resolution_clock.hpp hpx/timing/high_resolution_timer.hpp
     hpx/timing/scoped_timer.hpp hpx/timing/steady_clock.hpp
     hpx/timing/tick_counter.hpp
 )
 
-# Default location is $HPX_ROOT/libs/timing/include_compatibility
+# Default location is $HPX_ROOT/modules/timing/include_compatibility
 set(timing_compat_headers
     hpx/util/high_resolution_clock.hpp hpx/util/high_resolution_timer.hpp
     hpx/util/scoped_timer.hpp hpx/util/steady_clock.hpp
@@ -24,7 +24,7 @@ set(timing_compat_headers
 
 # cmake will not create a separate VS project without any source files, thus
 # this adds a dummy (empty) source file to the target Default location is
-# $HPX_ROOT/libs/timing/src
+# $HPX_ROOT/modules/timing/src
 set(timing_sources)
 
 include(HPX_AddModule)

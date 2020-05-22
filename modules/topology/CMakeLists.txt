@@ -8,15 +8,15 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-# Default location is $HPX_ROOT/libs/topology/include
+# Default location is $HPX_ROOT/modules/topology/include
 set(topology_headers hpx/topology/cpu_mask.hpp hpx/topology/topology.hpp)
 
-# Default location is $HPX_ROOT/libs/topology/include_compatibility
+# Default location is $HPX_ROOT/modules/topology/include_compatibility
 set(topology_compat_headers hpx/runtime/threads/cpu_mask.hpp
                             hpx/runtime/threads/topology.hpp
 )
 
-# Default location is $HPX_ROOT/libs/topology/src
+# Default location is $HPX_ROOT/modules/topology/src
 set(topology_sources cpu_mask.cpp topology.cpp)
 
 include(HPX_AddModule)
