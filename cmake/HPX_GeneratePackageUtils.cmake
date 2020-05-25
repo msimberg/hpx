@@ -89,6 +89,15 @@ function(
   # In case of components no need to do the recursive search
   if(NOT ${is_component})
     foreach(dep IN LISTS _target_link_libraries)
+      if("${dep}" MATCHES "^hpx_[^:]+::@.*")
+        # This is an HPX module (object library) that CMake decorates. Later
+        # versions of CMake have the plain name of the object library in
+        # INTERFACE_LINK_LIBRARIES. Example: hpx_runtime_configuration may end
+        # up as hpx_runtime_configuration::@<0x51f41a0>. However,
+        # hpx_runtime_configuration is still a valid target, so we simply strip
+        # the suffix starting with ::@.
+        string(REGEX REPLACE "(hpx_[^:]+)::@.*" "\\1" dep ${dep})
+      endif()
 
       if(${dep} MATCHES "^\\$<LINK_ONLY:([^>]+)>$")
         # This a private link dependency. Do not inherit the target's usage
@@ -160,6 +169,8 @@ function(
           set(_libraries ${_libraries} ${dep})
           # This is a link flag put as a link_libraries (to solve some cmake
           # problems)
+        elseif(${dep} MATCHES "::@")
+          # This is an internal CMake object, skip it.
         elseif(${dep} MATCHES "^-")
           set(_libraries ${_libraries} ${dep})
         else()
