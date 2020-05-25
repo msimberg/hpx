@@ -226,8 +226,10 @@ function(add_hpx_module libname modulename)
     PUBLIC hpx_base_libraries
   )
 
-  # All modules depend on the config registry
-  if(NOT "${modulename}" STREQUAL "config_registry")
+  # All core modules depend on the config registry
+  if("${libname}" STREQUAL "core" AND NOT "${modulename}" STREQUAL
+                                      "config_registry"
+  )
     target_link_libraries(hpx_${modulename} PUBLIC hpx_config_registry)
   endif()
 
