@@ -107,7 +107,7 @@ add_hpx_module(
   GLOBAL_HEADER_GEN OFF
   HEADERS ${async_headers}
   COMPAT_HEADERS ${async_compat_headers}
-  MODULE_DEPENDENCIES hpx_execution hpx_local_async hpx_local_lcos
+  MODULE_DEPENDENCIES hpx_execution hpx_futures hpx_local_async hpx_local_lcos
                       hpx_runtime_configuration hpx_threadmanager hpx_core
   CMAKE_SUBDIRS examples tests
 )

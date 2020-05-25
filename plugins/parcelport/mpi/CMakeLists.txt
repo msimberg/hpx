@@ -27,6 +27,7 @@ if(HPX_WITH_NETWORKING AND HPX_WITH_PARCELPORT_MPI)
     DEPENDENCIES
       hpx_command_line_handling
       hpx_execution
+      hpx_futures
       hpx_mpi_base
       hpx_performance_counters
       hpx_program_options

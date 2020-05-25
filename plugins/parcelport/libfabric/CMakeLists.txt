@@ -72,6 +72,7 @@ if(HPX_WITH_PARCELPORT_LIBFABRIC)
     DEPENDENCIES
       ${_libfabric_libraries}
       hpx_execution
+      hpx_futures
       hpx_performance_counters
       hpx_program_options
       hpx_threading

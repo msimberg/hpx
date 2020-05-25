@@ -20,8 +20,8 @@ if(HPX_WITH_PARCELPORT_VERBS)
       "${PROJECT_SOURCE_DIR}/plugins/parcelport/verbs/header.hpp"
       "${PROJECT_SOURCE_DIR}/plugins/parcelport/verbs/locality.hpp"
       "${PROJECT_SOURCE_DIR}/plugins/parcelport/verbs/pinned_memory_vector.hpp"
-    DEPENDENCIES hpx_threadmanager hpx_threading hpx_dependencies_boost hpx_core
-                 Verbs::verbs
+    DEPENDENCIES hpx_future hpx_threadmanager hpx_threading
+                 hpx_dependencies_boost hpx_core Verbs::verbs
     INCLUDE_DIRS ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}
     FOLDER "Core/Plugins/Parcelport/verbs"
   )

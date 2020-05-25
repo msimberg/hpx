@@ -21,6 +21,7 @@ set(_hpx_full_modules
     distributed_executors
     execution
     executors
+    futures
     include
     lcos_distributed
     local_async
