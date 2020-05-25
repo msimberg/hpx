@@ -106,31 +106,8 @@ endif()
 list(TRANSFORM hpx_SOURCES PREPEND ${PROJECT_SOURCE_DIR}/src/)
 
 set(hpx_external_objects_SOURCES)
-if(MSVC)
-  if(HPX_WITH_SWAP_CONTEXT_EMULATION)
-    enable_language(ASM)
-    set(switch_to_fiber_source
-        "${PROJECT_SOURCE_DIR}/modules/coroutines/src/switch_to_fiber.asm"
-    )
-    list(APPEND hpx_external_objects_SOURCES "${switch_to_fiber_source}")
-    add_hpx_library_sources(
-      hpx_external_objects GLOB GLOBS "${switch_to_fiber_source}"
-    )
-    add_custom_command(
-      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/switch_to_fiber.obj"
-      COMMAND
-        "${CMAKE_ASM_MASM_COMPILER}" /Fo
-        "${CMAKE_CURRENT_BINARY_DIR}/switch_to_fiber.obj" /nologo /c
-        "${switch_to_fiber_source}"
-      DEPENDS "${switch_to_fiber_source}"
-      VERBATIM
-    )
-    set(hpx_external_OBJECTS
-        "${CMAKE_CURRENT_BINARY_DIR}/switch_to_fiber.obj"
-        CACHE INTERNAL "External object files for HPX." FORCE
-    )
-  endif()
 
+if(MSVC)
   # add natvis files to solution (supported starting VS2015)
   if(MSVC14)
     add_hpx_library_sources(
@@ -557,13 +534,6 @@ if((NOT HPX_WITH_STATIC_LINKING) AND (("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
 endif()
 
 target_compile_definitions(hpx_full PRIVATE HPX_COMPONENT_NAME=hpx HPX_EXPORTS)
-
-# ##############################################################################
-# Emulation of SwapContext on Windows
-# ##############################################################################
-if(MSVC AND HPX_WITH_SWAP_CONTEXT_EMULATION)
-  target_link_options(hpx_full PRIVATE "/EXPORT:switch_to_fiber")
-endif()
 
 # ##############################################################################
 # Exported targets

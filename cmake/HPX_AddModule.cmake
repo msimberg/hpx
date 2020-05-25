@@ -15,6 +15,7 @@ function(add_hpx_module libname modulename)
       SOURCES
       HEADERS
       COMPAT_HEADERS
+      OBJECTS
       DEPENDENCIES
       MODULE_DEPENDENCIES
       CMAKE_SUBDIRS
@@ -204,7 +205,7 @@ function(add_hpx_module libname modulename)
   # cmake-format: off
   add_library(
     hpx_${modulename} OBJECT
-    ${sources} ${config_entries_source}
+    ${sources} ${config_entries_source} ${${modulename}_OBJECTS}
   )
   # cmake-format: on
 
@@ -290,8 +291,8 @@ function(add_hpx_module libname modulename)
   )
 
   set_target_properties(
-    hpx_${modulename} PROPERTIES FOLDER "Core/Modules" POSITION_INDEPENDENT_CODE
-                                                       ON
+    hpx_${modulename} PROPERTIES FOLDER "Core/${libname}/${modulename}"
+                                 POSITION_INDEPENDENT_CODE ON
   )
 
   # Add a static library that only contains the object library.
@@ -303,6 +304,10 @@ function(add_hpx_module libname modulename)
   endforeach()
 
   add_hpx_pseudo_dependencies(core hpx_${modulename}_static)
+
+  set_target_properties(
+    hpx_${modulename}_static PROPERTIES FOLDER "Core/${libname}/${modulename}"
+  )
 
   if(MSVC)
     set_target_properties(

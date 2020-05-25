@@ -63,6 +63,27 @@ set(coroutines_sources
     thread_enums.cpp
 )
 
+if(MSVC)
+  if(HPX_WITH_SWAP_CONTEXT_EMULATION)
+    enable_language(ASM)
+    set(switch_to_fiber_source
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/switch_to_fiber.asm"
+    )
+    set(switch_to_fiber_object
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/switch_to_fiber.asm"
+    )
+    add_custom_command(
+      OUTPUT "${switch_to_fiber_object}"
+      COMMAND
+        "${CMAKE_ASM_MASM_COMPILER}" /Fo
+        "${switch_to_fiber_object}" /nologo /c
+        "${switch_to_fiber_source}"
+      DEPENDS "${switch_to_fiber_source}"
+      VERBATIM
+    )
+  endif()
+endif()
+
 include(HPX_AddModule)
 add_hpx_module(
   core coroutines
@@ -72,7 +93,15 @@ add_hpx_module(
   SOURCES ${coroutines_sources}
   HEADERS ${coroutines_headers}
   COMPAT_HEADERS ${coroutines_compat_headers}
+  OBJECTS "${switch_to_fiber_object}"
   MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format
                       hpx_functional hpx_util
   CMAKE_SUBDIRS examples tests
 )
+
+if(MSVC)
+  if(HPX_WITH_SWAP_CONTEXT_EMULATION)
+    # TODO: Does this need to be on hpx_core or hpx_coroutines?
+    target_link_options(hpx_coroutines PRIVATE "/EXPORT:switch_to_fiber")
+  endif()
+endif()

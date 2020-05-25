@@ -63,6 +63,9 @@ foreach(lib ${_hpx_libs})
     add_library(hpx_${lib} SHARED src/dummy.cpp)
     add_library(hpx_${lib}_static STATIC src/dummy.cpp)
 
+    set_target_properties(hpx_${lib} PROPERTIES FOLDER "Core")
+    set_target_properties(hpx_${lib}_static PROPERTIES FOLDER "Core")
+
     install(
       TARGETS hpx_${lib}
       EXPORT HPXInternalTargets
