@@ -20,7 +20,7 @@
 // TODO
 // - [X] handle additional arguments
 // - [X] make copy constructible (for policy_allocator)?
-// - [ ] add helpers for synchronization
+// - [X] add helpers for synchronization
 // - [ ] add states for synchronization
 // - [ ] steal work
 // - [ ] documentation
@@ -118,15 +118,10 @@ namespace hpx { namespace parallel { namespace execution {
                     void operator()()
                     {
                         signal_idle_this_thread();
-
-                        //printf("%zu has started\n", thread_index_);
-
                         wait_start_this_thread();
 
                         while (!stop_signalled())
                         {
-                            //printf("%zu running parallel region\n", thread_index_);
-
                             // Initialize local queue.
                             queue_type& local_queue =
                                 queues_[thread_index_].data_;
@@ -138,12 +133,9 @@ namespace hpx { namespace parallel { namespace execution {
                             local_queue.reset(part_begin, part_end);
 
                             // Do computation.
-                            //printf("%zu calling wrapper function\n", thread_index_);
                             (function_wrapper_.load())(element_function_.load(),
                                 shape_.load(), argument_pack_.load(),
                                 thread_index_, num_threads_, queues_);
-                            //printf(
-                            //"%zu done calling wrapper function\n", thread_index_);
 
                             // Done with this parallel region.
                             signal_idle_this_thread();
@@ -151,8 +143,6 @@ namespace hpx { namespace parallel { namespace execution {
                             // Wait for more work.
                             wait_start_this_thread();
                         }
-
-                        //printf("%zu exiting work loop\n", thread_index_);
 
                         // Executor is destructed, no more work.
                         signal_idle_this_thread();
@@ -176,9 +166,7 @@ namespace hpx { namespace parallel { namespace execution {
                         while (threads_active_[t].data_.load())
                         {
                         }
-                        //printf("%zu started\n", t);
                     }
-                    //printf("all threads started\n");
                 }
 
                 void request_start_all()
@@ -215,10 +203,6 @@ namespace hpx { namespace parallel { namespace execution {
                                 size_, argument_pack_, queues_});
                     }
 
-                    //printf("main thread is %zu\n", main_thread_);
-                    //printf("waiting for threads to start\n");
-
-                    // Wait for all threads to start.
                     wait_idle_all();
                 }
 
@@ -304,8 +288,8 @@ namespace hpx { namespace parallel { namespace execution {
                         // Process local items first.
                         while (index = local_queue.pop_left())
                         {
-                            //printf("%zu processing index %u\n", thread_index,
-                            //index.value());
+                            // TODO: Is there a better way to do this? Could
+                            // define the required operations on the iterator.
                             auto it = hpx::util::begin(shape);
                             for (std::size_t i = 0; i < index.value();
                                  ++i, ++it)
@@ -313,8 +297,6 @@ namespace hpx { namespace parallel { namespace execution {
                             invoke_helper(index_pack_type{}, element_function,
                                 *it, argument_pack);
                         }
-
-                        //printf("%zu done processing local queue\n", thread_index);
                     };
                 };
 
@@ -322,12 +304,7 @@ namespace hpx { namespace parallel { namespace execution {
                 template <typename F, typename S, typename... Ts>
                 void bulk_sync_execute(F&& f, S const& shape, Ts&&... ts)
                 {
-                    //printf("bulk_sync_execute\n");
-
-                    // Wait for all threads to be idle.
                     wait_idle_all();
-
-                    //printf("all threads idle\n");
 
                     // Set the function.
                     element_function_ = static_cast<void*>(&f);
@@ -350,8 +327,6 @@ namespace hpx { namespace parallel { namespace execution {
                         ((thread_index_ + 1) * size_) / num_threads_;
                     local_queue.reset(part_begin, part_end);
 
-                    //printf("signal threads to start\n");
-
                     request_start_all();
 
                     // Main work loop
@@ -359,25 +334,16 @@ namespace hpx { namespace parallel { namespace execution {
 
                     while (index = local_queue.pop_left())
                     {
+                        // TODO: Is there a better way to do this? Could define
+                        // the required operations on the iterator.
                         auto it = hpx::util::begin(shape);
                         for (std::size_t i = 0; i < index.value(); ++i, ++it)
                             ;
-
-                        //printf(
-                        //"%zu processing index %u\n", thread_index_, index.value());
                         hpx::util::invoke(f, *it, ts...);
                     }
 
-                    //printf("%zu done processing local queue\n", thread_index_);
-
                     signal_idle_main_thread();
-
-                    //printf("wait for threads to be idle\n");
-
-                    // Wait for threads to finish.
                     wait_idle_all();
-
-                    //printf("all threads idle\n");
                 }
 
                 template <typename F, typename S, typename... Ts>
