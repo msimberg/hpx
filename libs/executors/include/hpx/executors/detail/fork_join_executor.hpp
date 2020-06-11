@@ -53,23 +53,33 @@ namespace hpx { namespace parallel { namespace execution {
                     threads::thread_stacksize_default;
                 threads::thread_schedule_hint schedulehint_{};
 
+                enum class thread_state
+                {
+                    starting = 0,
+                    idle = 1,
+                    active = 2,
+                    stopping = 3,
+                    stopped = 4,
+                };
+
                 // Fixed data for the duration of the executor.
                 std::size_t main_thread_;
                 std::size_t num_threads_;
-                std::vector<hpx::util::cache_aligned_data<std::atomic<bool>>>
+                std::vector<
+                    hpx::util::cache_aligned_data<std::atomic<thread_state>>>
                     threads_active_;
-                std::atomic<bool> stop_;
 
                 // Changing data for each parallel region.
                 using queue_type =
                     hpx::concurrency::contiguous_index_queue<std::uint32_t>;
                 using queues_type =
                     std::vector<hpx::util::cache_aligned_data<queue_type>>;
-                using function_wrapper_type = void(void*, void const*, void*,
-                    std::size_t, std::size_t, queues_type&);
+                using thread_function_helper_type = void(void*, void const*,
+                    void*, std::size_t, std::size_t, queues_type&);
 
                 // The helper function that dispatches to the actual element function.
-                std::atomic<function_wrapper_type*> function_wrapper_{nullptr};
+                std::atomic<thread_function_helper_type*>
+                    thread_function_helper_{nullptr};
 
                 // User inputs.
                 std::atomic<void*> element_function_{nullptr};
@@ -87,40 +97,41 @@ namespace hpx { namespace parallel { namespace execution {
                     // Fixed data for the duration of the executor.
                     std::size_t const num_threads_;
                     std::size_t const thread_index_;
-                    std::atomic<bool>& thread_active_;
-                    std::atomic<bool>& stop_;
+                    std::atomic<thread_state>& thread_active_;
 
                     // Changing data for each parallel region.
-                    std::atomic<function_wrapper_type*>& function_wrapper_;
+                    std::atomic<thread_function_helper_type*>&
+                        thread_function_helper_;
                     std::atomic<void*>& element_function_;
                     std::atomic<void const*>& shape_;
                     std::atomic<std::size_t>& size_;
                     std::atomic<void*>& argument_pack_;
                     queues_type& queues_;
 
-                    void wait_start_this_thread()
+                    void wait_nonidle_this_thread()
                     {
-                        while (!thread_active_.load())
+                        while (thread_active_.load() == thread_state::idle)
                         {
                         }
                     }
 
-                    bool stop_signalled()
+                    void set_idle_this_thread()
                     {
-                        return stop_.load();
+                        thread_active_ = thread_state::idle;
                     }
 
-                    void signal_idle_this_thread()
+                    void set_stopped_this_thread()
                     {
-                        thread_active_ = false;
+                        thread_active_ = thread_state::stopped;
                     }
 
                     void operator()()
                     {
-                        signal_idle_this_thread();
-                        wait_start_this_thread();
+                        HPX_ASSERT(thread_active_ == thread_state::starting);
+                        set_idle_this_thread();
+                        wait_nonidle_this_thread();
 
-                        while (!stop_signalled())
+                        while (thread_active_ < thread_state::stopping)
                         {
                             // Initialize local queue.
                             queue_type& local_queue =
@@ -133,47 +144,65 @@ namespace hpx { namespace parallel { namespace execution {
                             local_queue.reset(part_begin, part_end);
 
                             // Do computation.
-                            (function_wrapper_.load())(element_function_.load(),
-                                shape_.load(), argument_pack_.load(),
-                                thread_index_, num_threads_, queues_);
+                            (thread_function_helper_.load())(
+                                element_function_.load(), shape_.load(),
+                                argument_pack_.load(), thread_index_,
+                                num_threads_, queues_);
 
-                            // Done with this parallel region.
-                            signal_idle_this_thread();
-
-                            // Wait for more work.
-                            wait_start_this_thread();
+                            set_idle_this_thread();
+                            wait_nonidle_this_thread();
                         }
 
-                        // Executor is destructed, no more work.
-                        signal_idle_this_thread();
+                        HPX_ASSERT(thread_active_ == thread_state::stopping);
+                        set_stopped_this_thread();
                     }
                 };
 
-                void signal_idle_main_thread()
+                void set_idle_main_thread()
                 {
-                    threads_active_[main_thread_].data_ = false;
+                    threads_active_[main_thread_].data_ = thread_state::idle;
                 }
 
-                void request_stop_all()
+                void set_stopped_main_thread()
                 {
-                    stop_ = true;
+                    threads_active_[main_thread_].data_ = thread_state::stopped;
+                }
+
+                void set_stopping_all()
+                {
+                    for (std::size_t t = 0; t < num_threads_; ++t)
+                    {
+                        threads_active_[t].data_ = thread_state::stopping;
+                    }
+                }
+
+                void set_active_all()
+                {
+                    for (std::size_t t = 0; t < num_threads_; ++t)
+                    {
+                        threads_active_[t].data_ = thread_state::active;
+                    }
                 }
 
                 void wait_idle_all()
                 {
                     for (std::size_t t = 0; t < num_threads_; ++t)
                     {
-                        while (threads_active_[t].data_.load())
+                        while (threads_active_[t].data_.load() !=
+                            thread_state::idle)
                         {
                         }
                     }
                 }
 
-                void request_start_all()
+                void wait_stopped_all()
                 {
                     for (std::size_t t = 0; t < num_threads_; ++t)
                     {
-                        threads_active_[t].data_ = true;
+                        while (threads_active_[t].data_.load() !=
+                            thread_state::stopped)
+                        {
+                        }
                     }
                 }
 
@@ -181,26 +210,26 @@ namespace hpx { namespace parallel { namespace execution {
                 {
                     main_thread_ = get_local_worker_thread_num();
                     num_threads_ = pool_->get_os_thread_count();
-                    stop_ = false;
                     queues_.resize(num_threads_);
 
                     for (std::size_t t = 0; t < num_threads_; ++t)
                     {
                         if (t == main_thread_)
                         {
-                            threads_active_[t].data_ = false;
+                            threads_active_[t].data_ = thread_state::idle;
                             continue;
                         }
-                        threads_active_[t].data_ = true;
+
+                        threads_active_[t].data_ = thread_state::starting;
                         threads::thread_schedule_hint hint{
                             static_cast<std::int16_t>(t)};
                         hpx::detail::async_launch_policy_dispatch<
                             launch::async_policy>::call(launch::async, pool_,
                             threads::thread_priority_high, stacksize_, hint,
                             thread_function{num_threads_, t,
-                                threads_active_[t].data_, stop_,
-                                function_wrapper_, element_function_, shape_,
-                                size_, argument_pack_, queues_});
+                                threads_active_[t].data_,
+                                thread_function_helper_, element_function_,
+                                shape_, size_, argument_pack_, queues_});
                     }
 
                     wait_idle_all();
@@ -226,10 +255,10 @@ namespace hpx { namespace parallel { namespace execution {
 
                 ~shared_data()
                 {
-                    request_stop_all();
-                    request_start_all();
-                    signal_idle_main_thread();
                     wait_idle_all();
+                    set_stopping_all();
+                    set_stopped_main_thread();
+                    wait_stopped_all();
                 }
 
                 /// \cond NOINTERNAL
@@ -252,7 +281,7 @@ namespace hpx { namespace parallel { namespace execution {
 
             private:
                 template <typename F, typename S, typename Tuple>
-                struct function_wrapper_helper
+                struct thread_function_helper
                 {
                     using function_type = typename std::decay<F>::type;
                     using shape_type = typename std::decay<S>::type;
@@ -313,8 +342,9 @@ namespace hpx { namespace parallel { namespace execution {
                     auto argument_pack =
                         hpx::util::make_tuple<>(std::forward<Ts>(ts)...);
                     argument_pack_ = static_cast<void*>(&argument_pack);
-                    function_wrapper_ = static_cast<function_wrapper_type*>(
-                        &function_wrapper_helper<typename std::decay<F>::type,
+                    thread_function_helper_ = static_cast<
+                        thread_function_helper_type*>(
+                        &thread_function_helper<typename std::decay<F>::type,
                             typename std::decay<S>::type,
                             decltype(argument_pack)>::invoke);
 
@@ -327,7 +357,7 @@ namespace hpx { namespace parallel { namespace execution {
                         ((thread_index_ + 1) * size_) / num_threads_;
                     local_queue.reset(part_begin, part_end);
 
-                    request_start_all();
+                    set_active_all();
 
                     // Main work loop
                     hpx::util::optional<std::uint32_t> index;
@@ -342,7 +372,7 @@ namespace hpx { namespace parallel { namespace execution {
                         hpx::util::invoke(f, *it, ts...);
                     }
 
-                    signal_idle_main_thread();
+                    set_idle_main_thread();
                     wait_idle_all();
                 }
 
