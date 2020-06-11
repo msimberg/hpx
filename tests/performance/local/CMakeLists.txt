@@ -17,6 +17,7 @@ set(benchmarks
     native_tls_overhead
     print_heterogeneous_payloads
     resume_suspend
+    synchronization
     timed_task_spawn
 )
 

@@ -13,6 +13,7 @@ set(concurrency_headers
     hpx/concurrency/barrier.hpp
     hpx/concurrency/cache_line_data.hpp
     hpx/concurrency/concurrentqueue.hpp
+    hpx/concurrency/contiguous_index_queue.hpp
     hpx/concurrency/deque.hpp
     hpx/concurrency/detail/freelist.hpp
     hpx/concurrency/detail/tagged_ptr_pair.hpp

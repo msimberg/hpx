@@ -30,6 +30,8 @@
 #include <hpx/type_support/unused.hpp>
 #include <hpx/version.hpp>
 
+#include <hpx/executors/detail/fork_join_executor.hpp>
+
 #include <cstddef>
 #include <iostream>
 #include <iterator>
@@ -40,6 +42,9 @@
 #ifndef STREAM_TYPE
 #define STREAM_TYPE double
 #endif
+
+bool csv = false;
+bool header = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 hpx::threads::topology& retrieve_topology()
@@ -90,12 +95,9 @@ void check_results(std::size_t iterations, Vector const& a_res,
     std::vector<STREAM_TYPE> b(b_res.size());
     std::vector<STREAM_TYPE> c(c_res.size());
 
-    hpx::parallel::copy(
-        hpx::parallel::execution::par, a_res.begin(), a_res.end(), a.begin());
-    hpx::parallel::copy(
-        hpx::parallel::execution::par, b_res.begin(), b_res.end(), b.begin());
-    hpx::parallel::copy(
-        hpx::parallel::execution::par, c_res.begin(), c_res.end(), c.begin());
+    hpx::parallel::copy(hpx::parallel::execution::seq, a_res.begin(), a_res.end(), a.begin());
+    hpx::parallel::copy(hpx::parallel::execution::seq, b_res.begin(), b_res.end(), b.begin());
+    hpx::parallel::copy(hpx::parallel::execution::seq, c_res.begin(), c_res.end(), c.begin());
 
     STREAM_TYPE aj, bj, cj, scalar;
     STREAM_TYPE aSumErr, bSumErr, cSumErr;
@@ -228,6 +230,7 @@ void check_results(std::size_t iterations, Vector const& a_res,
     }
     if (err == 0)
     {
+        if (!csv)
         printf(
             "Solution Validates: avg error less than %e on all three arrays\n",
             epsilon);
@@ -325,16 +328,19 @@ std::vector<std::vector<double>> run_benchmark(std::size_t iterations,
     int quantum = checktick();
     if (quantum >= 1)
     {
+        if (!csv)
         std::cout << "Your clock granularity/precision appears to be "
                   << quantum << " microseconds.\n";
     }
     else
     {
+if (!csv)
         std::cout << "Your clock granularity appears to be less than one "
                      "microsecond.\n";
         quantum = 1;
     }
 
+if (!csv)
     std::cout
         << "Each test below will take on the order"
         << " of " << (int) t << " microseconds.\n"
@@ -343,6 +349,7 @@ std::vector<std::vector<double>> run_benchmark(std::size_t iterations,
         << "you are not getting at least 20 clock ticks per test.\n"
         << "-------------------------------------------------------------\n";
 
+if (!csv)
     std::cout
         << "WARNING -- The above is only a rough guideline.\n"
         << "For best results, please be sure you know the\n"
@@ -383,6 +390,7 @@ std::vector<std::vector<double>> run_benchmark(std::size_t iterations,
     // Check Results ...
     check_results(iterations, a, b, c);
 
+if (!csv)
     std::cout
         << "-------------------------------------------------------------\n";
 
@@ -397,12 +405,15 @@ int hpx_main(hpx::program_options::variables_map& vm)
     std::size_t iterations = vm["iterations"].as<std::size_t>();
     std::size_t chunk_size = vm["chunk_size"].as<std::size_t>();
     std::size_t executor = vm["executor"].as<std::size_t>();
+    csv  = vm.count("csv") > 0;
+    header  = vm.count("header") > 0;
 
     HPX_UNUSED(chunk_size);
 
     std::string chunker = vm["chunker"].as<std::string>();
 
     // clang-format off
+if (!csv)
     std::cout
         << "-------------------------------------------------------------\n"
         << "Modified STREAM benchmark based on\nHPX version: "
@@ -512,13 +523,44 @@ int hpx_main(hpx::program_options::variables_map& vm)
             timing = run_benchmark<>(
                 iterations, vector_size, std::move(alloc), std::move(policy));
         }
+        //else if (executor == 4)
+        //{
+        //    // Thread pool executor and allocator with thread pool executor.
+        //    using executor_type =
+        //        hpx::parallel::execution::parallel_executor_aggregated;
+
+        //    auto policy = hpx::parallel::execution::par.on(executor_type());
+        //    hpx::compute::host::detail::policy_allocator<STREAM_TYPE,
+        //        decltype(policy)>
+        //        alloc(policy);
+
+        //    timing = run_benchmark<>(
+        //        iterations, vector_size, std::move(alloc), std::move(policy));
+        //}
+        else if (executor == 4)
+        {
+            // Fork-join executor and allocator with fork-join executor.
+            using executor_type =
+                hpx::parallel::execution::experimental::fork_join_executor;
+
+            executor_type exec;
+            auto policy = hpx::parallel::execution::par.on(exec);
+            hpx::compute::host::detail::policy_allocator<STREAM_TYPE,
+                decltype(policy)>
+                alloc(policy);
+
+            timing = run_benchmark<>(
+                iterations, vector_size, std::move(alloc), std::move(policy));
+        }
         else
         {
             HPX_THROW_EXCEPTION(hpx::commandline_option_error, "hpx_main",
-                "Invalid executor id given (0-3 allowed");
+                "Invalid executor id given (0-4 allowed");
         }
     }
     time_total = mysecond() - time_total;
+
+    const char *executors[5] = { "parallel-serial", "block", "parallel-parallel", "thread_pool_executor", "fork_join_executor" };
 
     /* --- SUMMARY --- */
     // clang-format off
@@ -550,19 +592,37 @@ int hpx_main(hpx::program_options::variables_map& vm)
         }
     }
 
+if (csv && header)
+        printf("executor,threads,vector_size,copy_bytes,copy_bw,copy_avg,copy_min,copy_max,scale_bytes,scale_bw,scale_avg,scale_min,scale_max,add_bytes,add_bw,add_avg,add_min,add_max,triad_bytes,triad_bw,triad_avg,triad_min,triad_max\n");
+
+if (!csv)
     printf("Function    Best Rate MB/s  Avg time     Min time     Max time\n");
+if (csv)
+{
+    printf("%s,%zu,%zu,", executors[executor], hpx::get_os_thread_count(), vector_size);
+}
+
     for (std::size_t j = 0; j < 4; j++)
     {
         avgtime[j] = avgtime[j] / (double) (iterations - 1);
 
+if (csv)
+{
+        printf("%.0f,%.2f,%.9f,%.9f,%.9f", bytes[j], 1.0E-06 * bytes[j] / mintime[j], avgtime[j], mintime[j], maxtime[j]);
+        if (j < 3) printf(",");
+        else printf("\n");
+}
+else
         printf("%s%12.1f  %11.6f  %11.6f  %11.6f\n", label[j],
             1.0E-06 * bytes[j] / mintime[j], avgtime[j], mintime[j],
             maxtime[j]);
     }
 
+if (!csv)
     std::cout << "\nTotal time: " << time_total
               << " (per iteration: " << time_total / iterations << ")\n";
 
+if (!csv)
     std::cout
         << "-------------------------------------------------------------\n";
 
@@ -577,6 +637,8 @@ int main(int argc, char* argv[])
 
     // clang-format off
     cmdline.add_options()
+        (   "csv", "output results as csv")
+        (   "header", "print header for csv results")
         (   "vector_size",
             hpx::program_options::value<std::size_t>()->default_value(1024),
             "size of vector (default: 1024)")
