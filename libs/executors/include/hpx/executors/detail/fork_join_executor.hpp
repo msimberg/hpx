@@ -22,7 +22,8 @@
 // - [X] make copy constructible (for policy_allocator)?
 // - [X] add helpers for synchronization
 // - [X] add states for synchronization
-// - [ ] steal work
+// - [X] steal work
+// - [X] make work stealing optional
 // - [ ] documentation
 // - [ ] exception handling
 // - [ ] allow yielding after some time?
@@ -43,6 +44,12 @@ namespace hpx { namespace parallel { namespace execution {
             /// with this executor.
             typedef static_chunk_size executor_parameters_type;
 
+            enum class loop_schedule
+            {
+                static_,
+                dynamic,
+            };
+
         private:
             class shared_data
             {
@@ -50,24 +57,25 @@ namespace hpx { namespace parallel { namespace execution {
                 threads::thread_priority priority_ =
                     threads::thread_priority_default;
                 threads::thread_stacksize stacksize_ =
-                    threads::thread_stacksize_default;
-                threads::thread_schedule_hint schedulehint_{};
+                    threads::thread_stacksize_small;
+                loop_schedule schedule_ = loop_schedule::static_;
 
                 enum class thread_state
                 {
                     starting = 0,
                     idle = 1,
-                    active = 2,
-                    stopping = 3,
-                    stopped = 4,
+                    partitioning_work = 2,
+                    active = 3,
+                    stopping = 4,
+                    stopped = 5,
                 };
 
                 // Fixed data for the duration of the executor.
                 std::size_t main_thread_;
                 std::size_t num_threads_;
-                std::vector<
-                    hpx::util::cache_aligned_data<std::atomic<thread_state>>>
-                    thread_states_;
+                using thread_states_type = std::vector<
+                    hpx::util::cache_aligned_data<std::atomic<thread_state>>>;
+                thread_states_type thread_states_;
 
                 // Changing data for each parallel region.
                 using queue_type =
@@ -75,7 +83,8 @@ namespace hpx { namespace parallel { namespace execution {
                 using queues_type =
                     std::vector<hpx::util::cache_aligned_data<queue_type>>;
                 using thread_function_helper_type = void(void*, void const*,
-                    void*, std::size_t, std::size_t, queues_type&);
+                    void*, std::size_t, std::size_t, loop_schedule,
+                    queues_type&, thread_states_type&);
 
                 // The helper function that dispatches to the actual element function.
                 std::atomic<thread_function_helper_type*>
@@ -97,6 +106,7 @@ namespace hpx { namespace parallel { namespace execution {
                     // Fixed data for the duration of the executor.
                     std::size_t const num_threads_;
                     std::size_t const thread_index_;
+                    loop_schedule const schedule_;
                     std::atomic<thread_state>& thread_state_;
 
                     // Changing data for each parallel region.
@@ -107,6 +117,7 @@ namespace hpx { namespace parallel { namespace execution {
                     std::atomic<std::size_t>& size_;
                     std::atomic<void*>& argument_pack_;
                     queues_type& queues_;
+                    thread_states_type& thread_states_;
 
                     void wait_nonidle_this_thread()
                     {
@@ -136,7 +147,8 @@ namespace hpx { namespace parallel { namespace execution {
                             (thread_function_helper_.load())(
                                 element_function_.load(), shape_.load(),
                                 argument_pack_.load(), thread_index_,
-                                num_threads_, queues_);
+                                num_threads_, schedule_, queues_,
+                                thread_states_);
 
                             set_idle_this_thread();
                             wait_nonidle_this_thread();
@@ -165,11 +177,12 @@ namespace hpx { namespace parallel { namespace execution {
                     }
                 }
 
-                void set_active_all()
+                void set_partitioning_work_all()
                 {
                     for (std::size_t t = 0; t < num_threads_; ++t)
                     {
-                        thread_states_[t].data_ = thread_state::active;
+                        thread_states_[t].data_ =
+                            thread_state::partitioning_work;
                     }
                 }
 
@@ -214,11 +227,12 @@ namespace hpx { namespace parallel { namespace execution {
                             static_cast<std::int16_t>(t)};
                         hpx::detail::async_launch_policy_dispatch<
                             launch::async_policy>::call(launch::async, pool_,
-                            threads::thread_priority_high, stacksize_, hint,
-                            thread_function{num_threads_, t,
+                            priority_, stacksize_, hint,
+                            thread_function{num_threads_, t, schedule_,
                                 thread_states_[t].data_,
                                 thread_function_helper_, element_function_,
-                                shape_, size_, argument_pack_, queues_});
+                                shape_, size_, argument_pack_, queues_,
+                                thread_states_});
                     }
 
                     wait_idle_all();
@@ -238,14 +252,14 @@ namespace hpx { namespace parallel { namespace execution {
             public:
                 /// Create a new parallel executor
                 explicit shared_data(threads::thread_priority priority =
-                                         threads::thread_priority_default,
+                                         threads::thread_priority_high,
                     threads::thread_stacksize stacksize =
                         threads::thread_stacksize_default,
-                    threads::thread_schedule_hint schedulehint = {})
+                    loop_schedule schedule = loop_schedule::static_)
                   : pool_(this_thread::get_pool())
                   , priority_(priority)
                   , stacksize_(stacksize)
-                  , schedulehint_(schedulehint)
+                  , schedule_(schedule)
                   , num_threads_(pool_->get_os_thread_count())
                   , thread_states_(num_threads_)
                 {
@@ -265,8 +279,7 @@ namespace hpx { namespace parallel { namespace execution {
                 bool operator==(shared_data const& rhs) const noexcept
                 {
                     return pool_ == rhs.pool_ && priority_ == rhs.priority_ &&
-                        stacksize_ == rhs.stacksize_ &&
-                        schedulehint_ == rhs.schedulehint_;
+                        stacksize_ == rhs.stacksize_;
                 }
 
                 bool operator!=(shared_data const& rhs) const noexcept
@@ -299,10 +312,19 @@ namespace hpx { namespace parallel { namespace execution {
                             hpx::util::get<Is_>(std::forward<Tuple_>(t))...);
                     }
 
+                    static void set_active_this_thread(
+                        thread_states_type& thread_states,
+                        std::size_t thread_index)
+                    {
+                        thread_states[thread_index].data_ =
+                            thread_state::active;
+                    }
+
                     static void invoke(void* element_function_void,
                         void const* shape_void, void* argument_pack_void,
                         std::size_t thread_index, std::size_t num_threads,
-                        queues_type& queues)
+                        loop_schedule schedule, queues_type& queues,
+                        thread_states_type& thread_states)
                     {
                         F& element_function =
                             *static_cast<F*>(element_function_void);
@@ -315,11 +337,15 @@ namespace hpx { namespace parallel { namespace execution {
                         init_local_work_queue(
                             local_queue, thread_index, num_threads, size);
 
+                        set_active_this_thread(thread_states, thread_index);
+
                         hpx::util::optional<std::uint32_t> index;
 
                         // Process local items first.
                         while (index = local_queue.pop_left())
                         {
+                            printf("%zu processing %u\n", thread_index,
+                                index.value());
                             // TODO: Is there a better way to do this? Could
                             // define the required operations on the iterator.
                             auto it = hpx::util::begin(shape);
@@ -328,6 +354,44 @@ namespace hpx { namespace parallel { namespace execution {
                                 ;
                             invoke_helper(index_pack_type{}, element_function,
                                 *it, argument_pack);
+                        }
+
+                        if (schedule == loop_schedule::static_ ||
+                            num_threads == 1)
+                        {
+                            return;
+                        }
+
+                        // Then steal from neighboring threads.
+                        for (std::size_t offset = 1; offset < num_threads;
+                             ++offset)
+                        {
+                            std::size_t neighbor_index =
+                                (thread_index + offset) % num_threads;
+
+                            if (thread_states[neighbor_index].data_.load() !=
+                                thread_state::active)
+                            {
+                                continue;
+                            }
+
+                            queue_type& neighbor_queue =
+                                queues[neighbor_index].data_;
+
+                            while (index = neighbor_queue.pop_right())
+                            {
+                                printf("%zu stole %u from %zu\n", thread_index,
+                                    index.value(),
+                                    (thread_index + offset) % num_threads);
+                                // TODO: Is there a better way to do this? Could
+                                // define the required operations on the iterator.
+                                auto it = hpx::util::begin(shape);
+                                for (std::size_t i = 0; i < index.value();
+                                     ++i, ++it)
+                                    ;
+                                invoke_helper(index_pack_type{},
+                                    element_function, *it, argument_pack);
+                            }
                         }
                     };
                 };
@@ -351,25 +415,13 @@ namespace hpx { namespace parallel { namespace execution {
                             typename std::decay<S>::type,
                             decltype(argument_pack)>::invoke);
 
-                    set_active_all();
+                    set_partitioning_work_all();
 
-                    std::size_t thread_index_ = main_thread_;
-                    queue_type& local_queue = queues_[thread_index_].data_;
-                    init_local_work_queue(
-                        local_queue, main_thread_, num_threads_, size_);
-
-                    // Main work loop
-                    hpx::util::optional<std::uint32_t> index;
-
-                    while (index = local_queue.pop_left())
-                    {
-                        // TODO: Is there a better way to do this? Could define
-                        // the required operations on the iterator.
-                        auto it = hpx::util::begin(shape);
-                        for (std::size_t i = 0; i < index.value(); ++i, ++it)
-                            ;
-                        hpx::util::invoke(f, *it, ts...);
-                    }
+                    thread_function_helper<typename std::decay<F>::type,
+                        typename std::decay<S>::type,
+                        decltype(argument_pack)>::invoke(element_function_,
+                        shape_, argument_pack_, main_thread_, num_threads_,
+                        schedule_, queues_, thread_states_);
 
                     set_idle_main_thread();
                     wait_idle_all();
@@ -392,11 +444,11 @@ namespace hpx { namespace parallel { namespace execution {
 
         public:
             explicit fork_join_executor(threads::thread_priority priority =
-                                            threads::thread_priority_default,
+                                            threads::thread_priority_high,
                 threads::thread_stacksize stacksize =
-                    threads::thread_stacksize_default,
-                threads::thread_schedule_hint schedulehint = {})
-              : shared_(new shared_data(priority, stacksize, schedulehint))
+                    threads::thread_stacksize_small,
+                loop_schedule schedule = loop_schedule::static_)
+              : shared_(new shared_data(priority, stacksize, schedule))
             {
             }
 
