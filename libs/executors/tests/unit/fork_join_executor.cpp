@@ -4,11 +4,11 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <hpx/executors/detail/fork_join_executor.hpp>    // TODO: Move out of detail
 #include <hpx/hpx.hpp>
 #include <hpx/hpx_init.hpp>
-#include <hpx/testing.hpp>
-#include <hpx/timing.hpp>
+#include <hpx/modules/executors.hpp>
+#include <hpx/modules/testing.hpp>
+#include <hpx/modules/timing.hpp>
 
 #include <algorithm>
 #include <cstdlib>
@@ -28,36 +28,57 @@ void bulk_test(int value, int passed_through)    //-V813
 
 void test_bulk_sync()
 {
-    using executor = hpx::parallel::execution::experimental::fork_join_executor;
+    using executor = hpx::execution::experimental::fork_join_executor;
 
     hpx::thread::id tid = hpx::this_thread::get_id();
 
-    std::size_t const n = 13;
+    count = 0;
+    std::size_t const n = 107;
     std::vector<int> v(n);
     std::iota(std::begin(v), std::end(v), std::rand());
 
     using hpx::util::placeholders::_1;
     using hpx::util::placeholders::_2;
 
-    hpx::util::high_resolution_timer t;
     executor exec;
-    double t0 = t.elapsed();
     hpx::parallel::execution::bulk_sync_execute(
         exec, hpx::util::bind(&bulk_test, _1, _2), v, 42);
-    double t1 = t.elapsed();
     HPX_TEST_EQ(count.load(), n);
 
     hpx::parallel::execution::bulk_sync_execute(exec, &bulk_test, v, 42);
-    double t2 = t.elapsed();
     HPX_TEST_EQ(count.load(), 2 * n);
+}
 
-    printf("%f\n%f\n%f\n", t0, t1, t2);
+void test_bulk_async()
+{
+    using executor = hpx::execution::experimental::fork_join_executor;
+
+    hpx::thread::id tid = hpx::this_thread::get_id();
+
+    count = 0;
+    std::size_t const n = 107;
+    std::vector<int> v(n);
+    std::iota(std::begin(v), std::end(v), std::rand());
+
+    using hpx::util::placeholders::_1;
+    using hpx::util::placeholders::_2;
+
+    executor exec;
+    hpx::when_all(hpx::parallel::execution::bulk_async_execute(
+                      exec, hpx::util::bind(&bulk_test, _1, _2), v, 42))
+        .get();
+    HPX_TEST_EQ(count.load(), n);
+
+    hpx::when_all(hpx::parallel::execution::bulk_async_execute(
+                      exec, &bulk_test, v, 42))
+        .get();
+    HPX_TEST_EQ(count.load(), 2 * n);
 }
 
 void static_check_executor()
 {
     using namespace hpx::traits;
-    using executor = hpx::parallel::execution::experimental::fork_join_executor;
+    using executor = hpx::execution::experimental::fork_join_executor;
 
     static_assert(!has_sync_execute_member<executor>::value,
         "!has_sync_execute_member<executor>::value");
