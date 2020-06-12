@@ -30,8 +30,6 @@
 #include <hpx/type_support/unused.hpp>
 #include <hpx/version.hpp>
 
-#include <hpx/executors/detail/fork_join_executor.hpp>
-
 #include <cstddef>
 #include <iostream>
 #include <iterator>
@@ -95,9 +93,12 @@ void check_results(std::size_t iterations, Vector const& a_res,
     std::vector<STREAM_TYPE> b(b_res.size());
     std::vector<STREAM_TYPE> c(c_res.size());
 
-    hpx::parallel::copy(hpx::parallel::execution::seq, a_res.begin(), a_res.end(), a.begin());
-    hpx::parallel::copy(hpx::parallel::execution::seq, b_res.begin(), b_res.end(), b.begin());
-    hpx::parallel::copy(hpx::parallel::execution::seq, c_res.begin(), c_res.end(), c.begin());
+    hpx::parallel::copy(
+        hpx::parallel::execution::seq, a_res.begin(), a_res.end(), a.begin());
+    hpx::parallel::copy(
+        hpx::parallel::execution::seq, b_res.begin(), b_res.end(), b.begin());
+    hpx::parallel::copy(
+        hpx::parallel::execution::seq, c_res.begin(), c_res.end(), c.begin());
 
     STREAM_TYPE aj, bj, cj, scalar;
     STREAM_TYPE aSumErr, bSumErr, cSumErr;
@@ -231,9 +232,11 @@ void check_results(std::size_t iterations, Vector const& a_res,
     if (err == 0)
     {
         if (!csv)
-        printf(
-            "Solution Validates: avg error less than %e on all three arrays\n",
-            epsilon);
+        {
+            printf("Solution Validates: avg error less than %e on all three "
+                   "arrays\n",
+                epsilon);
+        }
     }
 #ifdef VERBOSE
     printf("Results Validation Verbose Results: \n");
@@ -329,32 +332,41 @@ std::vector<std::vector<double>> run_benchmark(std::size_t iterations,
     if (quantum >= 1)
     {
         if (!csv)
-        std::cout << "Your clock granularity/precision appears to be "
-                  << quantum << " microseconds.\n";
+        {
+            std::cout << "Your clock granularity/precision appears to be "
+                      << quantum << " microseconds.\n";
+        }
     }
     else
     {
-if (!csv)
-        std::cout << "Your clock granularity appears to be less than one "
-                     "microsecond.\n";
+        if (!csv)
+        {
+            std::cout << "Your clock granularity appears to be less than one "
+                         "microsecond.\n";
+        }
         quantum = 1;
     }
 
-if (!csv)
-    std::cout
-        << "Each test below will take on the order"
-        << " of " << (int) t << " microseconds.\n"
-        << "   (= " << (int) (t / quantum) << " clock ticks)\n"
-        << "Increase the size of the arrays if this shows that\n"
-        << "you are not getting at least 20 clock ticks per test.\n"
-        << "-------------------------------------------------------------\n";
+    if (!csv)
+    {
+        // clang-format off
+        std::cout << "Each test below will take on the order of " << (int) t << " microseconds.\n"
+                  << "   (= " << (int) (t / quantum) << " clock ticks)\n"
+                  << "Increase the size of the arrays if this shows that\n"
+                  << "you are not getting at least 20 clock ticks per test.\n"
+                  << "-------------------------------------------------------------\n";
+        // clang-format on
+    }
 
-if (!csv)
-    std::cout
-        << "WARNING -- The above is only a rough guideline.\n"
-        << "For best results, please be sure you know the\n"
-        << "precision of your system timer.\n"
-        << "-------------------------------------------------------------\n";
+    if (!csv)
+    {
+        // clang-format off
+        std::cout << "WARNING -- The above is only a rough guideline.\n"
+                  << "For best results, please be sure you know the\n"
+                  << "precision of your system timer.\n"
+                  << "-------------------------------------------------------------\n";
+        // clang-format on
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Main Loop
@@ -390,9 +402,12 @@ if (!csv)
     // Check Results ...
     check_results(iterations, a, b, c);
 
-if (!csv)
-    std::cout
-        << "-------------------------------------------------------------\n";
+    if (!csv)
+    {
+        // clang-format off
+        std::cout << "-------------------------------------------------------------\n";
+        // clang-format on
+    }
 
     return timing;
 }
@@ -405,40 +420,42 @@ int hpx_main(hpx::program_options::variables_map& vm)
     std::size_t iterations = vm["iterations"].as<std::size_t>();
     std::size_t chunk_size = vm["chunk_size"].as<std::size_t>();
     std::size_t executor = vm["executor"].as<std::size_t>();
-    csv  = vm.count("csv") > 0;
-    header  = vm.count("header") > 0;
+    csv = vm.count("csv") > 0;
+    header = vm.count("header") > 0;
 
     HPX_UNUSED(chunk_size);
 
     std::string chunker = vm["chunker"].as<std::string>();
 
     // clang-format off
-if (!csv)
-    std::cout
-        << "-------------------------------------------------------------\n"
-        << "Modified STREAM benchmark based on\nHPX version: "
-            << hpx::build_string() << "\n"
-        << "-------------------------------------------------------------\n"
-        << "This system uses " << sizeof(STREAM_TYPE)
-            << " bytes per array element.\n"
-        << "-------------------------------------------------------------\n"
-        << "Array size = " << vector_size << " (elements), "
-           "Offset = " << offset << " (elements)\n"
-        << "Memory per array = "
-            << sizeof(STREAM_TYPE) * (vector_size / 1024. / 1024.) << " MiB "
-        << "(= "
-            <<  sizeof(STREAM_TYPE) * (vector_size / 1024. / 1024. / 1024.)
-            << " GiB).\n"
-        << "Each kernel will be executed " << iterations << " times.\n"
-        << " The *best* time for each kernel (excluding the first iteration)\n"
-        << " will be used to compute the reported bandwidth.\n"
-        << "-------------------------------------------------------------\n"
-        << "Number of Threads requested = "
-            << hpx::get_os_thread_count() << "\n"
-        << "Chunking policy requested: " << chunker << "\n"
-        << "Executor requested: " << executor << "\n"
-        << "-------------------------------------------------------------\n"
-        ;
+    if (!csv)
+    {
+        std::cout
+            << "-------------------------------------------------------------\n"
+            << "Modified STREAM benchmark based on\nHPX version: "
+                << hpx::build_string() << "\n"
+            << "-------------------------------------------------------------\n"
+            << "This system uses " << sizeof(STREAM_TYPE)
+                << " bytes per array element.\n"
+            << "-------------------------------------------------------------\n"
+            << "Array size = " << vector_size << " (elements), "
+               "Offset = " << offset << " (elements)\n"
+            << "Memory per array = "
+                << sizeof(STREAM_TYPE) * (vector_size / 1024. / 1024.) << " MiB "
+            << "(= "
+                <<  sizeof(STREAM_TYPE) * (vector_size / 1024. / 1024. / 1024.)
+                << " GiB).\n"
+            << "Each kernel will be executed " << iterations << " times.\n"
+            << " The *best* time for each kernel (excluding the first iteration)\n"
+            << " will be used to compute the reported bandwidth.\n"
+            << "-------------------------------------------------------------\n"
+            << "Number of Threads requested = "
+                << hpx::get_os_thread_count() << "\n"
+            << "Chunking policy requested: " << chunker << "\n"
+            << "Executor requested: " << executor << "\n"
+            << "-------------------------------------------------------------\n"
+            ;
+    }
     // clang-format on
 
     double time_total = mysecond();
@@ -523,25 +540,11 @@ if (!csv)
             timing = run_benchmark<>(
                 iterations, vector_size, std::move(alloc), std::move(policy));
         }
-        //else if (executor == 4)
-        //{
-        //    // Thread pool executor and allocator with thread pool executor.
-        //    using executor_type =
-        //        hpx::parallel::execution::parallel_executor_aggregated;
-
-        //    auto policy = hpx::parallel::execution::par.on(executor_type());
-        //    hpx::compute::host::detail::policy_allocator<STREAM_TYPE,
-        //        decltype(policy)>
-        //        alloc(policy);
-
-        //    timing = run_benchmark<>(
-        //        iterations, vector_size, std::move(alloc), std::move(policy));
-        //}
         else if (executor == 4)
         {
             // Fork-join executor and allocator with fork-join executor.
             using executor_type =
-                hpx::parallel::execution::experimental::fork_join_executor;
+                hpx::execution::experimental::fork_join_executor;
 
             executor_type exec;
             auto policy = hpx::parallel::execution::par.on(exec);
@@ -560,11 +563,14 @@ if (!csv)
     }
     time_total = mysecond() - time_total;
 
-    const char *executors[5] = { "parallel-serial", "block", "parallel-parallel", "thread_pool_executor", "fork_join_executor" };
+    std::size_t const num_executors = 5;
+    const char* executors[num_executors] = {"parallel-serial", "block", "parallel-parallel",
+        "thread_pool_executor", "fork_join_executor"};
 
     /* --- SUMMARY --- */
     // clang-format off
-    const char *label[4] = {
+    std::size_t const num_stream_tests = 4;
+    const char *label[num_stream_tests] = {
         "Copy:      ",
         "Scale:     ",
         "Add:       ",
@@ -572,19 +578,19 @@ if (!csv)
     };
     // clang-format on
 
-    const double bytes[4] = {
+    const double bytes[num_stream_tests] = {
         2 * sizeof(STREAM_TYPE) * static_cast<double>(vector_size),
         2 * sizeof(STREAM_TYPE) * static_cast<double>(vector_size),
         3 * sizeof(STREAM_TYPE) * static_cast<double>(vector_size),
         3 * sizeof(STREAM_TYPE) * static_cast<double>(vector_size)};
 
     // Note: skip first iteration
-    std::vector<double> avgtime(4, 0.0);
-    std::vector<double> mintime(4, (std::numeric_limits<double>::max)());
-    std::vector<double> maxtime(4, 0.0);
+    std::vector<double> avgtime(num_stream_tests, 0.0);
+    std::vector<double> mintime(num_stream_tests, (std::numeric_limits<double>::max)());
+    std::vector<double> maxtime(num_stream_tests, 0.0);
     for (std::size_t iteration = 1; iteration != iterations; ++iteration)
     {
-        for (std::size_t j = 0; j < 4; j++)
+        for (std::size_t j = 0; j < num_stream_tests; j++)
         {
             avgtime[j] = avgtime[j] + timing[j][iteration];
             mintime[j] = (std::min)(mintime[j], timing[j][iteration]);
@@ -592,39 +598,57 @@ if (!csv)
         }
     }
 
-if (csv && header)
-        printf("executor,threads,vector_size,copy_bytes,copy_bw,copy_avg,copy_min,copy_max,scale_bytes,scale_bw,scale_avg,scale_min,scale_max,add_bytes,add_bw,add_avg,add_min,add_max,triad_bytes,triad_bw,triad_avg,triad_min,triad_max\n");
+    if (csv && header)
+    {
+        printf("executor,threads,vector_size,copy_bytes,copy_bw,copy_avg,copy_"
+               "min,copy_max,scale_bytes,scale_bw,scale_avg,scale_min,scale_"
+               "max,add_bytes,add_bw,add_avg,add_min,add_max,triad_bytes,triad_"
+               "bw,triad_avg,triad_min,triad_max\n");
+    }
 
-if (!csv)
-    printf("Function    Best Rate MB/s  Avg time     Min time     Max time\n");
-if (csv)
-{
-    printf("%s,%zu,%zu,", executors[executor], hpx::get_os_thread_count(), vector_size);
-}
+    if (!csv)
+    {
+        printf(
+            "Function    Best Rate MB/s  Avg time     Min time     Max time\n");
+    }
 
-    for (std::size_t j = 0; j < 4; j++)
+    if (csv)
+    {
+        printf("%s,%zu,%zu,", executors[executor], hpx::get_os_thread_count(),
+            vector_size);
+    }
+
+    for (std::size_t j = 0; j < num_stream_tests; j++)
     {
         avgtime[j] = avgtime[j] / (double) (iterations - 1);
 
-if (csv)
-{
-        printf("%.0f,%.2f,%.9f,%.9f,%.9f", bytes[j], 1.0E-06 * bytes[j] / mintime[j], avgtime[j], mintime[j], maxtime[j]);
-        if (j < 3) printf(",");
-        else printf("\n");
-}
-else
-        printf("%s%12.1f  %11.6f  %11.6f  %11.6f\n", label[j],
-            1.0E-06 * bytes[j] / mintime[j], avgtime[j], mintime[j],
-            maxtime[j]);
+        if (csv)
+        {
+            printf("%.0f,%.2f,%.9f,%.9f,%.9f", bytes[j],
+                1.0E-06 * bytes[j] / mintime[j], avgtime[j], mintime[j],
+                maxtime[j]);
+            printf(j < num_stream_tests - 1 ? "," : "\n");
+        }
+        else
+        {
+            printf("%s%12.1f  %11.6f  %11.6f  %11.6f\n", label[j],
+                1.0E-06 * bytes[j] / mintime[j], avgtime[j], mintime[j],
+                maxtime[j]);
+        }
     }
 
-if (!csv)
-    std::cout << "\nTotal time: " << time_total
-              << " (per iteration: " << time_total / iterations << ")\n";
+    if (!csv)
+    {
+        std::cout << "\nTotal time: " << time_total
+                  << " (per iteration: " << time_total / iterations << ")\n";
+    }
 
-if (!csv)
-    std::cout
-        << "-------------------------------------------------------------\n";
+    if (!csv)
+    {
+        // clang-format off
+        std::cout << "-------------------------------------------------------------\n";
+        // clang-format on
+    }
 
     return hpx::finalize();
 }
