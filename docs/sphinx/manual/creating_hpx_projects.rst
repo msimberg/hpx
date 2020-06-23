@@ -300,10 +300,11 @@ supporting static library.
 Using macros to create new targets
 ----------------------------------
 
-In addition to the targets described above, |hpx| provides convenience macros
-to hide optional boilerplate code that may be useful for your project. The link
-to the targets described above. We recommend that you use the targets directly
-whenever possible as they tend to compose better with other targets.
+In addition to the targets described above, |hpx| provides convenience macros to
+hide optional boilerplate code that may be useful for your project. The macrso
+link your targets to the targets described above. We recommend that you use the
+targets directly whenever possible as they tend to compose better with other
+targets.
 
 The macro for adding an |hpx| component is ``add_hpx_component``. It can be
 used in your ``CMakeLists.txt`` file like this:
