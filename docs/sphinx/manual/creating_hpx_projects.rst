@@ -286,6 +286,17 @@ find it at runtime. You can do this either by setting the environment variable
 ``HPX_COMPONENT_PATHS`` or the ini setting ``hpx.component_paths`` (see
 :option:`--hpx:ini`) to the directory containing your plugin.
 
+If you require starting the |hpx| runtime in a shared or static library, we
+recommend that you do not use ``main`` as the runtime entry point (see
+:ref:`minimal`). Instead explicitly start the |hpx| runtime (:ref:`medium`,
+:ref:`flexible`) and link all targets depending on |hpx| to
+``HPX::hpx_no_wrap_main``. The ``HPX::hpx`` target automatically links
+executables to a supporting static library, which is used to implement starting
+``main`` as an |hpx| thread. Since the implementation relies on a certain
+linking order you may encounter linker errors if ``main`` is defined in a static
+or shared library. The ``HPX::hpx_no_wrap_main`` target does not depend on the
+supporting static library.
+
 Using macros to create new targets
 ----------------------------------
 
