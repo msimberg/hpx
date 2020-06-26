@@ -42,6 +42,8 @@ set(doxygen_definition_list
     "DOXYGEN:=1"
     "BOOST_SYSTEM_NOEXCEPT="
     "HPX_EXCEPTION_EXPORT="
+    "HPX_CORE_EXPORT="
+    "HPX_FULL_EXPORT="
     "HPX_EXPORT="
     "HPX_ALWAYS_EXPORT="
     "extern="
@@ -197,7 +199,7 @@ file(
 )
 
 # exclude api.rst...
-list(FILTER sphinx_source_files EXCLUDE REGEX "sphinx/api.rst")
+list(FILTER sphinx_source_files EXCLUDE REGEX ".*api.rst")
 
 foreach(sphinx_source_file ${sphinx_source_files})
   add_custom_command(
@@ -217,33 +219,34 @@ foreach(sphinx_source_file ${sphinx_source_files})
   )
 endforeach()
 
-# Copy the Sphinx source files of the libs directory to build directory
+# Copy the Sphinx source files of the modules directory to build directory
 file(
-  GLOB_RECURSE sphinx_libs_source_files
+  GLOB_RECURSE sphinx_modules_source_files
   LIST_DIRECTORIES false
-  RELATIVE "${PROJECT_SOURCE_DIR}/libs"
-  "${PROJECT_SOURCE_DIR}/libs/*/docs/*"
+  RELATIVE "${PROJECT_SOURCE_DIR}/modules"
+  "${PROJECT_SOURCE_DIR}/modules/*/*/docs/*"
 )
 
-set(sphinx_libs_source_files "all_modules.rst" "index.rst" "overview.rst"
-                             ${sphinx_libs_source_files}
+set(sphinx_modules_source_files
+    "index.rst" "overview.rst" "core/modules.rst" "full/modules.rst"
+    ${sphinx_modules_source_files}
 )
 
-foreach(sphinx_source_file ${sphinx_libs_source_files})
+foreach(sphinx_source_file ${sphinx_modules_source_files})
   add_custom_command(
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sphinx/libs/${sphinx_source_file}"
-    DEPENDS "${PROJECT_SOURCE_DIR}/libs/${sphinx_source_file}"
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sphinx/modules/${sphinx_source_file}"
+    DEPENDS "${PROJECT_SOURCE_DIR}/modules/${sphinx_source_file}"
     COMMAND
       ${CMAKE_COMMAND} -E copy_if_different
-      "${PROJECT_SOURCE_DIR}/libs/${sphinx_source_file}"
-      "${CMAKE_CURRENT_BINARY_DIR}/sphinx/libs/${sphinx_source_file}"
+      "${PROJECT_SOURCE_DIR}/modules/${sphinx_source_file}"
+      "${CMAKE_CURRENT_BINARY_DIR}/sphinx/modules/${sphinx_source_file}"
   )
 endforeach()
 
-foreach(sphinx_source_file ${sphinx_libs_source_files})
+foreach(sphinx_source_file ${sphinx_modules_source_files})
   set(sphinx_source_files_build
       ${sphinx_source_files_build}
-      "${CMAKE_CURRENT_BINARY_DIR}/sphinx/libs/${sphinx_source_file}"
+      "${CMAKE_CURRENT_BINARY_DIR}/sphinx/modules/${sphinx_source_file}"
   )
 endforeach()
 
@@ -261,7 +264,7 @@ create_symbolic_link(
   "${PROJECT_SOURCE_DIR}/tests" "${CMAKE_CURRENT_BINARY_DIR}/tests"
 )
 create_symbolic_link(
-  "${PROJECT_SOURCE_DIR}/libs" "${CMAKE_CURRENT_BINARY_DIR}/libs"
+  "${PROJECT_SOURCE_DIR}/modules" "${CMAKE_CURRENT_BINARY_DIR}/modules"
 )
 
 hpx_source_to_doxygen(hpx_autodoc DEPENDENCIES ${doxygen_dependencies})
