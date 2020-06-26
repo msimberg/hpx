@@ -16,7 +16,7 @@ set(prefix_sources find_prefix.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  prefix
+  core prefix
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

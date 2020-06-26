@@ -11,7 +11,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Compatibility with using Boost.FileSystem, introduced in V1.4.0
 hpx_option(
   HPX_SERIALIZATION_WITH_BOOST_TYPES BOOL
-  "Enable serialization of certain Boost types. (default: ON)" ON ADVANCED
+  "Enable core serialization of certain Boost types. (default: ON)" ON ADVANCED
   CATEGORY "Modules"
   MODULE SERIALIZATION
 )
@@ -144,7 +144,7 @@ set(serialization_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  serialization
+  core serialization
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

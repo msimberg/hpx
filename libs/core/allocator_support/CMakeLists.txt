@@ -18,7 +18,7 @@ set(allocator_support_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  allocator_support
+  core allocator_support
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

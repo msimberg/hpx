@@ -24,7 +24,7 @@ set(thread_support_sources set_thread_name.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  thread_support
+  core thread_support
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

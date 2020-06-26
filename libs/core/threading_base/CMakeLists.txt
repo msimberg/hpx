@@ -76,7 +76,7 @@ endif()
 
 include(HPX_AddModule)
 add_hpx_module(
-  threading_base
+  core threading_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

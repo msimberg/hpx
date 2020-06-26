@@ -75,7 +75,7 @@ set(functional_sources basic_function.cpp empty_function.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  functional
+  core functional
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN

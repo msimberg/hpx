@@ -42,7 +42,7 @@ set(hardware_sources)
 include(HPX_AddModule)
 
 add_hpx_module(
-  hardware
+  core hardware
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   EXCLUDE_FROM_GLOBAL_HEADER

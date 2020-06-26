@@ -16,7 +16,7 @@ set(naming_base_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  naming_base
+  core naming_base
   COMPATIBILITY_HEADERS OFF
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF

@@ -16,7 +16,7 @@ set(asio_sources asio_util.cpp map_hostnames.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  asio
+  core asio
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

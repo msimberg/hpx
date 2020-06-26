@@ -29,7 +29,7 @@ set(timing_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  timing
+  core timing
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

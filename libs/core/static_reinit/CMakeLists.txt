@@ -22,7 +22,7 @@ set(static_reinit_sources static_reinit.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  static_reinit
+  core static_reinit
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

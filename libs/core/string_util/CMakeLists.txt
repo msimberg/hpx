@@ -15,7 +15,7 @@ set(string_util_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  string_util
+  core string_util
   GLOBAL_HEADER_GEN ON
   HEADERS ${string_util_headers}
   DEPENDENCIES

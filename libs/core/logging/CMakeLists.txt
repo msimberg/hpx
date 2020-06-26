@@ -53,7 +53,7 @@ set(logging_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  logging
+  core logging
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF

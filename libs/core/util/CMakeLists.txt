@@ -25,7 +25,7 @@ set(util_sources manage_config.cpp regex_from_pattern.cpp sed_transform.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  util
+  core util
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

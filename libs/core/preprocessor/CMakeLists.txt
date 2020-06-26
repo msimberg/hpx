@@ -23,7 +23,7 @@ set(preprocessor_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  preprocessor
+  core preprocessor
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   SOURCES ${preprocessor_sources}

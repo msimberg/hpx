@@ -37,7 +37,7 @@ set(execution_base_sources agent_ref.cpp register_locks.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  execution_base
+  core execution_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

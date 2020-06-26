@@ -36,7 +36,7 @@ set(concurrency_sources barrier.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  concurrency
+  core concurrency
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

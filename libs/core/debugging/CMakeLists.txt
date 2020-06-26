@@ -21,7 +21,7 @@ set(debugging_sources attach_debugger.cpp backtrace.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  debugging
+  core debugging
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

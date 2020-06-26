@@ -18,7 +18,7 @@ set(io_service_sources io_service_pool.cpp io_service_thread_pool.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  io_service
+  core io_service
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

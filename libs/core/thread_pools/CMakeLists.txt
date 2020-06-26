@@ -23,7 +23,7 @@ set(thread_pools_sources scheduled_thread_pool.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  thread_pools
+  core thread_pools
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
