@@ -48,7 +48,7 @@ namespace hpx { namespace util {
         util::itt::string_handle desc_itt_;
 #endif
 
-        HPX_EXPORT void init_from_alternative_name(char const* altname);
+        HPX_CORE_EXPORT void init_from_alternative_name(char const* altname);
 
     public:
         thread_description() noexcept
@@ -199,7 +199,7 @@ namespace hpx { namespace util {
 
     private:
         // expose for ABI compatibility reasons
-        HPX_EXPORT void init_from_alternative_name(char const* altname);
+        HPX_CORE_EXPORT void init_from_alternative_name(char const* altname);
 
     public:
         thread_description() noexcept {}
@@ -277,9 +277,9 @@ namespace hpx { namespace util {
     };
 #endif
 
-    HPX_EXPORT std::ostream& operator<<(
+    HPX_CORE_EXPORT std::ostream& operator<<(
         std::ostream&, thread_description const&);
-    HPX_EXPORT std::string as_string(thread_description const& desc);
+    HPX_CORE_EXPORT std::string as_string(thread_description const& desc);
 }}    // namespace hpx::util
 
 namespace hpx { namespace threads {
@@ -303,16 +303,16 @@ namespace hpx { namespace threads {
     ///                   throw but returns the result code using the
     ///                   parameter \a ec. Otherwise it throws an instance
     ///                   of hpx#exception.
-    HPX_EXPORT util::thread_description get_thread_description(
+    HPX_CORE_EXPORT util::thread_description get_thread_description(
         thread_id_type const& id, error_code& ec = throws);
-    HPX_EXPORT util::thread_description set_thread_description(
+    HPX_CORE_EXPORT util::thread_description set_thread_description(
         thread_id_type const& id,
         util::thread_description const& desc = util::thread_description(),
         error_code& ec = throws);
 
-    HPX_EXPORT util::thread_description get_thread_lco_description(
+    HPX_CORE_EXPORT util::thread_description get_thread_lco_description(
         thread_id_type const& id, error_code& ec = throws);
-    HPX_EXPORT util::thread_description set_thread_lco_description(
+    HPX_CORE_EXPORT util::thread_description set_thread_lco_description(
         thread_id_type const& id,
         util::thread_description const& desc = util::thread_description(),
         error_code& ec = throws);

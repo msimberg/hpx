@@ -16,9 +16,9 @@
 
 // clang-format off
 #if !defined(HPX_WINDOWS)
-#  define HPX_EXPORT_THREAD_SPECIFIC_PTR HPX_EXPORT
+#  define HPX_CORE_EXPORT_THREAD_SPECIFIC_PTR HPX_CORE_EXPORT
 #else
-#  define HPX_EXPORT_THREAD_SPECIFIC_PTR
+#  define HPX_CORE_EXPORT_THREAD_SPECIFIC_PTR
 #endif
 // clang-format on
 
@@ -29,7 +29,7 @@
 
 namespace hpx { namespace util {
     template <typename T, typename Tag>
-    struct HPX_EXPORT_THREAD_SPECIFIC_PTR thread_specific_ptr
+    struct HPX_CORE_EXPORT_THREAD_SPECIFIC_PTR thread_specific_ptr
     {
         typedef T element_type;
 
@@ -83,7 +83,7 @@ namespace hpx { namespace util {
     }    // namespace detail
 
     template <typename T, typename Tag>
-    struct HPX_EXPORT_THREAD_SPECIFIC_PTR thread_specific_ptr
+    struct HPX_CORE_EXPORT_THREAD_SPECIFIC_PTR thread_specific_ptr
     {
         typedef T element_type;
 
@@ -142,7 +142,7 @@ namespace hpx { namespace util {
 
 namespace hpx { namespace util {
     template <typename T, typename Tag>
-    struct HPX_EXPORT_THREAD_SPECIFIC_PTR thread_specific_ptr
+    struct HPX_CORE_EXPORT_THREAD_SPECIFIC_PTR thread_specific_ptr
     {
         typedef
             typename boost::thread_specific_ptr<T>::element_type element_type;

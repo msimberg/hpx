@@ -29,7 +29,7 @@
 namespace hpx { namespace util {
 
     using test_failure_handler_type = function_nonser<void()>;
-    HPX_EXPORT void set_test_failure_handler(test_failure_handler_type f);
+    HPX_CORE_EXPORT void set_test_failure_handler(test_failure_handler_type f);
 
     enum counter_type
     {
@@ -55,9 +55,9 @@ namespace hpx { namespace util {
             {
             }
 
-            HPX_EXPORT void increment(counter_type c);
+            HPX_CORE_EXPORT void increment(counter_type c);
 
-            HPX_EXPORT std::size_t get(counter_type c) const;
+            HPX_CORE_EXPORT std::size_t get(counter_type c) const;
 
             template <typename T>
             bool check_(char const* file, int line, char const* function,
@@ -174,14 +174,14 @@ namespace hpx { namespace util {
             }
         };
 
-        HPX_EXPORT extern fixture global_fixture;
+        HPX_CORE_EXPORT extern fixture global_fixture;
 
     }    // namespace detail
 
     ////////////////////////////////////////////////////////////////////////////
-    HPX_EXPORT int report_errors(std::ostream& stream = std::cerr);
-    HPX_EXPORT void print_cdash_timing(const char* name, double time);
-    HPX_EXPORT void print_cdash_timing(const char* name, std::uint64_t time);
+    HPX_CORE_EXPORT int report_errors(std::ostream& stream = std::cerr);
+    HPX_CORE_EXPORT void print_cdash_timing(const char* name, double time);
+    HPX_CORE_EXPORT void print_cdash_timing(const char* name, std::uint64_t time);
 }}    // namespace hpx::util
 
 ////////////////////////////////////////////////////////////////////////////////

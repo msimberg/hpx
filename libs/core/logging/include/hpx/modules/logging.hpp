@@ -32,12 +32,12 @@
 namespace hpx { namespace util {
     ////////////////////////////////////////////////////////////////////////////
     namespace detail {
-        HPX_EXPORT hpx::util::logging::level get_log_level(
+        HPX_CORE_EXPORT hpx::util::logging::level get_log_level(
             std::string const& env, bool allow_always = false);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    HPX_EXPORT HPX_DECLARE_LOG(agas)
+    HPX_CORE_EXPORT HPX_DECLARE_LOG(agas)
 
 #define LAGAS_(lvl)                                                            \
     HPX_LOG_FORMAT(hpx::util::agas, ::hpx::util::logging::level::lvl, "{} ",   \
@@ -47,7 +47,7 @@ namespace hpx { namespace util {
     hpx::util::agas_logger()->is_enabled(::hpx::util::logging::level::lvl) /**/
 
         ////////////////////////////////////////////////////////////////////////
-        HPX_EXPORT HPX_DECLARE_LOG(parcel)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(parcel)
 
 #define LPT_(lvl)                                                              \
     HPX_LOG_FORMAT(hpx::util::parcel, ::hpx::util::logging::level::lvl, "{} ", \
@@ -58,7 +58,7 @@ namespace hpx { namespace util {
         ::hpx::util::logging::level::lvl) /**/
 
         ////////////////////////////////////////////////////////////////////////
-        HPX_EXPORT HPX_DECLARE_LOG(timing)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(timing)
 
 #define LTIM_(lvl)                                                             \
     HPX_LOG_FORMAT(hpx::util::timing, ::hpx::util::logging::level::lvl, "{} ", \
@@ -72,7 +72,7 @@ namespace hpx { namespace util {
         ::hpx::util::logging::level::lvl) /**/
 
         ////////////////////////////////////////////////////////////////////////
-        HPX_EXPORT HPX_DECLARE_LOG(hpx)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(hpx)
 
 #define LHPX_(lvl, cat)                                                        \
     HPX_LOG_FORMAT(hpx::util::hpx, ::hpx::util::logging::level::lvl, "{}{}",   \
@@ -82,7 +82,7 @@ namespace hpx { namespace util {
     hpx::util::hpx_logger()->is_enabled(::hpx::util::logging::level::lvl) /**/
 
         ////////////////////////////////////////////////////////////////////////
-        HPX_EXPORT HPX_DECLARE_LOG(app)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(app)
 
 #define LAPP_(lvl)                                                             \
     HPX_LOG_FORMAT(hpx::util::app, ::hpx::util::logging::level::lvl, "{} ",    \
@@ -93,7 +93,7 @@ namespace hpx { namespace util {
 
         ////////////////////////////////////////////////////////////////////////
         // special debug logging channel
-        HPX_EXPORT HPX_DECLARE_LOG(debuglog)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(debuglog)
 
 #define LDEB_                                                                  \
     HPX_LOG_FORMAT(hpx::util::debuglog, ::hpx::util::logging::level::error,    \
@@ -106,19 +106,19 @@ namespace hpx { namespace util {
         ////////////////////////////////////////////////////////////////////////
         // errors are logged in a special manner (always to cerr and additionally,
         // if enabled to 'normal' logging destination as well)
-        HPX_EXPORT HPX_DECLARE_LOG(hpx_error)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(hpx_error)
 
 #define LFATAL_                                                                \
     HPX_LOG_FORMAT(hpx::util::hpx_error, ::hpx::util::logging::level::fatal,   \
         "{} [ERR] ", ::hpx::util::logging::level::fatal) /**/
 
-            HPX_EXPORT HPX_DECLARE_LOG(agas_console) HPX_EXPORT
-        HPX_DECLARE_LOG(parcel_console) HPX_EXPORT
-        HPX_DECLARE_LOG(timing_console) HPX_EXPORT
-        HPX_DECLARE_LOG(hpx_console) HPX_EXPORT HPX_DECLARE_LOG(app_console)
+            HPX_CORE_EXPORT HPX_DECLARE_LOG(agas_console) HPX_CORE_EXPORT
+        HPX_DECLARE_LOG(parcel_console) HPX_CORE_EXPORT
+        HPX_DECLARE_LOG(timing_console) HPX_CORE_EXPORT
+        HPX_DECLARE_LOG(hpx_console) HPX_CORE_EXPORT HPX_DECLARE_LOG(app_console)
 
         // special debug logging channel
-        HPX_EXPORT HPX_DECLARE_LOG(debuglog_console)
+        HPX_CORE_EXPORT HPX_DECLARE_LOG(debuglog_console)
 }}    // namespace hpx::util
 
 ///////////////////////////////////////////////////////////////////////////////

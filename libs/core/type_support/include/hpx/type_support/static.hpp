@@ -18,9 +18,9 @@
 
 // clang-format off
 #if !defined(HPX_WINDOWS)
-#  define HPX_EXPORT_STATIC_ HPX_EXPORT
+#  define HPX_CORE_EXPORT_STATIC_ HPX_CORE_EXPORT
 #else
-#  define HPX_EXPORT_STATIC_
+#  define HPX_CORE_EXPORT_STATIC_
 #endif
 // clang-format on
 
@@ -33,7 +33,7 @@ namespace hpx { namespace util {
     // For conforming compilers, we utilize this feature.
     //
     template <typename T, typename Tag = T>
-    struct HPX_EXPORT_STATIC_ static_
+    struct HPX_CORE_EXPORT_STATIC_ static_
     {
     public:
         HPX_NON_COPYABLE(static_);
@@ -91,7 +91,7 @@ namespace hpx { namespace util {
     //          this is a requirement of boost::call_once.
     //
     template <typename T, typename Tag = T>
-    struct HPX_EXPORT_STATIC_ static_
+    struct HPX_CORE_EXPORT_STATIC_ static_
     {
     public:
         HPX_NON_COPYABLE(static_);

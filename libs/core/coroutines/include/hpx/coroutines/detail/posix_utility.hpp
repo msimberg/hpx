@@ -72,7 +72,7 @@
  */
 namespace hpx { namespace threads { namespace coroutines { namespace detail {
     namespace posix {
-        HPX_EXPORT extern bool use_guard_pages;
+        HPX_CORE_EXPORT extern bool use_guard_pages;
 
 #if defined(HPX_HAVE_THREAD_STACK_MMAP) && defined(_POSIX_MAPPED_FILES) &&     \
     _POSIX_MAPPED_FILES > 0

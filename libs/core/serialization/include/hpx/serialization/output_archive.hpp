@@ -89,7 +89,7 @@ namespace hpx { namespace serialization {
     }    // namespace detail
 
     ////////////////////////////////////////////////////////////////////////////
-    struct HPX_EXPORT output_archive : basic_archive<output_archive>
+    struct HPX_CORE_EXPORT output_archive : basic_archive<output_archive>
     {
     private:
         static std::uint32_t make_flags(

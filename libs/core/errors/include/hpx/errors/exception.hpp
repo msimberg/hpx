@@ -38,7 +38,7 @@ namespace hpx {
     /// are either of this type or of a type derived from it. This implies that
     /// it is always safe to use this type only in catch statements guarding
     /// HPX library calls.
-    class HPX_EXPORT exception : public boost::system::system_error
+    class HPX_CORE_EXPORT exception : public boost::system::system_error
     {
     public:
         /// Construct a hpx::exception from a \a hpx::error.
@@ -110,12 +110,12 @@ namespace hpx {
         util::function_nonser<hpx::exception_info(
             std::string const&, std::string const&, long, std::string const&)>;
 
-    HPX_EXPORT void set_custom_exception_info_handler(
+    HPX_CORE_EXPORT void set_custom_exception_info_handler(
         custom_exception_info_handler_type f);
 
     using pre_exception_handler_type = util::function_nonser<void()>;
 
-    HPX_EXPORT void set_pre_exception_handler(pre_exception_handler_type f);
+    HPX_CORE_EXPORT void set_pre_exception_handler(pre_exception_handler_type f);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \brief A hpx::thread_interrupted is the exception type used by HPX to
@@ -183,7 +183,7 @@ namespace hpx {
     ///
     /// At any point, the interruption state for the current thread can be
     /// queried by calling \a hpx::this_thread::interruption_enabled().
-    struct HPX_EXPORT thread_interrupted : std::exception
+    struct HPX_CORE_EXPORT thread_interrupted : std::exception
     {
     };
 
@@ -204,7 +204,7 @@ namespace hpx {
         // under the [line] tag.
         HPX_DEFINE_ERROR_INFO(throw_line, long);
 
-        struct HPX_EXPORT std_exception : std::exception
+        struct HPX_CORE_EXPORT std_exception : std::exception
         {
         private:
             std::string what_;
@@ -223,7 +223,7 @@ namespace hpx {
             }
         };
 
-        struct HPX_EXPORT bad_alloc : std::bad_alloc
+        struct HPX_CORE_EXPORT bad_alloc : std::bad_alloc
         {
         private:
             std::string what_;
@@ -242,7 +242,7 @@ namespace hpx {
             }
         };
 
-        struct HPX_EXPORT bad_exception : std::bad_exception
+        struct HPX_CORE_EXPORT bad_exception : std::bad_exception
         {
         private:
             std::string what_;
@@ -261,7 +261,7 @@ namespace hpx {
             }
         };
 
-        struct HPX_EXPORT bad_cast : std::bad_cast
+        struct HPX_CORE_EXPORT bad_cast : std::bad_cast
         {
         private:
             std::string what_;
@@ -280,7 +280,7 @@ namespace hpx {
             }
         };
 
-        struct HPX_EXPORT bad_typeid : std::bad_typeid
+        struct HPX_CORE_EXPORT bad_typeid : std::bad_typeid
         {
         private:
             std::string what_;
@@ -300,12 +300,12 @@ namespace hpx {
         };
 
         template <typename Exception>
-        HPX_EXPORT std::exception_ptr get_exception(hpx::exception const& e,
+        HPX_CORE_EXPORT std::exception_ptr get_exception(hpx::exception const& e,
             std::string const& func, std::string const& file, long line,
             std::string const& auxinfo);
 
         template <typename Exception>
-        HPX_EXPORT std::exception_ptr construct_lightweight_exception(
+        HPX_CORE_EXPORT std::exception_ptr construct_lightweight_exception(
             Exception const& e);
     }    // namespace detail
     /// \endcond
@@ -341,7 +341,7 @@ namespace hpx {
     ///             \a hpx::get_error_backtrace(), \a hpx::get_error_env(),
     ///             \a hpx::get_error_config(), \a hpx::get_error_state()
     ///
-    HPX_EXPORT std::string get_error_what(exception_info const& xi);
+    HPX_CORE_EXPORT std::string get_error_what(exception_info const& xi);
 
     /// \cond NOINTERNAL
     template <typename E>
@@ -395,13 +395,13 @@ namespace hpx {
     ///             \a hpx::get_error_what(), \a hpx::get_error_config(),
     ///             \a hpx::get_error_state()
     ///
-    HPX_EXPORT error get_error(hpx::exception const& e);
+    HPX_CORE_EXPORT error get_error(hpx::exception const& e);
 
     /// \copydoc get_error(hpx::exception const& e)
-    HPX_EXPORT error get_error(hpx::error_code const& e);
+    HPX_CORE_EXPORT error get_error(hpx::error_code const& e);
 
     /// \cond NOINTERNAL
-    HPX_EXPORT error get_error(std::exception_ptr const& e);
+    HPX_CORE_EXPORT error get_error(std::exception_ptr const& e);
     /// \endcond
 
     /// \brief Return the function name from which the exception was thrown.
@@ -432,7 +432,7 @@ namespace hpx {
     ///             \a hpx::get_error_what(), \a hpx::get_error_config(),
     ///             \a hpx::get_error_state()
     ///
-    HPX_EXPORT std::string get_error_function_name(
+    HPX_CORE_EXPORT std::string get_error_function_name(
         hpx::exception_info const& xi);
 
     /// \cond NOINTERNAL
@@ -475,7 +475,7 @@ namespace hpx {
     ///             \a hpx::get_error_what(), \a hpx::get_error_config(),
     ///             \a hpx::get_error_state()
     ///
-    HPX_EXPORT std::string get_error_file_name(hpx::exception_info const& xi);
+    HPX_CORE_EXPORT std::string get_error_file_name(hpx::exception_info const& xi);
 
     /// \cond NOINTERNAL
     template <typename E>
@@ -516,7 +516,7 @@ namespace hpx {
     ///             \a hpx::get_error_what(), \a hpx::get_error_config(),
     ///             \a hpx::get_error_state()
     ///
-    HPX_EXPORT long get_error_line_number(hpx::exception_info const& xi);
+    HPX_CORE_EXPORT long get_error_line_number(hpx::exception_info const& xi);
 
     /// \cond NOINTERNAL
     template <typename E>

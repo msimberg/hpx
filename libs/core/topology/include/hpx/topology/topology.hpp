@@ -69,7 +69,7 @@ namespace hpx { namespace threads {
         }
 
         // stringify the bitmp using hwloc
-        friend HPX_EXPORT std::ostream& operator<<(
+        friend HPX_CORE_EXPORT std::ostream& operator<<(
             std::ostream& os, hpx_hwloc_bitmap_wrapper const* bmp);
 
     private:
@@ -98,7 +98,7 @@ namespace hpx { namespace threads {
 
 #include <hpx/config/warnings_prefix.hpp>
 
-    struct HPX_EXPORT topology
+    struct HPX_CORE_EXPORT topology
     {
         topology();
         ~topology();
@@ -418,7 +418,7 @@ namespace hpx { namespace threads {
         return topo.get();
     }
 
-    HPX_EXPORT HPX_NODISCARD unsigned int hardware_concurrency();
+    HPX_CORE_EXPORT HPX_NODISCARD unsigned int hardware_concurrency();
 
     ///////////////////////////////////////////////////////////////////////////
     // abstract away memory page size, calls to system functions are

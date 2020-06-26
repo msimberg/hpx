@@ -31,14 +31,14 @@ namespace hpx { namespace util {
     /// \returns \a true if the parsing was successful, false otherwise.
     ///
     /// \note Currently, only supports search and replace syntax (s/search/replace/)
-    HPX_EXPORT bool parse_sed_expression(
+    HPX_CORE_EXPORT bool parse_sed_expression(
         std::string const& input, std::string& search, std::string& replace);
 
     /// An unary function object which applies a sed command to its subject and
     /// returns the resulting string.
     ///
     /// \note Currently, only supports search and replace syntax (s/search/replace/)
-    struct HPX_EXPORT sed_transform
+    struct HPX_CORE_EXPORT sed_transform
     {
     private:
         struct command;

@@ -39,24 +39,24 @@ namespace hpx { namespace serialization { namespace detail {
 
         HPX_STATIC_CONSTEXPR std::uint32_t invalid_id = ~0u;
 
-        HPX_EXPORT void register_factory_function(
+        HPX_CORE_EXPORT void register_factory_function(
             const std::string& type_name, ctor_t ctor);
 
-        HPX_EXPORT void register_typename(
+        HPX_CORE_EXPORT void register_typename(
             const std::string& type_name, std::uint32_t id);
 
-        HPX_EXPORT void fill_missing_typenames();
+        HPX_CORE_EXPORT void fill_missing_typenames();
 
-        HPX_EXPORT std::uint32_t try_get_id(const std::string& type_name) const;
+        HPX_CORE_EXPORT std::uint32_t try_get_id(const std::string& type_name) const;
 
         std::uint32_t get_max_registered_id() const
         {
             return max_id;
         }
 
-        HPX_EXPORT std::vector<std::string> get_unassigned_typenames() const;
+        HPX_CORE_EXPORT std::vector<std::string> get_unassigned_typenames() const;
 
-        HPX_EXPORT static id_registry& instance();
+        HPX_CORE_EXPORT static id_registry& instance();
 
     private:
         id_registry()
@@ -67,7 +67,7 @@ namespace hpx { namespace serialization { namespace detail {
         friend struct ::hpx::util::static_<id_registry>;
         friend class polymorphic_id_factory;
 
-        HPX_EXPORT void cache_id(std::uint32_t id, ctor_t ctor);
+        HPX_CORE_EXPORT void cache_id(std::uint32_t id, ctor_t ctor);
 
         std::uint32_t max_id;
         typename_to_ctor_t typename_to_ctor;
@@ -112,13 +112,13 @@ namespace hpx { namespace serialization { namespace detail {
             return static_cast<T*>(ctor());
         }
 
-        HPX_EXPORT static std::uint32_t get_id(const std::string& type_name);
+        HPX_CORE_EXPORT static std::uint32_t get_id(const std::string& type_name);
 
     private:
         polymorphic_id_factory() {}
 
-        HPX_EXPORT static polymorphic_id_factory& instance();
-        HPX_EXPORT static std::string collect_registered_typenames();
+        HPX_CORE_EXPORT static polymorphic_id_factory& instance();
+        HPX_CORE_EXPORT static std::string collect_registered_typenames();
 
         friend struct hpx::util::static_<polymorphic_id_factory>;
     };

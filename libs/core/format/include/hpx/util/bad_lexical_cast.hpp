@@ -14,7 +14,7 @@
 
 namespace hpx { namespace util {
 
-    class HPX_EXPORT bad_lexical_cast : public std::bad_cast
+    class HPX_CORE_EXPORT bad_lexical_cast : public std::bad_cast
     {
     public:
         bad_lexical_cast() noexcept
@@ -51,7 +51,7 @@ namespace hpx { namespace util {
 
     namespace detail {
 
-        HPX_NORETURN HPX_EXPORT void throw_bad_lexical_cast(
+        HPX_NORETURN HPX_CORE_EXPORT void throw_bad_lexical_cast(
             std::type_info const& source_type,
             std::type_info const& target_type);
 

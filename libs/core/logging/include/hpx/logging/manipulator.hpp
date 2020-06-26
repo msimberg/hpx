@@ -53,7 +53,7 @@ namespace hpx { namespace util { namespace logging {
             /// That is, this allows configuration of your manipulator at run-time.
             virtual void configure(std::string const&) {}
 
-            HPX_EXPORT virtual ~manipulator();
+            HPX_CORE_EXPORT virtual ~manipulator();
 
         protected:
             // signify that we're only a base class - not to be used directly
@@ -80,7 +80,7 @@ namespace hpx { namespace util { namespace logging {
             /// That is, this allows configuration of your manipulator at run-time.
             virtual void configure(std::string const&) {}
 
-            HPX_EXPORT virtual ~manipulator();
+            HPX_CORE_EXPORT virtual ~manipulator();
 
         protected:
             // signify that we're only a base class - not to be used directly

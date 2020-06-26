@@ -18,7 +18,7 @@
 #include <hpx/config/warnings_prefix.hpp>
 
 namespace hpx { namespace util {
-    class HPX_EXPORT barrier
+    class HPX_CORE_EXPORT barrier
     {
     private:
         typedef std::mutex mutex_type;

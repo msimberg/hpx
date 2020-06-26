@@ -110,14 +110,14 @@ namespace hpx { namespace threads {
     namespace detail {
         using get_default_pool_type =
             util::function_nonser<thread_pool_base*()>;
-        HPX_EXPORT void set_get_default_pool(get_default_pool_type f);
-        HPX_EXPORT thread_pool_base* get_self_or_default_pool();
+        HPX_CORE_EXPORT void set_get_default_pool(get_default_pool_type f);
+        HPX_CORE_EXPORT thread_pool_base* get_self_or_default_pool();
 
         using get_default_timer_service_type =
             util::function_nonser<boost::asio::io_service*()>;
-        HPX_EXPORT void set_get_default_timer_service(
+        HPX_CORE_EXPORT void set_get_default_timer_service(
             get_default_timer_service_type f);
-        HPX_EXPORT boost::asio::io_service* get_default_timer_service();
+        HPX_CORE_EXPORT boost::asio::io_service* get_default_timer_service();
     }    // namespace detail
 
     ///////////////////////////////////////////////////////////////////////////

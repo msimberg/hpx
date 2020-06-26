@@ -146,7 +146,7 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail {
         }
 
     public:
-        static HPX_EXPORT coroutine_self*& local_self();
+        static HPX_CORE_EXPORT coroutine_self*& local_self();
 
         static void set_self(coroutine_self* self)
         {

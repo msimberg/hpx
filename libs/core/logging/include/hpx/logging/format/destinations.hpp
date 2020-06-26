@@ -32,9 +32,9 @@ namespace hpx { namespace util { namespace logging { namespace destination {
 */
     struct cout : manipulator
     {
-        HPX_EXPORT static std::unique_ptr<cout> make();
+        HPX_CORE_EXPORT static std::unique_ptr<cout> make();
 
-        HPX_EXPORT ~cout();
+        HPX_CORE_EXPORT ~cout();
 
     protected:
         cout() = default;
@@ -45,9 +45,9 @@ namespace hpx { namespace util { namespace logging { namespace destination {
 */
     struct cerr : manipulator
     {
-        HPX_EXPORT static std::unique_ptr<cerr> make();
+        HPX_CORE_EXPORT static std::unique_ptr<cerr> make();
 
-        HPX_EXPORT ~cerr();
+        HPX_CORE_EXPORT ~cerr();
 
     protected:
         cerr() = default;
@@ -62,10 +62,10 @@ namespace hpx { namespace util { namespace logging { namespace destination {
 */
     struct stream : manipulator
     {
-        HPX_EXPORT static std::unique_ptr<stream> make(
+        HPX_CORE_EXPORT static std::unique_ptr<stream> make(
             std::ostream* stream_ptr);
 
-        HPX_EXPORT ~stream();
+        HPX_CORE_EXPORT ~stream();
 
         /**
         @brief resets the stream. Further output will be written to this stream
@@ -100,9 +100,9 @@ namespace hpx { namespace util { namespace logging { namespace destination {
 */
     struct dbg_window : manipulator
     {
-        HPX_EXPORT static std::unique_ptr<dbg_window> make();
+        HPX_CORE_EXPORT static std::unique_ptr<dbg_window> make();
 
-        HPX_EXPORT ~dbg_window();
+        HPX_CORE_EXPORT ~dbg_window();
 
     protected:
         dbg_window() = default;
@@ -144,10 +144,10 @@ namespace hpx { namespace util { namespace logging { namespace destination {
         @param set [optional] file settings - see file_settings class,
         and @ref dealing_with_flags
     */
-        HPX_EXPORT static std::unique_ptr<file> make(
+        HPX_CORE_EXPORT static std::unique_ptr<file> make(
             std::string const& file_name, file_settings set = {});
 
-        HPX_EXPORT ~file();
+        HPX_CORE_EXPORT ~file();
 
     protected:
         file(std::string const& file_name, file_settings set)

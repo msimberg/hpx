@@ -31,7 +31,7 @@ namespace hpx {
     /// The type exception_list::const_iterator fulfills the requirements of
     /// a forward iterator.
     ///
-    class HPX_EXPORT exception_list : public hpx::exception
+    class HPX_CORE_EXPORT exception_list : public hpx::exception
     {
     private:
         // TODO: Does this need to be hpx::lcos::local::spinlock?

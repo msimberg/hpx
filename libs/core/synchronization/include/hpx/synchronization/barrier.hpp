@@ -231,7 +231,7 @@ namespace hpx { namespace lcos { namespace local {
     ///         and it can't be triggered using the action (parcel) mechanism.
     ///         It is just a low level synchronization primitive allowing to
     ///         synchronize a given number of \a threads.
-    class HPX_EXPORT barrier
+    class HPX_CORE_EXPORT barrier
     {
     private:
         typedef lcos::local::spinlock mutex_type;

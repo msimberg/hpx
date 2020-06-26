@@ -40,7 +40,7 @@ namespace hpx { namespace threads { namespace policies {
     ///////////////////////////////////////////////////////////////////////////
     /// The scheduler_base defines the interface to be implemented by all
     /// scheduler policies
-    struct HPX_EXPORT scheduler_base
+    struct HPX_CORE_EXPORT scheduler_base
     {
     public:
         HPX_NON_COPYABLE(scheduler_base);

@@ -255,7 +255,7 @@ namespace hpx { namespace util {
         ///////////////////////////////////////////////////////////////////////
         // Use dedicated macro so it may be overridden
 #if !defined(HPX_FORMAT_EXPORT)
-#define HPX_FORMAT_EXPORT HPX_EXPORT
+#define HPX_FORMAT_EXPORT HPX_CORE_EXPORT
 #endif
 
         HPX_FORMAT_EXPORT void format_to(std::ostream& os,

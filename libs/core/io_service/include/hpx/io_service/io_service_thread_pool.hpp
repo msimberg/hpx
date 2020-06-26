@@ -24,7 +24,7 @@
 
 namespace hpx { namespace threads { namespace detail {
     ///////////////////////////////////////////////////////////////////////////
-    class HPX_EXPORT io_service_thread_pool : public thread_pool_base
+    class HPX_CORE_EXPORT io_service_thread_pool : public thread_pool_base
     {
     public:
         explicit io_service_thread_pool(

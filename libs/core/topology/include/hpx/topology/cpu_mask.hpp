@@ -237,6 +237,6 @@ namespace hpx { namespace threads {
 
 #endif
 
-        HPX_EXPORT std::string to_string(mask_cref_type);
+        HPX_CORE_EXPORT std::string to_string(mask_cref_type);
         /// \endcond
 }}    // namespace hpx::threads

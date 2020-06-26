@@ -15,6 +15,6 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail {
         ///////////////////////////////////////////////////////////////////////
         // this global (urghhh) variable is used to control whether guard pages
         // will be used or not
-        HPX_EXPORT bool use_guard_pages = true;
+        HPX_CORE_EXPORT bool use_guard_pages = true;
 }}}}}    // namespace hpx::threads::coroutines::detail::posix
 #endif

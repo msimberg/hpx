@@ -27,42 +27,42 @@
 /// \cond NODETAIL
 namespace hpx { namespace detail {
     template <typename Exception>
-    HPX_NORETURN HPX_EXPORT void throw_exception(Exception const& e,
+    HPX_NORETURN HPX_CORE_EXPORT void throw_exception(Exception const& e,
         std::string const& func, std::string const& file, long line);
 
-    HPX_NORETURN HPX_EXPORT void throw_exception(error errcode,
+    HPX_NORETURN HPX_CORE_EXPORT void throw_exception(error errcode,
         std::string const& msg, std::string const& func,
         std::string const& file, long line);
 
-    HPX_NORETURN HPX_EXPORT void rethrow_exception(
+    HPX_NORETURN HPX_CORE_EXPORT void rethrow_exception(
         exception const& e, std::string const& func);
 
     template <typename Exception>
-    HPX_EXPORT std::exception_ptr get_exception(Exception const& e,
+    HPX_CORE_EXPORT std::exception_ptr get_exception(Exception const& e,
         std::string const& func = "<unknown>",
         std::string const& file = "<unknown>", long line = -1,
         std::string const& auxinfo = "");
 
-    HPX_EXPORT std::exception_ptr get_exception(error errcode,
+    HPX_CORE_EXPORT std::exception_ptr get_exception(error errcode,
         std::string const& msg, throwmode mode,
         std::string const& func = "<unknown>",
         std::string const& file = "<unknown>", long line = -1,
         std::string const& auxinfo = "");
 
-    HPX_EXPORT std::exception_ptr get_exception(
+    HPX_CORE_EXPORT std::exception_ptr get_exception(
         boost::system::error_code const& ec, std::string const& msg,
         throwmode mode, std::string const& func = "<unknown>",
         std::string const& file = "<unknown>", long line = -1,
         std::string const& auxinfo = "");
 
-    HPX_EXPORT void throws_if(hpx::error_code& ec, error errcode,
+    HPX_CORE_EXPORT void throws_if(hpx::error_code& ec, error errcode,
         std::string const& msg, std::string const& func,
         std::string const& file, long line);
 
-    HPX_EXPORT void rethrows_if(
+    HPX_CORE_EXPORT void rethrows_if(
         hpx::error_code& ec, exception const& e, std::string const& func);
 
-    HPX_NORETURN HPX_EXPORT void throw_thread_interrupted_exception();
+    HPX_NORETURN HPX_CORE_EXPORT void throw_thread_interrupted_exception();
 }}    // namespace hpx::detail
 /// \endcond
 

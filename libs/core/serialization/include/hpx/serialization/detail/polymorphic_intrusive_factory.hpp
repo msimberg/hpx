@@ -32,11 +32,11 @@ namespace hpx { namespace serialization { namespace detail {
     public:
         polymorphic_intrusive_factory() {}
 
-        HPX_EXPORT static polymorphic_intrusive_factory& instance();
+        HPX_CORE_EXPORT static polymorphic_intrusive_factory& instance();
 
-        HPX_EXPORT void register_class(std::string const& name, ctor_type fun);
+        HPX_CORE_EXPORT void register_class(std::string const& name, ctor_type fun);
 
-        HPX_EXPORT void* create(std::string const& name) const;
+        HPX_CORE_EXPORT void* create(std::string const& name) const;
 
         template <typename T>
         T* create(std::string const& name) const

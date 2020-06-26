@@ -77,11 +77,11 @@ namespace hpx { namespace threads { namespace coroutines { namespace detail {
         }
 
 #if defined(HPX_DEBUG)
-        HPX_EXPORT ~coroutine_impl();
+        HPX_CORE_EXPORT ~coroutine_impl();
 #endif
 
         // execute the coroutine using normal context switching
-        HPX_EXPORT void operator()() noexcept;
+        HPX_CORE_EXPORT void operator()() noexcept;
 
     public:
         void bind_result(result_type res)

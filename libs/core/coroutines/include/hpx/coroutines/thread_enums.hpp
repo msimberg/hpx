@@ -61,7 +61,7 @@ namespace hpx { namespace threads {
     /// thread_state constant.
     ///
     /// \param state this represents the thread state.
-    HPX_EXPORT char const* get_thread_state_name(thread_state_enum state);
+    HPX_CORE_EXPORT char const* get_thread_state_name(thread_state_enum state);
 
     ///////////////////////////////////////////////////////////////////////////
     // clang-format off
@@ -111,7 +111,7 @@ namespace hpx { namespace threads {
     /// constant.
     ///
     /// \param this represents the thread priority.
-    HPX_EXPORT char const* get_thread_priority_name(thread_priority priority);
+    HPX_CORE_EXPORT char const* get_thread_priority_name(thread_priority priority);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \enum thread_state_ex_enum
@@ -130,7 +130,7 @@ namespace hpx { namespace threads {
 
     /// Get the readable string representing the name of the given
     /// thread_state_ex_enum constant.
-    HPX_EXPORT char const* get_thread_state_ex_name(thread_state_ex_enum state);
+    HPX_CORE_EXPORT char const* get_thread_state_ex_name(thread_state_ex_enum state);
 
     /// \cond NOINTERNAL
     // special type storing both state in one tagged structure
@@ -141,7 +141,7 @@ namespace hpx { namespace threads {
 
     /// Get the readable string representing the name of the given
     /// thread_state constant.
-    HPX_EXPORT char const* get_thread_state_name(thread_state state);
+    HPX_CORE_EXPORT char const* get_thread_state_name(thread_state state);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \enum thread_stacksize
@@ -174,7 +174,7 @@ namespace hpx { namespace threads {
     /// constant.
     ///
     /// \param size this represents the stack size
-    HPX_EXPORT char const* get_stack_size_enum_name(thread_stacksize size);
+    HPX_CORE_EXPORT char const* get_stack_size_enum_name(thread_stacksize size);
 
     ///////////////////////////////////////////////////////////////////////////
     /// \enum thread_schedule_hint_mode

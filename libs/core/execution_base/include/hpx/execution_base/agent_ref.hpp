@@ -17,7 +17,7 @@ namespace hpx { namespace execution_base {
 
     struct agent_base;
 
-    class HPX_EXPORT agent_ref
+    class HPX_CORE_EXPORT agent_ref
     {
     public:
         constexpr agent_ref() noexcept

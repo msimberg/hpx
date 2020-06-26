@@ -135,7 +135,7 @@ namespace hpx { namespace serialization { namespace detail {
         using serializer_typeinfo_map_type = std::unordered_map<std::string,
             std::string, hpx::util::jenkins_hash>;
 
-        HPX_EXPORT static polymorphic_nonintrusive_factory& instance();
+        HPX_CORE_EXPORT static polymorphic_nonintrusive_factory& instance();
 
         void register_class(std::type_info const& typeinfo,
             std::string const& class_name, function_bunch_type const& bunch)
