@@ -22,7 +22,7 @@ set(distributed_executors_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  distributed_executors
+  core distributed_executors
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

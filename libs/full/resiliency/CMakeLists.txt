@@ -24,7 +24,7 @@ set(resiliency_sources resiliency.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  resiliency
+  core resiliency
   GLOBAL_HEADER_GEN OFF
   SOURCES ${resiliency_sources}
   HEADERS ${resiliency_headers}

@@ -26,7 +26,7 @@ set(pack_traversal_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  pack_traversal
+  core pack_traversal
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

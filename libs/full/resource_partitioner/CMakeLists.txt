@@ -24,7 +24,7 @@ set(resource_partitioner_sources detail_partitioner.cpp partitioner.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  resource_partitioner
+  core resource_partitioner
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

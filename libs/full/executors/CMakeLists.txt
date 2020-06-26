@@ -62,7 +62,7 @@ set(executors_sources current_executor.cpp exception_list_callbacks.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  executors
+  core executors
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF

@@ -86,7 +86,7 @@ set(async_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  async_distributed
+  core async_distributed
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF

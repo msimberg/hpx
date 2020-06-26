@@ -18,7 +18,7 @@ set(threading_sources thread.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  threading
+  core threading
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

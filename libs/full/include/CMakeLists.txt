@@ -100,7 +100,7 @@ set(include_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  include
+  core include
   GLOBAL_HEADER_GEN OFF
   HEADERS ${include_headers}
   DEPENDENCIES

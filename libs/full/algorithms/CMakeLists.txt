@@ -144,7 +144,7 @@ set(algorithms_sources handle_exception_termination_handler.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  algorithms
+  core algorithms
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   HEADERS ${algorithms_headers}

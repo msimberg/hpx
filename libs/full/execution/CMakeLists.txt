@@ -82,7 +82,7 @@ set(execution_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  execution
+  core execution
   SOURCES ${execution_sources}
   HEADERS ${execution_headers}
   DEPRECATION_WARNINGS

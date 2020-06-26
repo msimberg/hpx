@@ -19,7 +19,7 @@ endif()
 
 include(HPX_AddModule)
 add_hpx_module(
-  version
+  core version
   COMPATIBILITY_HEADERS OFF
   GLOBAL_HEADER_GEN OFF
   SOURCES ${version_sources}

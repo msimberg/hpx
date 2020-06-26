@@ -79,7 +79,7 @@ set(runtime_local_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  runtime_local
+  core runtime_local
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

@@ -22,7 +22,7 @@ set(async_base_compat_headers hpx/runtime/launch_policy.hpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  async_base
+  core async_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

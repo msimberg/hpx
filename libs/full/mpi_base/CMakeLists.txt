@@ -27,7 +27,7 @@ set(mpi_base_sources mpi_environment.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  mpi_base
+  core mpi_base
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

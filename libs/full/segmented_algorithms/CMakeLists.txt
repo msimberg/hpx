@@ -39,7 +39,7 @@ set(segmented_algorithms_compat_headers hpx/util/zip_iterator.hpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  segmented_algorithms
+  core segmented_algorithms
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   HEADERS ${segmented_algorithms_headers}

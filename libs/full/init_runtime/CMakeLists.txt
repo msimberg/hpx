@@ -25,7 +25,7 @@ set(init_runtime_sources hpx_init.cpp hpx_main_winsocket.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  init_runtime
+  core init_runtime
   GLOBAL_HEADER_GEN OFF
   SOURCES ${init_runtime_sources}
   HEADERS ${init_runtime_headers}

@@ -38,7 +38,7 @@ set(lcos_local_sources composable_guard.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  lcos_local
+  core lcos_local
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   SOURCES ${lcos_local_sources}

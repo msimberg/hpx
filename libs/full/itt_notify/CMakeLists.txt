@@ -20,7 +20,7 @@ set(itt_notify_sources itt_notify.cpp thread_name.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  itt_notify
+  core itt_notify
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
