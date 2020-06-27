@@ -7,7 +7,7 @@
 #pragma once
 
 #if (defined(HPX_HAVE_NETWORKING) && defined(HPX_HAVE_PARCELPORT_MPI)) ||      \
-    defined(HPX_HAVE_LIB_MPI)
+    defined(HPX_HAVE_MODULE_MPI)
 
 #if defined(__clang__)
 #pragma clang diagnostic push

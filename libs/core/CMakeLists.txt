@@ -31,6 +31,7 @@ set(_hpx_core_modules
     hashing
     io_service
     iterator_support
+    itt_notify
     logging
     memory
     naming_base

@@ -91,7 +91,7 @@ endforeach()
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/cmake/templates/modules_enabled.hpp.in"
-  "${PROJECT_BINARY_DIR}/modules/core/config/include/hpx/config/modules_enabled.hpp"
+  "${PROJECT_BINARY_DIR}/libs/core/config/include/hpx/config/modules_enabled.hpp"
   @ONLY
 )
 

@@ -25,7 +25,7 @@ add_hpx_module(
   SOURCES ${version_sources}
   HEADERS ${version_headers}
   DEPENDENCIES Hwloc::hwloc ${mpi_dependencies}
-  CMAKE_SUBDIRS
+  MODULE_DEPENDENCIES hpx_config hpx_format hpx_prefix
 )
 
 target_include_directories(
