@@ -44,25 +44,25 @@ add_hpx_module(
   SOURCES ${lcos_local_sources}
   HEADERS ${lcos_local_headers}
   COMPAT_HEADERS ${lcos_local_compat_headers}
-  DEPENDENCIES
-    hpx_config
-    hpx_execution_base
-    hpx_allocator_support
-    hpx_assertion
-    hpx_errors
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
+    
+    
+    
     hpx_execution
     hpx_executors
-    hpx_functional
-    hpx_iterator_support
-    hpx_memory
+    
+    
+    
     hpx_pack_traversal
-    hpx_synchronization
-    hpx_thread_support
-    hpx_type_support
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )
 
 # Temporary because of the dependency to main hpx/ includes
 target_link_libraries(
-  hpx_lcos_local PUBLIC hpx_plugin hpx_topology hpx_threadmanager
+  hpx_lcos_local PUBLIC   hpx_threadmanager
 )

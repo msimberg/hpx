@@ -29,7 +29,7 @@ add_hpx_module(
   SOURCES ${checkpoint_sources}
   HEADERS ${checkpoint_headers}
   COMPAT_HEADERS ${checkpoint_compat_headers}
-  DEPENDENCIES hpx_async_distributed hpx_checkpoint_base hpx_config hpx_futures
-               hpx_serialization
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES hpx_async_distributed hpx_checkpoint_base  hpx_futures
+               
   CMAKE_SUBDIRS examples tests
 )

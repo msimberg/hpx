@@ -28,6 +28,6 @@ add_hpx_module(
   SOURCES ${memory_sources}
   HEADERS ${memory_headers}
   COMPAT_HEADERS ${memory_compat_headers}
-  DEPENDENCIES hpx_config hpx_assertion hpx_serialization
+  MODULE_DEPENDENCIES hpx_config hpx_assertion hpx_serialization
   CMAKE_SUBDIRS examples tests
 )

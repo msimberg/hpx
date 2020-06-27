@@ -34,7 +34,7 @@ add_hpx_module(
   SOURCES ${mpi_base_sources}
   HEADERS ${mpi_base_headers}
   COMPAT_HEADERS ${mpi_base_compat_headers}
-  DEPENDENCIES hpx_config hpx_runtime_configuration hpx_synchronization hpx_util
-               ${additional_dependencies}
+ MODULE_DEPENDENCIES  hpx_runtime_configuration  
+   DEPENDENCIES hpx_core              ${additional_dependencies}
   CMAKE_SUBDIRS examples tests
 )

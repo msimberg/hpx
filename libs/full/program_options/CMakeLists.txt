@@ -55,7 +55,7 @@ add_hpx_module(
   GLOBAL_HEADER_GEN OFF
   SOURCES ${program_options_sources}
   HEADERS ${program_options_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_datastructures hpx_format
-               hpx_iterator_support ${__boost_program_options}
+  DEPENDENCIES hpx_core 
+                ${__boost_program_options}
   CMAKE_SUBDIRS examples tests
 )

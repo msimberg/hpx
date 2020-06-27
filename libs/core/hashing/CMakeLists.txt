@@ -23,6 +23,6 @@ add_hpx_module(
   SOURCES ${hashing_sources}
   HEADERS ${hashing_headers}
   COMPAT_HEADERS ${hashing_compat_headers}
-  DEPENDENCIES hpx_config
+  MODULE_DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

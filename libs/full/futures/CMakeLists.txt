@@ -57,21 +57,21 @@ add_hpx_module(
   COMPAT_HEADERS ${futures_compat_headers}
   EXCLUDE_FROM_GLOBAL_HEADER "hpx/futures/detail/future_data.hpp"
                              "hpx/futures/detail/future_transforms.hpp"
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
     hpx_async_base
-    hpx_execution_base
-    hpx_config
-    hpx_coroutines
-    hpx_errors
-    hpx_functional
-    hpx_memory
-    hpx_serialization
-    hpx_synchronization
-    hpx_thread_support
-    hpx_threading_base
-    hpx_timing
-    hpx_type_support
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

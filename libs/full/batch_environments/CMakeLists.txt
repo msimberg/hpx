@@ -35,13 +35,13 @@ add_hpx_module(
   SOURCES ${batch_environments_sources}
   HEADERS ${batch_environments_headers}
   COMPAT_HEADERS ${batch_environments_compat_headers}
-  DEPENDENCIES
-    hpx_asio
-    hpx_assertion
-    hpx_config
-    hpx_errors
-    hpx_format
-    hpx_string_util
-    hpx_util
+  DEPENDENCIES hpx_core
+    
+    
+    
+    
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

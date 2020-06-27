@@ -72,7 +72,7 @@ add_hpx_module(
   SOURCES ${synchronization_sources}
   HEADERS ${synchronization_headers}
   COMPAT_HEADERS ${synchronization_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_config
     hpx_assertion
     hpx_execution_base

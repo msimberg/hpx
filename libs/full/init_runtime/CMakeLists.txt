@@ -23,18 +23,19 @@ set(init_runtime_headers
 
 set(init_runtime_sources hpx_init.cpp hpx_main_winsocket.cpp)
 
+if(HPX_WITH_DISTRIBUTED_RUNTIME)
+	set(
+    init_runtime_optional_module_dependencies hpx_async_distributed hpx_performance_counters
+  )
+endif()
+
 include(HPX_AddModule)
 add_hpx_module(
   core init_runtime
   GLOBAL_HEADER_GEN OFF
   SOURCES ${init_runtime_sources}
   HEADERS ${init_runtime_headers}
-  DEPENDENCIES hpx_algorithms hpx_runtime_local hpx_testing
+  DEPENDENCIES hpx_core
+  MODULE_DEPENDENCIES hpx_algorithms hpx_runtime_local ${init_runtime_optional_module_dependencies}
   CMAKE_SUBDIRS examples tests
 )
-
-if(HPX_WITH_DISTRIBUTED_RUNTIME)
-  target_link_libraries(
-    hpx_init_runtime PUBLIC hpx_async_distributed hpx_performance_counters
-  )
-endif()

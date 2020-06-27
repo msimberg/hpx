@@ -31,30 +31,30 @@ add_hpx_module(
   SOURCES ${resource_partitioner_sources}
   HEADERS ${resource_partitioner_headers}
   COMPAT_HEADERS ${resource_partitioner_compat_headers}
-  DEPENDENCIES
-    hpx_affinity
-    hpx_allocator_support
-    hpx_assertion
-    hpx_cache
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
+    
+    
     hpx_command_line_handling
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_errors
+    
+    
+    
+    
     hpx_execution
-    hpx_format
-    hpx_functional
-    hpx_hardware
-    hpx_memory
+    
+    
+    
+    
     hpx_mpi_base
     hpx_pack_traversal
-    hpx_plugin
+    
     hpx_program_options
     hpx_runtime_configuration
-    hpx_serialization
-    hpx_synchronization
-    hpx_thread_pools
-    hpx_threading_base
-    hpx_topology
+    
+    
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

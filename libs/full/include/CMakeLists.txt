@@ -103,29 +103,29 @@ add_hpx_module(
   core include
   GLOBAL_HEADER_GEN OFF
   HEADERS ${include_headers}
-  DEPENDENCIES
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
     hpx_algorithms
-    hpx_assertion
+    
     hpx_async_combinators
-    hpx_config
-    hpx_errors
+    
+    
     hpx_executors
     hpx_execution
-    hpx_format
+    
     hpx_futures
     hpx_async_local
     hpx_lcos_local
-    hpx_naming_base
+    
     hpx_pack_traversal
     hpx_resource_partitioner
-    hpx_serialization
-    hpx_synchronization
+    
+    
     hpx_thread_executors
-    hpx_thread_pools
+    
     hpx_threadmanager
     hpx_threading
     hpx_timed_execution
-    hpx_util
+    
   CMAKE_SUBDIRS tests
 )
 

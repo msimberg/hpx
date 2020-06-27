@@ -14,7 +14,6 @@ set(_hpx_core_modules
     allocator_support
     asio
     assertion
-    basic_execution
     cache
     concepts
     concurrency
@@ -24,6 +23,7 @@ set(_hpx_core_modules
     datastructures
     debugging
     errors
+    execution_base
     filesystem
     format
     functional

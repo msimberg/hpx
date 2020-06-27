@@ -32,12 +32,12 @@ add_hpx_module(
   SOURCES ${lcos_distributed_sources}
   HEADERS ${lcos_distributed_headers}
   COMPAT_HEADERS ${lcos_distributed_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
     hpx_async_distributed
-    hpx_config
+    
     hpx_lcos_local
-    hpx_preprocessor
+    
   CMAKE_SUBDIRS examples tests
 )
 # cmake-format: on

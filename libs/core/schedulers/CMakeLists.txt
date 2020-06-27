@@ -52,7 +52,7 @@ add_hpx_module(
   HEADERS ${schedulers_headers}
   COMPAT_HEADERS ${schedulers_compat_headers}
   SOURCES ${schedulers_sources}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_config
     hpx_assertion
     hpx_errors

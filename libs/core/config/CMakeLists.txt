@@ -41,7 +41,7 @@ add_hpx_module(
   GLOBAL_HEADER_GEN OFF
   SOURCES ${config_sources}
   HEADERS ${config_headers}
-  DEPENDENCIES
-  DEPENDENCIES hpx_preprocessor hpx_dependencies_boost
+  MODULE_DEPENDENCIES
+  MODULE_DEPENDENCIES hpx_preprocessor DEPENDENCIES hpx_dependencies_boost
   CMAKE_SUBDIRS examples tests
 )

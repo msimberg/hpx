@@ -21,6 +21,6 @@ add_hpx_module(
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
   HEADERS ${naming_base_headers}
-  DEPENDENCIES hpx_config
+  MODULE_DEPENDENCIES hpx_config
   CMAKE_SUBDIRS examples tests
 )

@@ -18,6 +18,5 @@ add_hpx_module(
   core string_util
   GLOBAL_HEADER_GEN ON
   HEADERS ${string_util_headers}
-  DEPENDENCIES
   CMAKE_SUBDIRS examples tests
 )

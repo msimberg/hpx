@@ -25,27 +25,27 @@ add_hpx_module(
   SOURCES ${threadmanager_sources}
   HEADERS ${threadmanager_headers}
   COMPAT_HEADERS ${threadmanager_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
     hpx_command_line_handling
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_errors
+    
+    
+    
+    
     hpx_execution
-    hpx_format
-    hpx_functional
-    hpx_hardware
-    hpx_io_service
-    hpx_logging
-    hpx_plugin
+    
+    
+    
+    
+    
+    
     hpx_program_options
     hpx_resource_partitioner
     hpx_runtime_configuration
-    hpx_schedulers
-    hpx_serialization
+    
+    
     hpx_thread_executors
-    hpx_topology
+    
   CMAKE_SUBDIRS examples tests
 )

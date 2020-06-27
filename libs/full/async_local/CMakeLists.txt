@@ -17,18 +17,18 @@ add_hpx_module(
   core async_local
   GLOBAL_HEADER_GEN ON
   HEADERS ${async_local_headers}
-  DEPENDENCIES
-    hpx_allocator_support
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
     hpx_async_base
-    hpx_config
-    hpx_coroutines
-    hpx_datastructures
+    
+    
+    
     hpx_execution
     hpx_executors
-    hpx_functional
-    hpx_memory
-    hpx_threading_base
-    hpx_type_support
-    hpx_util
+    
+    
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

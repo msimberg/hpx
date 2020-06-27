@@ -32,6 +32,6 @@ add_hpx_module(
   SOURCES ${statistics_sources}
   HEADERS ${statistics_headers}
   COMPAT_HEADERS ${statistics_compat_headers}
-  DEPENDENCIES hpx_config hpx_iterator_support
+  MODULE_DEPENDENCIES hpx_config hpx_iterator_support
   CMAKE_SUBDIRS examples tests
 )

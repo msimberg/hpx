@@ -43,20 +43,20 @@ add_hpx_module(
   SOURCES ${runtime_configuration_sources}
   HEADERS ${runtime_configuration_headers}
   COMPAT_HEADERS ${runtime_configuration_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_errors
-    hpx_filesystem
-    hpx_functional
-    hpx_logging
-    hpx_plugin
-    hpx_prefix
-    hpx_serialization
-    hpx_string_util
-    hpx_thread_support
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     hpx_version
   CMAKE_SUBDIRS examples tests
 )

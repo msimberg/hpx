@@ -57,7 +57,7 @@ add_hpx_module(
   SOURCES ${coroutines_sources}
   HEADERS ${coroutines_headers}
   COMPAT_HEADERS ${coroutines_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format hpx_functional
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_format hpx_functional
                hpx_util
   CMAKE_SUBDIRS examples tests
 )

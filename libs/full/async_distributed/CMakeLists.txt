@@ -92,24 +92,24 @@ add_hpx_module(
   GLOBAL_HEADER_GEN OFF
   HEADERS ${async_headers}
   COMPAT_HEADERS ${async_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
-    hpx_config
-    hpx_coroutines
-    hpx_datastructures
-    hpx_errors
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
+    
+    
+    
+    
     hpx_execution
-    hpx_format
-    hpx_functional
+    
+    
     hpx_futures
     hpx_async_local
     hpx_lcos_local
-    hpx_memory
+    
     hpx_runtime_configuration
-    hpx_threading_base
+    
     hpx_threadmanager
-    hpx_type_support
-    hpx_util
+    
+    
   CMAKE_SUBDIRS examples tests
 )

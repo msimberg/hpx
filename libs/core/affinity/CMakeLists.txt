@@ -29,7 +29,7 @@ add_hpx_module(
   SOURCES ${affinity_sources}
   HEADERS ${affinity_headers}
   COMPAT_HEADERS ${affinity_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_datastructures
@@ -37,6 +37,7 @@ add_hpx_module(
     hpx_format
     hpx_topology
     hpx_util
+    DEPENDENCIES
     Hwloc::hwloc
   CMAKE_SUBDIRS tests
 )

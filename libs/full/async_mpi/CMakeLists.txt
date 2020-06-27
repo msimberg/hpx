@@ -34,18 +34,18 @@ add_hpx_module(
   GLOBAL_HEADER_GEN ON
   SOURCES ${mpi_sources}
   HEADERS ${async_mpi_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_execution_base
-    hpx_concurrency
-    hpx_config
-    hpx_errors
+  DEPENDENCIES hpx_core
+    Mpi::mpi
+     MODULE_DEPENDENCIES
+    
+    
+    
+    
     hpx_execution
     hpx_lcos_local
-    hpx_memory
+    
     hpx_mpi_base
     hpx_runtime_local
-    hpx_threading_base
-    Mpi::mpi
+    
   CMAKE_SUBDIRS examples tests
 )

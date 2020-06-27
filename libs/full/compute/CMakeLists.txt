@@ -46,30 +46,30 @@ add_hpx_module(
   SOURCES ${compute_sources}
   HEADERS ${compute_headers}
   COMPAT_HEADERS ${compute_compat_headers}
-  DEPENDENCIES
-    hpx_affinity
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
     hpx_algorithms
-    hpx_assertion
-    hpx_config
-    hpx_coroutines
+    
+    
+    
     hpx_execution
     hpx_executors
     hpx_futures
-    hpx_hardware
-    hpx_memory
+    
+    
     hpx_pack_traversal
-    hpx_plugin
+    
     hpx_program_options
     hpx_resource_partitioner
     hpx_runtime_configuration
     hpx_runtime_local
-    hpx_serialization
-    hpx_synchronization
+    
+    
     hpx_threading
-    hpx_threading_base
+    
     hpx_threadmanager
-    hpx_topology
-    hpx_type_support
+    
+    
   CMAKE_SUBDIRS examples tests
 )
 
@@ -80,4 +80,4 @@ if(HPX_WITH_DISTRIBUTED_RUNTIME)
 endif()
 
 # Temporary since the module still depends on some runtime files
-target_link_libraries(hpx_compute PUBLIC hpx_static_reinit hpx_lcos_local)
+target_link_libraries(hpx_compute PUBLIC  hpx_lcos_local)

@@ -44,17 +44,17 @@ add_hpx_module(
   DEPRECATION_WARNINGS
   HEADERS ${segmented_algorithms_headers}
   COMPAT_HEADERS ${segmented_algorithms_compat_headers}
-  DEPENDENCIES
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
     hpx_algorithms
-    hpx_assertion
-    hpx_config
-    hpx_datastructures
+    
+    
+    
     hpx_execution
     hpx_executors
-    hpx_functional
-    hpx_iterator_support
+    
+    
     hpx_pack_traversal
-    hpx_serialization
-    hpx_type_support
+    
+    
   CMAKE_SUBDIRS examples tests
 )

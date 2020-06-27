@@ -18,6 +18,5 @@ add_hpx_module(
   GLOBAL_HEADER_GEN OFF
   SOURCES ${config_registry_sources}
   HEADERS ${config_registry_headers}
-  DEPENDENCIES
   CMAKE_SUBDIRS examples tests
 )

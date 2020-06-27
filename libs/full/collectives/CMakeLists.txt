@@ -55,46 +55,46 @@ add_hpx_module(
   SOURCES ${collectives_sources}
   HEADERS ${collectives_headers}
   COMPAT_HEADERS ${collectives_compat_headers}
-  DEPENDENCIES
-    hpx_affinity
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
     hpx_algorithms
-    hpx_allocator_support
-    hpx_assertion
+    
+    
     hpx_async_distributed
-    hpx_cache
-    hpx_concurrency
-    hpx_config
-    hpx_coroutines
-    hpx_datastructures
-    hpx_errors
+    
+    
+    
+    
+    
+    
     hpx_execution
-    hpx_format
-    hpx_functional
-    hpx_hardware
-    hpx_hashing
+    
+    
+    
+    
     hpx_init_runtime
-    hpx_iterator_support
+    
     hpx_lcos_local
-    hpx_logging
-    hpx_memory
+    
+    
     hpx_pack_traversal
     hpx_performance_counters
-    hpx_preprocessor
+    
     hpx_program_options
     hpx_runtime_configuration
     hpx_runtime_local
-    hpx_serialization
-    hpx_synchronization
-    hpx_timing
+    
+    
+    
     hpx_threading
-    hpx_thread_support
-    hpx_threading_base
+    
+    
     hpx_threadmanager
-    hpx_topology
-    hpx_type_support
-    hpx_util
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )
 
 # Temporary since the module still depends on some runtime files
-target_link_libraries(hpx_collectives PUBLIC hpx_static_reinit)
+target_link_libraries(hpx_collectives PUBLIC )

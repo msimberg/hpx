@@ -29,7 +29,7 @@ add_hpx_module(
   SOURCES ${static_reinit_sources}
   HEADERS ${static_reinit_headers}
   COMPAT_HEADERS ${static_reinit_compat_headers}
-  DEPENDENCIES hpx_config hpx_assertion hpx_concurrency hpx_functional
+  MODULE_DEPENDENCIES hpx_config hpx_assertion hpx_concurrency hpx_functional
                hpx_type_support
   CMAKE_SUBDIRS examples tests
 )

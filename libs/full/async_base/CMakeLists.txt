@@ -29,7 +29,5 @@ add_hpx_module(
   HEADERS ${async_base_headers}
   COMPAT_HEADERS ${async_base_compat_headers}
   SOURCES ${async_base_sources}
-  DEPENDENCIES hpx_allocator_support hpx_config hpx_coroutines hpx_type_support
-               hpx_serialization
   CMAKE_SUBDIRS examples tests
 )

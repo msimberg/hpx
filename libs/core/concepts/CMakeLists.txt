@@ -26,6 +26,6 @@ add_hpx_module(
   SOURCES ${concepts_sources}
   HEADERS ${concepts_headers}
   COMPAT_HEADERS ${concepts_compat_headers}
-  DEPENDENCIES hpx_config hpx_preprocessor hpx_type_support
+  MODULE_DEPENDENCIES hpx_config hpx_preprocessor hpx_type_support
   CMAKE_SUBDIRS examples tests
 )

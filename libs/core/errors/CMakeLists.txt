@@ -46,7 +46,7 @@ add_hpx_module(
   SOURCES ${errors_sources}
   HEADERS ${errors_headers}
   COMPAT_HEADERS ${errors_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_filesystem

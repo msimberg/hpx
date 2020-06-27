@@ -90,7 +90,7 @@ add_hpx_module(
   SOURCES ${functional_sources}
   HEADERS ${functional_headers}
   COMPAT_HEADERS ${functional_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_concurrency
     hpx_config

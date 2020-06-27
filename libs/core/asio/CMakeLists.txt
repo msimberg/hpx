@@ -23,6 +23,6 @@ add_hpx_module(
   SOURCES ${asio_sources}
   HEADERS ${asio_headers}
   COMPAT_HEADERS ${asio_compat_headers}
-  DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_functional
+  MODULE_DEPENDENCIES hpx_assertion hpx_config hpx_errors hpx_functional
   CMAKE_SUBDIRS examples tests
 )

@@ -69,21 +69,21 @@ add_hpx_module(
   SOURCES ${executors_sources}
   HEADERS ${executors_headers}
   COMPAT_HEADERS ${executors_compat_headers}
-  DEPENDENCIES
-    hpx_allocator_support
-    hpx_assertion
-    hpx_execution_base
-    hpx_config
-    hpx_errors
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
+    
+    
+    
     hpx_execution
-    hpx_functional
-    hpx_iterator_support
-    hpx_serialization
-    hpx_synchronization
-    hpx_threading_base
+    
+    
+    
+    
+    
     hpx_threadmanager
-    hpx_timing
-    hpx_type_support
-    hpx_util
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

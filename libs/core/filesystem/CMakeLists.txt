@@ -17,12 +17,12 @@ set(filesystem_compat_headers hpx/filesystem.hpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core core filesystem
+  core filesystem
   GLOBAL_HEADER_GEN OFF
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   HEADERS ${filesystem_headers}
   COMPAT_HEADERS ${filesystem_compat_headers}
-  DEPENDENCIES hpx_config ${__boost_filesystem}
+  MODULE_DEPENDENCIES hpx_config DEPENDENCIES ${__boost_filesystem}
   CMAKE_SUBDIRS examples tests
 )

@@ -46,22 +46,22 @@ add_hpx_module(
   SOURCES ${async_cuda_sources}
   HEADERS ${async_cuda_headers}
   COMPAT_HEADERS ${async_cuda_compat_headers}
-  DEPENDENCIES
-    hpx_affinity
-    hpx_allocator_support
-    hpx_assertion
-    hpx_coroutines
-    hpx_config
-    hpx_errors
+  DEPENDENCIES hpx_core
+    Cuda::cuda
+     MODULE_DEPENDENCIES
+    
+    
+    
+    
+    
     hpx_execution
-    hpx_functional
-    hpx_memory
+    
+    
     hpx_performance_counters
     hpx_program_options
     hpx_runtime_configuration
-    hpx_synchronization
-    hpx_static_reinit
-    hpx_type_support
-    Cuda::cuda
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

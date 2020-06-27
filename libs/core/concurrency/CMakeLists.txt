@@ -43,7 +43,7 @@ add_hpx_module(
   SOURCES ${concurrency_sources}
   HEADERS ${concurrency_headers}
   COMPAT_HEADERS ${concurrency_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_concepts
     hpx_config

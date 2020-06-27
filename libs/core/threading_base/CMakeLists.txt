@@ -85,7 +85,7 @@ add_hpx_module(
   SOURCES ${threading_base_sources}
   HEADERS ${threading_base_headers}
   COMPAT_HEADERS ${threading_base_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_affinity
     hpx_allocator_support
     hpx_assertion

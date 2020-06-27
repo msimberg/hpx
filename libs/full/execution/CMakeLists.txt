@@ -88,27 +88,27 @@ add_hpx_module(
   DEPRECATION_WARNINGS
   COMPATIBILITY_HEADERS ON # Added in 1.5.0
   COMPAT_HEADERS ${execution_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
     hpx_async_base
     hpx_async_combinators
-    hpx_allocator_support
-    hpx_concepts
-    hpx_config
-    hpx_errors
-    hpx_datastructures
-    hpx_errors
-    hpx_functional
-    hpx_iterator_support
-    hpx_preprocessor
+    
+    
+    
+    
+    
+    
+    
+    
+    
     hpx_resource_partitioner
-    hpx_synchronization
+    
     hpx_threading
     hpx_threadmanager
-    hpx_thread_support
-    hpx_timing
-    hpx_topology
-    hpx_type_support
+    
+    
+    
+    
     hpx_pack_traversal
   CMAKE_SUBDIRS examples tests
 )

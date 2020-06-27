@@ -150,24 +150,20 @@ add_hpx_module(
   HEADERS ${algorithms_headers}
   COMPAT_HEADERS ${algorithms_compat_headers}
   SOURCES ${algorithms_sources}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_concepts
-    hpx_concurrency
-    hpx_config
-    hpx_datastructures
-    hpx_errors
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
     hpx_execution
     hpx_executors
-    hpx_format
-    hpx_functional
-    hpx_iterator_support
+    
+    
+    
     hpx_async_local
     hpx_pack_traversal
     hpx_program_options
-    hpx_statistics
-    hpx_synchronization
-    hpx_timing
-    hpx_type_support
+    
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

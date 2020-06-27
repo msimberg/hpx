@@ -62,27 +62,27 @@ add_hpx_module(
   GLOBAL_HEADER_GEN ON
   SOURCES ${performance_counters_sources}
   HEADERS ${performance_counters_headers}
-  DEPENDENCIES
-    hpx_assertion
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
     hpx_async_distributed
-    hpx_config
-    hpx_errors
+    
+    
     hpx_execution
     hpx_executors
-    hpx_format
-    hpx_functional
-    hpx_logging
+    
+    
+    
     hpx_pack_traversal
     hpx_runtime_local
-    hpx_serialization
-    hpx_synchronization
-    hpx_static_reinit
-    hpx_statistics
-    hpx_string_util
+    
+    
+    
+    
+    
     hpx_threading
-    hpx_thread_support
-    hpx_threading_base
-    hpx_timing
+    
+    
+    
     hpx_version
   CMAKE_SUBDIRS examples tests
 )

@@ -151,7 +151,7 @@ add_hpx_module(
   SOURCES ${serialization_sources}
   HEADERS ${serialization_headers}
   COMPAT_HEADERS ${serialization_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_datastructures

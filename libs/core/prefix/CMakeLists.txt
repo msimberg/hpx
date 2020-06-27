@@ -23,7 +23,7 @@ add_hpx_module(
   SOURCES ${prefix_sources}
   HEADERS ${prefix_headers}
   COMPAT_HEADERS ${prefix_compat_headers}
-  DEPENDENCIES
+  MODULE_DEPENDENCIES
     hpx_assertion
     hpx_config
     hpx_errors

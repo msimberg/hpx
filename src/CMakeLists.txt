@@ -422,20 +422,20 @@ endif()
 # ##############################################################################
 # libhpx
 add_library(
-  hpx_core ${hpx_library_link_mode_core} ${hpx_SOURCES} ${hpx_external_SOURCES}
+  hpx_full ${hpx_library_link_mode_core} ${hpx_SOURCES} ${hpx_external_SOURCES}
            ${hpx_generated_SOURCES} ${hpx_external_OBJECTS} ${hpx_HEADERS}
 )
 
 target_link_libraries(
-  hpx_core
+  hpx_full
   PUBLIC hpx_public_flags
   PRIVATE hpx_private_flags
 )
-target_link_libraries(hpx_core PUBLIC hpx_dependencies_boost)
+target_link_libraries(hpx_full PUBLIC hpx_dependencies_boost)
 
 # Set the basic search paths for the HPX headers
 target_include_directories(
-  hpx_core
+  hpx_full
   PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
          $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}> $<INSTALL_INTERFACE:include>
 )

@@ -25,19 +25,19 @@ add_hpx_module(
   SOURCES ${threading_sources}
   HEADERS ${threading_headers}
   COMPAT_HEADERS ${threading_compat_headers}
-  DEPENDENCIES
-    hpx_assertion
-    hpx_execution_base
-    hpx_config
-    hpx_coroutines
-    hpx_errors
+  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
+    
+    
+    
+    
+    
     hpx_execution
-    hpx_functional
+    
     hpx_futures
-    hpx_memory
-    hpx_synchronization
-    hpx_threading_base
-    hpx_thread_support
-    hpx_timing
+    
+    
+    
+    
+    
   CMAKE_SUBDIRS examples tests
 )

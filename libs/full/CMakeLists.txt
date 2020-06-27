@@ -11,9 +11,11 @@ include(HPX_Message)
 
 set(_hpx_full_modules
     algorithms
-    async
     async_base
     async_combinators
+    async_distributed
+    async_local
+    async_mpi
     batch_environments
     checkpoint
     collectives
@@ -26,9 +28,7 @@ set(_hpx_full_modules
     futures
     include
     lcos_distributed
-    local_async
-    local_lcos
-    mpi
+    lcos_local
     mpi_base
     pack_traversal
     performance_counters
