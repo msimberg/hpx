@@ -30,7 +30,7 @@ set(mpi_sources mpi_future.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core async_mpi
+  full async_mpi
   GLOBAL_HEADER_GEN ON
   SOURCES ${mpi_sources}
   HEADERS ${async_mpi_headers}

@@ -28,7 +28,7 @@ set(batch_environments_sources alps_environment.cpp batch_environment.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  core batch_environments
+  full batch_environments
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

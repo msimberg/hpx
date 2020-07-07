@@ -18,7 +18,7 @@ set(threadmanager_sources threadmanager.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core threadmanager
+  full threadmanager
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF

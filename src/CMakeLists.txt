@@ -392,7 +392,6 @@ add_hpx_source_group(
   NAME hpx_generated
   CLASS "Source Files"
   ROOT "${PROJECT_BINARY_DIR}/libs"
-  TARGETS ${hpx_generated_SOURCES}
 )
 
 add_hpx_source_group(
@@ -423,7 +422,7 @@ endif()
 # libhpx
 add_library(
   hpx_full ${hpx_library_link_mode_core} ${hpx_SOURCES} ${hpx_external_SOURCES}
-           ${hpx_generated_SOURCES} ${hpx_external_OBJECTS} ${hpx_HEADERS}
+           ${hpx_external_OBJECTS} ${hpx_HEADERS}
 )
 
 target_link_libraries(

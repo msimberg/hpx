@@ -36,7 +36,7 @@ set(runtime_configuration_sources ini.cpp init_ini_data.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  core runtime_configuration
+  full runtime_configuration
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

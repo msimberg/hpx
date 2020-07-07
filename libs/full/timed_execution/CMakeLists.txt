@@ -23,7 +23,7 @@ set(timed_execution_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  core timed_execution
+  full timed_execution
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

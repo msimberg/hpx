@@ -18,6 +18,7 @@ set(_hpx_full_modules
     async_mpi
     batch_environments
     checkpoint
+    checkpoint_base
     collectives
     command_line_handling
     compute
@@ -36,6 +37,7 @@ set(_hpx_full_modules
     resiliency
     resource_partitioner
     runtime_configuration
+    runtime_local
     segmented_algorithms
     thread_executors
     threading

@@ -51,7 +51,7 @@ set(program_options_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  core program_options
+  full program_options
   GLOBAL_HEADER_GEN OFF
   SOURCES ${program_options_sources}
   HEADERS ${program_options_headers}

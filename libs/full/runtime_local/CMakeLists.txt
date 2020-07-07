@@ -79,7 +79,7 @@ set(runtime_local_sources
 
 include(HPX_AddModule)
 add_hpx_module(
-  core runtime_local
+  full runtime_local
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
@@ -87,14 +87,9 @@ add_hpx_module(
   HEADERS ${runtime_local_headers}
   COMPAT_HEADERS ${runtime_local_compat_headers}
   DEPENDENCIES hpx_core MODULE_DEPENDENCIES
-    
-    
-    
     hpx_lcos_local
-    
     hpx_program_options
     hpx_threadmanager
     hpx_thread_executors
-    
   CMAKE_SUBDIRS examples tests
 )

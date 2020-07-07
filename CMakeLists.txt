@@ -2316,14 +2316,21 @@ if(HPX_WITH_DISTRIBUTED_RUNTIME)
 endif()
 
 # ##############################################################################
-# Add libraries
-# ##############################################################################
-add_subdirectory(libs)
-
-# ##############################################################################
 # Add core dependency
 # ##############################################################################
 add_hpx_pseudo_target(core)
+
+# ##############################################################################
+# Add libraries
+# ##############################################################################
+add_subdirectory(src)
+add_subdirectory(libs)
+
+# ##############################################################################
+# Add static init and wrap library
+# ##############################################################################
+add_subdirectory(init)
+add_subdirectory(wrap)
 
 # ##############################################################################
 # Configure compression and other plugins
@@ -2343,9 +2350,6 @@ hpx_include(Documentation)
 # ##############################################################################
 # Target specification
 # ##############################################################################
-# Recurse into some subdirectories. This does not actually cause another cmake
-# executable to run. The same process will walk through the project's entire
-# directory structure.
 if(HPX_WITH_TOOLS)
   add_hpx_pseudo_target(tools)
   add_subdirectory(tools)
@@ -2354,13 +2358,6 @@ endif()
 # ##############################################################################
 # Add core configuration
 # ##############################################################################
-add_subdirectory(src)
-
-# ##############################################################################
-# Add static init and wrap library
-# ##############################################################################
-add_subdirectory(init)
-add_subdirectory(wrap)
 
 # ##############################################################################
 # Add components

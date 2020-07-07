@@ -25,7 +25,7 @@ set(lcos_distributed_sources)
 include(HPX_AddModule)
 # cmake-format: off
 add_hpx_module(
-  core lcos_distributed
+  full lcos_distributed
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

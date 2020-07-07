@@ -23,7 +23,7 @@ set(command_line_handling_sources command_line_handling.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  core command_line_handling
+  full command_line_handling
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

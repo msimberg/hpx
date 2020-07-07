@@ -86,30 +86,20 @@ set(async_compat_headers
 
 include(HPX_AddModule)
 add_hpx_module(
-  core async_distributed
+  full async_distributed
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN OFF
   HEADERS ${async_headers}
   COMPAT_HEADERS ${async_compat_headers}
-  DEPENDENCIES hpx_core MODULE_DEPENDENCIES
-    
-    
-    
-    
-    
-    
+  DEPENDENCIES hpx_core
+  MODULE_DEPENDENCIES
     hpx_execution
-    
-    
     hpx_futures
     hpx_async_local
     hpx_lcos_local
-    
     hpx_runtime_configuration
-    
+    hpx_runtime_local
     hpx_threadmanager
-    
-    
   CMAKE_SUBDIRS examples tests
 )

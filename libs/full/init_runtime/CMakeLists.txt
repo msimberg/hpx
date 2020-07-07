@@ -31,7 +31,7 @@ endif()
 
 include(HPX_AddModule)
 add_hpx_module(
-  core init_runtime
+  full init_runtime
   GLOBAL_HEADER_GEN OFF
   SOURCES ${init_runtime_sources}
   HEADERS ${init_runtime_headers}

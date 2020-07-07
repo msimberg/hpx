@@ -49,7 +49,7 @@ set(collectives_sources barrier.cpp latch.cpp detail/barrier_node.cpp
 
 include(HPX_AddModule)
 add_hpx_module(
-  core collectives
+  full collectives
   COMPATIBILITY_HEADERS ON # Added in 1.4.0
   DEPRECATION_WARNINGS
   SOURCES ${collectives_sources}

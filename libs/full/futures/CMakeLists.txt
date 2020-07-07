@@ -48,7 +48,7 @@ set(futures_sources future_data.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core futures
+  full futures
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

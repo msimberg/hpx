@@ -22,7 +22,7 @@ set(checkpoint_sources)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core checkpoint
+  full checkpoint
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON

@@ -39,7 +39,7 @@ set(compute_sources get_host_targets.cpp host_target.cpp numa_domains.cpp)
 
 include(HPX_AddModule)
 add_hpx_module(
-  core compute
+  full compute
   COMPATIBILITY_HEADERS ON
   DEPRECATION_WARNINGS
   GLOBAL_HEADER_GEN ON
