@@ -916,7 +916,10 @@ endif()
 
 # Profiling related build options
 hpx_option(
-  HPX_WITH_APEX BOOL "Enable APEX instrumentation support." OFF
+  HPX_WITH_APEX
+  BOOL
+  "Enable APEX instrumentation support (cannot be enabled together with HPX_WITH_SIMPLE_TASK_TIMERS)."
+  OFF
   CATEGORY "Profiling"
 )
 if(HPX_WITH_APEX)
@@ -929,6 +932,15 @@ if(HPX_WITH_APEX)
     HPX_WITH_APEX_TAG STRING "APEX repository tag or branch" "v2.1.9"
     CATEGORY "Profiling"
   )
+endif()
+
+hpx_option(
+  HPX_WITH_SIMPLE_TASK_TIMERS BOOL
+  "Enable simple task timers (cannot be enabled together with HPX_WITH_APEX)."
+  OFF CATEGORY "Profiling"
+)
+if(HPX_WITH_SIMPLE_TASK_TIMERS)
+  hpx_add_config_define(HPX_HAVE_SIMPLE_TASK_TIMERS)
 endif()
 
 # LibCDS option

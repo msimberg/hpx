@@ -22,7 +22,7 @@
 #include <hpx/thread_pools/detail/scoped_background_timer.hpp>
 #endif
 
-#if defined(HPX_HAVE_APEX)
+#if defined(HPX_HAVE_APEX) || defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
 #include <hpx/threading_base/external_timer.hpp>
 #endif
 
@@ -707,6 +707,10 @@ namespace hpx { namespace threads { namespace detail {
                                 {
                                     profiler.yield();
                                 }
+#elif defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                                // TODO: num_thread is the local thread number.
+                                util::external_timer::scoped_timer profiler(thrd, num_thread);
+                                thrd_stat = (*thrd)(context_storage);
 #else
                                 thrd_stat = (*thrd)(context_storage);
 #endif

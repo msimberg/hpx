@@ -10,6 +10,8 @@
 #include <hpx/assert.hpp>
 #include <hpx/coroutines/thread_id_type.hpp>
 #include <hpx/modules/functional.hpp>
+#include <hpx/modules/timing.hpp>
+#include <hpx/threading_base/thread_data.hpp>
 #include <hpx/threading_base/thread_description.hpp>
 
 #include <cstdint>
@@ -291,7 +293,36 @@ namespace hpx { namespace util {
             std::shared_ptr<task_wrapper> data_;
         };
     }    // namespace external_timer
+#elif defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+    namespace external_timer {
+        struct scoped_timer
+        {
+            explicit scoped_timer(
+                hpx::threads::thread_data* data, std::size_t thread_num)
+              : data_(data)
+              , thread_num_(thread_num)
+              , begin_time_(hpx::util::high_resolution_clock::now())
+            {
+            }
 
+            ~scoped_timer()
+            {
+                std::uint64_t end_time =
+                    hpx::util::high_resolution_clock::now();
+                std::ostringstream s;
+                s << std::setprecision(12) << "locality,0"
+                  << ",worker_thread_num," << thread_num_ << ",description,"
+                  << data_->get_description() << ",begin_time,"
+                  << (begin_time_ / 1e9) << ",end_time," << (end_time / 1e9)
+                  << std::endl;
+                std::cout << s.str();
+            }
+
+            hpx::threads::thread_data* data_;
+            std::size_t thread_num_;
+            std::uint64_t begin_time_;
+        };
+    }    // namespace external_timer
 #else
     namespace external_timer {
 
