@@ -23,8 +23,6 @@ namespace hpx {
     using hpx::parallel::find_first_of;
     using hpx::parallel::find_if;
     using hpx::parallel::find_if_not;
-    using hpx::parallel::for_each;
-    using hpx::parallel::for_each_n;
     using hpx::parallel::for_loop;
     using hpx::parallel::for_loop_n;
     using hpx::parallel::for_loop_n_strided;
