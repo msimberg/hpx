@@ -26,6 +26,8 @@ set(async_cuda_headers
     hpx/async_cuda/cuda_exception.hpp
     hpx/async_cuda/cuda_future.hpp
     hpx/async_cuda/cublas_executor.hpp
+    hpx/async_cuda/custom_blas_api.hpp
+    hpx/async_cuda/custom_gpu_api.hpp
     hpx/async_cuda/get_targets.hpp
     hpx/async_cuda/target.hpp
 )
@@ -46,6 +48,10 @@ if(HPX_WITH_DISTRIBUTED_RUNTIME)
   )
 endif()
 
+if(HPX_WITH_HIP AND TARGET roc::hipblas)
+  set(async_cuda_extra_deps ${async_cuda_extra_deps} roc::hipblas)
+endif()
+
 include(HPX_AddModule)
 add_hpx_module(
   full async_cuda
@@ -57,6 +63,6 @@ add_hpx_module(
   COMPAT_HEADERS ${async_cuda_compat_headers}
   MODULE_DEPENDENCIES hpx_program_options hpx_runtime_configuration
                       hpx_runtime_local ${async_cuda_extra_module_dependencies}
-  DEPENDENCIES hpx_core hpx_parallelism Cuda::cuda
+  DEPENDENCIES hpx_core hpx_parallelism Cuda::cuda ${async_cuda_extra_deps}
   CMAKE_SUBDIRS examples tests
 )
