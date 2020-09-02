@@ -1995,6 +1995,9 @@ if(HPX_WITH_COMPILER_WARNINGS_AS_ERRORS)
   endif()
 endif()
 
+# [Temporary] Setup HIP here to remove temporary an annoying warning
+include(HPX_SetupHIP)
+
 # Diagnostics
 if(MSVC)
   # Display full paths in diagnostics
@@ -2034,8 +2037,12 @@ else()
     hpx_add_compile_flag_if_available(-Wno-maybe-uninitialized LANGUAGES CXX C)
   endif()
 
-  # Silence warning about __sync_fetch_and_nand changing semantics
-  hpx_add_compile_flag_if_available(-Wno-sync-nand LANGUAGES CXX C)
+  # Silence warning about __sync_fetch_and_nand changing semantics TODO: find
+  # for which exact version of the compiler it is not available
+  if(HPX_WITH_HIP)
+    set(HIP_FLAG HIP)
+  endif(HPX_WITH_HIP)
+  hpx_add_compile_flag_if_available(-Wno-sync-nand ${HIP_FLAG} LANGUAGES CXX C)
 
   # Silence warnings about deleting polymorphic objects with non-virtual dtors.
   # These come from within Boost.
@@ -2230,7 +2237,6 @@ include(HPX_SetupBoostIostreams)
 include(HPX_SetupBoostProgramOptions)
 # Find all allocators which are currently supported.
 include(HPX_SetupAllocator)
-include(HPX_SetupHIP)
 include(HPX_SetupHwloc)
 
 # reset external source lists
