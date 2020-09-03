@@ -14,7 +14,7 @@ set(tests ${tests} cublas_matmul)
 
 # Temporary only this test is enabled
 if(HPX_WITH_HIP)
-  set(tests dummy_hip)
+  set(tests ${tests} dummy_hip)
 endif(HPX_WITH_HIP)
 
 set(cublas_matmul_PARAMETERS THREADS_PER_LOCALITY 4)
