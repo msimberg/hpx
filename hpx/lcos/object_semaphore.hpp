@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/assert.hpp>
 #include <hpx/modules/errors.hpp>
 #include <hpx/lcos/server/object_semaphore.hpp>
@@ -91,4 +92,4 @@ namespace hpx { namespace lcos
     };
 }}
 
-
+#endif

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/components_fwd.hpp>
 #include <hpx/futures/future_fwd.hpp>
 
@@ -289,4 +290,4 @@ namespace hpx
     Client unregister_with_basename(std::string base_name,
         std::size_t sequence_nr = ~static_cast<std::size_t>(0));
 }
-
+#endif

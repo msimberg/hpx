@@ -438,6 +438,7 @@ namespace hpx { namespace lcos { namespace detail {
                 alloc, std::forward<F>(f), std::forward<Ts>(ts)...);
         }
 
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
         template <typename Allocator, typename P, typename F, typename... Ts>
         HPX_FORCEINLINE static auto call(Allocator const& alloc, P&& p, F&& f,
             typename std::enable_if<
@@ -454,6 +455,7 @@ namespace hpx { namespace lcos { namespace detail {
                 Policy>::call(alloc, std::forward<P>(p), std::forward<F>(f), id,
                 std::forward<Ts>(ts)...);
         }
+#endif
     };
 
     // executors

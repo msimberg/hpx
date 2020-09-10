@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/actions_base/traits/action_priority.hpp>
 #include <hpx/actions_base/traits/extract_action.hpp>
 #include <hpx/allocator_support/internal_allocator.hpp>
@@ -626,4 +627,4 @@ namespace hpx { namespace lcos {
         }
     };
 }}
-
+#endif

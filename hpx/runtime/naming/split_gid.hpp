@@ -9,6 +9,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/datastructures/any.hpp>
 #include <hpx/futures/future.hpp>
 #include <hpx/synchronization/spinlock.hpp>
@@ -24,4 +25,4 @@ namespace hpx { namespace naming { namespace detail {
         std::unique_lock<gid_type::mutex_type>& l, gid_type& gid);
 
 }}}    // namespace hpx::naming::detail
-
+#endif

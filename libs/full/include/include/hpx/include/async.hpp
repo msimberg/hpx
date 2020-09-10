@@ -9,7 +9,7 @@
 #include <hpx/config.hpp>
 #include <hpx/async_local/async.hpp>
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/async_distributed/async.hpp>
 #include <hpx/async_distributed/async_callback.hpp>
 #include <hpx/async_distributed/async_continue_callback.hpp>

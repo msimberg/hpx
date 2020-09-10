@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 
 #if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/actions_base/actions_base_support.hpp>
@@ -104,4 +105,5 @@ namespace hpx { namespace detail {
     }
 }}    // namespace hpx::detail
 
+#endif
 #endif

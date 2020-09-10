@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/components_base/traits/component_pin_support.hpp>
 #include <hpx/functional/bind_back.hpp>
 #include <hpx/modules/errors.hpp>
@@ -178,4 +179,4 @@ namespace hpx { namespace components { namespace server
 }}}
 
 
-
+#endif

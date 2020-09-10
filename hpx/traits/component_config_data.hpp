@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 
 namespace hpx { namespace traits
 {
@@ -23,4 +24,4 @@ namespace hpx { namespace traits
     };
 }}
 
-
+#endif

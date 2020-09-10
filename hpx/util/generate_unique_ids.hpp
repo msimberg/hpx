@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/naming/name.hpp>
 #include <hpx/concurrency/spinlock.hpp>
 
@@ -62,4 +63,4 @@ namespace hpx { namespace util
 #endif
 
 
-
+#endif

@@ -9,8 +9,9 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/lcos/detail/promise_base.hpp>
 
 #include <exception>
@@ -272,4 +273,4 @@ namespace std {
     };
 }    // namespace std
 #endif
-
+#endif

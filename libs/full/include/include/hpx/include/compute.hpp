@@ -11,6 +11,8 @@
     defined(HPX_HAVE_HIP)
 #include <hpx/compute/cuda.hpp>
 #endif
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/compute/host.hpp>
+#endif
 #include <hpx/compute/serialization/vector.hpp>
 #include <hpx/compute/vector.hpp>

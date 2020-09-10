@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/assert.hpp>
 #include <hpx/modules/errors.hpp>
 #include <hpx/lcos/base_lco.hpp>
@@ -229,4 +230,4 @@ struct object_semaphore
 
 }}}
 
-
+#endif

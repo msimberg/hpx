@@ -9,6 +9,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/assert.hpp>
 #include <hpx/lcos/base_lco_with_value.hpp>
 #include <hpx/futures/detail/future_data.hpp>
@@ -245,4 +246,4 @@ namespace components { namespace detail {
     };
 }}
 }
-
+#endif

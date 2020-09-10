@@ -10,6 +10,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/actions_base/traits/action_priority.hpp>
 #include <hpx/assert.hpp>
 #include <hpx/async_base/launch_policy.hpp>
@@ -3063,3 +3064,4 @@ namespace hpx
         return agas::unregister_name(std::move(name));
     }
 }
+#endif

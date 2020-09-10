@@ -92,6 +92,7 @@ namespace hpx { namespace lcos {
 #else
 
 #include <hpx/config.hpp>
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
 
 #if !defined(HPX_COMPUTE_DEVICE_CODE)
 
@@ -359,4 +360,5 @@ namespace hpx {
 #define HPX_REGISTER_ALLTOALL(...)             /**/
 
 #endif    // COMPUTE_HOST_CODE
+#endif
 #endif    // DOXYGEN

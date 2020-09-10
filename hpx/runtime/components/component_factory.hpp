@@ -39,6 +39,7 @@
 #else
 
 #include <hpx/config.hpp>
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
 #include <hpx/preprocessor/cat.hpp>
 #include <hpx/preprocessor/expand.hpp>
 #include <hpx/preprocessor/nargs.hpp>
@@ -148,4 +149,5 @@
         ComponentType, componentname, state)                                  \
 /**/
 
+#endif
 #endif

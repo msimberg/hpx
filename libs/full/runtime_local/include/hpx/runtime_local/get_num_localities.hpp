@@ -13,7 +13,9 @@
 #include <hpx/async_base/launch_policy.hpp>
 #include <hpx/futures/future_fwd.hpp>
 #include <hpx/modules/errors.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/components/component_type.hpp>
+#endif
 
 #include <cstdint>
 
@@ -69,6 +71,7 @@ namespace hpx {
     HPX_EXPORT std::uint32_t get_num_localities(
         launch::sync_policy, error_code& ec = throws);
 
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
     /// \brief Asynchronously return the number of localities which are
     ///        currently registered for the running application.
     ///
@@ -106,4 +109,5 @@ namespace hpx {
     /// \see      \a hpx::find_all_localities, \a hpx::get_num_localities
     HPX_EXPORT std::uint32_t get_num_localities(launch::sync_policy,
         components::component_type t, error_code& ec = throws);
+#endif
 }    // namespace hpx

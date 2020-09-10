@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/functional/function.hpp>
 #include <hpx/runtime_configuration/agas_service_mode.hpp>
 
@@ -38,4 +39,4 @@ namespace hpx { namespace agas
     }
     struct HPX_EXPORT addressing_service;
 }}
-
+#endif
