@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 
 #if defined(HPX_HAVE_PARCELPORT_ACTION_COUNTERS) && defined(HPX_HAVE_NETWORKING)
 #include <hpx/performance_counters/counters_fwd.hpp>
@@ -109,4 +110,4 @@ namespace hpx { namespace parcelset { namespace detail
 #define HPX_REGISTER_PER_ACTION_DATA_COUNTER_TYPES(Action)
 
 #endif
-
+#endif

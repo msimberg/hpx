@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/components/component_type.hpp>
 #include <hpx/runtime/naming/name.hpp>
 #include <hpx/runtime/naming_fwd.hpp>
@@ -95,4 +96,4 @@ namespace hpx { namespace naming
 HPX_IS_BITWISE_SERIALIZABLE(hpx::naming::address)
 
 #include <hpx/config/warnings_suffix.hpp>
-
+#endif

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/actions_base/traits/action_priority.hpp>
 #include <hpx/actions_base/traits/extract_action.hpp>
 #include <hpx/datastructures/tuple.hpp>
@@ -451,3 +452,4 @@ namespace hpx {
         }
     }    // namespace functional
 }    // namespace hpx
+#endif

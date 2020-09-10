@@ -10,6 +10,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/futures/future.hpp>
 #include <hpx/runtime/agas_fwd.hpp>
 #include <hpx/runtime/naming/name.hpp>
@@ -91,4 +92,4 @@ private:
 
 #include <hpx/config/warnings_suffix.hpp>
 
-
+#endif

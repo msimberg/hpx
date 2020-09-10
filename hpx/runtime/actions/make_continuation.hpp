@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/runtime/find_here.hpp>
 #include <hpx/runtime/actions/set_lco_value_continuation.hpp>
@@ -81,4 +83,4 @@ namespace hpx {
             std::forward<Cont>(cont), target, std::forward<F>(f));
     }
 }
-
+#endif

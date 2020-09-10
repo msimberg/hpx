@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 
 #include <cstdint>
 
@@ -37,4 +38,4 @@ namespace hpx { namespace traits
       : component_type_database<Component, Enable>
     {};
 }}
-
+#endif

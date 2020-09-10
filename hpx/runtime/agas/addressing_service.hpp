@@ -12,6 +12,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/cache/lru_cache.hpp>
 #include <hpx/cache/statistics/local_full_statistics.hpp>
 #include <hpx/components_base/pinned_ptr.hpp>
@@ -1418,4 +1419,4 @@ public:
 
 #include <hpx/config/warnings_suffix.hpp>
 
-
+#endif

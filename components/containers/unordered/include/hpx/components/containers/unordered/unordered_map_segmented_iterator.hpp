@@ -14,6 +14,7 @@
  // http://lafstern.org/matt/segmented.pdf.
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 //#include <hpx/runtime/naming/id_type.hpp>
 #include <hpx/assert.hpp>
 #include <hpx/iterator_support/iterator_adaptor.hpp>
@@ -210,4 +211,4 @@ namespace hpx
 //         BaseIter end_;
 //     };
 }
-
+#endif
