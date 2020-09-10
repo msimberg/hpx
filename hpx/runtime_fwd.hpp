@@ -12,7 +12,7 @@
 #include <hpx/config.hpp>
 #include <hpx/runtime_local/runtime_local_fwd.hpp>
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/basename_registration_fwd.hpp>
 #include <hpx/runtime/find_localities.hpp>
 #include <hpx/runtime/get_colocation_id.hpp>
@@ -151,4 +151,3 @@ namespace hpx {
         error_code& ec = throws);
 }    // namespace hpx
 #endif
-

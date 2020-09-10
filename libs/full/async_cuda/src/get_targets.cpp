@@ -13,7 +13,7 @@
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/threading_base/thread_helpers.hpp>
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/actions_base/plain_action.hpp>
 #include <hpx/modules/async_distributed.hpp>
 #include <hpx/runtime/find_here.hpp>
@@ -69,7 +69,7 @@ namespace hpx { namespace cuda { namespace experimental {
 
 }}}    // namespace hpx::cuda::experimental
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 HPX_PLAIN_ACTION(
     hpx::cuda::experimental::get_local_targets, cuda_get_targets_action);
 

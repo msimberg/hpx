@@ -8,6 +8,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/modules/errors.hpp>
 #include <hpx/async_distributed/detail/async_colocated_fwd.hpp>
 #include <hpx/futures/future.hpp>
@@ -294,4 +295,4 @@ namespace hpx { namespace components { namespace stubs
             parcelset::endpoints_type const& endpoints);
     };
 }}}
-
+#endif

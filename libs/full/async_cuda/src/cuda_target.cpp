@@ -14,7 +14,7 @@
 #include <hpx/runtime_fwd.hpp>
 #include <hpx/threading_base/thread_helpers.hpp>
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/find_here.hpp>
 #include <hpx/runtime/naming/id_type_impl.hpp>
 #if !defined(HPX_COMPUTE_DEVICE_CODE)
@@ -178,7 +178,7 @@ namespace hpx { namespace cuda { namespace experimental {
     ///////////////////////////////////////////////////////////////////////////
     void target::synchronize() const
     {
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
         // FIXME: implement remote targets
         HPX_ASSERT(hpx::find_here() == locality_);
 #endif

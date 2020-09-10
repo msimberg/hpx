@@ -9,6 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/assert.hpp>
 #include <hpx/modules/async_distributed.hpp>
 #include <hpx/execution_base/register_locks.hpp>
@@ -1668,4 +1669,4 @@ void primary_namespace::counter_data::increment_end_migration_count()
 }
 
 }}}
-
+#endif

@@ -122,4 +122,3 @@ namespace hpx { namespace naming
 }}
 
 #include <hpx/config/warnings_suffix.hpp>
-

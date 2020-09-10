@@ -9,6 +9,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/allocator_support/internal_allocator.hpp>
 #include <hpx/assert.hpp>
 #include <hpx/execution_base/register_locks.hpp>
@@ -1027,4 +1028,4 @@ namespace std
 }
 
 #include <hpx/config/warnings_suffix.hpp>
-
+#endif

@@ -6,6 +6,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 
 #if defined(HPX_HAVE_LOGGING)
 #include <hpx/modules/logging.hpp>
@@ -961,3 +962,4 @@ namespace hpx { namespace util { namespace detail
 }}}
 
 #endif // HPX_HAVE_LOGGING
+#endif

@@ -6,6 +6,7 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/assert.hpp>
 #include <hpx/state.hpp>
 #include <hpx/modules/errors.hpp>
@@ -236,3 +237,4 @@ namespace hpx { namespace util
         return std::string("one_size_heap_list(") + class_name_ + ")";
     }
 }}
+#endif

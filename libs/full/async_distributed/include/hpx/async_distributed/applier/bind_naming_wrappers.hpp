@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/modules/errors.hpp>
 #include <hpx/runtime/naming/address.hpp>
 #include <hpx/runtime/naming/name.hpp>
@@ -26,3 +27,4 @@ namespace hpx { namespace applier {
     HPX_EXPORT void unbind_range_local(
         naming::gid_type const&, std::size_t, error_code& ec = throws);
 }}    // namespace hpx::applier
+#endif

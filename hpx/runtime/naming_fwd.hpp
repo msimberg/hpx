@@ -9,7 +9,9 @@
 
 #include <hpx/config.hpp>
 #include <hpx/modules/naming_base.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/agas_fwd.hpp>
+#endif
 
 #include <cstdint>
 
@@ -21,17 +23,20 @@ namespace hpx
     /// (Active Global Address Space) service.
     namespace naming
     {
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
         using resolver_client = agas::addressing_service;
+#endif
 
         struct HPX_EXPORT gid_type;
         struct HPX_EXPORT id_type;
         struct HPX_EXPORT address;
 
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
         HPX_EXPORT resolver_client& get_agas_client();
+#endif
     }
 
     ///////////////////////////////////////////////////////////////////////////
     // Pulling important types into the main namespace
     using naming::id_type;
 }
-

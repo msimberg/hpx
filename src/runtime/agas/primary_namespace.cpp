@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/async_distributed/apply.hpp>
 #include <hpx/assert.hpp>
 #include <hpx/modules/async_distributed.hpp>
@@ -345,3 +346,4 @@ namespace hpx { namespace agas {
         server_->unregister_server_instance(ec);
     }
 }}
+#endif

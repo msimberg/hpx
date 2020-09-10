@@ -14,7 +14,7 @@
 #include <hpx/async_cuda/target.hpp>
 #include <hpx/futures/traits/future_access.hpp>
 #include <hpx/modules/errors.hpp>
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/find_here.hpp>
 #include <hpx/runtime/naming/id_type_impl.hpp>
 #endif

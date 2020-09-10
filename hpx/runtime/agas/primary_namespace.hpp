@@ -9,6 +9,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/agas_fwd.hpp>
 #include <hpx/runtime/parcelset_fwd.hpp>
 #include <hpx/runtime/agas/gva.hpp>
@@ -101,4 +102,4 @@ private:
 
 #include <hpx/config/warnings_suffix.hpp>
 
-
+#endif

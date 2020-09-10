@@ -5,13 +5,14 @@
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/modules/async_distributed.hpp>
 #include <hpx/async_distributed/apply.hpp>
 #include <hpx/modules/errors.hpp>
 #include <hpx/runtime/get_locality_name.hpp>
 #include <hpx/runtime_local/runtime_local.hpp>
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/actions_base/plain_action.hpp>
 #include <hpx/runtime_distributed.hpp>
 #endif
@@ -44,7 +45,7 @@ namespace hpx { namespace detail
     }
 }}
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 HPX_PLAIN_ACTION_ID(hpx::detail::get_locality_name, hpx_get_locality_name_action,
         hpx::actions::hpx_get_locality_name_action_id)
 #endif
@@ -57,10 +58,11 @@ namespace hpx
         return detail::get_locality_name();
     }
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
     future<std::string> get_locality_name(naming::id_type const& id)
     {
         return async<hpx_get_locality_name_action>(id);
     }
 #endif
 }
+#endif

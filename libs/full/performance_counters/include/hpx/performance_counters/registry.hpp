@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/functional/function.hpp>
 #include <hpx/performance_counters/counters.hpp>
 #include <hpx/runtime/naming/name.hpp>
@@ -166,3 +167,4 @@ namespace hpx { namespace performance_counters {
         counter_type_map_type countertypes_;
     };
 }}    // namespace hpx::performance_counters
+#endif

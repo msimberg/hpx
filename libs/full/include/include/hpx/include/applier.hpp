@@ -9,7 +9,7 @@
 
 #include <hpx/config.hpp>
 
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
+#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/async_distributed/applier/applier.hpp>
 #include <hpx/async_distributed/applier/apply.hpp>
 #include <hpx/async_distributed/applier/bind_naming_wrappers.hpp>
