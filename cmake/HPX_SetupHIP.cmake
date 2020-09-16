@@ -46,6 +46,11 @@ if(HPX_WITH_HIP)
   # add_library(HIP::hip INTERFACE IMPORTED) target_compile_options(HIP::hip
   # INTERFACE -xhip ${HIP_HIPCC_FLAGS})
 
+  # Needed on rostam
+  list(APPEND CMAKE_PREFIX_PATH $ENV{HIP_PATH}/lib/cmake/hip)
+  list(APPEND CMAKE_PREFIX_PATH $ENV{DEVICE_LIB_PATH}/cmake/AMDDeviceLibs)
+  list(APPEND CMAKE_PREFIX_PATH $ENV{DEVICE_LIB_PATH}/cmake/amd_comgr)
+  list(APPEND CMAKE_PREFIX_PATH $ENV{DEVICE_LIB_PATH}/cmake/hsa-runtime64)
   # Setup hipblas (creates roc::hipblas)
   find_package(hipblas HINTS $ENV{HIPBLAS_ROOT} CONFIG)
   if(NOT hipblas_FOUND)
