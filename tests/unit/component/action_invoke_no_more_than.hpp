@@ -7,6 +7,7 @@
 #pragma once
 
 #include <hpx/config.hpp>
+#if !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/assert.hpp>
 #include <hpx/functional/bind_back.hpp>
 #include <hpx/synchronization/counting_semaphore.hpp>
@@ -229,4 +230,4 @@ namespace hpx { namespace actions { namespace detail
         {};                                                                   \
     }}                                                                        \
 /**/
-
+#endif
