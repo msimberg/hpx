@@ -50,7 +50,14 @@ namespace hpx { namespace threads { namespace policies {
 
         scheduler_base(std::size_t num_threads, char const* description = "",
             thread_queue_init_parameters thread_queue_init = {},
-            scheduler_mode mode = nothing_special);
+            scheduler_mode mode = nothing_special
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+            ,
+            bool simple_task_timers_enabled = false,
+            std::chrono::milliseconds simple_task_timers_flush_interval =
+                std::chrono::milliseconds(100)
+#endif
+        );
 
         virtual ~scheduler_base() = default;
 
@@ -287,6 +294,18 @@ namespace hpx { namespace threads { namespace policies {
                 user_polling_function_();
         }
 
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+        bool simple_task_timers_enabled()
+        {
+            return simple_task_timers_enabled_;
+        }
+
+        std::chrono::milliseconds get_simple_task_timers_flush_interval()
+        {
+            return simple_task_timers_flush_interval_;
+        }
+#endif
+
     protected:
         // the scheduler mode, protected from false sharing
         util::cache_line_data<std::atomic<scheduler_mode>> mode_;
@@ -320,6 +339,11 @@ namespace hpx { namespace threads { namespace policies {
         std::atomic<std::int64_t> background_thread_count_;
 
         util::function_nonser<void()> user_polling_function_;
+
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+        bool simple_task_timers_enabled_;
+        std::chrono::milliseconds simple_task_timers_flush_interval_;
+#endif
 
 #if defined(HPX_HAVE_SCHEDULER_LOCAL_STORAGE)
     public:

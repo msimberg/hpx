@@ -1097,6 +1097,22 @@ namespace hpx { namespace util {
             "hpx.os_threads=" + std::to_string(num_threads_));
         ini_config.emplace_back("hpx.cores=" + std::to_string(num_cores_));
 
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+        if (vm.count("hpx:print-task-timers"))
+        {
+            ini_config.emplace_back(
+                "hpx.thread_queue.simple_task_timers_enabled!=1");
+        }
+
+        if (vm.count("hpx:print-task-timers-interval"))
+        {
+            ini_config.emplace_back(
+                "hpx.thread_queue.simple_task_timers_flush_interval!=" +
+                std::to_string(
+                    vm["hpx:print-task-timers-interval"].as<std::size_t>()));
+        }
+#endif
+
         // map host names to ip addresses, if requested
         hpx_host = mapnames.map(hpx_host, hpx_port);
         agas_host = mapnames.map(agas_host, agas_port);

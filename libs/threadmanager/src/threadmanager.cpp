@@ -167,6 +167,15 @@ namespace hpx { namespace threads {
             cfg_.rtcfg_.get_entry("hpx.max_idle_backoff_time",
                 std::to_string(HPX_IDLE_BACKOFF_TIME_MAX)));
 
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+        bool const simple_task_timers_enabled =
+            hpx::util::from_string<bool>(cfg_.rtcfg_.get_entry(
+                "hpx.thread_queue.simple_task_timers_enabled", "0"));
+        std::chrono::milliseconds const simple_task_timers_flush_interval{
+            hpx::util::from_string<std::size_t>(cfg_.rtcfg_.get_entry(
+                "hpx.thread_queue.simple_task_timers_flush_interval", "100"))};
+#endif
+
         std::ptrdiff_t small_stacksize = get_stack_size(thread_stacksize_small);
         std::ptrdiff_t medium_stacksize =
             get_stack_size(thread_stacksize_medium);
@@ -287,7 +296,13 @@ namespace hpx { namespace threads {
                 local_sched_type::init_parameter_type init(
                     thread_pool_init.num_threads_,
                     thread_pool_init.affinity_data_, num_high_priority_queues,
-                    thread_queue_init, "core-local_priority_queue_scheduler");
+                    thread_queue_init, "core-local_priority_queue_scheduler"
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                    ,
+                    simple_task_timers_enabled,
+                    simple_task_timers_flush_interval
+#endif
+                );
 
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
@@ -324,7 +339,13 @@ namespace hpx { namespace threads {
                 local_sched_type::init_parameter_type init(
                     thread_pool_init.num_threads_,
                     thread_pool_init.affinity_data_, num_high_priority_queues,
-                    thread_queue_init, "core-local_priority_queue_scheduler");
+                    thread_queue_init, "core-local_priority_queue_scheduler"
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                    ,
+                    simple_task_timers_enabled,
+                    simple_task_timers_flush_interval
+#endif
+                );
 
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
@@ -448,8 +469,13 @@ namespace hpx { namespace threads {
                 local_sched_type::init_parameter_type init(
                     thread_pool_init.num_threads_,
                     thread_pool_init.affinity_data_, num_high_priority_queues,
-                    thread_queue_init,
-                    "core-abp_fifo_priority_queue_scheduler");
+                    thread_queue_init, "core-abp_fifo_priority_queue_scheduler"
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                    ,
+                    simple_task_timers_enabled,
+                    simple_task_timers_flush_interval
+#endif
+                );
 
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));
@@ -493,8 +519,13 @@ namespace hpx { namespace threads {
                 local_sched_type::init_parameter_type init(
                     thread_pool_init.num_threads_,
                     thread_pool_init.affinity_data_, num_high_priority_queues,
-                    thread_queue_init,
-                    "core-abp_fifo_priority_queue_scheduler");
+                    thread_queue_init, "core-abp_fifo_priority_queue_scheduler"
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                    ,
+                    simple_task_timers_enabled,
+                    simple_task_timers_flush_interval
+#endif
+                );
 
                 std::unique_ptr<local_sched_type> sched(
                     new local_sched_type(init));

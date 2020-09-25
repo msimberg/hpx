@@ -297,9 +297,14 @@ namespace hpx { namespace util {
     namespace external_timer {
         struct scoped_timer
         {
-            explicit scoped_timer(
-                hpx::threads::thread_data* data, std::size_t thread_num)
-              : data_(data)
+            scoped_timer(bool enabled, std::stringstream& buffer,
+                hpx::threads::thread_data* data, std::uint32_t locality_id,
+                std::size_t pool_num, std::size_t thread_num)
+              : enabled_(enabled)
+              , buffer_(buffer)
+              , data_(data)
+              , locality_id_(locality_id)
+              , pool_num_(pool_num)
               , thread_num_(thread_num)
               , begin_time_(hpx::util::high_resolution_clock::now())
             {
@@ -307,18 +312,23 @@ namespace hpx { namespace util {
 
             ~scoped_timer()
             {
-                std::uint64_t end_time =
-                    hpx::util::high_resolution_clock::now();
-                std::ostringstream s;
-                s << std::setprecision(12) << "locality,0"
-                  << ",worker_thread_num," << thread_num_ << ",description,"
-                  << data_->get_description() << ",begin_time,"
-                  << (begin_time_ / 1e9) << ",end_time," << (end_time / 1e9)
-                  << std::endl;
-                std::cout << s.str();
+                if (enabled_)
+                {
+                    std::uint64_t end_time =
+                        hpx::util::high_resolution_clock::now();
+                    buffer_ << std::setprecision(12) << "task_data,"
+                            << locality_id_ << "," << pool_num_ << ","
+                            << thread_num_ << "," << data_->get_description()
+                            << "," << (begin_time_ / 1e9) << ","
+                            << (end_time / 1e9) << std::endl;
+                }
             }
 
+            bool enabled_;
+            std::stringstream& buffer_;
             hpx::threads::thread_data* data_;
+            std::uint32_t locality_id_;
+            std::size_t pool_num_;
             std::size_t thread_num_;
             std::uint64_t begin_time_;
         };

@@ -34,9 +34,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace hpx { namespace threads { namespace policies {
-    scheduler_base::scheduler_base(std::size_t num_threads,
-        char const* description, thread_queue_init_parameters thread_queue_init,
-        scheduler_mode mode)
+    scheduler_base::scheduler_base(
+        std::size_t num_threads, char const* description,
+        thread_queue_init_parameters thread_queue_init, scheduler_mode mode
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+        ,
+        bool simple_task_timers_enabled,
+        std::chrono::milliseconds simple_task_timers_flush_interval
+#endif
+        )
       : suspend_mtxs_(num_threads)
       , suspend_conds_(num_threads)
       , pu_mtxs_(num_threads)
@@ -45,6 +51,10 @@ namespace hpx { namespace threads { namespace policies {
       , thread_queue_init_(thread_queue_init)
       , parent_pool_(nullptr)
       , background_thread_count_(0)
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+      , simple_task_timers_enabled_(simple_task_timers_enabled)
+      , simple_task_timers_flush_interval_(simple_task_timers_flush_interval)
+#endif
     {
         set_scheduler_mode(mode);
 

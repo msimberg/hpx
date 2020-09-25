@@ -540,6 +540,11 @@ namespace hpx { namespace util {
                   "allowed values: 0 - no NUMA sensitivity, 1 - allow only for "
                   "boundary cores to steal across NUMA domains, 2 - "
                   "no cross boundary stealing is allowed (default value: 0)")
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                ("hpx:print-task-timers", "print task timers")
+                ("hpx:print-task-timers-interval", value<std::size_t>(),
+                 "print task timers interval in milliseconds (default value: 100)")
+#endif
             ;
 
             options_description config_options("HPX configuration options");

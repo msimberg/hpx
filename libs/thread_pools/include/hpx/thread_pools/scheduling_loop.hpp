@@ -16,6 +16,7 @@
 #include <hpx/threading_base/scheduler_base.hpp>
 #include <hpx/threading_base/scheduler_state.hpp>
 #include <hpx/threading_base/thread_data.hpp>
+#include <hpx/threading_base/thread_num_tss.hpp>
 
 #if defined(HPX_HAVE_BACKGROUND_THREAD_COUNTERS) &&                            \
     defined(HPX_HAVE_THREAD_IDLE_RATES)
@@ -62,6 +63,38 @@ namespace hpx { namespace threads { namespace detail {
                     << "description(" << thrd->get_description() << "), "
                     << "old state(" << get_thread_state_name(state) << ")";
     }
+
+    ///////////////////////////////////////////////////////////////////////
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+    struct task_timer_buffer
+    {
+        std::stringstream buffer;
+        hpx::util::high_resolution_timer timer;
+        std::chrono::milliseconds flush_interval;
+
+        task_timer_buffer(std::chrono::milliseconds flush_interval =
+                              std::chrono::milliseconds(100))
+          : flush_interval(flush_interval)
+        {
+        }
+
+        ~task_timer_buffer()
+        {
+            flush(true);
+        }
+
+        void flush(bool force = false)
+        {
+            if (force ||
+                timer.elapsed_microseconds() * 1e-3 > flush_interval.count())
+            {
+                std::cout << buffer.rdbuf() << std::flush;
+                buffer = {};
+                timer.restart();
+            }
+        }
+    };
+#endif
 
     ///////////////////////////////////////////////////////////////////////
     // helper class for switching thread state in and out during execution
@@ -570,6 +603,19 @@ namespace hpx { namespace threads { namespace detail {
         // util::itt::frame_context fctx(thread_domain);
 #endif
 
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+        bool const simple_task_timers_enabled =
+            scheduler.simple_task_timers_enabled();
+        std::chrono::milliseconds const simple_task_timers_flush_interval =
+            scheduler.get_simple_task_timers_flush_interval();
+        detail::task_timer_buffer task_buffer(
+            simple_task_timers_flush_interval);
+        std::size_t const pool_num =
+            scheduler.get_parent_pool()->get_pool_id().index();
+        std::uint32_t const locality_id =
+            hpx::threads::detail::get_locality_id(hpx::throws);
+#endif
+
         std::int64_t& idle_loop_count = counters.idle_loop_count_;
         std::int64_t& busy_loop_count = counters.busy_loop_count_;
 
@@ -709,8 +755,12 @@ namespace hpx { namespace threads { namespace detail {
                                 }
 #elif defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
                                 // TODO: num_thread is the local thread number.
-                                util::external_timer::scoped_timer profiler(thrd, num_thread);
+                                util::external_timer::scoped_timer profiler(
+                                    simple_task_timers_enabled,
+                                    task_buffer.buffer, thrd, locality_id,
+                                    pool_num, num_thread);
                                 thrd_stat = (*thrd)(context_storage);
+                                task_buffer.flush();
 #else
                                 thrd_stat = (*thrd)(context_storage);
 #endif

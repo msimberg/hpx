@@ -80,7 +80,14 @@ namespace hpx { namespace threads { namespace policies {
                 detail::affinity_data const& affinity_data,
                 std::size_t num_high_priority_queues = std::size_t(-1),
                 thread_queue_init_parameters thread_queue_init = {},
-                char const* description = "local_priority_queue_scheduler")
+                char const* description = "local_priority_queue_scheduler"
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                ,
+                bool simple_task_timers_enabled = false,
+                std::chrono::milliseconds simple_task_timers_flush_interval =
+                    std::chrono::milliseconds(100)
+#endif
+                    )
               : num_queues_(num_queues)
               , num_high_priority_queues_(
                     num_high_priority_queues == std::size_t(-1) ?
@@ -89,6 +96,11 @@ namespace hpx { namespace threads { namespace policies {
               , thread_queue_init_(thread_queue_init)
               , affinity_data_(affinity_data)
               , description_(description)
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+              , simple_task_timers_enabled_(simple_task_timers_enabled)
+              , simple_task_timers_flush_interval_(
+                    simple_task_timers_flush_interval)
+#endif
             {
             }
 
@@ -108,13 +120,23 @@ namespace hpx { namespace threads { namespace policies {
             thread_queue_init_parameters thread_queue_init_;
             detail::affinity_data const& affinity_data_;
             char const* description_;
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+            bool simple_task_timers_enabled_;
+            std::chrono::milliseconds simple_task_timers_flush_interval_;
+#endif
         };
         typedef init_parameter init_parameter_type;
 
         local_priority_queue_scheduler(init_parameter_type const& init,
             bool deferred_initialization = true)
-          : scheduler_base(
-                init.num_queues_, init.description_, init.thread_queue_init_)
+          : scheduler_base(init.num_queues_, init.description_,
+                init.thread_queue_init_, nothing_special
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+                ,
+                init.simple_task_timers_enabled_,
+                init.simple_task_timers_flush_interval_
+#endif
+                )
           , curr_queue_(0)
           , affinity_data_(init.affinity_data_)
           , num_queues_(init.num_queues_)

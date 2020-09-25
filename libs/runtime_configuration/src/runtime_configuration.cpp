@@ -251,6 +251,11 @@ namespace hpx { namespace util {
             "${HPX_THREAD_QUEUE_MAX_TERMINATED_THREADS:" HPX_PP_STRINGIZE(
                 HPX_PP_EXPAND(HPX_THREAD_QUEUE_MAX_TERMINATED_THREADS)) "}",
 
+#if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
+            "simple_task_timers_enabled = 0",
+            "simple_task_timers_flush_interval = 100",
+#endif
+
             "[hpx.commandline]",
             // enable aliasing
             "aliasing = ${HPX_COMMANDLINE_ALIASING:1}",
