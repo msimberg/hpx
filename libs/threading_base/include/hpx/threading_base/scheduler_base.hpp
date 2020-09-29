@@ -12,6 +12,7 @@
 #include <hpx/modules/errors.hpp>
 #include <hpx/modules/format.hpp>
 #include <hpx/modules/functional.hpp>
+#include <hpx/modules/timing.hpp>
 #include <hpx/threading_base/scheduler_mode.hpp>
 #include <hpx/threading_base/scheduler_state.hpp>
 #include <hpx/threading_base/thread_data.hpp>
@@ -304,6 +305,11 @@ namespace hpx { namespace threads { namespace policies {
         {
             return simple_task_timers_flush_interval_;
         }
+
+        hpx::util::high_resolution_timer& get_timer()
+        {
+            return timer_;
+        }
 #endif
 
     protected:
@@ -343,6 +349,7 @@ namespace hpx { namespace threads { namespace policies {
 #if defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
         bool simple_task_timers_enabled_;
         std::chrono::milliseconds simple_task_timers_flush_interval_;
+        hpx::util::high_resolution_timer timer_;
 #endif
 
 #if defined(HPX_HAVE_SCHEDULER_LOCAL_STORAGE)

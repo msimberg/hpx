@@ -13,6 +13,7 @@
 #include <hpx/hardware/timestamp.hpp>
 #include <hpx/modules/itt_notify.hpp>
 #include <hpx/modules/logging.hpp>
+#include <hpx/modules/timing.hpp>
 #include <hpx/threading_base/scheduler_base.hpp>
 #include <hpx/threading_base/scheduler_state.hpp>
 #include <hpx/threading_base/thread_data.hpp>
@@ -69,12 +70,15 @@ namespace hpx { namespace threads { namespace detail {
     struct task_timer_buffer
     {
         std::stringstream buffer;
-        hpx::util::high_resolution_timer timer;
+        hpx::util::high_resolution_timer& timer;
+        std::int64_t last_flush = 0;
         std::chrono::milliseconds flush_interval;
 
-        task_timer_buffer(std::chrono::milliseconds flush_interval =
-                              std::chrono::milliseconds(100))
-          : flush_interval(flush_interval)
+        task_timer_buffer(hpx::util::high_resolution_timer& timer,
+            std::chrono::milliseconds flush_interval =
+                std::chrono::milliseconds(100))
+          : timer(timer)
+          , flush_interval(flush_interval)
         {
         }
 
@@ -85,12 +89,13 @@ namespace hpx { namespace threads { namespace detail {
 
         void flush(bool force = false)
         {
+            std::int64_t current_time = timer.elapsed_microseconds();
             if (force ||
-                timer.elapsed_microseconds() * 1e-3 > flush_interval.count())
+                (current_time - last_flush) * 1e-3 > flush_interval.count())
             {
                 std::cout << buffer.rdbuf() << std::flush;
                 buffer = {};
-                timer.restart();
+                last_flush = current_time;
             }
         }
     };
@@ -609,7 +614,7 @@ namespace hpx { namespace threads { namespace detail {
         std::chrono::milliseconds const simple_task_timers_flush_interval =
             scheduler.get_simple_task_timers_flush_interval();
         detail::task_timer_buffer task_buffer(
-            simple_task_timers_flush_interval);
+            scheduler.get_timer(), simple_task_timers_flush_interval);
         std::size_t const pool_num =
             scheduler.get_parent_pool()->get_pool_id().index();
         std::uint32_t const locality_id =
@@ -756,6 +761,7 @@ namespace hpx { namespace threads { namespace detail {
 #elif defined(HPX_HAVE_SIMPLE_TASK_TIMERS)
                                 // TODO: num_thread is the local thread number.
                                 util::external_timer::scoped_timer profiler(
+                                    scheduler.get_timer(),
                                     simple_task_timers_enabled,
                                     task_buffer.buffer, thrd, locality_id,
                                     pool_num, num_thread);
