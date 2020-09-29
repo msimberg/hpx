@@ -13,6 +13,7 @@
 #include <hpx/modules/timing.hpp>
 #include <hpx/threading_base/thread_data.hpp>
 #include <hpx/threading_base/thread_description.hpp>
+#include <hpx/threading_base/thread_num_tss.hpp>
 
 #include <cstdint>
 #include <memory>
@@ -317,10 +318,11 @@ namespace hpx { namespace util {
                     std::uint64_t end_time =
                         hpx::util::high_resolution_clock::now();
                     buffer_ << std::setprecision(12) << "task_data,"
-                            << locality_id_ << "," << pool_num_ << ","
-                            << thread_num_ << "," << data_->get_description()
-                            << "," << (begin_time_ / 1e9) << ","
-                            << (end_time / 1e9) << std::endl;
+                            << locality_id_ << ","
+                            << hpx::get_worker_thread_num() << ","
+                            << data_->get_description() << ","
+                            << (begin_time_ / 1e9) << "," << (end_time / 1e9)
+                            << std::endl;
                 }
             }
 
