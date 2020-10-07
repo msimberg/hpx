@@ -86,7 +86,7 @@ int hpx_main(hpx::program_options::variables_map& vm)
 
     // copy data to device
     hpx::future<void> f = hpx::copy(
-            hpx::execution::par(hpx::parallel::execution::task), h_A.begin(),
+            hpx::execution::par(hpx::execution::task), h_A.begin(),
             h_A.end(), d_A.begin());
 
     hpx::copy(hpx::execution::par, h_B.begin(), h_B.end(), d_B.begin());
