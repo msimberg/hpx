@@ -59,7 +59,8 @@ if(HPX_WITH_HIP)
       correct location"
     )
   endif()
-  target_include_directories(roc::hipblas INTERFACE ${hipblas_INCLUDE_DIRS})
+  target_include_directories(roc::hipblas SYSTEM INTERFACE
+      ${hipblas_INCLUDE_DIRS})
 
   set(HPX_WITH_COMPUTE ON)
   hpx_add_config_define(HPX_HAVE_COMPUTE)
