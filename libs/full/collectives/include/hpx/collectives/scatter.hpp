@@ -163,8 +163,6 @@ namespace hpx { namespace lcos {
 #else
 
 #include <hpx/config.hpp>
-#if defined(HPX_HAVE_DISTRIBUTED_RUNTIME)
-
 #if !defined(HPX_COMPUTE_DEVICE_CODE)
 
 #include <hpx/async_base/launch_policy.hpp>
@@ -478,5 +476,4 @@ namespace hpx {
 #define HPX_REGISTER_SCATTER(...)             /**/
 
 #endif    // COMPUTE_HOST_CODE
-#endif
 #endif    // DOXYGEN

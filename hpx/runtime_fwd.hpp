@@ -12,7 +12,7 @@
 #include <hpx/config.hpp>
 #include <hpx/runtime_local/runtime_local_fwd.hpp>
 
-#if !defined(HPX_COMPUTE_DEVICE_CODE)
+#if defined(HPX_WITH_DISTRIBUTED_RUNTIME) && !defined(HPX_COMPUTE_DEVICE_CODE)
 #include <hpx/runtime/basename_registration_fwd.hpp>
 #include <hpx/runtime/find_localities.hpp>
 #include <hpx/runtime/get_colocation_id.hpp>

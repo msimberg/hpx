@@ -124,10 +124,6 @@
 #  if defined(__HIP_DEVICE_COMPILE__)
      // hipclang compiling CUDA/HIP code, device mode.
 #    define HPX_COMPUTE_DEVICE_CODE
-#    undef HPX_HAVE_DISTRIBUTED_RUNTIME
-#    undef HPX_HAVE_IO_COUNTERS
-#    undef HPX_HAVE_NETWORKING
-#    undef HPX_HAVE_LOGGING
 #  else
      // clang compiling CUDA/HIP code, host mode.
 #    define HPX_COMPUTE_HOST_CODE
