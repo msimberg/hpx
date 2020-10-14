@@ -1925,7 +1925,7 @@ namespace hpx {
     /// Unregister an external OS-thread with HPX
     bool runtime::unregister_thread()
     {
-        if (nullptr != get_runtime_ptr())
+        if (nullptr == get_runtime_ptr())
             return false;    // never registered
 
         deinit_tss_helper(
