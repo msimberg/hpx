@@ -256,8 +256,10 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(util::function_nonser<int(
-                          hpx::program_options::variables_map& vm)> const& f,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(util::function_nonser<int(hpx::program_options::
+                                       variables_map& vm)> const& f,
         hpx::program_options::options_description const& desc_cmdline, int argc,
         char** argv, std::vector<std::string> const& cfg,
         startup_function_type startup = startup_function_type(),
@@ -316,7 +318,10 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(int (*f)(hpx::program_options::variables_map& vm),
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(int (*f)(hpx::program_options::variables_map&
+                                       vm),
         hpx::program_options::options_description const& desc_cmdline, int argc,
         char** argv, startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
@@ -370,9 +375,12 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(
-        hpx::program_options::options_description const& desc_cmdline, int argc,
-        char** argv, startup_function_type startup = startup_function_type(),
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(hpx::program_options::options_description const&
+                                   desc_cmdline,
+        int argc, char** argv,
+        startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
@@ -430,9 +438,11 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(
-        hpx::program_options::options_description const& desc_cmdline, int argc,
-        char** argv, std::vector<std::string> const& cfg,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(hpx::program_options::options_description const&
+                                   desc_cmdline,
+        int argc, char** argv, std::vector<std::string> const& cfg,
         startup_function_type startup = startup_function_type(),
         shutdown_function_type shutdown = shutdown_function_type(),
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
@@ -479,7 +489,9 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(int argc, char** argv,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(int argc, char** argv,
         std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
@@ -524,9 +536,11 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(
-        hpx::program_options::options_description const& desc_cmdline, int argc,
-        char** argv, hpx::runtime_mode mode);
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(hpx::program_options::options_description const&
+                                   desc_cmdline,
+        int argc, char** argv, hpx::runtime_mode mode);
 
     /// \brief Main non-blocking entry point for launching the HPX runtime system.
     ///
@@ -575,9 +589,11 @@ namespace hpx {
     ///                     command line arguments passed in `argc`/`argv`.
     ///                     Otherwise it will be executed as specified by the
     ///                     parameter\p mode.
-    inline bool start(
-        hpx::program_options::options_description const& desc_cmdline, int argc,
-        char** argv, std::vector<std::string> const& cfg,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(hpx::program_options::options_description const&
+                                   desc_cmdline,
+        int argc, char** argv, std::vector<std::string> const& cfg,
         hpx::runtime_mode mode);
 
     /// \brief Main non-blocking entry point for launching the HPX runtime system.
@@ -611,7 +627,9 @@ namespace hpx {
     /// \note               The created runtime system instance will be
     ///                     executed in console or worker mode depending on the
     ///                     command line arguments passed in `argc`/`argv`.
-    inline bool start(std::string const& app_name, int argc = 0,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(std::string const& app_name, int argc = 0,
         char** argv = nullptr,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
@@ -652,7 +670,9 @@ namespace hpx {
     ///                     runtime system will not support any of the default
     ///                     command line options as described in the section
     ///                     'HPX Command Line Options'.
-    inline bool start(std::vector<std::string> const& cfg,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
     /// \brief Main non-blocking entry point for launching the HPX runtime system.
@@ -691,7 +711,10 @@ namespace hpx {
     /// \note               The created runtime system instance will be
     ///                     executed in console or worker mode depending on the
     ///                     command line arguments passed in `argc`/`argv`.
-    inline bool start(int (*f)(hpx::program_options::variables_map& vm),
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(int (*f)(hpx::program_options::variables_map&
+                                       vm),
         std::string const& app_name, int argc, char** argv,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
@@ -733,7 +756,9 @@ namespace hpx {
     /// \note               The created runtime system instance will be
     ///                     executed in console or worker mode depending on the
     ///                     command line arguments passed in `argc`/`argv`.
-    inline bool start(util::function_nonser<int(int, char**)> const& f,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(util::function_nonser<int(int, char**)> const& f,
         std::string const& app_name, int argc, char** argv,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
@@ -780,7 +805,9 @@ namespace hpx {
     /// \note               The created runtime system instance will be
     ///                     executed in console or worker mode depending on the
     ///                     command line arguments passed in `argc`/`argv`.
-    inline bool start(util::function_nonser<int(int, char**)> const& f,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(util::function_nonser<int(int, char**)> const& f,
         int argc, char** argv, std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
@@ -821,19 +848,29 @@ namespace hpx {
     /// \note               The created runtime system instance will be
     ///                     executed in console or worker mode depending on the
     ///                     configuration passed in `cfg`.
-    inline bool start(util::function_nonser<int(int, char**)> const& f,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(util::function_nonser<int(int, char**)> const& f,
         std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
     /// \cond NOINTERNAL
-    inline bool start(std::nullptr_t f, std::string const& app_name, int argc,
-        char** argv, hpx::runtime_mode mode = hpx::runtime_mode::default_);
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(std::nullptr_t f, std::string const& app_name,
+        int argc, char** argv,
+        hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
-    inline bool start(std::nullptr_t f, int argc, char** argv,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(std::nullptr_t f, int argc, char** argv,
         std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 
-    inline bool start(std::nullptr_t f, std::vector<std::string> const& cfg,
+    inline HPX_DEPRECATED_V(1, 6,
+        "Please use an overload of hpx::start taking hpx::init_params "
+        "instead.") bool start(std::nullptr_t f,
+        std::vector<std::string> const& cfg,
         hpx::runtime_mode mode = hpx::runtime_mode::default_);
 /// \endcond
 #endif
