@@ -29,6 +29,7 @@
 #include <hpx/threading_base/thread_init_data.hpp>
 #include <hpx/threading_base/thread_queue_init_parameters.hpp>
 #include <hpx/topology/topology.hpp>
+#include <hpx/type_support/unused.hpp>
 #include <hpx/util/from_string.hpp>
 
 #include <cstddef>
@@ -1064,6 +1065,7 @@ namespace hpx { namespace threads {
                 get_pool(pool_name).remove_processing_unit(virt_core);
             });
 #else
+        HPX_UNUSED(pool_name);
         HPX_THROW_EXCEPTION(no_success, "threadmanager::shrink_pool",
             "shrink_pool is not available because "
             "HPX_HAVE_THREAD_EXECUTORS_COMPATIBILITY=OFF");
@@ -1080,6 +1082,7 @@ namespace hpx { namespace threads {
                     virt_core, pool.get_thread_offset() + virt_core);
             });
 #else
+        HPX_UNUSED(pool_name);
         HPX_THROW_EXCEPTION(no_success, "threadmanager::shrink_pool",
             "shrink_pool is not available because "
             "HPX_HAVE_THREAD_EXECUTORS_COMPATIBILITY=OFF");
