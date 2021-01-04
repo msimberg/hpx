@@ -189,12 +189,16 @@ void test_semantic_values()
     variables_map vm3;
     HPX_TEST_THROW(store(parsed, vm3), multiple_occurrences);
 
+    // NOTE: hpx::util::from_string does not throw on extra content after
+    // whitespace, boost::lexical_cast throws.
+#if defined(HPX_PROGRAM_OPTIONS_HAVE_BOOST_PROGRAM_OPTIONS_COMPATIBILITY)
     options = saved_options;
     // Now try passing two int in one 'argv' element.
     // This should not work.
     options.emplace_back(option("int", vector<string>(1, "2 3")));
     variables_map vm4;
     HPX_TEST_THROW(store(parsed, vm4), validation_error);
+#endif
 }
 
 void test_priority()
