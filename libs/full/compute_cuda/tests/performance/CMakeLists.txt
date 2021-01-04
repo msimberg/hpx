@@ -5,12 +5,9 @@
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-set(benchmarks)
+set(benchmarks synchronize)
 
-if(HPX_WITH_CUDA_CLANG OR HPX_WITH_HIP)
-  set(tests ${tests} synchronize)
-  set(synchronize_CUDA ON)
-endif()
+set(synchronize_CUDA ON)
 
 foreach(benchmark ${benchmarks})
   if(${${benchmark}_CUDA})

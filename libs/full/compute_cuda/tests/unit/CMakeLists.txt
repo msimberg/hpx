@@ -6,13 +6,13 @@
 
 set(tests)
 
-set(tests ${tests} default_executor)
+set(tests ${tests} default_executor for_each_compute for_loop_compute)
 set(default_executor_CUDA On)
+set(for_each_compute_CUDA On)
+set(for_loop_compute_CUDA On)
 
 if(HPX_WITH_CUDA_CLANG OR HPX_WITH_HIP)
-  set(tests ${tests} for_each_compute for_loop_compute transform_compute)
-  set(for_each_compute_CUDA On)
-  set(for_loop_compute_CUDA On)
+  set(tests ${tests} transform_compute)
   set(transform_compute_CUDA On)
 endif()
 

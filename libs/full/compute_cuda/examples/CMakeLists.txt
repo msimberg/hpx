@@ -25,24 +25,21 @@ else()
   return()
 endif()
 
-set(example_programs)
+set(example_programs data_copy hello_compute)
 
-if(HPX_WITH_CUDA_CLANG OR HPX_WITH_HIP)
-  set(example_programs ${example_programs} data_copy hello_compute)
-  set(data_copy_PARAMETERS THREADS_PER_LOCALITY 4)
-  set(hello_compute_PARAMETERS THREADS_PER_LOCALITY 4)
-  set(data_copy_CUDA ON)
-  set(hello_compute_CUDA ON)
-endif()
+set(data_copy_PARAMETERS THREADS_PER_LOCALITY 4)
+set(hello_compute_PARAMETERS THREADS_PER_LOCALITY 4)
 
 # TODO: The partitioned_vector example works with neither with clang nor nvcc
 # list(APPEND example_programs partitioned_vector)
 # set(partitioned_vector_PARAMETERS THREADS_PER_LOCALITY 4)
 
-#set(partitioned_vector_CUDA ON)
-#set(partitioned_vector_FLAGS DEPENDENCIES partitioned_vector_component)
-
 include_directories(${CUDA_INCLUDE_DIRS})
+
+set(data_copy_CUDA ON)
+set(hello_compute_CUDA ON)
+set(partitioned_vector_CUDA ON)
+set(partitioned_vector_FLAGS DEPENDENCIES partitioned_vector_component)
 
 foreach(example_program ${example_programs})
   if(${${example_program}_CUDA})
