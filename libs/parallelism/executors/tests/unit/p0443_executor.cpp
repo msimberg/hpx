@@ -326,6 +326,95 @@ void test_properties()
     }
 }
 
+void test_on_basic()
+{
+    hpx::execution::experimental::executor exec{};
+    hpx::thread::id parent_id = hpx::this_thread::get_id();
+    hpx::thread::id current_id;
+
+    auto begin = hpx::execution::experimental::schedule(exec);
+    auto work1 =
+        hpx::execution::experimental::transform(begin, [=, &current_id]() {
+            current_id = hpx::this_thread::get_id();
+            HPX_TEST_NEQ(current_id, parent_id);
+        });
+    auto work2 =
+        hpx::execution::experimental::transform(work1, [=, &current_id]() {
+            HPX_TEST_EQ(current_id, hpx::this_thread::get_id());
+        });
+    auto on1 = hpx::execution::experimental::on(work2, exec);
+    auto work3 =
+        hpx::execution::experimental::transform(on1, [=, &current_id]() {
+            hpx::thread::id new_id = hpx::this_thread::get_id();
+            HPX_TEST_NEQ(current_id, new_id);
+            current_id = new_id;
+            HPX_TEST_NEQ(current_id, parent_id);
+        });
+    auto work4 =
+        hpx::execution::experimental::transform(work3, [=, &current_id]() {
+            HPX_TEST_EQ(current_id, hpx::this_thread::get_id());
+        });
+    auto on2 = hpx::execution::experimental::on(work4, exec);
+    auto work5 =
+        hpx::execution::experimental::transform(on2, [=, &current_id]() {
+            hpx::thread::id new_id = hpx::this_thread::get_id();
+            HPX_TEST_NEQ(current_id, new_id);
+            current_id = new_id;
+            HPX_TEST_NEQ(current_id, parent_id);
+        });
+
+    hpx::execution::experimental::sync_wait(work5);
+}
+
+void test_on_arguments()
+{
+    hpx::execution::experimental::executor exec{};
+    hpx::thread::id parent_id = hpx::this_thread::get_id();
+    hpx::thread::id current_id;
+
+    auto begin = hpx::execution::experimental::schedule(exec);
+    auto work1 =
+        hpx::execution::experimental::transform(begin, [=, &current_id]() {
+            current_id = hpx::this_thread::get_id();
+            HPX_TEST_NEQ(current_id, parent_id);
+            return 3;
+        });
+    auto work2 =
+        hpx::execution::experimental::transform(work1, [=, &current_id](int x) {
+            HPX_TEST_EQ(current_id, hpx::this_thread::get_id());
+            return x / 2.0;
+        });
+    auto on1 = hpx::execution::experimental::on(work2, exec);
+    auto work3 = hpx::execution::experimental::transform(
+        on1, [=, &current_id](double x) {
+            hpx::thread::id new_id = hpx::this_thread::get_id();
+            HPX_TEST_NEQ(current_id, new_id);
+            current_id = new_id;
+            HPX_TEST_NEQ(current_id, parent_id);
+            return x / 2;
+        });
+    auto work4 =
+        hpx::execution::experimental::transform(work3, [=, &current_id](int x) {
+            HPX_TEST_EQ(current_id, hpx::this_thread::get_id());
+            return "result: " + std::to_string(x);
+        });
+    auto on2 = hpx::execution::experimental::on(work4, exec);
+    auto work5 = hpx::execution::experimental::transform(
+        on2, [=, &current_id](std::string s) {
+            hpx::thread::id new_id = hpx::this_thread::get_id();
+            HPX_TEST_NEQ(current_id, new_id);
+            current_id = new_id;
+            HPX_TEST_NEQ(current_id, parent_id);
+            return s + "!";
+        });
+
+    auto result = hpx::execution::experimental::sync_wait(work5);
+    static_assert(std::is_same<std::string,
+                      typename std::decay<decltype(result)>::type>::value,
+        "result should be a std::string");
+    HPX_TEST_EQ(result, std::string("result: 0!"));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 int hpx_main()
 {
@@ -337,6 +426,8 @@ int hpx_main()
     test_sender_receiver_transform_sync_wait();
     test_sender_receiver_transform_arguments();
     test_properties();
+    test_on_basic();
+    test_on_arguments();
 
     return hpx::finalize();
 }
