@@ -415,6 +415,99 @@ void test_on_arguments()
     HPX_TEST_EQ(result, std::string("result: 0!"));
 }
 
+void test_on()
+{
+    hpx::execution::experimental::executor exec{};
+    hpx::thread::id parent_id = hpx::this_thread::get_id();
+    hpx::thread::id current_id;
+
+    auto begin = hpx::execution::experimental::schedule(exec);
+    auto work1 = hpx::execution::experimental::transform(begin, []() {
+        std::cerr << "work1: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work2 = hpx::execution::experimental::transform(work1, []() {
+        std::cerr << "work2: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto on1 = hpx::execution::experimental::on(work2, exec);
+    auto work3 = hpx::execution::experimental::transform(on1, []() {
+        std::cerr << "work3: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work4 = hpx::execution::experimental::transform(work3, []() {
+        std::cerr << "work4: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    hpx::execution::experimental::sync_wait(work4);
+    hpx::execution::experimental::sync_wait(work4);
+}
+
+void test_fork()
+{
+    hpx::execution::experimental::executor exec{};
+
+    auto begin = hpx::execution::experimental::schedule(exec);
+    auto work1 = hpx::execution::experimental::transform(begin, []() {
+        std::cerr << "work1: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work2 = hpx::execution::experimental::transform(work1, []() {
+        std::cerr << "work2: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto fork1 = hpx::execution::experimental::fork(work2, exec);
+
+    auto work3a = hpx::execution::experimental::transform(fork1, []() {
+        std::cerr << "work3a: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work4a = hpx::execution::experimental::transform(work3a, []() {
+        std::cerr << "work4a: " << hpx::this_thread::get_id() << std::endl;
+    });
+    hpx::execution::experimental::sync_wait(work4a);
+
+    auto work3b = hpx::execution::experimental::transform(fork1, []() {
+        std::cerr << "work3b: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work4b = hpx::execution::experimental::transform(work3b, []() {
+        std::cerr << "work4b: " << hpx::this_thread::get_id() << std::endl;
+    });
+    hpx::execution::experimental::sync_wait(work4b);
+}
+
+void test_fork_join()
+{
+    hpx::execution::experimental::executor exec{};
+
+    auto begin = hpx::execution::experimental::schedule(exec);
+    auto work1 = hpx::execution::experimental::transform(begin, []() {
+        std::cerr << "work1: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work2 = hpx::execution::experimental::transform(work1, []() {
+        std::cerr << "work2: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto fork1 = hpx::execution::experimental::fork(work2, exec);
+
+    auto work3a = hpx::execution::experimental::transform(fork1, []() {
+        std::cerr << "work3a: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work4a = hpx::execution::experimental::transform(work3a, []() {
+        std::cerr << "work4a: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    auto work3b = hpx::execution::experimental::transform(fork1, []() {
+        std::cerr << "work3b: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    auto work4b = hpx::execution::experimental::transform(work3b, []() {
+        std::cerr << "work4b: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    auto when1 = hpx::execution::experimental::when_all(work4a, work4b);
+    auto work5 = hpx::execution::experimental::transform(when1, []() {
+        std::cerr << "work5: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work6 = hpx::execution::experimental::transform(work5, []() {
+        std::cerr << "work5: " << hpx::this_thread::get_id() << std::endl;
+    });
+    hpx::execution::experimental::sync_wait(work6);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 int hpx_main()
 {
@@ -428,6 +521,9 @@ int hpx_main()
     test_properties();
     test_on_basic();
     test_on_arguments();
+    test_on();
+    test_fork();
+    test_fork_join();
 
     return hpx::finalize();
 }
