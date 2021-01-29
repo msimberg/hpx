@@ -107,6 +107,8 @@ namespace hpx { namespace execution { namespace experimental {
                 std::make_shared<when_all_state>();
 
             // TODO: Make this work for non-void functions.
+            // TODO: P1897 specifies that when_all is only for *non-void*
+            // senders!
             template <typename R>
             auto connect(R&& r)
             {
