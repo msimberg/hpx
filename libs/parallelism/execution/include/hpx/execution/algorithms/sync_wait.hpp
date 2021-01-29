@@ -8,13 +8,12 @@
 
 #include <hpx/config.hpp>
 #include <hpx/datastructures/optional.hpp>
+#include <hpx/execution/algorithms/detail/single_result.hpp>
 #include <hpx/execution_base/operation_state.hpp>
 #include <hpx/execution_base/sender.hpp>
 #include <hpx/synchronization/condition_variable.hpp>
 #include <hpx/synchronization/mutex.hpp>
 #include <hpx/type_support/pack.hpp>
-
-#include <boost/variant.hpp>
 
 #include <exception>
 #include <tuple>
@@ -22,26 +21,6 @@
 #include <utility>
 
 namespace hpx { namespace execution { namespace experimental {
-    template <typename... Variants>
-    struct sync_wait_single_result
-    {
-        static_assert(sizeof...(Variants) == 1,
-            "sync_wait expects the predecessor sender to have a single variant "
-            "in sender_traits<>::value_types");
-    };
-
-    template <typename T>
-    struct sync_wait_single_result<hpx::util::pack<hpx::util::pack<T>>>
-    {
-        using type = T;
-    };
-
-    template <>
-    struct sync_wait_single_result<hpx::util::pack<hpx::util::pack<>>>
-    {
-        using type = void;
-    };
-
     namespace detail {
         template <typename T>
         struct sync_wait_receiver
@@ -189,7 +168,8 @@ namespace hpx { namespace execution { namespace experimental {
         using value_types =
             typename hpx::execution::experimental::sender_traits<
                 S>::template value_types<hpx::util::pack, hpx::util::pack>;
-        using result_type = typename sync_wait_single_result<value_types>::type;
+        using result_type =
+            typename detail::sync_wait_single_result<value_types>::type;
 
         return detail::sync_wait_impl(
             std::is_void<result_type>{}, std::forward<S>(s));
