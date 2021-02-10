@@ -61,15 +61,31 @@ namespace hpx { namespace execution { namespace experimental {
             template <typename... Ts>
             void set_value_helper(std::true_type, Ts&&... ts) noexcept
             {
-                HPX_INVOKE(f, std::forward<Ts>(ts)...);
-                hpx::execution::experimental::set_value(std::move(r));
+                try
+                {
+                    HPX_INVOKE(f, std::forward<Ts>(ts)...);
+                    hpx::execution::experimental::set_value(std::move(r));
+                }
+                catch (...)
+                {
+                    hpx::execution::experimental::set_error(
+                        std::move(r), std::current_exception());
+                }
             }
 
             template <typename... Ts>
             void set_value_helper(std::false_type, Ts&&... ts) noexcept
             {
-                hpx::execution::experimental::set_value(
-                    std::move(r), HPX_INVOKE(f, std::forward<Ts>(ts)...));
+                try
+                {
+                    hpx::execution::experimental::set_value(
+                        std::move(r), HPX_INVOKE(f, std::forward<Ts>(ts)...));
+                }
+                catch (...)
+                {
+                    hpx::execution::experimental::set_error(
+                        std::move(r), std::current_exception());
+                }
             }
 
             template <typename... Ts>
