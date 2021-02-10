@@ -508,6 +508,21 @@ void test_fork_join()
     hpx::execution::experimental::sync_wait(work6);
 }
 
+void test_let_value()
+{
+    auto begin = hpx::execution::experimental::just(3);
+    auto work1 = hpx::execution::experimental::let_value(begin, [](int& x) {
+        return hpx::execution::experimental::transform(
+            hpx::execution::experimental::just(2), [&x](int y) -> int {
+                std::cerr << "x = " << x << std::endl;
+                return y * x * x;
+            });
+    });
+
+    auto result = hpx::execution::experimental::sync_wait(work1);
+    std::cout << "result = " << result << std::endl;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 int hpx_main()
 {
@@ -524,6 +539,7 @@ int hpx_main()
     test_on();
     test_fork();
     test_fork_join();
+    test_let_value();
 
     return hpx::finalize();
 }
