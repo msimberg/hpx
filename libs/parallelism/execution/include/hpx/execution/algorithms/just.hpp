@@ -26,7 +26,7 @@ namespace hpx { namespace execution { namespace experimental {
 
             static constexpr bool sends_done = false;
 
-            template <typename R, typename T>
+            template <typename R>
             struct operation_state
             {
                 typename std::decay<R>::type r;
@@ -42,7 +42,7 @@ namespace hpx { namespace execution { namespace experimental {
             template <typename R>
             auto connect(R&& r)
             {
-                return operation_state<R, T>{std::forward<R>(r), std::move(t)};
+                return operation_state<R>{std::forward<R>(r), std::move(t)};
             }
         };
     }    // namespace detail

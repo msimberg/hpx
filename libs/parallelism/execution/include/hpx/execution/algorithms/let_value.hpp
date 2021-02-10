@@ -56,7 +56,6 @@ namespace hpx { namespace execution { namespace experimental {
             {
                 try
                 {
-                    // TODO: Do the arguments live long enough?
                     // NOTE: Arguments are not forwarded. They should be taken
                     // by reference in f.
                     hpx::execution::experimental::start(

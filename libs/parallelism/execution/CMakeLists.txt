@@ -12,6 +12,7 @@ set(execution_headers
     hpx/execution/algorithms/detail/is_negative.hpp
     hpx/execution/algorithms/detail/predicates.hpp
     hpx/execution/algorithms/fork.hpp
+    hpx/execution/algorithms/just.hpp
     hpx/execution/algorithms/just_on.hpp
     hpx/execution/algorithms/let_value.hpp
     hpx/execution/algorithms/on.hpp

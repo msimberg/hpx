@@ -508,6 +508,58 @@ void test_fork_join()
     hpx::execution::experimental::sync_wait(work6);
 }
 
+void test_just()
+{
+    std::cerr << "parent: " << hpx::this_thread::get_id() << std::endl;
+
+    auto begin = hpx::execution::experimental::just(3);
+    auto work1 = hpx::execution::experimental::transform(begin, [](int x) {
+        std::cerr << "work1: " << hpx::this_thread::get_id() << std::endl;
+        std::cerr << "work1: x = " << x << std::endl;
+    });
+    auto work2 = hpx::execution::experimental::transform(work1, []() {
+        std::cerr << "work2: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    hpx::execution::experimental::executor exec{};
+
+    auto on1 = hpx::execution::experimental::on(work2, exec);
+    auto work3 = hpx::execution::experimental::transform(on1, []() {
+        std::cerr << "work3: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work4 = hpx::execution::experimental::transform(work3, []() {
+        std::cerr << "work4: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    hpx::execution::experimental::sync_wait(work4);
+}
+
+void test_just_on()
+{
+    std::cerr << "parent: " << hpx::this_thread::get_id() << std::endl;
+
+    hpx::execution::experimental::executor exec{};
+
+    auto begin = hpx::execution::experimental::just_on(exec, 3);
+    auto work1 = hpx::execution::experimental::transform(begin, [](int x) {
+        std::cerr << "work1: " << hpx::this_thread::get_id() << std::endl;
+        std::cerr << "work1: x = " << x << std::endl;
+    });
+    auto work2 = hpx::execution::experimental::transform(work1, []() {
+        std::cerr << "work2: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    auto on1 = hpx::execution::experimental::on(work2, exec);
+    auto work3 = hpx::execution::experimental::transform(on1, []() {
+        std::cerr << "work3: " << hpx::this_thread::get_id() << std::endl;
+    });
+    auto work4 = hpx::execution::experimental::transform(work3, []() {
+        std::cerr << "work4: " << hpx::this_thread::get_id() << std::endl;
+    });
+
+    hpx::execution::experimental::sync_wait(work4);
+}
+
 void test_let_value()
 {
     auto begin = hpx::execution::experimental::just(3);
@@ -539,6 +591,8 @@ int hpx_main()
     test_on();
     test_fork();
     test_fork_join();
+    test_just();
+    test_just_on();
     test_let_value();
 
     return hpx::finalize();
