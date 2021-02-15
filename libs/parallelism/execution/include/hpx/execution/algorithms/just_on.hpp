@@ -10,6 +10,7 @@
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
 #include <hpx/functional/invoke_result.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 #include <hpx/type_support/pack.hpp>
 
 #include <atomic>
@@ -77,16 +78,22 @@ namespace hpx { namespace execution { namespace experimental {
             auto connect(R&& r)
             {
                 auto s = hpx::execution::experimental::schedule(scheduler);
-                return hpx::execution::experimental::connect(
-                    std::move(s), just_on_receiver<R, T>(std::forward<R>(r), std::move(t)));
+                return hpx::execution::experimental::connect(std::move(s),
+                    just_on_receiver<R, T>(std::forward<R>(r), std::move(t)));
             }
         };
     }    // namespace detail
 
-    template <typename Scheduler, typename T>
-    auto just_on(Scheduler&& scheduler, T&& t)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct just_on_t final
+      : hpx::functional::tag_fallback<just_on_t>
     {
-        return detail::just_on_sender<Scheduler, T>{
-            std::forward<Scheduler>(scheduler), std::forward<T>(t)};
-    }
+    private:
+        template <typename Scheduler, typename T>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(
+            just_on_t, Scheduler&& scheduler, T&& t)
+        {
+            return detail::just_on_sender<Scheduler, T>{
+                std::forward<Scheduler>(scheduler), std::forward<T>(t)};
+        }
+    } just_on{};
 }}}    // namespace hpx::execution::experimental

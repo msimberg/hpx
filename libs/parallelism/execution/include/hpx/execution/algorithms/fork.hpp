@@ -11,6 +11,7 @@
 #include <hpx/execution_base/operation_state.hpp>
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 #include <hpx/synchronization/mutex.hpp>
 #include <hpx/type_support/pack.hpp>
 
@@ -151,12 +152,17 @@ namespace hpx { namespace execution { namespace experimental {
         };
     }    // namespace detail
 
-    // TODO: This should be a CPO.
-    // TODO: How generic is this implementation?
-    template <typename S, typename Scheduler>
-    auto fork(S&& s, Scheduler&& scheduler)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct fork_t final
+      : hpx::functional::tag_fallback<fork_t>
     {
-        return detail::fork_sender<S, Scheduler>{
-            std::forward<S>(s), std::forward<Scheduler>(scheduler)};
-    }
+    private:
+        // TODO: How generic is this implementation?
+        template <typename S, typename Scheduler>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(
+            fork_t, S&& s, Scheduler&& scheduler)
+        {
+            return detail::fork_sender<S, Scheduler>{
+                std::forward<S>(s), std::forward<Scheduler>(scheduler)};
+        }
+    } fork{};
 }}}    // namespace hpx::execution::experimental

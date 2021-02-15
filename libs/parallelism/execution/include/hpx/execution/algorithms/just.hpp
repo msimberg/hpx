@@ -9,6 +9,7 @@
 #include <hpx/config.hpp>
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 
 namespace hpx { namespace execution { namespace experimental {
     namespace detail {
@@ -47,11 +48,15 @@ namespace hpx { namespace execution { namespace experimental {
         };
     }    // namespace detail
 
-    // TODO: Allow multiple values? No values?
-    // TODO: Make CPO.
-    template <typename T>
-    auto just(T&& t)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct just_t final
+      : hpx::functional::tag_fallback<just_t>
     {
-        return detail::just_sender<T>{std::forward<T>(t)};
-    }
+    private:
+        // TODO: Allow multiple values? No values?
+        template <typename T>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(just_t, T&& t)
+        {
+            return detail::just_sender<T>{std::forward<T>(t)};
+        }
+    } just{};
 }}}    // namespace hpx::execution::experimental

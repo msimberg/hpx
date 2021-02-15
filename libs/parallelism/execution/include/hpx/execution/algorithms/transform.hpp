@@ -9,6 +9,7 @@
 #include <hpx/config.hpp>
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 #include <hpx/type_support/pack.hpp>
 
 #include <exception>

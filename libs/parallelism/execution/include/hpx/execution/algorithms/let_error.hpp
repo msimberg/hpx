@@ -10,6 +10,7 @@
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
 #include <hpx/functional/invoke_result.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 
 #include <exception>
 #include <type_traits>
@@ -106,10 +107,16 @@ namespace hpx { namespace execution { namespace experimental {
         };
     }    // namespace detail
 
-    template <typename S, typename F>
-    auto let_error(S&& s, F&& f)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct let_error_t final
+      : hpx::functional::tag_fallback<let_error_t>
     {
-        return detail::let_error_sender<S, F>{
-            std::forward<S>(s), std::forward<F>(f)};
-    }
+    private:
+        template <typename S, typename F>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(
+            let_error_t, S&& s, F&& f)
+        {
+            return detail::let_error_sender<S, F>{
+                std::forward<S>(s), std::forward<F>(f)};
+        }
+    } let_error{};
 }}}    // namespace hpx::execution::experimental

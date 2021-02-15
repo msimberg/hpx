@@ -12,6 +12,7 @@
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
 #include <hpx/functional/invoke_fused.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 #include <hpx/synchronization/mutex.hpp>
 #include <hpx/type_support/pack.hpp>
 
@@ -126,12 +127,17 @@ namespace hpx { namespace execution { namespace experimental {
         };
     }    // namespace detail
 
-    // TODO: This should be a CPO.
-    // TODO: How generic is this implementation?
-    template <typename... Ss>
-    auto when_all(Ss&&... ss)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct when_all_t final
+      : hpx::functional::tag_fallback<when_all_t>
     {
-        return detail::when_all_sender<Ss...>{
-            std::make_tuple(std::forward<Ss>(ss)...)};
-    }
+    private:
+        // TODO: How generic is this implementation?
+        template <typename... Ss>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(
+            when_all_t, Ss&&... ss)
+        {
+            return detail::when_all_sender<Ss...>{
+                std::make_tuple(std::forward<Ss>(ss)...)};
+        }
+    } when_all{};
 }}}    // namespace hpx::execution::experimental

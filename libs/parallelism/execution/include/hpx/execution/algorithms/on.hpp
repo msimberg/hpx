@@ -9,6 +9,7 @@
 #include <hpx/config.hpp>
 #include <hpx/execution_base/receiver.hpp>
 #include <hpx/execution_base/sender.hpp>
+#include <hpx/functional/tag_fallback_invoke.hpp>
 #include <hpx/type_support/pack.hpp>
 
 #include <atomic>
@@ -85,10 +86,16 @@ namespace hpx { namespace execution { namespace experimental {
         };
     }    // namespace detail
 
-    template <typename S, typename Scheduler>
-    auto on(S&& s, Scheduler&& scheduler)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct on_t final
+      : hpx::functional::tag_fallback<on_t>
     {
-        return detail::on_sender<S, Scheduler>{
-            std::forward<S>(s), std::forward<Scheduler>(scheduler)};
-    }
+    private:
+        template <typename S, typename Scheduler>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(
+            on_t, S&& s, Scheduler&& scheduler)
+        {
+            return detail::on_sender<S, Scheduler>{
+                std::forward<S>(s), std::forward<Scheduler>(scheduler)};
+        }
+    } on{};
 }}}    // namespace hpx::execution::experimental
