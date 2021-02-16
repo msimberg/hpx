@@ -169,4 +169,154 @@ namespace hpx { namespace execution { namespace experimental {
         hpx::threads::thread_schedule_hint schedulehint_{};
         /// \endcond
     };
+
+    // TODO: Very experimental.
+    struct stream_executor
+    {
+        constexpr stream_executor() = default;
+
+        /// \cond NOINTERNAL
+        bool operator==(stream_executor const& rhs) const noexcept
+        {
+            return stream_ == rhs.stream_;
+        }
+
+        bool operator!=(stream_executor const& rhs) const noexcept
+        {
+            return !(*this == rhs);
+        }
+
+        // TODO: This could set the stream priority.
+        // friend stream_executor tag_invoke(
+        //     hpx::execution::experimental::make_with_priority_t,
+        //     stream_executor const& exec, hpx::threads::thread_priority priority)
+        // {
+        //     auto exec_with_priority = exec;
+        //     exec_with_priority.priority_ = priority;
+        //     return exec_with_priority;
+        // }
+
+        template <typename F>
+        void execute(F&& f) const
+        {
+            HPX_INVOKE(f, stream_);
+        }
+
+        template <typename R>
+        struct operation_state
+        {
+            typename std::decay<R>::type r;
+
+            void start() noexcept
+            {
+                // TODO: What does this need to do? It could do nothing. Can
+                // work be submitted eagerly? It does need to honour the receiver though.
+
+                // Record an event and start a task which will `set_value` when
+                // the event is ready?
+
+                // Store the active stream?
+
+                // Store the event?
+
+                // NOTE: This triggers the receivers. Where and when should an
+                // event be inserted? Where and when should the event be waited
+                // on.
+                hpx::execution::experimental::set_value(std::move(r));
+            }
+        };
+
+        struct sender
+        {
+            template <template <typename...> class Tuple,
+                template <typename...> class Variant>
+            using value_types = Variant<Tuple<>>;
+
+            template <template <typename...> class Variant>
+            using error_types = Variant<std::exception_ptr>;
+
+            static constexpr bool sends_done = false;
+
+            template <typename R>
+            operation_state<R> connect(R&& r)
+            {
+                return {std::forward<R>(r)};
+            }
+
+            friend constexpr HPX_FORCEINLINE void tag_invoke(
+                sync_wait_t, sender s)
+            {
+                // Nothing has been scheduled yet so there is nothing to wait
+                // for. Return immediately.
+            }
+        };
+
+        template <template <class...> class Tuple,
+            template <class...> class Variant>
+        using value_types = Variant<Tuple<>>;
+
+        template <template <class...> class Variant>
+        using error_types = Variant<std::exception_ptr>;
+
+        static constexpr bool sends_done = false;
+
+        template <typename R>
+        operation_state<R> connect(R&& r)
+        {
+            return {std::forward<R>(r)};
+        }
+
+        sender schedule()
+        {
+            return {};
+        }
+        /// \endcond
+
+    private:
+        /// \cond NOINTERNAL
+        cudaStream_t stream_{};
+        /// \endcond
+    };
+
+    struct stream_transform_sender
+    {
+        template <template <typename...> class Tuple,
+            template <typename...> class Variant>
+        using value_types = Variant<Tuple<>>;
+
+        template <template <typename...> class Variant>
+        using error_types = Variant<std::exception_ptr>;
+
+        static constexpr bool sends_done = false;
+
+        template <typename R>
+        operation_state<R> connect(R&& r)
+        {
+            return {std::forward<R>(r)};
+        }
+
+        friend constexpr HPX_FORCEINLINE void tag_invoke(
+            sync_wait_t, stream_transform_sender s)
+        {
+            // Something has been scheduled. Block until event is ready.
+            // TODO: Use scheduler integration.
+            hpx::util::yield_while([this]() { return this->event_ == ready; });
+        }
+    };
+
+    template <typename F>
+    HPX_FORCEINLINE auto tag_invoke(
+        transform_t, stream_executor::sender s, F&& f)
+    {
+        // Eagerly or lazily trigger submission?
+
+        // Let's try eagerly first. The predecessor is known to be a
+        // void sender.
+        HPX_INVOKE(f, stream_);
+
+        // Need to return a sender which, when waited on, completes only
+        // when the event is done.
+
+        return
+    }
 }}}    // namespace hpx::execution::experimental
