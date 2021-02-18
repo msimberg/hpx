@@ -579,7 +579,7 @@ void test_let_error()
 {
     auto begin = hpx::execution::experimental::just(3);
     auto work1 = hpx::execution::experimental::transform(
-        begin, [](int x) -> int { throw std::runtime_error("aksjdh"); });
+        begin, [](int) -> int { throw std::runtime_error("aksjdh"); });
     auto work2 =
         hpx::execution::experimental::let_error(work1, [](std::exception_ptr) {
             // Handle exception ptr in some reasonable way.

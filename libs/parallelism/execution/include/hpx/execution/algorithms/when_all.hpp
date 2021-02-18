@@ -60,8 +60,9 @@ namespace hpx { namespace execution { namespace experimental {
                 hpx::execution::experimental::set_done(std::move(r));
             };
 
+            // TODO: Arguments ignored.
             template <typename... Ts>
-            void set_value(Ts&&... ts) noexcept
+            void set_value(Ts&&...) noexcept
             {
                 // TODO: Too coarse.
                 if (--st->predecessors_remaining == 0)

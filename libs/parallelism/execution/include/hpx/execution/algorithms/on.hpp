@@ -48,7 +48,9 @@ namespace hpx { namespace execution { namespace experimental {
             template <typename... Ts>
             void set_value(Ts&&... ts) noexcept
             {
-                // TODO: Forward parameters, don't copy unless needed.
+                // TODO: Is this generic enough? CUDA stream executor requires
+                // customization (f is expected to take a stream, which this
+                // lambda does not). Are there other primitives we can use?
                 hpx::execution::experimental::execute(
                     scheduler, [=, r = std::move(r)]() mutable {
                         hpx::execution::experimental::set_value(

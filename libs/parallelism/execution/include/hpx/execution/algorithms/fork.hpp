@@ -52,8 +52,9 @@ namespace hpx { namespace execution { namespace experimental {
                 // TODO
             };
 
+            // TODO: Arguments are ignored.
             template <typename... Ts>
-            void set_value(Ts&&... ts) noexcept
+            void set_value(Ts&&...) noexcept
             {
                 // TODO: Too coarse.
                 std::lock_guard<hpx::lcos::local::mutex> l{st->mtx};
