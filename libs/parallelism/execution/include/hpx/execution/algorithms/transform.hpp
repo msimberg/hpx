@@ -141,10 +141,16 @@ namespace hpx { namespace execution { namespace experimental {
         };
     }    // namespace detail
 
-    template <typename S, typename F>
-    auto transform(S&& s, F&& f)
+    HPX_INLINE_CONSTEXPR_VARIABLE struct transform_t final
+      : hpx::functional::tag_fallback<transform_t>
     {
-        return detail::transform_sender<S, F>{
-            std::forward<S>(s), std::forward<F>(f)};
-    }
+    private:
+        template <typename S, typename F>
+        friend constexpr HPX_FORCEINLINE auto tag_fallback_invoke(
+            transform_t, S&& s, F&& f)
+        {
+            return detail::transform_sender<S, F>{
+                std::forward<S>(s), std::forward<F>(f)};
+        }
+    } transform{};
 }}}    // namespace hpx::execution::experimental
