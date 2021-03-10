@@ -39,6 +39,7 @@ add_hpx_component(
   HEADERS ${iostreams_headers}
   PREPEND_SOURCE_ROOT
   SOURCE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/src"
+  DEPENDENCIES Boost::iostreams
   SOURCES ${iostreams_sources} ${HPX_WITH_UNITY_BUILD_OPTION}
 )
 
