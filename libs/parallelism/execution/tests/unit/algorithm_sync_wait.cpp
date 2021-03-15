@@ -54,6 +54,10 @@ struct sender
 
 struct sender2 : sender
 {
+    explicit sender2(sender s)
+      : sender(s)
+    {
+    }
 };
 
 // NOTE: This is not a conforming sync_wait implementation. It only exists to
