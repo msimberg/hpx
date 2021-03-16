@@ -13,8 +13,10 @@
 
 #include <array>
 #include <atomic>
+#include <chrono>
 #include <cstddef>
 #include <string>
+#include <thread>
 #include <type_traits>
 #include <utility>
 
@@ -508,6 +510,135 @@ void test_just_on_two_args()
     ex::sync_wait(work1);
 }
 
+void test_when_all()
+{
+    hpx::execution::experimental::executor exec{};
+
+    {
+        hpx::thread::id parent_id = hpx::this_thread::get_id();
+
+        auto begin1 = hpx::execution::experimental::schedule(exec);
+        auto work1 =
+            hpx::execution::experimental::transform(begin1, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                return 42;
+            });
+
+        auto begin2 = hpx::execution::experimental::schedule(exec);
+        auto work2 =
+            hpx::execution::experimental::transform(begin2, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                return std::string("hello");
+            });
+
+        auto begin3 = hpx::execution::experimental::schedule(exec);
+        auto work3 =
+            hpx::execution::experimental::transform(begin3, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                return 3.14;
+            });
+
+        auto when1 =
+            hpx::execution::experimental::when_all(work1, work2, work3);
+        auto transform1 = hpx::execution::experimental::transform(
+            when1, [parent_id](int x, std::string y, double z) {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                HPX_TEST_EQ(x, 42);
+                HPX_TEST_EQ(y, std::string("hello"));
+                HPX_TEST_EQ(z, 3.14);
+            });
+        hpx::execution::experimental::sync_wait(transform1);
+    }
+
+    {
+        hpx::thread::id parent_id = hpx::this_thread::get_id();
+
+        // The exception is likely to be thrown before set_value from the second
+        // sender is called because the second sender sleeps.
+        auto begin1 = hpx::execution::experimental::schedule(exec);
+        auto work1 =
+            hpx::execution::experimental::transform(begin1, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                throw std::runtime_error("error");
+                return 42;
+            });
+
+        auto begin2 = hpx::execution::experimental::schedule(exec);
+        auto work2 =
+            hpx::execution::experimental::transform(begin2, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                return std::string("hello");
+            });
+
+        auto when1 = hpx::execution::experimental::when_all(work1, work2);
+        auto transform1 = hpx::execution::experimental::transform(
+            when1, [parent_id](int x, std::string y) {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                HPX_TEST_EQ(x, 42);
+                HPX_TEST_EQ(y, std::string("hello"));
+            });
+
+        bool exception_thrown = false;
+
+        try
+        {
+            hpx::execution::experimental::sync_wait(transform1);
+        }
+        catch (std::runtime_error const& e)
+        {
+            HPX_TEST_EQ(std::string(e.what()), std::string("error"));
+            exception_thrown = true;
+        }
+
+        HPX_TEST(exception_thrown);
+    }
+
+    {
+        hpx::thread::id parent_id = hpx::this_thread::get_id();
+
+        // The exception is likely to be thrown after set_value from the second
+        // sender is called because the first sender sleeps before throwing.
+        auto begin1 = hpx::execution::experimental::schedule(exec);
+        auto work1 =
+            hpx::execution::experimental::transform(begin1, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                throw std::runtime_error("error");
+                return 42;
+            });
+
+        auto begin2 = hpx::execution::experimental::schedule(exec);
+        auto work2 =
+            hpx::execution::experimental::transform(begin2, [parent_id]() {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                return std::string("hello");
+            });
+
+        auto when1 = hpx::execution::experimental::when_all(work1, work2);
+        auto transform1 = hpx::execution::experimental::transform(
+            when1, [parent_id](int x, std::string y) {
+                HPX_TEST_NEQ(parent_id, hpx::this_thread::get_id());
+                HPX_TEST_EQ(x, 42);
+                HPX_TEST_EQ(y, std::string("hello"));
+            });
+
+        bool exception_thrown = false;
+
+        try
+        {
+            hpx::execution::experimental::sync_wait(transform1);
+        }
+        catch (std::runtime_error const& e)
+        {
+            HPX_TEST_EQ(std::string(e.what()), std::string("error"));
+            exception_thrown = true;
+        }
+
+        HPX_TEST(exception_thrown);
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 int hpx_main()
 {
@@ -527,6 +658,7 @@ int hpx_main()
     test_just_on_void();
     test_just_on_one_arg();
     test_just_on_two_args();
+    test_when_all();
 
     return hpx::finalize();
 }
